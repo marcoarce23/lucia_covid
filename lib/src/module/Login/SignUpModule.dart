@@ -210,71 +210,101 @@ class _SignUpModuleState extends State<SignUpModule> {
       // Navigator.of(context).pushNamed('registerLogin'),
   }
 
+  // Widget _gmailButton() {
+  //   // return Container(
+  //   //   height: 50,
+  //   //   margin: EdgeInsets.symmetric(vertical: 5),
+  //   //   decoration: BoxDecoration(
+  //   //     borderRadius: BorderRadius.all(Radius.circular(10)),
+  //   //   ),
+  //   //   child: Row(
+  //   //     children: <Widget>[
+  //   //       Expanded(
+  //   //         flex: 1,
+  //   //         child: Container(
+  //   //           decoration: BoxDecoration(
+  //   //             color: Colors.red,
+  //   //             borderRadius: BorderRadius.only(
+  //   //                 bottomLeft: Radius.circular(5),
+  //   //                 topLeft: Radius.circular(5)),
+  //   //           ),
+  //   //           alignment: Alignment.center,
+  //   //           child: Text('G',
+  //   //               style: TextStyle(
+  //   //                   color: Colors.white,
+  //   //                   fontSize: 25,
+  //   //                   fontWeight: FontWeight.w400)),
+  //   //         ),
+  //   //       ),
+  //   //       Expanded(
+
+  //   //         child: Container(
+
+  //   //             decoration: BoxDecoration(
+
+  //   //               color: Colors.red,
+  //   //               borderRadius: BorderRadius.only(
+  //   //                   bottomRight: Radius.circular(5),
+  //   //                   topRight: Radius.circular(5)),
+  //   //             ),
+  //   //             alignment: Alignment.center,
+  //   //             child: InkWell(
+  //   //               onTap: () {
+  //   //                 Navigator.push(
+  //   //                     context,
+  //   //                     MaterialPageRoute(
+  //   //                         builder: (context) => CitizenLayoutMenuModule()));
+  //   //               },
+  //   //               child: Text(
+  //   //                 'GMail',
+  //   //                 style: TextStyle(fontSize: 20, color: Colors.white),
+  //   //               ),
+  //   //             )),
+  //   //       ),
+  //   //     ],
+  //   //   ),
+  //   // );
+  //   return Container(
+  //     padding: EdgeInsets.symmetric(horizontal: 100.0),
+  //     width: MediaQuery.of(context).size.width,
+  //     child: RaisedButton.icon(
+  //       shape:
+  //           RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+  //       color: Colors.orange,
+  //       textColor: Colors.white,
+  //       label: Text('GMail'),
+  //       icon: Icon(Icons.mail_outline),
+  //       onPressed: (_save) ? null : _submit,
+  //     ),
+  //   );
+  // }
+
   Widget _gmailButton() {
-    // return Container(
-    //   height: 50,
-    //   margin: EdgeInsets.symmetric(vertical: 5),
-    //   decoration: BoxDecoration(
-    //     borderRadius: BorderRadius.all(Radius.circular(10)),
-    //   ),
-    //   child: Row(
-    //     children: <Widget>[
-    //       Expanded(
-    //         flex: 1,
-    //         child: Container(
-    //           decoration: BoxDecoration(
-    //             color: Colors.red,
-    //             borderRadius: BorderRadius.only(
-    //                 bottomLeft: Radius.circular(5),
-    //                 topLeft: Radius.circular(5)),
-    //           ),
-    //           alignment: Alignment.center,
-    //           child: Text('G',
-    //               style: TextStyle(
-    //                   color: Colors.white,
-    //                   fontSize: 25,
-    //                   fontWeight: FontWeight.w400)),
-    //         ),
-    //       ),
-    //       Expanded(
-
-    //         child: Container(
-
-    //             decoration: BoxDecoration(
-
-    //               color: Colors.red,
-    //               borderRadius: BorderRadius.only(
-    //                   bottomRight: Radius.circular(5),
-    //                   topRight: Radius.circular(5)),
-    //             ),
-    //             alignment: Alignment.center,
-    //             child: InkWell(
-    //               onTap: () {
-    //                 Navigator.push(
-    //                     context,
-    //                     MaterialPageRoute(
-    //                         builder: (context) => CitizenLayoutMenuModule()));
-    //               },
-    //               child: Text(
-    //                 'GMail',
-    //                 style: TextStyle(fontSize: 20, color: Colors.white),
-    //               ),
-    //             )),
-    //       ),
-    //     ],
-    //   ),
-    // );
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 100.0),
-      width: MediaQuery.of(context).size.width,
-      child: RaisedButton.icon(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: Colors.orange,
-        textColor: Colors.white,
-        label: Text('GMail'),
-        icon: Icon(Icons.mail_outline),
-        onPressed: (_save) ? null : _submit,
+    return OutlineButton(
+      splashColor: Colors.grey,
+      onPressed: () {},
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+      highlightElevation: 0,
+      borderSide: BorderSide(color: Colors.grey),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image(image: AssetImage("assets/google_logo.png"), height: 35.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                'Sign in with Google',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
