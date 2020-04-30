@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "944371536908",
+    "firebase_url": "https://covid-ad388.firebaseio.com",
+    "project_id": "covid-ad388",
+    "storage_bucket": "covid-ad388.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944371536908:android:9f736817601053fea34a29",
+        "android_client_info": {
+          "package_name": "com.example.ccc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "944371536908-ms2a0tde0ok4276ld37jmfbpaaq54fo8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ccc",
+            "certificate_hash": "12c2c8a8fbf187f061344c929af498d39b287073"
+          }
+        },
+        {
+          "client_id": "944371536908-9nm5vp91jetbshgsu4i22kh4nuutdcte.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2xXjvtXmYBd5kXCi3oRUq6P54IOQ43VY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "944371536908-9nm5vp91jetbshgsu4i22kh4nuutdcte.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944371536908:android:aaefefdcd51d72f6a34a29",
+        "android_client_info": {
+          "package_name": "com.example.lucia_covid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "944371536908-h5aus5rv448m255rchritseu856q1a25.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lucia_covid",
+            "certificate_hash": "12c2c8a8fbf187f061344c929af498d39b287073"
+          }
+        },
+        {
+          "client_id": "944371536908-9nm5vp91jetbshgsu4i22kh4nuutdcte.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2xXjvtXmYBd5kXCi3oRUq6P54IOQ43VY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "944371536908-9nm5vp91jetbshgsu4i22kh4nuutdcte.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
