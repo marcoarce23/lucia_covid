@@ -25,60 +25,64 @@ class _CitizenNewsModuleState extends State<CitizenNewsModule> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Card(
-          elevation: 4,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-          child: Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: TextField(
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                prefixIcon: Icon(Icons.search),
-                hintText: "Buscar",
+    return Scaffold(
+          body: SafeArea(
+                      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+            Card(
+              elevation: 4,
+              shape:
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    prefixIcon: Icon(Icons.search),
+                    hintText: "Buscar",
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-        SizedBox(
-          height: 7,
-        ),
-        Container(
-          child:
-              Padding(padding: EdgeInsets.all(15), child: Text("Categorias")),
-        ),
-        Container(
-          height: 30,
-          child: ListView.builder(
-              itemCount: categories.length,
-              shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return CategorieTile(
-                  categorie: categories[index],
-                  isSelected: selectedCategorie == categories[index],
-                  context: this,
-                );
-              }),
-        ),
-        SizedBox(
-          height: 7,
-        ),
-        news("descripcion", "01/01/2020", "Adress map",
-            "image/circled_user_female.png"),
-        news("descripcion", "01/01/2020", "Adress map",
-            "image/circled_user_female.png"),
-        news("descripcion", "01/01/2020", "Adress map",
-            "image/circled_user_female.png"),
+            SizedBox(
+              height: 7,
+            ),
+            Container(
+              child:
+                  Padding(padding: EdgeInsets.all(15), child: Text("Categorias")),
+            ),
+            Container(
+              height: 30,
+              child: ListView.builder(
+                  itemCount: categories.length,
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return CategorieTile(
+                      categorie: categories[index],
+                      isSelected: selectedCategorie == categories[index],
+                      context: this,
+                    );
+                  }),
+            ),
+            SizedBox(
+              height: 7,
+            ),
+            news("descripcion", "01/01/2020", "Adress map",
+                "image/circled_user_female.png"),
+            news("descripcion", "01/01/2020", "Adress map",
+                "image/circled_user_female.png"),
+            news("descripcion", "01/01/2020", "Adress map",
+                "image/circled_user_female.png"),
 
-        //news("descripcion", "01/01/2020", "Adress map", "circled_user_female.png"),
-        //news("descripcion", "01/01/2020", "Adress map", "circled_user_female.png"),
-      ],
+            //news("descripcion", "01/01/2020", "Adress map", "circled_user_female.png"),
+            //news("descripcion", "01/01/2020", "Adress map", "circled_user_female.png"),
+        ],
+      ),
+          ),
     );
   }
 
