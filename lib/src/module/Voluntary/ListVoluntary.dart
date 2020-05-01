@@ -22,120 +22,76 @@ class _ListVoluntaryState extends State<ListVoluntary> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text(widget.profesional.profesion),
+        iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+        elevation: 0,
+        title: Text(
+          widget.profesional.profesion,
+          style: TextStyle(
+              color: AppTheme.themeColorNaranja,
+              fontSize: 17,
+              fontWeight: FontWeight.w400),
+        ),
+        //backgroundColor: AppTheme.themeColorNaranja,
       ),
       body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            ClipPath(
-              clipper: FormaRecorte(),
-              child: Container(
-                height: 150,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      AppTheme.themeColorAzul,
-                      AppTheme.themeColorCeleste
-                    ],
-                  ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              GestureDetector(
+                child: Hero(
+                  tag: widget.profesional.imagenFondo,
+                  child: ImageOpaqueAssets(widget.profesional.imagenFondo,
+                      Colors.white, Size(170.0, 150.0), 0.50),
                 ),
               ),
-            ),
-            Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 10,
-                ),
-                GestureDetector(
-                  child: Hero(
-                    tag: widget.profesional.imagenFondo,
-                    child: ImageOpaqueAssets(widget.profesional.imagenFondo,
-                        Colors.white, Size(170.0, 150.0), 0.50),
+              Expanded(
+                child: RichText(
+                  overflow: TextOverflow.clip,
+                  text: TextSpan(
+                    text:  widget.profesional.descripcion,
+                    style:  TextStyle(fontSize: 12, color: Colors.black) ,
                   ),
                 ),
-                futureCuerpoProfesionales(context),
-              ],
-            )
-          ],
-        ),
-      ),
+              )
+            ],
+          ),
+          SizedBox(height: 10,),
+          Container(
+              child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text("Lista de instituciones registradas" ,style:  AppTheme.themeTitulo, )),
+            ),
+          futureCuerpoProfesionales(context),
+        ],
+      )),
     );
   }
 
   Widget informacionProfesional(BuildContext context,
       ProfesionalesDeInstitucion profesionalesDeInstitucion) {
-    return Center(
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 4),
-        padding: EdgeInsets.all(15.0),
-        width: MediaQuery.of(context).size.width - 50,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          color: Colors.black12,
-        ),
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                imagenProfesional(profesionalesDeInstitucion),
-                RichText(
-                  text: TextSpan(
-                    text: profesionalesDeInstitucion
-                        .tipoProfesion, // 'Dr Dan MlayahFX',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      height: 1.5,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text:
-                            '\n' + profesionalesDeInstitucion.nombreProfesional,
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Divider(),
-            SizedBox(
-              height: 10,
-            ),
-            ExpansionTile(
-              title: Container(
-                child: Column(
-                  children: <Widget>[
-                    Text("Datos personales"),
-                  ],
-                ),
-              ),
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    crearIconoProfesional(Icons.mail, 'Correo'),
-                    crearIconoProfesional(Icons.phone, 'Correo'),
-                    crearIconoProfesional(Icons.bug_report, 'Ayuda con covid'),
-                  ],
-                )
-              ],
-            )
-          ],
-        ),
+    return ListTile(
+      leading: imagenProfesional(profesionalesDeInstitucion),
+      title: Text(profesionalesDeInstitucion.tipoProfesion),
+      subtitle: Column(
+        //mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(profesionalesDeInstitucion.nombreProfesional),
+          crearIconoProfesional(Icons.bug_report, 'Ayuda con covid'),
+        ],
+      ),
+      //trailing:crearIconoProfesional(Icons.mail, 'Correo')
+
+      trailing: Wrap(
+        children: <Widget>[
+          crearIconoProfesional(Icons.mail, 'Correo'),
+          SizedBox(
+            width: 15,
+          ),
+          crearIconoProfesional(Icons.phone, 'Correo'),
+        ],
       ),
     );
   }
@@ -167,20 +123,19 @@ class _ListVoluntaryState extends State<ListVoluntary> {
       children: <Widget>[
         Icon(
           icon,
-          size: 28,
-          color: Colors.black,
+          size: 18,
+          color: AppTheme.themeColorAzul,
         ),
-        SizedBox(
-          height: 8.0,
-        ),
+        /*
         Text(
           title,
           style: TextStyle(
-            fontSize: 13,
+            fontSize: 10,
             fontWeight: FontWeight.w300,
-            color: Colors.black,
+            color: AppTheme.themeColorAzul,
           ),
         ),
+        */
       ],
     );
   }

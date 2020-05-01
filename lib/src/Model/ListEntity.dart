@@ -8,24 +8,28 @@ Future<List<ProfesionalesAgrupados>>
   valor1.cantidadProfesionales = 200;
   valor1.idInstitucion = 1;
   valor1.imagenFondo = "assets/image/Familial Relationship.png";
+  valor1.descripcion="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).";
   valor1.profesion = "Religioso";
 
   ProfesionalesAgrupados valor2 = ProfesionalesAgrupados();
   valor2.cantidadProfesionales = 356;
   valor2.idInstitucion = 2;
   valor2.imagenFondo = "assets/image/medical_profesional1.png";
+  valor2.descripcion="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).";
   valor2.profesion = "Psicologos";
 
   ProfesionalesAgrupados valor3 = ProfesionalesAgrupados();
   valor3.cantidadProfesionales = 356;
   valor3.idInstitucion = 3;
   valor3.imagenFondo = "assets/image/medical_profesional2.png";
+  valor3.descripcion="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).";
   valor3.profesion = "Curas";
 
   ProfesionalesAgrupados valor4 = ProfesionalesAgrupados();
   valor4.cantidadProfesionales = 34354;
   valor4.idInstitucion = 4;
   valor4.imagenFondo = "assets/image/Familial Relationship.png";
+  valor4.descripcion="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).";
   valor4.profesion = "Paramedicos";
 
   vRespuesta.add(valor1);
@@ -102,6 +106,7 @@ Future<List<InstitucionesItems>> getInstitucionesItems() async {
   item1.ayudaConCovid = "0";
   item1.fechaConCovid = new DateTime(2020, 1, 30);
   item1.miembros = 50;
+  item1.url="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg";
   lista.add(item1);
 
   InstitucionesItems item2 = new InstitucionesItems();
@@ -112,6 +117,7 @@ Future<List<InstitucionesItems>> getInstitucionesItems() async {
   item2.ayudaConCovid = "1";
   item2.fechaConCovid = new DateTime(2020, 1, 20);
   item2.miembros = 10;
+  item2.url="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg";
   lista.add(item2);
 
   InstitucionesItems item3 = new InstitucionesItems();
@@ -122,6 +128,7 @@ Future<List<InstitucionesItems>> getInstitucionesItems() async {
   item3.ayudaConCovid = "1";
   item3.fechaConCovid = new DateTime(2020, 1, 31);
   item3.miembros = 15;
+  item3.url="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg";
   lista.add(item3);
 
   InstitucionesItems item4 = new InstitucionesItems();
@@ -132,6 +139,7 @@ Future<List<InstitucionesItems>> getInstitucionesItems() async {
   item4.ayudaConCovid = "1";
   item4.fechaConCovid = new DateTime(2020, 1, 31);
   item4.miembros = 15;
+  item4.url="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg";
   lista.add(item4);
 
   InstitucionesItems item5 = new InstitucionesItems();
@@ -142,6 +150,7 @@ Future<List<InstitucionesItems>> getInstitucionesItems() async {
   item5.ayudaConCovid = "1";
   item5.fechaConCovid = new DateTime(2020, 1, 1);
   item5.miembros = 15;
+  item5.url="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg";
   lista.add(item5);
 
   InstitucionesItems item6 = new InstitucionesItems();
@@ -152,6 +161,7 @@ Future<List<InstitucionesItems>> getInstitucionesItems() async {
   item6.ayudaConCovid = "1";
   item6.fechaConCovid = new DateTime(2020, 1, 1);
   item6.miembros = 15;
+  item6.url="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg";
   lista.add(item6);
 
   return lista;

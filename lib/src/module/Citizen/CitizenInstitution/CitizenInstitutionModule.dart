@@ -4,6 +4,7 @@ import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/ListEntity.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenMultimedia/CitizenImageDetailModule.dart';
 import 'package:lucia_covid/src/module/General/PageViewModule.dart';
 import 'package:lucia_covid/src/module/Voluntary/ListVoluntary.dart';
 
@@ -50,17 +51,28 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
 
         Align(
           alignment: Alignment.topLeft,
-                  child: Container(
+          child: Container(
             child: Padding(
-                padding: EdgeInsets.all(1),
+                padding: EdgeInsets.all(10),
                 child: Text(
-                  "Lista de s registradas",
+                  "Grupo de voluntarios",
                   style: AppTheme.themeTitulo,
                 )),
           ),
         ),
-        SizedBox(height: 10,),
         futureCuerpoProfesionales(context),
+        Align(
+          alignment: Alignment.topLeft,
+          child: Container(
+            child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  "Galeria de fotos",
+                  style: AppTheme.themeTitulo,
+                )),
+          ),
+        ),
+        futureMultimedia(context),
         //cuerpoProfesionales()
       ]),
     );
@@ -69,7 +81,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
   Widget cuerpoProfesionales(BuildContext context, AsyncSnapshot snapshot) {
     return SingleChildScrollView(
       child: Container(
-        height: 250,
+        height: 170,
         child: ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
@@ -89,13 +101,13 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          Container(
-            height: 230,
+          FadeInImage.assetNetwork(
+            placeholder: "assets/loading/loadingImage.gif",
+            placeholderScale: 0.2,
+            image: widget.institutionItem.url,
             width: 150,
-            child: ImageOpaqueNetwork(
-                'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg',
-                Colors.white12,
-                Size(150, 230)),
+            height: 230,
+            fit: BoxFit.cover,
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,6 +150,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                 height: 20,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   ClipOval(
                     child: Material(
@@ -148,8 +161,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                         child: SizedBox(
                             width: 40,
                             height: 40,
-                            child: Image.network(
-                                'https://cdn.pixabay.com/photo/2017/08/20/10/30/facebook-2661207_960_720.jpg',
+                            child: Image.asset('assets/image/facebook.jpg',
                                 fit: BoxFit.cover)),
                         onTap: () {},
                       ),
@@ -164,8 +176,8 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                         child: SizedBox(
                             width: 40,
                             height: 40,
-                            child: Image.network(
-                              'https://s23527.pcdn.co/wp-content/uploads/2019/12/twitter.jpg.optimal.jpg',
+                            child: Image.asset(
+                              'assets/image/twitter.jpg',
                               fit: BoxFit.cover,
                             )),
                         onTap: () {},
@@ -181,8 +193,8 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                         child: SizedBox(
                             width: 40,
                             height: 40,
-                            child: Image.network(
-                              'https://creamostuvideo.com/wp-content/uploads/2019/05/Youtube-Copiar-300x211.jpg',
+                            child: Image.asset(
+                              'assets/image/youtube.jpg',
                               fit: BoxFit.cover,
                             )),
                         onTap: () {},
@@ -198,8 +210,8 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                         child: SizedBox(
                             width: 40,
                             height: 40,
-                            child: Image.network(
-                              'https://www.alltechbuzz.net/wp-content/uploads/2019/09/57e6d2464c55ac14ea898579ce203e7c1d22dfe05558774075277dd2_640.png',
+                            child: Image.asset(
+                              'assets/image/instagram.png',
                               fit: BoxFit.cover,
                             )),
                         onTap: () => Navigator.of(context).push(
@@ -217,75 +229,6 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
             ],
           ),
         ],
-      ),
-    );
-
-    /*
-    Container(
-      height: 240,
-      child: Stack(
-        children: <Widget>[
-          ImageOpaqueNetwork(
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg',
-              AppTheme.backGroundInstitutionPrimary,
-              Size(double.maxFinite, 220)),
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              children: <Widget>[
-                RadialProgress(
-                  width: 4,
-                  goalCompleted: 0.85,
-                  child: Container(
-                      child: ImageOvalNetwork(
-                          imageNetworkUrl:
-                              'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-                          sizeImage: Size.fromWidth(90))),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(widget.institutionItem.nombreInstitucion),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(widget.institutionItem.tipoInstitucion),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.map,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(widget.institutionItem.ubicacion),
-                        SizedBox(
-                          width: 5,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          barraRedesSociales(screenHeigh, screenwidth),
-        ],
-      ),
-    );
-
-    */
-  }
-
-  Widget blank() {
-    return Center(
-      child: Container(
-        child: Text("Citizen Institution"),
       ),
     );
   }
@@ -370,5 +313,91 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
               return cuerpoProfesionales(context, snapshot);
           }
         });
+  }
+
+  Widget futureMultimedia(BuildContext context) {
+    return FutureBuilder(
+        future: /*generic.getAll(new Hospital())*/ getImagenesMultimedia(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(child: CircularProgressIndicator());
+              break;
+            default:
+              //mostramos los datos
+              return fotosMultimedia(context, snapshot);
+          }
+        });
+  }
+
+  Widget fotosMultimedia(BuildContext context, AsyncSnapshot snapshot) {
+    return SingleChildScrollView(
+      child: Container(
+        height: 170,
+        child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            physics: ClampingScrollPhysics(),
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, index) {
+              MultimediaImagen imagen = snapshot.data[index];
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CitizenImageDetailModule(
+                              multimediaImagen: imagen,
+                            )),
+                  );
+                },
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.all(15),
+                      child: FadeInImage.assetNetwork(
+                        placeholder: "assets/loading/loadingImage.gif",
+                        placeholderScale: 0.2,
+                        image: imagen.url,
+                        width: 150,
+                        height: 150,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 140,
+                        ),
+                        Container(
+                            width: 165,
+                            color: Colors.white70,
+                            padding: EdgeInsets.only(left: 18),
+                            child: Text(
+                              imagen.titulo,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.w500),
+                            )),
+                        Container(
+                            width: 165,
+                            color: Colors.white70,
+                            padding: EdgeInsets.only(left: 18),
+                            child: Text(
+                              imagen.subtitulo,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 10, fontWeight: FontWeight.w500),
+                            )),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+              (imagen);
+            }),
+      ),
+    );
   }
 }

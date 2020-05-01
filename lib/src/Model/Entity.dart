@@ -582,23 +582,27 @@ class ProfesionalesAgrupados extends Entity {
   String profesion;
   int cantidadProfesionales;
   String imagenFondo;
+  String descripcion;
 
   ProfesionalesAgrupados(
       {this.idInstitucion,
       this.profesion,
       this.cantidadProfesionales,
+      this.descripcion,
       this.imagenFondo});
 
   fromJson(Map<String, dynamic> json) => new ProfesionalesAgrupados(
       idInstitucion: json["idInstitucion"],
       profesion: json["profesion"],
       cantidadProfesionales: json["cantidadProfesionales"],
+      descripcion: json["descripcion"],
       imagenFondo: json["imagenFondo"]);
 
   Map<String, dynamic> toJson() => {
         "idInstitucion": idInstitucion,
         "profesion": profesion,
         "cantidadProfesionales": cantidadProfesionales,
+        "descripcion": descripcion,
         "imagenFondo": imagenFondo
       };
 }
@@ -656,6 +660,7 @@ class InstitucionesItems extends Entity {
   String ubicacion;
   String ayudaConCovid;
   DateTime fechaConCovid;
+  String url;
   int miembros;
 
   InstitucionesItems(
@@ -665,6 +670,7 @@ class InstitucionesItems extends Entity {
       this.ubicacion,
       this.ayudaConCovid,
       this.fechaConCovid,
+      this.url,
       this.miembros});
 
   fromJson(Map<String, dynamic> json) => new InstitucionesItems(
@@ -674,6 +680,7 @@ class InstitucionesItems extends Entity {
       ubicacion: json["ubicacion"],
       ayudaConCovid: json["ayudaConCovid"],
       fechaConCovid: json["fechaConCovid"],
+      url: json["url"],
       miembros: json["miembros"]);
 
   Map<String, dynamic> toJson() => {
@@ -683,6 +690,7 @@ class InstitucionesItems extends Entity {
         "ubicacion": ubicacion,
         "ayudaConCovid": ayudaConCovid,
         "fechaConCovid": fechaConCovid,
+        "url":url,
         "miembros": miembros
       };
 }
