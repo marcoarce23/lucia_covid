@@ -19,39 +19,54 @@ class _CitizenListInstitucionModuleState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Text("Lista de instituciones registradas")),
-          ),
-          Card(
-            elevation: 4,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            child: Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  prefixIcon: Icon(Icons.search),
-                  hintText: "Buscar",
+        appBar: AppBar(
+        iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+        elevation: 0,
+        title: Text(
+          "Instituciones",
+          style: TextStyle(
+              color: AppTheme.themeColorNaranja,
+              fontSize: 17,
+              fontWeight: FontWeight.w400),
+        ),
+        //backgroundColor: AppTheme.themeColorNaranja,
+      ),
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text("Lista de instituciones registradas" ,style:  AppTheme.themeTitulo, )),
+            ),
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    prefixIcon: Icon(Icons.search),
+                    hintText: "Buscar",
+                  ),
                 ),
               ),
             ),
-          ),
-          // colcoamos las cajas de instituciones
-          Container(
-            child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Text("Resultados",
-                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.w400))),
-          ),
-          futureItemsInstitution(context)
-        ],
+            // colcoamos las cajas de instituciones
+            Container(
+              child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text("Resultados",
+                      style: TextStyle(
+                          fontSize: 11, fontWeight: FontWeight.w400))),
+            ),
+            futureItemsInstitution(context)
+          ],
+        ),
       ),
     );
   }
@@ -90,27 +105,11 @@ class _CitizenListInstitucionModuleState
                         )),
               );
             },
-            child: Card(
-                elevation: 2,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(0)),
-                //margin:                      const EdgeInsets.only(left: 10, right: 10),
-                child: Center(
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    width: MediaQuery.of(context).size.width - 30,
-                    height: 85,
-                    child: Row(
-                      //mainAxisAlignment: MainAxisAlignment.start,
-                      //crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        iconInstitution(institutionItem),
-                        dividerLine(),
-                        listInstitution(context, institutionItem),
-                      ],
-                    ),
-                  ),
-                )),
+            child: ListTile(
+              leading: iconInstitution(institutionItem),
+              title: listInstitution(context, institutionItem),
+              trailing: Icon(Icons.arrow_right),
+            ),
           );
         },
       ),
