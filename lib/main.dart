@@ -1,6 +1,7 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenMultimedia/CitizenMultimediaModule.dart';
 import 'package:lucia_covid/src/module/CitizenPage/CitizenModule.dart';
 import 'package:lucia_covid/src/module/InitialPages/SlideShowModule.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       //home: new ListCitizenModule(),
       //initialRoute: SplashScreenModule(),
 
-      home: new CitizenMultimediaModule(),
+      home: new CitizenLayoutMenuModule(),
 
       routes: <String, WidgetBuilder> {
         'Splash': (BuildContext context) => new SplashScreenModule(),
