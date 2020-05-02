@@ -51,11 +51,20 @@ class PreferensUser
 
       // GET y SET del correo
       get correoElectronico {
-        return _prefs.getString('correo') ?? '< vacio@gmail.com >';
+        return _prefs.getString('correo') ?? '< vacio@correo.com >';
       }
 
       set correoElectronico( String value ) {
         _prefs.setString('correo', value);
+      }
+
+ // GET y SET del correo
+      get correoGmail {
+        return _prefs.getString('correoGmail') ?? '< vacio@gmail.com >';
+      }
+
+      set correoGmail( String value ) {
+        _prefs.setString('correoGmail', value);
       }
 
       // GET y SET del nombreUsuario

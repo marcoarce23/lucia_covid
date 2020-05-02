@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       //home: new ListCitizenModule(),
       //initialRoute: SplashScreenModule(),
 
-      home: new SignUpModule(),
+      home: new SplashScreenModule(),//(,//IntroScreen(),
 
       routes: <String, WidgetBuilder>{
         'Splash': (BuildContext context) => new SplashScreenModule(),

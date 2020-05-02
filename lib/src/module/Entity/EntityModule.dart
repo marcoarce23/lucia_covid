@@ -420,17 +420,17 @@ Widget crearTwitter(String text) {
     );
   }
 
-  Widget _crearEstadoCovid() {
-    bool valor=true;
-    return SwitchListTile(
-      value: valor,
-      title: Text('Centinela Covid',),
-      activeColor: Colors.orange,
-      onChanged: (value) => setState(() {
-        valor= value;
-      }),
-    );
-  }
+  // Widget _crearEstadoCovid() {
+  //   bool valor=true;
+  //   return SwitchListTile(
+  //     value: valor,
+  //     title: Text('Centinela Covid',),
+  //     activeColor: Colors.orange,
+  //     onChanged: (value) => setState(() {
+  //       valor= value;
+  //     }),
+  //   );
+  // }
 
   Widget _crearEmail(String text) {
     return Padding(

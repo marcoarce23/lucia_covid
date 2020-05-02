@@ -45,7 +45,7 @@ class _RegisterLoginModuleState extends State<RegisterLoginModule> {
               ),
             ),
             Container(
-              width: size.width * 0.85,
+              width: size.width * 0.92,
     //          margin: EdgeInsets.symmetric(vertical: 0.0),
              padding: EdgeInsets.symmetric( vertical: 25.0 ),
               decoration: _crearContenedorCampos(),

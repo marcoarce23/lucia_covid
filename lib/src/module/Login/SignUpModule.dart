@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
@@ -7,9 +8,13 @@ import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Validator.dart' as validator;
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
-import 'package:lucia_covid/src/module/InitialPages/SlideShowModule.dart';
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
+
 import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
 import 'package:lucia_covid/src/module/Login/RegisterLoginModule.dart';
+import 'package:page_transition/page_transition.dart';
+
 
 class SignUpModule extends StatefulWidget {
   @override
@@ -21,8 +26,46 @@ class _SignUpModuleState extends State<SignUpModule> {
   final formKey = GlobalKey<FormState>();
   final generic = new Generic();
   final prefs = new PreferensUser();
+  GoogleSignInAccount currentUser;
+  GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['profile', 'email']);
 
   Hospital hospital = new Hospital();
+
+@override
+  void initState() {
+    super.initState();
+
+    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
+      setState(() {
+        currentUser = account;
+      });
+    });
+
+   // _googleSignIn.signInSilently();
+  }
+
+    Future<void> handleSignIn() async {
+    String _tieneUsuario = '0';
+    try {
+      await _googleSignIn.signIn();
+      if(_tieneUsuario == '0')
+         // Navigator.of(context).push(PageRouteTheme(RegisterLoginModule()));
+         Navigator.push(context, PageTransition(
+                        curve: Curves.bounceOut,
+                        type: PageTransitionType.rotate,
+                        alignment: Alignment.topCenter,
+                        child: RegisterLoginModule(),
+                  ));
+      else
+          Navigator.of(context).push(PageRouteTheme(CitizenLayoutMenuModule()));
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  Future<void> handleSignOut() async {
+    _googleSignIn.disconnect();
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,9 +97,15 @@ class _SignUpModuleState extends State<SignUpModule> {
               decoration: _crearContenedorCampos(),
               child     : _crearCampos(),
             ),
+             SizedBox(height: 20.0),
             _dividerOr(),
             _gmailButton(),
             _registerCount(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              child: Divider(color:Colors.orange, thickness: 2.0,),
+            ),
+            copyRigth(),
           ],
         ),
       ),
@@ -66,6 +115,7 @@ class _SignUpModuleState extends State<SignUpModule> {
   Widget _crearCampos() {
     return Column(
       children: <Widget>[
+        SizedBox(height:15.0),
         Text('Bienvenido a "Lucia Te Cuida."', style: TextStyle(fontSize: 20.0)),
         _crearEmail('Correo ELectrónico'),
         _crearPassword('Contraseña:'),
@@ -90,15 +140,21 @@ class _SignUpModuleState extends State<SignUpModule> {
 
   Widget _crearBoton(String text) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 100.0),
+      padding: EdgeInsets.symmetric(horizontal: 65.0),
       width: MediaQuery.of(context).size.width,
       child: RaisedButton.icon(
         shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
         color: Colors.blue,
         textColor: Colors.white,
-        label: Text(text),
-        icon: Icon(Icons.save),
+        label: Text(
+                'Ingresar',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+              ),
+        icon: Icon(Icons.check),
         onPressed: (_save) ? null : _submit,
       ),
     );
@@ -152,19 +208,17 @@ class _SignUpModuleState extends State<SignUpModule> {
       _save = true;
     });
 
-    if (hospital.nombre == null) {
+    if (_save) {
       // generic.add(citizen);
-      print("INSERTOOOO");
-    } else {
-      //  generic.update(citizen);
-      print("MODIFICO");
+        Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => CitizenLayoutMenuModule()));
     }
-
-    setState(() {
-      _save = false;
-    });
-
-    Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
+    else
+    {
+          setState(() {
+          _save = false;
+          });
+        Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SignUpModule()));
+    }
   }
 
   Widget _dividerOr() {
@@ -180,7 +234,7 @@ class _SignUpModuleState extends State<SignUpModule> {
               ),
             ),
           ),
-          SizedBox(height: 30.0),
+          SizedBox(height: 5.0),
           Text('PARA PÚBLICO EN GENERAL'),
           Expanded(
             child: Padding(
@@ -207,82 +261,13 @@ class _SignUpModuleState extends State<SignUpModule> {
       child: Text('Crea una nueva cuenta. Aqui.'),
       onPressed: () =>  Navigator.of(context).push(PageRouteTheme(RegisterLoginModule()))
       );
-      // Navigator.of(context).pushNamed('registerLogin'),
   }
 
-  // Widget _gmailButton() {
-  //   // return Container(
-  //   //   height: 50,
-  //   //   margin: EdgeInsets.symmetric(vertical: 5),
-  //   //   decoration: BoxDecoration(
-  //   //     borderRadius: BorderRadius.all(Radius.circular(10)),
-  //   //   ),
-  //   //   child: Row(
-  //   //     children: <Widget>[
-  //   //       Expanded(
-  //   //         flex: 1,
-  //   //         child: Container(
-  //   //           decoration: BoxDecoration(
-  //   //             color: Colors.red,
-  //   //             borderRadius: BorderRadius.only(
-  //   //                 bottomLeft: Radius.circular(5),
-  //   //                 topLeft: Radius.circular(5)),
-  //   //           ),
-  //   //           alignment: Alignment.center,
-  //   //           child: Text('G',
-  //   //               style: TextStyle(
-  //   //                   color: Colors.white,
-  //   //                   fontSize: 25,
-  //   //                   fontWeight: FontWeight.w400)),
-  //   //         ),
-  //   //       ),
-  //   //       Expanded(
-
-  //   //         child: Container(
-
-  //   //             decoration: BoxDecoration(
-
-  //   //               color: Colors.red,
-  //   //               borderRadius: BorderRadius.only(
-  //   //                   bottomRight: Radius.circular(5),
-  //   //                   topRight: Radius.circular(5)),
-  //   //             ),
-  //   //             alignment: Alignment.center,
-  //   //             child: InkWell(
-  //   //               onTap: () {
-  //   //                 Navigator.push(
-  //   //                     context,
-  //   //                     MaterialPageRoute(
-  //   //                         builder: (context) => CitizenLayoutMenuModule()));
-  //   //               },
-  //   //               child: Text(
-  //   //                 'GMail',
-  //   //                 style: TextStyle(fontSize: 20, color: Colors.white),
-  //   //               ),
-  //   //             )),
-  //   //       ),
-  //   //     ],
-  //   //   ),
-  //   // );
-  //   return Container(
-  //     padding: EdgeInsets.symmetric(horizontal: 100.0),
-  //     width: MediaQuery.of(context).size.width,
-  //     child: RaisedButton.icon(
-  //       shape:
-  //           RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-  //       color: Colors.orange,
-  //       textColor: Colors.white,
-  //       label: Text('GMail'),
-  //       icon: Icon(Icons.mail_outline),
-  //       onPressed: (_save) ? null : _submit,
-  //     ),
-  //   );
-  // }
-
+  
   Widget _gmailButton() {
     return OutlineButton(
       splashColor: Colors.grey,
-      onPressed: () {},
+      onPressed: handleSignIn,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,
       borderSide: BorderSide(color: Colors.grey),
@@ -292,13 +277,13 @@ class _SignUpModuleState extends State<SignUpModule> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image(image: AssetImage("assets/google_logo.png"), height: 35.0),
+            Image(image: AssetImage("assets/google_logo.png"), height: 20.0),
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
-                'Sign in with Google',
+                'Registrate con Google',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 16,
                   color: Colors.grey,
                 ),
               ),
