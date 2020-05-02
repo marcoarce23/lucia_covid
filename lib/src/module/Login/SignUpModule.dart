@@ -13,6 +13,7 @@ import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMe
 
 import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
 import 'package:lucia_covid/src/module/Login/RegisterLoginModule.dart';
+import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
 import 'package:page_transition/page_transition.dart';
 
 
@@ -208,9 +209,9 @@ class _SignUpModuleState extends State<SignUpModule> {
       _save = true;
     });
 
-    if (_save) {
+    if (true) {
       // generic.add(citizen);
-        Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => CitizenLayoutMenuModule()));
+        Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => IntroScreenModule()));
     }
     else
     {

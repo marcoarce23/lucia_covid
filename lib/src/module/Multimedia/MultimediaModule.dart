@@ -250,7 +250,7 @@ List<String> _tipoSubCatalogo = [
           style: TextStyle(fontSize: 20, color: Colors.black),
         ),
         _crearCatalogo(),
-        _crearSubCatalogo(),
+     //   _crearSubCatalogo(),
         _crearTitulo('Titulo del material'),
         _crearTitulo('Resumen del material'),
         _crearFechaInicio('Fecha Inicio'),

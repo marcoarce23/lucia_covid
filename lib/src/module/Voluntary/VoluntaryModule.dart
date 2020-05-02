@@ -27,7 +27,48 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
   String _fecha = '';
   TextEditingController _inputFieldDateController = new TextEditingController();
   List<String> _expedido = ['CHQ','LPZ','CBB','ORU', 'PTS','TRJ', 'SCZ','BNI', 'PND' ];
-  List<String> _entidad = ['Seleccionar', 'Dejame Apoyarte','BOL -110','SAR','Narices Frias'];
+  List<String> _entidad = ['Seleccionar', 'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  
+  
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  'Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+  ]  ;
 
   int _selectedRadio;
   int _currentIndex;
@@ -195,6 +236,7 @@ List<DropdownMenuItem<String>> getEntidadDropdown() {
          _crearToken('Ingrese el token:'),
         _crearNombre('Nombres:'),
         _crearApellidos('Apellidos:'),
+        _crearApellidos('Especialidad:'),
         Row( children: <Widget>[
             Expanded(
               child: _crearCI('Documento de Identidad'),),

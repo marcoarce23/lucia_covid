@@ -257,7 +257,6 @@ class _AtentionModuleState extends State<AtentionModule> {
         ),
         _crearTitulo('Facebook'),
 _crearTitulo('Twitter'),
-_crearTitulo('Instagram'),
 _crearTitulo('YouTube'),
 _crearTitulo('Página Web'),
 Padding(

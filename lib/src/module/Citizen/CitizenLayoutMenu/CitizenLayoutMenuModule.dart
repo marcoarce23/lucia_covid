@@ -8,6 +8,8 @@ import 'package:lucia_covid/src/module/Citizen/CitizenInstitution/CitizenListIns
 import 'package:lucia_covid/src/module/Citizen/CitizenMultimedia/CitizenMultimediaModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenPanicButton/CitizenPanicButtonModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenTestCovid/CitizenTestCovidModule.dart';
+import 'package:lucia_covid/src/module/Entity/EntityModule.dart';
+import 'package:lucia_covid/src/module/Multimedia/MultimediaModule.dart';
 
 import 'package:lucia_covid/src/module/Voluntary/VoluntaryModule.dart';
 
@@ -188,8 +190,32 @@ class DrawerCitizen extends StatelessWidget {
                     ),
                     fit: BoxFit.cover)),
           ),
+    
+          // ListTile(
+          //   title: Text('Inicio'),
+          //   trailing: Icon(Icons.keyboard_arrow_right),
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (context) => CitizenHomeModule()),
+          //     );
+          //   },
+          // ),
+ ListTile(
+            title: Text('Visita las institucion'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CitizenListInstitucionModule()),
+              );
+            },
+          ),
+
+          Divider(color: Colors.black, thickness: 1.0,),
+
           ListTile(
-            title: Text('Inicio'),
+            title: Text('Encuentra a un voluntario'),
             trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {
               Navigator.push(
@@ -199,17 +225,7 @@ class DrawerCitizen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Consulta a un Voluntario'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CitizenHomeModule()),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('Eventos'),
+            title: Text('Eventos de las insituciones'),
             trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {
               Navigator.push(
@@ -249,17 +265,17 @@ class DrawerCitizen extends StatelessWidget {
               );
             },
           ),
-          ListTile(
-            title: Text('Test Covid'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CitizenTestCovidModule()),
-              );
-            },
-          ),
+          // ListTile(
+          //   title: Text('Test Covid'),
+          //   trailing: Icon(Icons.keyboard_arrow_right),
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) => CitizenTestCovidModule()),
+          //     );
+          //   },
+          // ),
           ListTile(
             title: Text('Mapa de ayuda'),
             trailing: Icon(Icons.keyboard_arrow_right),
@@ -270,17 +286,19 @@ class DrawerCitizen extends StatelessWidget {
               );
             },
           ),
-          Divider(),
-          ListTile(
-            title: Text('Institucion'),
+          Divider(color: Colors.black, thickness: 1.0,),
+         
+         ListTile(
+            title: Text('Entidades'),
             trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CitizenListInstitucionModule()),
+                MaterialPageRoute(builder: (context) => EntityModule()),
               );
             },
           ),
+
           ListTile(
             title: Text('Voluntario'),
             trailing: Icon(Icons.keyboard_arrow_right),
@@ -289,7 +307,7 @@ class DrawerCitizen extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => VoluntaryModule()),
               );
-            },
+            },  
           ),
           ListTile(
             title: Text('Imágenes Multimedia'),
@@ -297,7 +315,7 @@ class DrawerCitizen extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CitizenInfoModule()),
+                MaterialPageRoute(builder: (context) => MultimediaModule()),
               );
             },
           ),

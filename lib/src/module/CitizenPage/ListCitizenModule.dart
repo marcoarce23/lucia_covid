@@ -44,7 +44,7 @@ class ListCitizenModule extends StatelessWidget {
       ),
       onDismissed: (value) 
       {
-         generic.delete(value);
+         //generic.delete(value);
       
           Scaffold.of(context).showSnackBar(
             new SnackBar(content:new Text('Registro eliminado'))

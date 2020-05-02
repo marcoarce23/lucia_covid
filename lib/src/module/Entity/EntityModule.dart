@@ -164,7 +164,7 @@ Widget _bottomNavigationBar(BuildContext context) {
         Text('INFORMACION GENERAL',  style: TextStyle(fontSize: 18, color: Colors.black),),
         _crearTipoInstitucion(),
         _crearNombre('Nombres de la Entidad/Institución'),
-        
+        _crearUbicacion('Ciudad'),
         _crearUbicacion('Dirección/Ubicación'),
  //       _crearFecha('Fecha'),
   //      _crearEstadoCovid(),
@@ -177,8 +177,7 @@ Widget _bottomNavigationBar(BuildContext context) {
         Text('REDES SOCIALES',  style: TextStyle(fontSize: 18, color: Colors.black),),
         crearFacebook('Cuenta Facebook'),
         crearTwitter('Cuenta Twitter'),
-        crearInstagram('Cuenta Instagram'),
-        crearPaginaWeb('Página Web'),
+           crearPaginaWeb('Página Web'),
         crearYouTube('Cuenta YouTUbe'),
         _crearEmail('Correo ELectrónico'),
         

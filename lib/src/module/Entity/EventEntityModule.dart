@@ -252,11 +252,13 @@ class _EventEntityModuleState extends State<EventEntityModule> {
           style: TextStyle(fontSize: 20, color: Colors.black),
         ),
         _crearTitulo('Titulo del evento'),
-        _crearDetalle('Detalle del evento'),
-        _crearDetalle('Ubicacion'),
+        _crearDetalle('Objetivo del evento'),
+        _crearDetalle('Dirigido a'),
+        _crearDetalle('Expositor'),
+        _crearDetalle('Ubicación/enlace dogital'),
         _crearFecha('Fecha Evento'),
         _crearTime('hora'),
-        _crearDetalle('Detalle'),
+        
         _crearBoton(resource.save),
       ],
     );
