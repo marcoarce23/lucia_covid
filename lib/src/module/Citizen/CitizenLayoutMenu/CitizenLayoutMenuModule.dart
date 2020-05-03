@@ -2,17 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenHelp/CitizenAtentionRegisterModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenHelp/CitizenHelpModule.dart';
-import 'package:lucia_covid/src/module/Citizen/CitizenHelp/CitizenInfoModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenHome/CitizenHomeModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenInstitution/CitizenListInstitucionModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenMultimedia/CitizenMultimediaModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenPanicButton/CitizenPanicButtonModule.dart';
-import 'package:lucia_covid/src/module/Citizen/CitizenTestCovid/CitizenTestCovidModule.dart';
 import 'package:lucia_covid/src/module/Entity/EntityModule.dart';
+import 'package:lucia_covid/src/module/Map/MapModule.dart';
 import 'package:lucia_covid/src/module/Multimedia/MultimediaModule.dart';
 
 import 'package:lucia_covid/src/module/Voluntary/VoluntaryModule.dart';
-
 
 class CitizenLayoutMenuModule extends StatefulWidget {
   @override
@@ -21,136 +19,8 @@ class CitizenLayoutMenuModule extends StatefulWidget {
 }
 
 class _CitizenLayoutMenuModuleState extends State<CitizenLayoutMenuModule> {
-
   @override
   void initState() {
-    /*
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          name: 'Inicio',
-          baseStyle:
-              TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 18.0),
-          colorLineSelected: Colors.white,
-        ),
-        CitizenHomeModule()));
-
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          name: 'Consulta a un Voluntario',
-          baseStyle:
-              TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 18.0),
-          colorLineSelected: Colors.white,
-        ),
-        CitizenListInstitucionModule()));
-
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          name: 'Eventos',
-          baseStyle:
-              TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 18.0),
-          colorLineSelected: Colors.white,
-        ),
-        CitizenListInstitucionModule()));
-
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          name: 'Material Multimedia',
-          baseStyle:
-              TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 18.0),
-          colorLineSelected: Colors.white,
-        ),
-        CitizenListInstitucionModule()));
-
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          name: 'Botón de ayuda',
-          baseStyle:
-              TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 18.0),
-          colorLineSelected: Colors.white,
-        ),
-        CitizenPanicButtonModule()));
-
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          name: 'Ayuda a un amig@',
-          baseStyle:
-              TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 18.0),
-          colorLineSelected: Colors.white,
-        ),
-        CitizenHelpModule()));
-
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          name: 'Test Covid',
-          baseStyle:
-              TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 18.0),
-          colorLineSelected: Colors.white,
-        ),
-        CitizenTestCovidModule()));
-
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          name: 'Mapa de ayuda',
-          baseStyle:
-              TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 18.0),
-          colorLineSelected: Colors.white,
-        ),
-        CitizenTestCovidModule()));
-
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          name: '-- ADMINSITRACIÓN --',
-          baseStyle:
-              TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 18.0),
-          colorLineSelected: Colors.white,
-        ),
-        CitizenTestCovidModule()));
-
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          name: 'Institucion',
-          baseStyle:
-              TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 18.0),
-          colorLineSelected: Colors.white,
-        ),
-        EntityModule()));
-
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          name: 'Voluntario',
-          baseStyle:
-              TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 18.0),
-          colorLineSelected: Colors.white,
-        ),
-        VoluntaryModule()));
-
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          name: 'Imágenes Multimedia',
-          baseStyle:
-              TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 18.0),
-          colorLineSelected: Colors.white,
-        ),
-        CitizenInfoModule()));
-
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          name: 'Atencion médica',
-          baseStyle:
-              TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 18.0),
-          colorLineSelected: Colors.white,
-        ),
-        CitizenAtentionRegisterModule()));
-
-    items.add(new ScreenHiddenDrawer(
-        new ItemHiddenMenu(
-          name: 'Administración',
-          baseStyle:
-              TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 18.0),
-          colorLineSelected: Colors.white,
-        ),
-        CitizenTestCovidModule()));
-*/
     super.initState();
   }
 
@@ -158,13 +28,12 @@ class _CitizenLayoutMenuModuleState extends State<CitizenLayoutMenuModule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Post COVID-19"),
+          title: Text("LUCIA TE CUIDA."),
           backgroundColor: AppTheme.themeColorNaranja),
       drawer: DrawerCitizen(),
     );
   }
 }
-
 
 class DrawerCitizen extends StatelessWidget {
   const DrawerCitizen({Key key}) : super(key: key);
@@ -172,195 +41,211 @@ class DrawerCitizen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-          child: ListView(
-        children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountName:
-                Container(color: Colors.white, child: Text("hola mundo")),
-            accountEmail:
-                Container(color: Colors.white, child: Text("hola@mundo")),
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.red,
-              child: Text("CA"),
-            ),
-            decoration: new BoxDecoration(
-                image: new DecorationImage(
-                    image: ExactAssetImage(
+        child: ListView(
+      children: <Widget>[
+        DrawerHeader(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: <Color>[Colors.deepOrange, Colors.orangeAccent])),
+          child: Container(
+              child: Column(
+            children: <Widget>[
+              Material(
+                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                  elevation: 10.0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
                       'assets/image/COVID-19.png',
+                      width: 70,
+                      height: 70,
                     ),
-                    fit: BoxFit.cover)),
-          ),
-    
-          // ListTile(
-          //   title: Text('Inicio'),
-          //   trailing: Icon(Icons.keyboard_arrow_right),
-          //   onTap: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(builder: (context) => CitizenHomeModule()),
-          //     );
-          //   },
-          // ),
- ListTile(
-            title: Text('Visita las institucion'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CitizenListInstitucionModule()),
-              );
-            },
-          ),
-
-          Divider(color: Colors.black, thickness: 1.0,),
-
-          ListTile(
-            title: Text('Encuentra a un voluntario'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CitizenHomeModule()),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('Eventos de las insituciones'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CitizenHomeModule()),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('Material Multimedia'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CitizenMultimediaModule()),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('Botón de ayuda'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CitizenPanicButtonModule()),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('Ayuda a un amig@'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CitizenHelpModule()),
-              );
-            },
-          ),
-          // ListTile(
-          //   title: Text('Test Covid'),
-          //   trailing: Icon(Icons.keyboard_arrow_right),
-          //   onTap: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //           builder: (context) => CitizenTestCovidModule()),
-          //     );
-          //   },
-          // ),
-          ListTile(
-            title: Text('Mapa de ayuda'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CitizenHomeModule()),
-              );
-            },
-          ),
-          Divider(color: Colors.black, thickness: 1.0,),
-         
-         ListTile(
-            title: Text('Entidades'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => EntityModule()),
-              );
-            },
-          ),
-
-          ListTile(
-            title: Text('Voluntario'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => VoluntaryModule()),
-              );
-            },  
-          ),
-          ListTile(
-            title: Text('Imágenes Multimedia'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MultimediaModule()),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('Atención médica'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CitizenAtentionRegisterModule()),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('Administración'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CitizenTestCovidModule()),
-              );
-            },
-          ),
-          Divider(),
-
-/*
-          ListTile(
-            leading: CircleAvatar(
-              radius: 55,
-              backgroundColor: Color(0xffFDCF09),
-              child: CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage('assets/images/LuciaAvatar.png'),
+                  )),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'Marco Antonio Arce Valdivia',
+                      style: TextStyle(color: Colors.black54, fontSize: 18.0),
+                    ),
+                    Text(
+                      'marcoarce23@gmail.com',
+                      style: TextStyle(color: Colors.black87, fontSize: 18.0),
+                    ),
+                  ],
+                ),
               ),
+            ],
+          )),
+        ),
+        CustomListTile(
+            Icons.person_pin,
+            'Perfil',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CitizenListInstitucionModule()),
+                )),
+        CustomListTile(
+            Icons.notification_important,
+            'Notificaciones',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CitizenListInstitucionModule()),
+                )),
+        CustomListTile(
+            Icons.business,
+            'Visita las institucion',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CitizenListInstitucionModule()),
+                )),
+        CustomListTile(
+            Icons.person,
+            'Encuentra a un voluntario',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CitizenHomeModule()),
+                )),
+        CustomListTile(
+            Icons.event_available,
+            'Eventos de las instituciones',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CitizenHomeModule()),
+                )),
+        CustomListTile(
+            Icons.photo_size_select_actual,
+            'Material Multimedia',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CitizenMultimediaModule()),
+                )),
+        CustomListTile(
+            Icons.hotel,
+            'Solicita una ayuda',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CitizenPanicButtonModule()),
+                )),
+        CustomListTile(
+            Icons.accessibility,
+            'Ayuda a un amig@',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CitizenHelpModule()),
+                )),
+        CustomListTile(
+            Icons.map,
+            'Solicitud de ayuda',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MapModule()),
+                )),
+        CustomListTile(
+            Icons.edit_location,
+            'Registro Entidades',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EntityModule()),
+                )),
+        CustomListTile(
+            Icons.edit_location,
+            'Eventos de Entidades',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EntityModule()),
+                )),
+        CustomListTile(
+            Icons.edit_location,
+            'Registo voluntario',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EntityModule()),
+                )),
+        CustomListTile(
+            Icons.person_add,
+            'Eventos Voluntarios',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => VoluntaryModule()),
+                )),
+        CustomListTile(
+            Icons.add_photo_alternate,
+            'Imágenes Multimedia',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MultimediaModule()),
+                )),
+        CustomListTile(
+            Icons.airline_seat_individual_suite,
+            'Atención médica',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CitizenAtentionRegisterModule()),
+                )),
+        CustomListTile(
+            Icons.settings,
+            'Configuración',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CitizenAtentionRegisterModule()),
+                )),
+        CustomListTile(
+            Icons.exit_to_app,
+            'Salir',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CitizenAtentionRegisterModule()),
+                )),
+      ],
+    ));
+  }
+}
+
+class CustomListTile extends StatelessWidget {
+  final IconData icon;
+  final String text;
+  final Function onTap;
+
+  CustomListTile(this.icon, this.text, this.onTap);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(14.0, 0, 14.0, 0),
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: Colors.grey))),
+        child: InkWell(
+          splashColor: Colors.orange,
+          onTap: onTap,
+          child: Container(
+            height: 50,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(children: <Widget>[
+                  Icon(icon),
+                  Text(
+                    text,
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                ]),
+                Icon(Icons.arrow_right)
+              ],
             ),
-            title: Text("Lucia te cuida"),
-            subtitle: Text("  "),
           ),
-          ListTile(leading: Icon(Icons.home), title: Text("Home")),
-          ListTile(leading: Icon(Icons.grid_on), title: Text("Products")),
-          ListTile(leading: Icon(Icons.contacts), title: Text("Contact Us")),
-          */
-        ],
-      ));
+        ),
+      ),
+    );
   }
 }

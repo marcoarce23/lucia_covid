@@ -4,12 +4,12 @@ import 'package:location/location.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
 
 
-class MapSample extends StatefulWidget {
+class MapModule extends StatefulWidget {
   @override
-  State<MapSample> createState() => MapSampleState();
+  State<MapModule> createState() => MapModuleState();
 }
 
-class MapSampleState extends State<MapSample> {
+class MapModuleState extends State<MapModule> {
   List<Marker> allMarkers = [];
   GoogleMapController _controller;
   final Location location = Location();
