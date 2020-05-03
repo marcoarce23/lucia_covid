@@ -7,7 +7,6 @@ import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 import 'package:lucia_covid/src/module/General/PageViewModule.dart';
 
-
 import 'CitizenImageDetailModule.dart';
 
 class CitizenMultimediaModule extends StatefulWidget {
@@ -21,7 +20,7 @@ class CitizenMultimediaModule extends StatefulWidget {
 class _CitizenMultimediaModuleState extends State<CitizenMultimediaModule> {
   int page = 0;
   GlobalKey _bottomNavigationKey = GlobalKey();
-  final List<Widget> optionPage = [PagePicture(), PageVideo()];
+  final List<Widget> optionPage = [PagePicture(), PageVideo(), PageDocuments()];
 
   @override
   void initState() {
@@ -56,6 +55,7 @@ class _CitizenMultimediaModuleState extends State<CitizenMultimediaModule> {
             color: AppTheme.themeColorAzul,
           ),
           Icon(Icons.video_library, size: 30, color: AppTheme.themeColorAzul),
+          Icon(Icons.description, size: 30, color: AppTheme.themeColorAzul),
         ],
         color: AppTheme.themeColorNaranja,
         buttonBackgroundColor: Colors.white,
@@ -82,10 +82,11 @@ class PagePicture extends StatelessWidget {
     return SingleChildScrollView(
       child: Container(
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.only(left: 10.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              campoBuscarPorInstitucionCategoria(),
               Text(
                 "Galería de imagenes de institución",
                 style: AppTheme.themeTitulo,
@@ -94,6 +95,20 @@ class PagePicture extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget campoBuscarPorInstitucionCategoria() {
+    return TextField(
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        prefixIcon: Icon(
+          Icons.search,
+          color: AppTheme.themeColorNaranja,
+        ),
+        hintText: "Buscar por institución / categoria",
+        hintStyle: TextStyle(fontSize: 12, color: AppTheme.themeColorNaranja),
       ),
     );
   }
@@ -190,20 +205,19 @@ class PageVideo extends StatefulWidget {
 class _PageVideoState extends State<PageVideo> {
   @override
   void initState() {
-   
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
-return SingleChildScrollView(
+    return SingleChildScrollView(
       child: Container(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              campoBuscarPorInstitucionCategoria(),
               Text(
                 "Galería de videos de institución",
                 style: AppTheme.themeTitulo,
@@ -214,10 +228,20 @@ return SingleChildScrollView(
         ),
       ),
     );
+  }
 
-
-
- 
+  Widget campoBuscarPorInstitucionCategoria() {
+    return TextField(
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        prefixIcon: Icon(
+          Icons.search,
+          color: AppTheme.themeColorNaranja,
+        ),
+        hintText: "Buscar por institución / categoria",
+        hintStyle: TextStyle(fontSize: 12, color: AppTheme.themeColorNaranja),
+      ),
+    );
   }
 
   Widget futureVideo(BuildContext context) {
@@ -271,6 +295,102 @@ return SingleChildScrollView(
               builder: (BuildContext context) => PageViewModule(
                     title: multimediaVideo.titulo,
                     selectedUrl: multimediaVideo.url,
+                  )));
+        });
+  }
+}
+
+class PageDocuments extends StatelessWidget {
+  const PageDocuments({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              campoBuscarPorInstitucionCategoria(),
+              Text(
+                "Galería de imagenes de institución",
+                style: AppTheme.themeTitulo,
+              ),
+              futureDocumentos(context),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget campoBuscarPorInstitucionCategoria() {
+    return TextField(
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        prefixIcon: Icon(
+          Icons.search,
+          color: AppTheme.themeColorNaranja,
+        ),
+        hintText: "Buscar por institución / categoria",
+        hintStyle: TextStyle(fontSize: 12, color: AppTheme.themeColorNaranja),
+      ),
+    );
+  }
+
+  Widget futureDocumentos(BuildContext context) {
+    return FutureBuilder(
+        future: /*generic.getAll(new Hospital())*/ getDocumentosMultimedia(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(child: CircularProgressIndicator());
+              break;
+            default:
+              //mostramos los datos
+              return buildDocumentos(context, snapshot);
+          }
+        });
+  }
+
+  Widget buildDocumentos(BuildContext context, AsyncSnapshot snapshot) {
+    return Container(
+      child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          physics: ClampingScrollPhysics(),
+          itemCount: snapshot.data.length,
+          itemBuilder: (context, index) {
+            MultimediaDocumentos item = snapshot.data[index];
+            return itemDocumento(context, item);
+          }),
+    );
+  }
+
+  Widget itemDocumento(
+      BuildContext context, MultimediaDocumentos multimediaDocumento) {
+    return InkWell(
+        child: ListTile(
+          leading: Icon(
+            Icons.description,
+            size: 35,
+          ),
+          title: Text(
+            multimediaDocumento.titulo,
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+          ),
+          subtitle: Text(
+            multimediaDocumento.subtitulo,
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+          ),
+          trailing: Icon(Icons.navigate_next),
+        ),
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => PageViewModule(
+                    title: multimediaDocumento.titulo,
+                    selectedUrl: multimediaDocumento.url,
                   )));
         });
   }

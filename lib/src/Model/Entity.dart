@@ -690,7 +690,7 @@ class InstitucionesItems extends Entity {
         "ubicacion": ubicacion,
         "ayudaConCovid": ayudaConCovid,
         "fechaConCovid": fechaConCovid,
-        "url":url,
+        "url": url,
         "miembros": miembros
       };
 }
@@ -736,5 +736,62 @@ class MultimediaVideo extends Entity {
         "titulo": titulo,
         "subtitulo": subtitulo,
         "url": url
+      };
+}
+
+class MultimediaDocumentos extends Entity {
+  int idInstitucion;
+  String titulo;
+  String subtitulo;
+  String url;
+
+  MultimediaDocumentos({this.idInstitucion, this.titulo, this.subtitulo, this.url});
+
+  fromJson(Map<String, dynamic> json) => new MultimediaDocumentos(
+      idInstitucion: json["idInstitucion"],
+      titulo: json["titulo"],
+      subtitulo: json["subtitulo"],
+      url: json["url"]);
+
+  Map<String, dynamic> toJson() => {
+        "idInstitucion": idInstitucion,
+        "titulo": titulo,
+        "subtitulo": subtitulo,
+        "url": url
+      };
+}
+
+
+class EventosItem extends Entity {
+  String institucion;
+  String voluntario;
+  String titulo;
+  String objetivo;
+  String url;
+  DateTime fechaYhora;
+
+  EventosItem(
+      {this.institucion,
+      this.voluntario,
+      this.titulo,
+      this.objetivo,
+      this.url,
+      this.fechaYhora});
+
+  fromJson(Map<String, dynamic> json) => new EventosItem(
+      institucion: json["idInstitucion"],
+      voluntario: json["idVoluntario"],
+      titulo: json["titulo"],
+      url: json["url"],
+      objetivo: json["objetivo"],
+      fechaYhora: json["fechaYhora"]);
+
+  Map<String, dynamic> toJson() => {
+        "idInstitucion": institucion,
+        "idVoluntario": voluntario,
+        "url": url,
+        "titulo": titulo,
+        "objetivo": objetivo,
+        "fechaYhor": fechaYhora
       };
 }

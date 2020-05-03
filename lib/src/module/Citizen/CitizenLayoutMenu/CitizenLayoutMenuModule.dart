@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenEvents/CitizenEventsModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenHelp/CitizenAtentionRegisterModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenHelp/CitizenHelpModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenHome/CitizenHomeModule.dart';
@@ -9,6 +10,7 @@ import 'package:lucia_covid/src/module/Citizen/CitizenPanicButton/CitizenPanicBu
 import 'package:lucia_covid/src/module/Entity/EntityModule.dart';
 import 'package:lucia_covid/src/module/Map/MapModule.dart';
 import 'package:lucia_covid/src/module/Multimedia/MultimediaModule.dart';
+import 'package:lucia_covid/src/module/Voluntary/FoundVoluntaryModule.dart';
 
 import 'package:lucia_covid/src/module/Voluntary/VoluntaryModule.dart';
 
@@ -108,14 +110,14 @@ class DrawerCitizen extends StatelessWidget {
             'Encuentra a un voluntario',
             () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CitizenHomeModule()),
+                  MaterialPageRoute(builder: (context) => FoundVoluntaryModule()),
                 )),
         CustomListTile(
             Icons.event_available,
             'Eventos de las instituciones',
             () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CitizenHomeModule()),
+                  MaterialPageRoute(builder: (context) => CitizenEventsModule()),
                 )),
         CustomListTile(
             Icons.photo_size_select_actual,
