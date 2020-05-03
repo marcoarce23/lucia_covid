@@ -9,6 +9,7 @@ import 'package:lucia_covid/src/module/Login/RegisterLoginModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/SplashScreenModule.dart';
+import 'package:lucia_covid/src/module/Voluntary/VoluntaryModule.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

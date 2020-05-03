@@ -10,6 +10,13 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:lucia_covid/src/Util/Validator.dart' as validator;
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
+
+
+
+
+
+
 
 class VoluntaryModule extends StatefulWidget {
   const VoluntaryModule({Key key}) : super(key: key);
@@ -19,6 +26,10 @@ class VoluntaryModule extends StatefulWidget {
 }
 
 class _VoluntaryModuleState extends State<VoluntaryModule> {
+
+  InputTextState x;
+  InputTextState x1;
+
   bool _save = false;
   File foto;
   
@@ -28,46 +39,7 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
   TextEditingController _inputFieldDateController = new TextEditingController();
   List<String> _expedido = ['CHQ','LPZ','CBB','ORU', 'PTS','TRJ', 'SCZ','BNI', 'PND' ];
   List<String> _entidad = ['Seleccionar', 'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias',
+    'Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias',
   ]  ;
 
   int _selectedRadio;
@@ -154,17 +126,7 @@ _selectDate(BuildContext context) async {
     return lista;
   }
 
-List<DropdownMenuItem<String>> getEntidadDropdown() {
-    List<DropdownMenuItem<String>> lista = new List();
 
-    _entidad.forEach((entidad) {
-      lista.add(DropdownMenuItem(
-        child: Text(entidad),
-        value: entidad,
-      ));
-    });
-    return lista;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -230,25 +192,33 @@ List<DropdownMenuItem<String>> getEntidadDropdown() {
   }
 
   Widget _crearCampos() {
-    return Column(
+x=  InputTextState(Icon(Icons.access_alarm), 'NOMBRE COMPELTO', '.');
+x1=  InputTextState(Icon(Icons.accessibility), 'NOMBRE uicacnion', '.');
+     return Column(
       children: <Widget>[
-         _crearEntidad(),
-         _crearToken('Ingrese el token:'),
-        _crearNombre('Nombres:'),
-        _crearApellidos('Apellidos:'),
-        _crearApellidos('Especialidad:'),
-        Row( children: <Widget>[
-            Expanded(
-              child: _crearCI('Documento de Identidad'),),
-             _crearExpedido(),
-          ],
-        ),
-        _crearTelefono('Telefono'),
-        _crearSexo('Sexo'),
-        _crearEmail('Correo ELectrónico'),
-        _crearEsCovid('Ayuda Covid'),
 
-        _crearObservacion('Información complementaria'),
+x,
+x1,
+      
+
+
+        //  _crearEntidad(),
+        //  _crearToken('Ingrese el token:'),
+        // _crearNombre('Nombres:'),
+        // _crearApellidos('Apellidos:'),
+        // _crearApellidos('Especialidad:'),
+        // Row( children: <Widget>[
+        //     Expanded(
+        //       child: _crearCI('Documento de Identidad'),),
+        //      _crearExpedido(),
+        //   ],
+        // ),
+        // _crearTelefono('Telefono'),
+        // _crearSexo('Sexo'),
+        // _crearEmail('Correo ELectrónico'),
+        // _crearEsCovid('Ayuda Covid'),
+
+        // _crearObservacion('Información complementaria'),
         _crearBoton(resource.save),
         // _forgetPassword(),
       ],
@@ -410,7 +380,20 @@ Widget _crearToken(String text) {
     );
   }
 
- Widget _crearEntidad() {
+List<DropdownMenuItem<String>> getEntidadDropdown()
+ {
+    List<DropdownMenuItem<String>> lista = new List();
+
+    _entidad.forEach((entidad) {
+      lista.add(DropdownMenuItem(
+        child: Text(entidad),
+        value: entidad,
+      ));
+    });
+    return lista;
+  }
+
+ Widget _crearEntida2d() {
     return Row(
       children: <Widget>[
         SizedBox(width: 30.0),
@@ -431,6 +414,23 @@ Widget _crearToken(String text) {
     );
   }
   
+
+  // List<DropdownMenuItem<String>>  _crearEntidad() 
+  // {
+  //   return FutureBuilder(
+  //     future: generic.getAll(new Hospital()),
+  //     builder: (BuildContext context, AsyncSnapshot<List<Entity>> snapshot) {
+  //       if (snapshot.hasData) {
+          
+  //       } else
+  //         return Center(child: CircularProgressIndicator());
+  //     },
+      
+  //   );
+  // }
+
+
+
 
    Widget _crearSexo(String text) {
     return Column(
@@ -527,24 +527,30 @@ Widget _crearToken(String text) {
   }
 
   _submit() async {
-    if (!formKey.currentState.validate()) return;
+
+     if (!formKey.currentState.validate()) return;
 
     formKey.currentState.save();
     setState(() {
       _save = true;
     });
 
-    if (hospital.nombre == null) {
-      // generic.add(citizen);
-      print("INSERTOOOO");
-    } else {
-      //  generic.update(citizen);
-      print("MODIFICO");
-    }
+    hospital.nombre =  x.objectValue;
+    hospital.ubicacion =  x1.objectValue;
+print('NOMBREERE: ${hospital.nombre}');
+print('ubicaion: ${hospital.ubicacion}');
 
-    setState(() {
-      _save = false;
-    });
+    // if (hospital.nombre == null) {
+    //   // generic.add(citizen);
+    //   print("INSERTOOOO");
+    // } else {
+    //   //  generic.update(citizen);
+    //   print("MODIFICO");
+    // }
+
+    // setState(() {
+    //   _save = false;
+    // });
 
     //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
   }
