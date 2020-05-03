@@ -240,8 +240,8 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ListVoluntary(
-                      profesional: profesional,
+                builder: (context) => ListVoluntaryModule(
+                   //   profesional: profesional,
                     )),
           );
         },

@@ -1,30 +1,34 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
-import 'package:lucia_covid/src/Util/Validator.dart' as validator;
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 
 class AtentionModule extends StatefulWidget {
   @override
   _AtentionModuleState createState() => _AtentionModuleState();
 }
 
-class _AtentionModuleState extends State<AtentionModule> {
-  bool _save = false;
-  bool _lun = false;
-  bool _mar = false;
-  bool _mie = false;
-  bool _jue = false;
-  bool _vie = false;
-  bool _sab = false;
-  bool _dom = false;
+class _AtentionModuleState extends State<AtentionModule> 
+{
+   InputUrlField facebook;
+  InputUrlField twitter;
+  InputUrlField youtube;
+  InputUrlField web;
+
+  InputCheckBox lunes;
+  InputCheckBox martes;
+  InputCheckBox miercoles;
+  InputCheckBox jueves;
+  InputCheckBox viernes;
+  InputCheckBox sabado;
+  InputCheckBox domingo;
   
   int _currentIndex;
-
+  bool _save =false;
 
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -85,7 +89,7 @@ class _AtentionModuleState extends State<AtentionModule> {
               title: Text('Atención-RRSS')),
           BottomNavigationBarItem(
               icon: Icon(Icons.supervised_user_circle, size: 25.0),
-              title: Text('Eventos')),
+              title: Text('Integrantes')),
         ],
       ),
     );
@@ -156,15 +160,7 @@ class _AtentionModuleState extends State<AtentionModule> {
                           fontSize: 15,
                         ),
                       ),
-                      TextSpan(
-                        text: '\n' + 'Correo: corina_123@gmail.com',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
+                     ],
                   ),
                 )
               ],
@@ -249,16 +245,22 @@ class _AtentionModuleState extends State<AtentionModule> {
 
 
   Widget _crearCamposRRSS() {
+    facebook = InputUrlField(Icon(Icons.alternate_email), 'Facebook:', '', '');
+twitter = InputUrlField(Icon(Icons.alternate_email), 'Twitter:', '', '');
+youtube = InputUrlField(Icon(Icons.alternate_email), 'YouTube:', '', '');
+web = InputUrlField(Icon(Icons.alternate_email), 'Página Web/bloc:', '', '');
+
     return Column(
       children: <Widget>[
         Text(
           'REDES SOCIALES',
           style: TextStyle(fontSize: 18, color: Colors.black),
         ),
-        _crearTitulo('Facebook'),
-_crearTitulo('Twitter'),
-_crearTitulo('YouTube'),
-_crearTitulo('Página Web'),
+        facebook,
+        twitter,
+        youtube,
+        web,
+
 Padding(
   padding: const EdgeInsets.all(12.0),
   child:   Divider(thickness: 2.0, color: Colors.orange),
@@ -268,6 +270,15 @@ _crearCampos(),
     );
   }
   Widget _crearCampos() {
+
+    lunes= InputCheckBox('Lun');
+martes= InputCheckBox('Mar');
+miercoles= InputCheckBox('Mie');
+jueves= InputCheckBox('Jue');
+viernes= InputCheckBox('Vie');
+sabado= InputCheckBox('Sab');
+domingo= InputCheckBox('Dom');
+
     return Column(
       children: <Widget>[
         Text(
@@ -277,13 +288,13 @@ _crearCampos(),
         Row(
           children: <Widget>[
             Expanded(
-              child: _crearLu(),
+              child: lunes,
             ),
             Expanded(
-              child: _crearMa(),
+              child: martes,
             ),
             Expanded(
-              child: _crearMi(),
+              child: miercoles,
             ),
            
           ],
@@ -291,13 +302,13 @@ _crearCampos(),
         Row(
           children: <Widget>[
              Expanded(
-              child: _crearJu(),
+              child: jueves,
             ),
             Expanded(
-              child: _crearVi(),
+              child: viernes,
             ),
             Expanded(
-              child: _crearSa(),
+              child: sabado,
             ),
           
           ],
@@ -306,106 +317,6 @@ _crearCampos(),
       ],
     );
   }
-
-  Widget _crearLu() {
-    return CheckboxListTile(
-        title: new Text('Lun.'), 
-        value: _lun, 
-        onChanged: (value) {
-          setState(() {
-             _lun = value;
-          });
-        }
-    );
-  }
-
- Widget _crearMa() {
-    return CheckboxListTile(
-        title: new Text('Mar.'), 
-        value: _mar, 
-        onChanged: (value) {
-          setState(() {
-             _mar = value;
-          });
-        }
-    );
-  }
-   Widget _crearMi() {
-    return CheckboxListTile(
-        title: new Text('Mie.'), 
-        value: _mie, 
-        onChanged: (value) {
-          setState(() {
-             _mie = value;
-          });
-        }
-    );
-  }
-   Widget _crearJu() {
-    return CheckboxListTile(
-        title: new Text('Jue.'), 
-        value: _jue, 
-        onChanged: (value) {
-          setState(() {
-             _jue = value;
-          });
-        }
-    );
-  }
-   Widget _crearVi() {
-    return CheckboxListTile(
-        title: new Text('Vie.'), 
-        value: _vie, 
-        onChanged: (value) {
-          setState(() {
-             _vie = value;
-          });
-        }
-    );
-  }
-   Widget _crearSa() {
-    return CheckboxListTile(
-        title: new Text('Sab.'), 
-        value: _sab, 
-        onChanged: (value) {
-          setState(() {
-             _sab = value;
-          });
-        }
-    );
-  }
-   Widget _crearDo() {
-    return CheckboxListTile(
-        title: new Text('Dom.'), 
-        value: _dom, 
-        onChanged: (value) {
-          setState(() {
-             _dom = value;
-          });
-        }
-    );
-  }
-  Widget _crearTitulo(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextFormField(
-        initialValue: hospital.nombre,
-        textCapitalization: TextCapitalization.sentences,
-        enableInteractiveSelection: true,
-        enableSuggestions: true,
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          focusColor: Colors.blue,
-          hintText: text,
-          labelText: text,
-          icon: Icon(Icons.add_box, color: Colors.orange),
-        ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
-        onSaved: (value) => hospital.nombre = value,
-      ),
-    );
-  }
-
   _crearContenedorCampos() {
     return BoxDecoration(
         color: Colors.white,
@@ -419,8 +330,6 @@ _crearCampos(),
         ]
       );
   }
-
-
 
   _crearContenedorCamposRRSS() {
     return BoxDecoration(
@@ -473,44 +382,4 @@ _crearCampos(),
 
     //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
   }
-
-  Widget _crearBotonRRSS(String text) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 100.0),
-      width: MediaQuery.of(context).size.width,
-      child: RaisedButton.icon(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: Colors.blue,
-        textColor: Colors.white,
-        label: Text(text),
-        icon: Icon(Icons.save),
-        onPressed: (_save) ? null : _submit,
-      ),
-    );
-  }
-
-  _submit2() async {
-    if (!formKey.currentState.validate()) return;
-
-    formKey.currentState.save();
-    setState(() {
-      _save = true;
-    });
-
-    if (hospital.nombre == null) {
-      // generic.add(citizen);
-      print("INSERTOOOO");
-    } else {
-      //  generic.update(citizen);
-      print("MODIFICO");
-    }
-
-    setState(() {
-      _save = false;
-    });
-
-    //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
-  }
-
 }

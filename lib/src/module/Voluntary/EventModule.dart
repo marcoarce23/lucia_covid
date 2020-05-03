@@ -1,12 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
-import 'package:lucia_covid/src/Util/Validator.dart' as validator;
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 
 
 class EventModule extends StatefulWidget {
@@ -19,13 +21,24 @@ class _EventModuleState extends State<EventModule> {
   String _fecha = '';
   TimeOfDay _time;
   int _currentIndex;
+    File foto;
+
   TextEditingController _inputFieldDateController = new TextEditingController();
   TextEditingController _inputFieldTimeController = new TextEditingController();
+
+  InputTextField titulo;
+InputMultilineField objetivo;
+InputMultilineField dirigidoA;
+InputTextField expositor;
+InputMultilineField ubicacion;
+InputTextField fecha;
+InputTextField hora;
+InputTextField fotoa;
 
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
-  Hospital hospital = new Hospital();
+  Evento evento = new Evento();
 
   @override
   void initState() {
@@ -36,9 +49,9 @@ class _EventModuleState extends State<EventModule> {
 
   @override
   Widget build(BuildContext context) {
-    final Hospital hospitalData = ModalRoute.of(context).settings.arguments;
+    final Evento eventoData = ModalRoute.of(context).settings.arguments;
 
-    if (hospitalData != null) hospital = hospitalData;
+    if (eventoData != null) evento = eventoData;
 
     return Scaffold(
         key: scaffoldKey,
@@ -48,17 +61,46 @@ class _EventModuleState extends State<EventModule> {
             _crearForm(context),
           ],
         ),
-        bottomNavigationBar: _bottomNavigationBar(context));
+        bottomNavigationBar: _bottomNavigationBar(context)
+        );
   }
 
   AppBar _appBar() {
     return AppBar(
       title: Text('REGISTRO DE EVENTOS'),
       backgroundColor: Colors.orange,
+      actions: <Widget>[_crearIconAppImagenes(), _crearIconAppCamara()],
     );
   }
 
-   Widget _bottomNavigationBar(BuildContext context) {
+
+_crearIconAppImagenes() {
+    return IconButton(
+      icon: Icon(Icons.photo_size_select_actual),
+      onPressed: _seleccionarFoto,
+    );
+  }
+
+  _crearIconAppCamara() {
+    return IconButton(
+      icon: Icon(Icons.camera_alt),
+      onPressed: _tomarFoto,
+    );
+  }
+
+   _seleccionarFoto() async => _procesarImagen(ImageSource.gallery);
+  _tomarFoto() async => _procesarImagen(ImageSource.camera);
+  
+  _procesarImagen(ImageSource origen) async {
+    foto = await ImagePicker.pickImage(source: origen);
+
+    if (foto != null) {
+      evento.regTelefono = null;
+    }
+    setState(() {});
+  }
+  
+    Widget _bottomNavigationBar(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
           canvasColor: Colors.white,
@@ -70,19 +112,16 @@ class _EventModuleState extends State<EventModule> {
         onTap: (value) {
           setState(() {
              _currentIndex = value;
-            callPage(_currentIndex, context);
+            callPageEventVoluntary(_currentIndex, context);
           });
         },
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 25.0), title: Text('Voluntarios')),
+              icon: Icon(Icons.person, size: 25.0), title: Text('Eventos')),
         
           BottomNavigationBarItem(
               icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Atención-RRSS')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.supervised_user_circle, size: 25.0),
-              title: Text('Eventos')),
+              title: Text('Historial Eventos')),
         ],
       ),
     );
@@ -153,14 +192,7 @@ class _EventModuleState extends State<EventModule> {
                           fontSize: 15,
                         ),
                       ),
-                      TextSpan(
-                        text: '\n' + 'Correo: corina_123@gmail.com',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
+                     
                     ],
                   ),
                 )
@@ -244,63 +276,33 @@ class _EventModuleState extends State<EventModule> {
   }
 
   Widget _crearCampos() {
+
+       titulo = InputTextField(Icon(Icons.business), 'Titulo del evento:', '', '');
+        objetivo = InputMultilineField(Icon(Icons.business), 'Objetivo:', '', '');
+        dirigidoA=InputMultilineField(Icon(Icons.business), 'Dirigido A:', '', '');
+        expositor=InputTextField(Icon(Icons.business), 'Expositor:', '', '');
+        ubicacion=InputMultilineField(Icon(Icons.business), 'Ubicacion:', '', '');
+
+
     return Column(
       children: <Widget>[
         Text(
           'REGISTRO DE EVENTOS',
           style: TextStyle(fontSize: 20, color: Colors.black),
         ),
-        _crearTitulo('Titulo del evento'),
-        _crearDetalle('Detalle del evento'),
-        _crearFecha('Fecha Evento'),
+        titulo,
+        objetivo,
+        dirigidoA,
+        expositor,
+        ubicacion,
+         _crearFecha('Fecha Evento'),
         _crearTime('hora'),
-        _crearDetalle('Detalle'),
         _crearBoton(resource.save),
       ],
     );
   }
 
-  Widget _crearTitulo(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextFormField(
-        initialValue: hospital.nombre,
-        textCapitalization: TextCapitalization.sentences,
-        enableInteractiveSelection: true,
-        enableSuggestions: true,
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          focusColor: Colors.blue,
-          hintText: text,
-          labelText: text,
-          icon: Icon(Icons.add_box, color: Colors.orange),
-        ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
-        onSaved: (value) => hospital.nombre = value,
-      ),
-    );
-  }
-
-  Widget _crearDetalle(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextFormField(
-        initialValue: hospital.nombre,
-        textCapitalization: TextCapitalization.sentences,
-        enableInteractiveSelection: true,
-        enableSuggestions: true,
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          focusColor: Colors.blue,
-          hintText: text,
-          labelText: text,
-          icon: Icon(Icons.note, color: Colors.orange),
-        ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
-        onSaved: (value) => hospital.nombre = value,
-      ),
-    );
-  }
+ 
 
   _selectDate(BuildContext context) async {
     DateTime picked = await showDatePicker(
@@ -421,7 +423,7 @@ class _EventModuleState extends State<EventModule> {
       _save = true;
     });
 
-    if (hospital.nombre == null) {
+    if (evento.idcovRegistroAmigo == null) {
       // generic.add(citizen);
       print("INSERTOOOO");
     } else {

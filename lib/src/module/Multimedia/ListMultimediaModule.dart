@@ -1,35 +1,37 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/ListEntity.dart';
-import 'package:lucia_covid/src/module/Citizen/CitizenInstitution/CitizenInstitutionModule.dart';
-
+import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/module/Multimedia/MultimediaModule.dart';
 
+class ListMultimediaModule extends StatefulWidget {
 
-class ListEmployeeModule extends StatefulWidget {
+  const ListMultimediaModule({Key key, }) : super(key: key);
+
   @override
-  _ListEmployeeModuleState createState() => _ListEmployeeModuleState();
+  _ListMultimediaModuleState createState() => _ListMultimediaModuleState();
 }
 
-class _ListEmployeeModuleState extends State<ListEmployeeModule> 
-{
-   final generic = new Generic();
+class _ListMultimediaModuleState extends State<ListMultimediaModule> {
+  final generic = new Generic();
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
-      appBar: AppBar(
-        title: Text("Listado de Empleados"),
-      ),
-        body: Column(
+    return Scaffold(
+      appBar: _appBar(),
+          body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
             child: Padding(
                 padding: EdgeInsets.all(10),
-                child: Text("Lista de empleados registradas")),
+                child: Text("Material multimedia registrado")),
           ),
           Card(
             elevation: 4,
@@ -56,6 +58,41 @@ class _ListEmployeeModuleState extends State<ListEmployeeModule>
           ),
           futureItemsInstitution(context)
         ],
+      ),
+      bottomNavigationBar: _bottomNavigationBar(context)
+    );
+  }
+
+  AppBar _appBar() {
+    return AppBar(
+      title: Text('Material Multimedia'),
+      backgroundColor: Colors.orange,
+    );
+  }
+
+     Widget _bottomNavigationBar(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(
+          canvasColor: Colors.white,
+          primaryColor: Colors.blue,
+          textTheme: Theme.of(context).textTheme.copyWith(
+              caption: TextStyle(color: Colors.blueGrey))),
+      child: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (value) {
+          setState(() {
+             _currentIndex = value;
+            callMaterial(_currentIndex, context);
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person, size: 25.0), title: Text('Multimedia')),
+        
+          BottomNavigationBarItem(
+              icon: Icon(Icons.bubble_chart, size: 25.0),
+              title: Text('Listado Multimedia')),
+         ],
       ),
     );
   }
@@ -89,8 +126,8 @@ class _ListEmployeeModuleState extends State<ListEmployeeModule>
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => CitizenInstitutionModule(
-                          institutionItem: institutionItem,
+                    builder: (context) => MultimediaModule(
+                         // institutionItem: institutionItem,
                         )),
               );
             },
@@ -144,7 +181,7 @@ class _ListEmployeeModuleState extends State<ListEmployeeModule>
             ),
             Container(
                 child: Text(
-              " 53 miembreos ",
+              " 53 Eventos ",
               style: TextStyle(color: Colors.black45, fontSize: 12),
             )),
             tieneCovid(institutionItem),
@@ -162,7 +199,7 @@ class _ListEmployeeModuleState extends State<ListEmployeeModule>
     } else {
       var formatter = new DateFormat('dd/MM/yyyy');
       respuesta =
-          "Ayuda COVID-19 desde ${formatter.format(institutionItem.fechaConCovid)}";
+          "Fecha del Evento ${formatter.format(institutionItem.fechaConCovid)}";
     }
 
     return Text(
