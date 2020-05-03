@@ -3,41 +3,203 @@ abstract class Entity {
   Map<String, dynamic> toJson();
 }
 
-class Ciudadano extends Entity {
-  int idcovCiudadano;
-  int idcovLogin;
-  String ciuImei;
-  String ciuCorreo;
-  String ciuNombre;
-  String ciuImagen;
-  DateTime ciuFechanacimiento;
+class BotonPanico extends Entity {
+  int idcovBotonpanico;
+  int idaCatalogo;
+  String botDetalle;
+  int idaPrioridad;
+  String botCordenadalat;
+  String botCordenadalon;
+  DateTime botFecha;
+  int idaEstadoSolicitud;
+  String botTelefono;
+  String usuario;
 
-  Ciudadano(
-      {this.idcovCiudadano = 0,
-      this.idcovLogin,
-      this.ciuImei,
-      this.ciuCorreo,
-      this.ciuNombre,
-      this.ciuImagen,
-      this.ciuFechanacimiento});
 
-  fromJson(Map<String, dynamic> json) => new Ciudadano(
-      idcovCiudadano: json["IDCOV_CIUDADANO"],
-      idcovLogin: json["IDCOV_LOGIN"],
-      ciuImei: json["CIU_IMEI"],
-      ciuCorreo: json["CIU_CORREO"],
-      ciuNombre: json["CIU_NOMBRE"],
-      ciuImagen: json["CIU_IMAGEN"],
-      ciuFechanacimiento: json["CIU_FECHANACIMIENTO"]);
+  BotonPanico({
+    this.idcovBotonpanico = 0,
+    this.idaCatalogo,
+    this.botDetalle,
+    this.idaPrioridad,
+    this.botCordenadalat,
+    this.botCordenadalon,
+    this.botFecha,
+    this.idaEstadoSolicitud,
+    this.botTelefono,
+    this.usuario
+  });
+
+  fromJson(Map<String, dynamic> json) => new BotonPanico(
+      idcovBotonpanico: json["IDCOV_BOTONPANICO"],
+       idaCatalogo: json["IDA_CATALOGO"],
+      botDetalle: json["BOT_DETALLE"],
+      idaPrioridad: json["IDA_PRIORIDAD"],
+       botCordenadalat: json["BOT_CORDENADALAT"],
+      botCordenadalon: json["BOT_CORDENADALON"],
+      botFecha: json["BOT_FECHA"],
+      idaEstadoSolicitud: json["IDA_ESTADOSOLICITUD"],
+      botTelefono: json["BOT_TELEFONO"],
+      usuario: json["USUARIO"]
+        
+  );
 
   Map<String, dynamic> toJson() => {
-        "IDCOV_CIUDADANO": idcovCiudadano,
-        "IDCOV_LOGIN": idcovLogin,
-        "CIU_IMEI": ciuImei,
-        "CIU_CORREO": ciuCorreo,
-        "CIU_NOMBRE": ciuNombre,
-        "CIU_IMAGEN": ciuImagen,
-        "CIU_FECHANACIMIENTO": ciuFechanacimiento
+        "IDCOV_BOTONPANICO": idcovBotonpanico,
+        "IDA_CATALOGO": idaCatalogo,
+        "BOT_DETALLE": botDetalle,
+        "IDA_PRIORIDAD": idaPrioridad,
+        "BOT_CORDENADALAT": botCordenadalat,
+        "BOT_CORDENADALON": botCordenadalon,
+        "BOT_FECHA": botFecha,
+        "IDA_ESTADOSOLICITUD": idaEstadoSolicitud,
+        "BOT_TELEFONO": botTelefono,
+        "USUARIO": usuario
+      };
+}
+
+class Catalogo extends Entity {
+  int idcovCatalogo;
+  int idaTipocatalogo;
+  String catFuente;
+  String catFecha;
+  int idaDifusion;
+  int idaUbicacion;
+  String usuario;
+
+  Catalogo(
+      {this.idcovCatalogo = 0,
+      this.idaTipocatalogo,
+      this.catFuente,
+      this.catFecha,
+      this.idaDifusion,
+      this.idaUbicacion,
+      this.usuario});
+
+  fromJson(Map<String, dynamic> json) => new Catalogo(
+      idcovCatalogo: json["IDCOV_CATALOGO"],
+      idaTipocatalogo: json["IDA_TIPOCATALOGO"],
+      catFuente: json["CAT_FUENTE"],
+      catFecha: json["CAT_FECHA"],
+      idaDifusion: json["IDA_DIFUSION"],
+      idaUbicacion: json["IDA_UBICACION"],
+      usuario: json["USUARIO"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "IDCOV_CATALOGO": idcovCatalogo,
+        "IDA_TIPOCATALOGO": idaTipocatalogo,
+        "CAT_FUENTE": catFuente,
+        "CAT_FECHA": catFecha,
+        "IDA_DIFUSION": idaDifusion,
+        "IDA_UBICACION": idaUbicacion,
+         "USUARIO": usuario,
+      };
+}
+
+class DetalleCatalogo extends Entity {
+  int idcovDetallecatalogo;
+  int idcovCatalogo;
+  DateTime detFecha;
+  DateTime detFechaInicio;
+  DateTime detFechaFin;
+  String detTitulo;
+  String detSubtitulo;
+  String detContenido;
+  String detImagen;
+  String detDocumento;
+  int detEstado;
+  String usuario;
+
+
+  DetalleCatalogo(
+      {this.idcovDetallecatalogo,
+      this.idcovCatalogo = 0,
+      this.detFecha,
+      this.detFechaInicio,
+      this.detFechaFin,
+      this.detTitulo,
+      this.detSubtitulo,
+      this.detContenido,
+      this.detImagen,
+      this.detDocumento,
+      this.detEstado,
+      this.usuario});
+
+  fromJson(Map<String, dynamic> json) => new DetalleCatalogo(
+      idcovDetallecatalogo: json["IDCOV_DETALLECATALOGO"],
+      idcovCatalogo: json["IDCOV_CATALOGO"],
+      detFecha: json["DET_FECHA"],
+      detFechaInicio: json["DET_FECHAINICIO"],
+      detFechaFin: json["DET_FECHAFIN"],
+      detTitulo: json["DET_TITULO"],
+      detSubtitulo: json["DET_SUBTITULO"],
+      detContenido: json["DET_CONTENIDO"],
+      detImagen: json["DET_IMAGEN"],
+      detDocumento: json["DET_DOCUMENTO"],
+      detEstado: json["DET_ESTADO"],
+      usuario: json["USUARIO"],
+  );
+
+  Map<String, dynamic> toJson() => {
+        "IDCOV_DETALLECATALOGO": idcovDetallecatalogo,
+        "IDCOV_CATALOGO": idcovCatalogo,
+        "DET_FECHA": detFecha,
+        "DET_FECHAINICIO": detFechaInicio,
+        "DET_FECHAFIN": detFechaFin,
+        "DET_TITULO": detTitulo,
+        "DET_SUBTITULO": detSubtitulo,
+        "DET_CONTENIDO": detContenido,
+        "DET_IMAGEN": detImagen,
+        "DET_DOCUMENTO": detDocumento,
+        "DET_ESTADO": detEstado,
+        "USUARIO": usuario
+      };
+}
+
+class Multimedia extends Entity {
+  int idcovMultimedia;
+  int idaCategoria;
+  int idaCovInstitucion;
+  String mulTitulo;
+  String mulResumen;
+  DateTime detFechaInicio;
+  DateTime detFechaFin;
+  String mulEnlace;
+  String usuario;
+
+  Multimedia(
+      {this.idcovMultimedia,
+      this.idaCategoria = 0,
+      this.idaCovInstitucion,
+      this.mulTitulo,
+      this.mulResumen,
+      this.detFechaInicio,
+      this.detFechaFin,
+      this.mulEnlace,
+      this.usuario});
+
+  fromJson(Map<String, dynamic> json) => new Multimedia(
+      idcovMultimedia: json["IDCOV_MULTIMEDIA"],
+      idaCategoria: json["IDA_CATEGORIA"],
+      idaCovInstitucion: json["IDCOV_INSTITUCION"],
+      mulTitulo: json["MUL_TITULO"],
+      mulResumen: json["MUL_RESUMEN"],
+      detFechaInicio: json["MUL_FECHAINICIO"],
+      detFechaFin: json["MUL_FECHAFIN"],
+      mulEnlace: json["MUL_ENLACE"],
+      usuario: json["USUARIO"],
+  );
+
+  Map<String, dynamic> toJson() => {
+        "IDCOV_MULTIMEDIA": idcovMultimedia,
+        "IDA_CATEGORIA": idaCategoria,
+        "IDCOV_INSTITUCION": idaCovInstitucion,
+        "MUL_TITULO": mulTitulo,
+        "MUL_RESUMEN": mulResumen,
+        "MUL_FECHAINICIO": detFechaInicio,
+        "MUL_FECHAFIN": detFechaFin,
+        "MUL_ENLACE": mulEnlace,
+        "USUARIO": usuario
       };
 }
 
@@ -57,200 +219,238 @@ class Hospital extends Entity {
       {"ID": id, "HOS_NOMBRE": nombre, "HOS_UBICACION": ubicacion};
 }
 
-class BotonPanico extends Entity {
-  int idcovBotonpanico;
-  int idcovCiudadano;
-  int idaCatalogo;
-  String botDetalle;
-  int idaPrioridad;
-  int botUbicacion;
-  String botCordenadalat;
-  String botCordenadalon;
-  DateTime botFecha;
 
-  BotonPanico({
-    this.idcovBotonpanico = 0,
-    this.idcovCiudadano,
-    this.idaCatalogo,
-    this.botDetalle,
-    this.idaPrioridad,
-    this.botUbicacion,
-    this.botCordenadalat,
-    this.botCordenadalon,
-    this.botFecha,
-  });
 
-  fromJson(Map<String, dynamic> json) => new BotonPanico(
-      idcovBotonpanico: json["IDCOV_BOTONPANICO"],
-      idcovCiudadano: json["IDCOV_CIUDADANO"],
-      idaCatalogo: json["IDA_CATALOGO"],
-      botDetalle: json["BOT_DETALLE"],
-      idaPrioridad: json["IDA_PRIORIDAD"],
-      botUbicacion: json["BOT_UBICACION"],
-      botCordenadalat: json["BOT_CORDENADALAT"],
-      botCordenadalon: json["BOT_CORDENADALON"],
-      botFecha: json["BOT_FECHA"]);
-
-  Map<String, dynamic> toJson() => {
-        "IDCOV_BOTONPANICO": idcovBotonpanico,
-        "IDCOV_CIUDADANO": idcovCiudadano,
-        "IDA_CATALOGO": idaCatalogo,
-        "BOT_DETALLE": botDetalle,
-        "IDA_PRIORIDAD": idaPrioridad,
-        "BOT_UBICACION": botUbicacion,
-        "BOT_CORDENADALAT": botCordenadalat,
-        "BOT_CORDENADALON": botCordenadalon,
-        "BOT_FECHA": botFecha
-      };
-}
-
-class Familiar extends Entity {
-  int idcovFamiliar;
-  int idcovCiudadano;
-  int famAdultosmayores;
-  int famAdultos;
-  int famAdolescentes;
-  int famInfantes;
-  int famBebes;
-  int famMascotas;
-
-  Familiar({
-    this.idcovFamiliar = 0,
-    this.idcovCiudadano = 0,
-    this.famAdultosmayores = 0,
-    this.famAdultos = 0,
-    this.famAdolescentes = 0,
-    this.famInfantes = 0,
-    this.famBebes = 0,
-    this.famMascotas = 0,
-  });
-
-  fromJson(Map<String, dynamic> json) => new Familiar(
-      idcovFamiliar: json["IDCOV_FAMILIAR"],
-      idcovCiudadano: json["IDCOV_CIUDADANO"],
-      famAdultosmayores: json["FAM_ADULTOSMAYORES"],
-      famAdultos: json["FAM_ADULTOS"],
-      famAdolescentes: json["FAM_ADOLESCENTES"],
-      famInfantes: json["FAM_INFANTES"],
-      famBebes: json["FAM_BEBES"],
-      famMascotas: json["FAM_MASCOTAS"]);
-
-  Map<String, dynamic> toJson() => {
-        "IDCOV_FAMILIAR": idcovFamiliar,
-        "IDCOV_CIUDADANO": idcovCiudadano,
-        "FAM_ADULTOSMAYORES": famAdultosmayores,
-        "FAM_ADULTOS": famAdultos,
-        "FAM_ADOLESCENTES": famAdolescentes,
-        "FAM_INFANTES": famInfantes,
-        "FAM_BEBES": famBebes,
-        "FAM_MASCOTAS": famMascotas
-      };
-}
-
-class Referencia extends Entity {
-  int idcovReferencia;
-  int idcovCiudadano;
-  int idaTiporeferencia;
-  String refNombrecompleto;
-  String refCi;
-  String refTelefono;
-  String refCorreo;
-
-  Referencia(
-      {this.idcovReferencia = 0,
-      this.idcovCiudadano,
-      this.idaTiporeferencia,
-      this.refNombrecompleto,
-      this.refCi,
-      this.refTelefono,
-      this.refCorreo});
-
-  fromJson(Map<String, dynamic> json) => new Referencia(
-      idcovReferencia: json["IDCOV_REFERENCIA"],
-      idcovCiudadano: json["IDCOV_CIUDADANO"],
-      idaTiporeferencia: json["IDA_TIPOREFERENCIA"],
-      refNombrecompleto: json["REF_NOMBRECOMPLETO"],
-      refCi: json["REF_CI"],
-      refTelefono: json["REF_TELEFONO"],
-      refCorreo: json["REF_CORREO"]);
-
-  Map<String, dynamic> toJson() => {
-        "IDCOV_REFERENCIA": idcovReferencia,
-        "IDCOV_CIUDADANO": idcovCiudadano,
-        "IDA_TIPOREFERENCIA": idaTiporeferencia,
-        "REF_NOMBRECOMPLETO": refNombrecompleto,
-        "REF_CI": refCi,
-        "REF_TELEFONO": refTelefono,
-        "REF_CORREO": refCorreo
-      };
-}
 
 class Institucion extends Entity {
-  int idcovInstitucion;
-  int idaTipoinstitucion;
-  String insNombreinstitucion;
-  int idaUbicacion;
-  int idaEstadocovd;
-  DateTime insFechacovid;
+  int idInstitucion;
+  String token;
+  String nombreInstitucion;
+  String tipoInstitucion;
+  String ubicacion;
+  String direccion;
+  double insLat;
+  double insLng;
+  int idaEstadoCovid;
+  DateTime fechaConCovid;
+  String telefono;
+  String perFacebbok;
+String perTwitter;
+String perPaginaWeb;
+String perYouTube;
+String perCorreoElectronico;
+String perInformacionComp;
+String foto;
+int perLunes;
+int perMartes;
+int perMiercoles;
+int perJueves;
+int perViernes;
+int perSabado;
+int perDomingo;
+String perLunesH;
+String perMartesH;
+String perMiercolesH;
+String perJuevesH;
+String perViernesH;
+String perSabadoH;
+String perDomingoH;
+String usuario;
 
-  Institucion(
-      {this.idcovInstitucion = 0,
-      this.idaTipoinstitucion,
-      this.insNombreinstitucion,
-      this.idaUbicacion,
-      this.idaEstadocovd,
-      this.insFechacovid});
+
+  Institucion({
+      this.idInstitucion,
+  this.token,
+  this.nombreInstitucion,
+  this.tipoInstitucion,
+  this.ubicacion,
+  this.direccion,
+  this.insLat,
+  this.insLng,
+  this.idaEstadoCovid,
+  this.fechaConCovid,
+  this.telefono,
+  this.perFacebbok,
+this.perTwitter,
+this.perPaginaWeb,
+this.perYouTube,
+this.perCorreoElectronico,
+this.perInformacionComp,
+this.foto,
+this.perLunes,
+this.perMartes,
+this.perMiercoles,
+this.perJueves,
+this.perViernes,
+this.perSabado,
+this.perDomingo,
+this.perLunesH,
+this.perMartesH,
+this.perMiercolesH,
+this.perJuevesH,
+this.perViernesH,
+this.perSabadoH,
+this.perDomingoH,
+this.usuario,});
 
   fromJson(Map<String, dynamic> json) => new Institucion(
-      idcovInstitucion: json["IDCOV_INSTITUCION"],
-      idaTipoinstitucion: json["IDA_TIPOINSTITUCION"],
-      insNombreinstitucion: json["INS_NOMBREINSTITUCION"],
-      idaUbicacion: json["IDA_UBICACION"],
-      idaEstadocovd: json["IDA_ESTADOCOVD"],
-      insFechacovid: json["INS_FECHACOVID"]);
+      idInstitucion: json["IDCOV_INSTITUCION"],
+      token: json["INS_TOKEN"],
+      tipoInstitucion: json["IDA_TIPOINSTITUCION"],
+      nombreInstitucion: json["INS_NOMBREINSTITUCION"],
+      ubicacion: json["IDA_UBICACION"],
+      direccion: json["INS_DIRECCION"],
+      insLat: json["INS_LAT"],
+      insLng: json["INS_LNG"],
+      idaEstadoCovid: json["IDA_ESTADOCOVD"],
+      fechaConCovid: json["INS_FECHACOVID"],
+      telefono: json["INS_TELEFONO"],
+      perFacebbok: json["INS_CUENTACEBOOK"],
+      perTwitter: json["INS_CUENTATWITTER"],
+      perPaginaWeb: json["INS_PAGINAWEB"],
+       perYouTube: json["INS_CUENTAYOUTUBE"],
+        perCorreoElectronico: json["INS_CORREOINSTITUCIONAL"],
+      perInformacionComp: json["INS_INFORMACIONCOMPLEMENTARIA"],
+      foto: json["INS_FOTO"],
+      perLunes: json["PER_LUNES"],
+      perMartes: json["PER_MARTES"],
+      perMiercoles: json["PER_MIERCOLES"],
+      perJueves: json["PER_JUEVES"],
+      perViernes: json["PER_VIERNES"],
+      perSabado: json["PER_SABADO"],
+      perDomingo: json["PER_DOMINGO"],
+       perLunesH: json["PER_LUNES_HORARIO"],
+      perMartesH: json["PER_MARTES_HORARIO"],
+      perMiercolesH: json["PER_MIERCOLES_HORARIO"],
+      perJuevesH: json["PER_JUEVES_HORARIO"],
+      perViernesH: json["PER_VIERNES_HORARIO"],
+      perSabadoH: json["PER_SABADO_HORARIO"],
+      perDomingoH: json["PER_DOMINGO_HORARIO"],
+       usuario: json["USUARIO"]
+    
+      );
 
   Map<String, dynamic> toJson() => {
-        "IDCOV_INSTITUCION": idcovInstitucion,
-        "IDA_TIPOINSTITUCION": idaTipoinstitucion,
-        "INS_NOMBREINSTITUCION": insNombreinstitucion,
-        "IDA_UBICACION": idaUbicacion,
-        "IDA_ESTADOCOVD": idaEstadocovd,
-        "INS_FECHACOVID": insFechacovid
+        "IDCOV_INSTITUCION": idInstitucion,
+        "INS_TOKEN": token,
+"IDA_TIPOINSTITUCION": tipoInstitucion,
+        "INS_NOMBREINSTITUCION": nombreInstitucion,
+        "IDA_UBICACION": ubicacion,
+        "INS_DIRECCION": direccion,
+        "INS_LAT": insLat,
+        "INS_LNG": insLng,
+        "IDA_ESTADOCOVD": idaEstadoCovid,
+        "INS_FECHACOVID": fechaConCovid,
+         "INS_TELEFONO": telefono,
+        "INS_CUENTACEBOOK": perFacebbok,
+        "INS_CUENTATWITTER": perTwitter,
+        "INS_PAGINAWEB": perPaginaWeb,
+"INS_CUENTAYOUTUBE": perYouTube,
+"INS_CORREOINSTITUCIONAL": perCorreoElectronico,
+        "PER_INFORMACIONCOMPLEMENTARIA": perInformacionComp,
+
+        "INS_FOTO": foto,
+        "INS_LUNES": perLunes,
+        "INS__MARTES": perMartes,
+        "INS_MIERCOLES": perMiercoles,
+        "INS_JUEVES": perJueves,
+        "INS_VIERNES": perViernes,
+        "INS_SABADO": perSabado,
+        "INS_DOMINGO": perDomingo,
+         "INS_LUNES_HORARIO": perLunesH,
+        "INS__MARTES_HORARIO": perMartesH,
+        "INS_MIERCOLES_HORARIO": perMiercolesH,
+        "INS_JUEVES_HORARIO": perJuevesH,
+        "INS_VIERNES_HORARIO": perViernesH,
+        "INS_SABADO_HORARIO": perSabadoH,
+        "INS_DOMINGO_HORARIO": perDomingoH,
+        "USUARIO": usuario
       };
 }
 
-class Personal extends Entity {
+class Voluntary extends Entity {
   int idcovPersonal;
   int idcovInstitucion;
   int idcovLogin;
   int idaTipopersonal;
   String perNombrepersonal;
+  String perApellido;
   String perCorreo;
   String perTelefono;
-  int perUbicacion;
   int perAyudacovid;
 
-  Personal(
+String perCI;
+int idaExtension;
+int idaSexo;
+String perInformacionComplementaria;
+String perFacebbok;
+String perTwitter;
+String perPaginaWeb;
+int perLunes;
+int perMartes;
+int perMiercoles;
+int perJueves;
+int perViernes;
+int perSabado;
+int perDomingo;
+String usuario;
+
+  Voluntary(
       {this.idcovPersonal = 0,
       this.idcovInstitucion,
       this.idcovLogin,
       this.idaTipopersonal,
       this.perNombrepersonal,
+      this.perApellido,
       this.perCorreo,
       this.perTelefono,
-      this.perUbicacion,
-      this.perAyudacovid});
+      this.perAyudacovid,
+      
+      this.perCI,
+this.idaExtension,
+this.idaSexo,
+this.perInformacionComplementaria,
+this.perFacebbok,
+this.perTwitter,
+this.perPaginaWeb,
+this.perLunes,
+this.perMartes,
+this.perMiercoles,
+this.perJueves,
+this.perViernes,
+this.perSabado,
+this.perDomingo,
+this.usuario
+      
+      });
 
-  fromJson(Map<String, dynamic> json) => new Personal(
+  fromJson(Map<String, dynamic> json) => new Voluntary(
       idcovPersonal: json["IDCOV_PERSONAL"],
       idcovInstitucion: json["IDCOV_INSTITUCION"],
       idcovLogin: json["IDCOV_LOGIN"],
       idaTipopersonal: json["IDA_TIPOPERSONAL"],
       perNombrepersonal: json["PER_NOMBREPERSONAL"],
+      perApellido: json["PER_APELLIDO"],
       perCorreo: json["PER_CORREO"],
       perTelefono: json["PER_TELEFONO"],
-      perUbicacion: json["PER_UBICACION"],
-      perAyudacovid: json["PER_AYUDACOVID"]);
+      perAyudacovid: json["PER_AYUDACOVID"],
+      perCI: json["PER_CI"],
+      idaExtension: json["IDA_EXTENCIONCI"],
+      idaSexo: json["IDA_SEXO"],
+      perInformacionComplementaria: json["PER_INFORMACIONCOMPLEMENTARIA"],
+      perFacebbok: json["PER_CUENTAFACEBOOK"],
+      perTwitter: json["PER_CUENTATWITTER"],
+      perPaginaWeb: json["PER_PAGINAWEB"],
+      perLunes: json["PER_LUNES"],
+      perMartes: json["PER_MARTES"],
+      perMiercoles: json["PER_MIERCOLES"],
+      perJueves: json["PER_JUEVES"],
+      perViernes: json["PER_VIERNES"],
+      perSabado: json["PER_SABADO"],
+      perDomingo: json["PER_DOMINGO"],
+       usuario: json["USUARIO"]
+       
+      );
 
   Map<String, dynamic> toJson() => {
         "IDCOV_PERSONAL": idcovPersonal,
@@ -258,88 +458,110 @@ class Personal extends Entity {
         "IDCOV_LOGIN": idcovLogin,
         "IDA_TIPOPERSONAL": idaTipopersonal,
         "PER_NOMBREPERSONAL": perNombrepersonal,
+        "PER_APELLIDO" : perApellido,
         "PER_CORREO": perCorreo,
         "PER_TELEFONO": perTelefono,
-        "PER_UBICACION": perUbicacion,
-        "PER_AYUDACOVID": perAyudacovid
+        "PER_AYUDACOVID": perAyudacovid,
+        "PER_CI": perCI,
+        "IDA_EXTENCIONCI": idaExtension,
+        "IDA_SEXO": idaSexo,
+        "PER_INFORMACIONCOMPLEMENTARIA": perInformacionComplementaria,
+        "PER_CUENTAFACEBOOK": perFacebbok,
+        "PER_CUENTATWITTER": perTwitter,
+        "PER_PAGINAWEB": perPaginaWeb,
+        "PER_LUNES": perLunes,
+        "PER_MARTES": perMartes,
+        "PER_LUNES": perAyudacovid,
+        "PER_MIERCOLES": perMiercoles,
+        "PER_JUEVES": perJueves,
+        "PER_VIERNES": perViernes,
+        "PER_SABADO": perSabado,
+        "PER_DOMINGO": perDomingo,
+        "USUARIO": usuario
       };
 }
+class RegistroAmigo extends Entity {
+  int idcovRegistroAmigo;
+  String regPersona;
+  String regTelefono;
+  String regUbicacion;
+  String regTipoAPoyo;
+  String regPrioridad;
+  String usuario;
 
-class Catalogo extends Entity {
-  int idcovCatalogo;
-  int idaTipocatalogo;
-  String catFuente;
-  String catFecha;
-  int idaDifusion;
-  int idaUbicacion;
+  RegistroAmigo(
+      {this.idcovRegistroAmigo = 0,
+      this.regPersona,
+      this.regTelefono,
+      this.regUbicacion,
+      this.regTipoAPoyo,
+      this.regPrioridad,
+      this.usuario
+      });
 
-  Catalogo(
-      {this.idcovCatalogo = 0,
-      this.idaTipocatalogo,
-      this.catFuente,
-      this.catFecha,
-      this.idaDifusion,
-      this.idaUbicacion});
-
-  fromJson(Map<String, dynamic> json) => new Catalogo(
-      idcovCatalogo: json["IDCOV_CATALOGO"],
-      idaTipocatalogo: json["IDA_TIPOCATALOGO"],
-      catFuente: json["CAT_FUENTE"],
-      catFecha: json["CAT_FECHA"],
-      idaDifusion: json["IDA_DIFUSION"],
-      idaUbicacion: json["IDA_UBICACION"]);
+  fromJson(Map<String, dynamic> json) => new RegistroAmigo(
+      idcovRegistroAmigo: json["IDCOV_REGISTRAAMIGO"],
+      regPersona: json["REG_PERSONA"],
+      regTelefono: json["REG_TELEFONO"],
+      regUbicacion: json["REG_UBICACION"],
+      regTipoAPoyo: json["IDA_TIPOAPOYO"],
+      regPrioridad: json["REG_PRIORIDAD"],
+      usuario: json["USUARIO"],
+      );
 
   Map<String, dynamic> toJson() => {
-        "IDCOV_CATALOGO": idcovCatalogo,
-        "IDA_TIPOCATALOGO": idaTipocatalogo,
-        "CAT_FUENTE": catFuente,
-        "CAT_FECHA": catFecha,
-        "IDA_DIFUSION": idaDifusion,
-        "IDA_UBICACION": idaUbicacion,
+        "IDCOV_REGISTRAAMIGO": idcovRegistroAmigo,
+        "REG_PERSONA": regPersona,
+        "REG_TELEFONO": regTelefono,
+        "REG_UBICACION": regUbicacion,
+        "IDA_TIPOAPOYO": regTipoAPoyo,
+        "REG_PRIORIDAD": regPrioridad,
+        "USUARIO": usuario,
+
       };
 }
 
-class DetalleCatalogo extends Entity {
-  int idcovDetallecatalogo;
-  int idcovCatalogo;
-  DateTime detFecha;
-  String detTitulo;
-  String detSubtitulo;
-  String detContenido;
-  String detImagen;
-  int detEstado;
+class Evento extends Entity {
+  int idcovRegistroAmigo;
+  String regPersona;
+  String regTelefono;
+  String regUbicacion;
+  String regTipoAPoyo;
+  String regPrioridad;
+  String usuario;
 
-  DetalleCatalogo(
-      {this.idcovDetallecatalogo,
-      this.idcovCatalogo = 0,
-      this.detFecha,
-      this.detTitulo,
-      this.detSubtitulo,
-      this.detContenido,
-      this.detImagen,
-      this.detEstado});
+  Evento(
+      {this.idcovRegistroAmigo = 0,
+      this.regPersona,
+      this.regTelefono,
+      this.regUbicacion,
+      this.regTipoAPoyo,
+      this.regPrioridad,
+      this.usuario
+      });
 
-  fromJson(Map<String, dynamic> json) => new DetalleCatalogo(
-      idcovDetallecatalogo: json["IDCOV_DETALLECATALOGO"],
-      idcovCatalogo: json["IDCOV_CATALOGO"],
-      detFecha: json["DET_FECHA"],
-      detTitulo: json["DET_TITULO"],
-      detSubtitulo: json["DET_SUBTITULO"],
-      detContenido: json["DET_CONTENIDO"],
-      detImagen: json["DET_IMAGEN"],
-      detEstado: json["DET_ESTADO"]);
+  fromJson(Map<String, dynamic> json) => new Evento(
+      idcovRegistroAmigo: json["IDCOV_REGISTRAAMIGO"],
+      regPersona: json["REG_PERSONA"],
+      regTelefono: json["REG_TELEFONO"],
+      regUbicacion: json["REG_UBICACION"],
+      regTipoAPoyo: json["IDA_TIPOAPOYO"],
+      regPrioridad: json["REG_PRIORIDAD"],
+      usuario: json["USUARIO"],
+      );
 
   Map<String, dynamic> toJson() => {
-        "IDCOV_DETALLECATALOGO": idcovDetallecatalogo,
-        "IDCOV_CATALOGO": idcovCatalogo,
-        "DET_FECHA": detFecha,
-        "DET_TITULO": detTitulo,
-        "DET_SUBTITULO": detSubtitulo,
-        "DET_CONTENIDO": detContenido,
-        "DET_IMAGEN": detImagen,
-        "DET_ESTADO": detEstado
+        "IDCOV_REGISTRAAMIGO": idcovRegistroAmigo,
+        "REG_PERSONA": regPersona,
+        "REG_TELEFONO": regTelefono,
+        "REG_UBICACION": regUbicacion,
+        "IDA_TIPOAPOYO": regTipoAPoyo,
+        "REG_PRIORIDAD": regPrioridad,
+        "USUARIO": usuario,
+
       };
 }
+
 
 class Test extends Entity {
   int idcovTest;
@@ -372,175 +594,29 @@ class TestHistorial extends Entity {
   int idcovTest;
   String hisRespuesta;
   DateTime hisFecha;
+  String usuario;
 
   TestHistorial(
       {this.idcovTesthistorial = 0,
       this.idcovTest,
       this.hisRespuesta,
-      this.hisFecha});
+      this.hisFecha,
+      this.usuario});
 
   fromJson(Map<String, dynamic> json) => new TestHistorial(
       idcovTesthistorial: json["IDCOV_TESTHISTORIAL"],
       idcovTest: json["IDCOV_TEST"],
       hisRespuesta: json["HIS_RESPUESTA"],
-      hisFecha: json["HIS_FECHA"]);
+      hisFecha: json["HIS_FECHA"],
+      usuario: json["USUARIO"]);
 
   Map<String, dynamic> toJson() => {
         "IDCOV_TESTHISTORIAL": idcovTesthistorial,
         "IDCOV_TEST": idcovTest,
         "HIS_RESPUESTA": hisRespuesta,
-        "HIS_FECHA": hisFecha
+        "HIS_FECHA": hisFecha,
+         "USUARIO": usuario
       };
-}
-
-class ZonaComunidad extends Entity {
-  int idcovZonacomunidad;
-  int idcovCiudadano;
-  int idaTipozonaComunidad;
-  int idaPrioridad;
-  String zonLat;
-  String zonLon;
-  String zonImagen;
-
-  ZonaComunidad(
-      {this.idcovZonacomunidad = 0,
-      this.idcovCiudadano,
-      this.idaTipozonaComunidad,
-      this.idaPrioridad,
-      this.zonLat,
-      this.zonLon,
-      this.zonImagen});
-
-  fromJson(Map<String, dynamic> json) => new ZonaComunidad(
-      idcovZonacomunidad: json["IDCOV_ZONACOMUNIDAD"],
-      idcovCiudadano: json["IDCOV_CIUDADANO"],
-      idaTipozonaComunidad: json["IDA_TIPOZONA_COMUNIDAD"],
-      idaPrioridad: json["IDA_PRIORIDAD"],
-      zonLat: json["ZON_LAT"],
-      zonLon: json["ZON_LON"],
-      zonImagen: json["ZON_IMAGEN"]);
-
-  Map<String, dynamic> toJson() => {
-        "IDCOV_ZONACOMUNIDAD": idcovZonacomunidad,
-        "IDCOV_CIUDADANO": idcovCiudadano,
-        "IDA_TIPOZONA_COMUNIDAD": idaTipozonaComunidad,
-        "IDA_PRIORIDAD": idaPrioridad,
-        "ZON_LAT": zonLat,
-        "ZON_LON": zonLon,
-        "ZON_IMAGEN": zonImagen
-      };
-}
-
-class ZonaControl extends Entity {
-  int id;
-  String nombre;
-  String ubicacion;
-
-  ZonaControl({this.id = 0, this.nombre, this.ubicacion});
-
-  fromJson(Map<String, dynamic> json) => new ZonaControl(
-      id: json["ID"],
-      nombre: json["HOS_NOMBRE"],
-      ubicacion: json["HOS_UBICACION"]);
-
-  Map<String, dynamic> toJson() =>
-      {"ID": id, "HOS_NOMBRE": nombre, "HOS_UBICACION": ubicacion};
-}
-
-class ZonaReporte extends Entity {
-  int idcovZonareporte;
-  int idcovFuncionario;
-  int idaTipozonaReporte;
-  int idaPrioridad;
-  String zonLat;
-  String zonLon;
-  String zonImagen;
-
-  ZonaReporte(
-      {this.idcovZonareporte = 0,
-      this.idcovFuncionario,
-      this.idaTipozonaReporte,
-      this.idaPrioridad,
-      this.zonLat,
-      this.zonLon,
-      this.zonImagen});
-
-  fromJson(Map<String, dynamic> json) => new ZonaReporte(
-      idcovZonareporte: json["IDCOV_ZONAREPORTE"],
-      idcovFuncionario: json["IDCOV_FUNCIONARIO"],
-      idaTipozonaReporte: json["IDA_TIPOZONA_REPORTE"],
-      idaPrioridad: json["IDA_PRIORIDAD"],
-      zonLat: json["ZON_LAT"],
-      zonLon: json["ZON_LON"],
-      zonImagen: json["ZON_IMAGEN"]);
-
-  Map<String, dynamic> toJson() => {
-        "IDCOV_ZONAREPORTE": idcovZonareporte,
-        "IDCOV_FUNCIONARIO": idcovFuncionario,
-        "IDA_TIPOZONA_REPORTE": idaTipozonaReporte,
-        "IDA_PRIORIDAD": idaPrioridad,
-        "ZON_LAT": zonLat,
-        "ZON_LON": zonLon,
-        "ZON_IMAGEN": zonImagen
-      };
-}
-
-class Funcionario extends Entity {
-  int idcovFuncionario;
-  int idcovLogin;
-  String funNombre;
-  String funCi;
-  int idaInstitucion;
-  DateTime funFechanacimiento;
-  String funTelefono;
-  String funCorreo;
-
-  Funcionario(
-      {this.idcovFuncionario = 0,
-      this.idcovLogin,
-      this.funNombre,
-      this.funCi,
-      this.idaInstitucion,
-      this.funFechanacimiento,
-      this.funTelefono,
-      this.funCorreo});
-
-  fromJson(Map<String, dynamic> json) => new Funcionario(
-      idcovFuncionario: json["IDCOV_FUNCIONARIO"],
-      idcovLogin: json["IDCOV_LOGIN"],
-      funNombre: json["FUN_NOMBRE"],
-      funCi: json["FUN_CI"],
-      idaInstitucion: json["IDA_INSTITUCION"],
-      funFechanacimiento: json["FUN_FECHANACIMIENTO"],
-      funTelefono: json["FUN_TELEFONO"],
-      funCorreo: json["FUN_CORREO"]);
-
-  Map<String, dynamic> toJson() => {
-        "IDCOV_FUNCIONARIO": idcovFuncionario,
-        "IDCOV_LOGIN": idcovLogin,
-        "FUN_NOMBRE": funNombre,
-        "FUN_CI": funCi,
-        "IDA_INSTITUCION": idaInstitucion,
-        "FUN_FECHANACIMIENTO": funFechanacimiento,
-        "FUN_TELEFONO": funTelefono,
-        "FUN_CORREO": funCorreo
-      };
-}
-
-class Alerta extends Entity {
-  int id;
-  String nombre;
-  String ubicacion;
-
-  Alerta({this.id = 0, this.nombre, this.ubicacion});
-
-  fromJson(Map<String, dynamic> json) => new Alerta(
-      id: json["ID"],
-      nombre: json["HOS_NOMBRE"],
-      ubicacion: json["HOS_UBICACION"]);
-
-  Map<String, dynamic> toJson() =>
-      {"ID": id, "HOS_NOMBRE": nombre, "HOS_UBICACION": ubicacion};
 }
 
 class Login extends Entity {
@@ -550,6 +626,7 @@ class Login extends Entity {
   int logEstado;
   DateTime logFecharegistro;
   int logTipoingreso;
+  String usuario;
 
   Login(
       {this.idcovLogin = 0,
@@ -557,7 +634,8 @@ class Login extends Entity {
       this.logContrasenia,
       this.logEstado,
       this.logFecharegistro,
-      this.logTipoingreso});
+      this.logTipoingreso,
+      this.usuario});
 
   fromJson(Map<String, dynamic> json) => new Login(
       idcovLogin: json["IDCOV_LOGIN"],
@@ -565,7 +643,9 @@ class Login extends Entity {
       logContrasenia: json["LOG_CONTRASENIA"],
       logEstado: json["LOG_ESTADO"],
       logFecharegistro: json["LOG_FECHAREGISTRO"],
-      logTipoingreso: json["LOG_TIPOINGRESO"]);
+      logTipoingreso: json["LOG_TIPOINGRESO"],
+      usuario: json["USUARIO"],
+      );
 
   Map<String, dynamic> toJson() => {
         "IDCOV_LOGIN": idcovLogin,
@@ -573,7 +653,8 @@ class Login extends Entity {
         "LOG_CONTRASENIA": logContrasenia,
         "LOG_ESTADO": logEstado,
         "LOG_FECHAREGISTRO": logFecharegistro,
-        "LOG_TIPOINGRESO": logTipoingreso
+        "LOG_TIPOINGRESO": logTipoingreso,
+        "USUARIO": usuario
       };
 }
 

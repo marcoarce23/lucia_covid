@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:image_picker/image_picker.dart';
-
-import 'package:lucia_covid/src/Util/Validator.dart' as validator;
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 
 class VoluntaryModule extends StatefulWidget {
   const VoluntaryModule({Key key}) : super(key: key);
@@ -19,71 +17,64 @@ class VoluntaryModule extends StatefulWidget {
 }
 
 class _VoluntaryModuleState extends State<VoluntaryModule> {
+  InputTextField entidad;
+  InputTextField token;
+  InputTextField nombre;
+  InputTextField apellido;
+  InputTextField ci;
+  InputTextField telefono;
+  InputTextField email;
+  InputTextField complmementario;
+  InputSexo sexo;
+
   bool _save = false;
   File foto;
-  
+
   String _opcionSeleccionada = '';
-  String _opcionEntidad= '';
+  String _opcionEntidad = '';
+  String _opcionEspecialidad;
   String _fecha = '';
   TextEditingController _inputFieldDateController = new TextEditingController();
-  List<String> _expedido = ['CHQ','LPZ','CBB','ORU', 'PTS','TRJ', 'SCZ','BNI', 'PND' ];
-  List<String> _entidad = ['Seleccionar', 'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  'Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias','Dejame Apoyarte','BOL -110','SAR','Narices Frias',
-  ]  ;
+  List<String> _expedido = [
+    'CHQ',
+    'LPZ',
+    'CBB',
+    'ORU',
+    'PTS',
+    'TRJ',
+    'SCZ',
+    'BNI',
+    'PND'
+  ];
+  List<String> _entidad = [
+    'Seleccionar',
+    'Dejame Apoyarte',
+    'BOL -110',
+    'SAR',
+    'Narices Frias'
+  ];
 
-  int _selectedRadio;
+  List<String> _tipoEntidad = [
+    'Medicina',
+    'Psicologia',
+    'Religioso',
+    'Medicina Tradicional',
+    'Psquiatria'
+  ];
+
   int _currentIndex;
 
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
-  Hospital hospital = new Hospital();
+  Voluntary voluntario = new Voluntary();
 
   @override
   void initState() {
-    _selectedRadio = 0;
     _currentIndex = 0;
     _opcionSeleccionada = 'LPZ';
     _opcionEntidad = 'Seleccionar';
+    _opcionEspecialidad = 'Medicina'; 
     super.initState();
   }
 
@@ -105,32 +96,25 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
         },
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 25.0, color: Colors.black), 
+              icon: Icon(Icons.person, size: 25.0, color: Colors.black),
               title: Text('Voluntario')),
-           BottomNavigationBarItem(
+          BottomNavigationBarItem(
               icon: Icon(Icons.supervised_user_circle, size: 25.0),
               title: Text('Atención-RRSS')),
           BottomNavigationBarItem(
               icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Eventos')),
-       
+              title: Text('Integrantes')),
         ],
       ),
     );
   }
 
-  _setSelectedRadio(int value) {
-    setState(() {
-      _selectedRadio = value;
-    });
-  }
-
-_selectDate(BuildContext context) async {
+  selectDate(BuildContext context) async {
     DateTime picked = await showDatePicker(
       context: context,
       initialDate: new DateTime.now(),
-      firstDate: new DateTime(2020,3),
-      lastDate: new DateTime(2025,12),
+      firstDate: new DateTime(2020, 3),
+      lastDate: new DateTime(2025, 12),
       //    locale: Locale('es', 'ES')
     );
 
@@ -142,7 +126,7 @@ _selectDate(BuildContext context) async {
     }
   }
 
- List<DropdownMenuItem<String>> getOpcionesDropdown() {
+  List<DropdownMenuItem<String>> getOpcionesDropdown() {
     List<DropdownMenuItem<String>> lista = new List();
 
     _expedido.forEach((expedido) {
@@ -154,24 +138,11 @@ _selectDate(BuildContext context) async {
     return lista;
   }
 
-List<DropdownMenuItem<String>> getEntidadDropdown() {
-    List<DropdownMenuItem<String>> lista = new List();
-
-    _entidad.forEach((entidad) {
-      lista.add(DropdownMenuItem(
-        child: Text(entidad),
-        value: entidad,
-      ));
-    });
-    return lista;
-  }
-
   @override
   Widget build(BuildContext context) {
-    
-    final Hospital hospitalData = ModalRoute.of(context).settings.arguments;
+    final Voluntary voluntaryData = ModalRoute.of(context).settings.arguments;
 
-    if (hospitalData != null) hospital = hospitalData;
+    if (voluntaryData != null) voluntario = voluntaryData;
 
     return Scaffold(
         key: scaffoldKey,
@@ -186,16 +157,29 @@ List<DropdownMenuItem<String>> getEntidadDropdown() {
   }
 
   AppBar _appBar() {
-      return AppBar(
-          title: Text('REGISTRO VOLUNTARIO'),
-          backgroundColor: Colors.orange,
-          actions: <Widget>[
-            _crearIconAppImagenes(), 
-            _crearIconAppCamara()
-          ],
-      );
+    return AppBar(
+      title: Text('REGISTRO VOLUNTARIO'),
+      backgroundColor: Colors.orange,
+      actions: <Widget>[_crearIconAppImagenes(), _crearIconAppCamara()],
+    );
   }
+
+ _crearIconAppImagenes() {
+    return IconButton(
+      icon: Icon(Icons.photo_size_select_actual),
+      onPressed: _seleccionarFoto,
+    );
+  }
+
+  _crearIconAppCamara() {
+    return IconButton(
+      icon: Icon(Icons.camera_alt),
+      onPressed: _tomarFoto,
+    );
+  }
+
  
+  
   Widget _crearForm(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
@@ -215,44 +199,52 @@ List<DropdownMenuItem<String>> getEntidadDropdown() {
               decoration: _crearContenedorCampos(),
               child: _crearCampos(),
             ),
-           
-       crearLucia(),
+            crearLucia(),
           ],
         ),
-        
       ),
-
-      
-
     );
-
-     
   }
 
   Widget _crearCampos() {
+    entidad =
+        InputTextField(Icon(Icons.business), 'Institución/entidad', '', '');
+    token = InputTextField(Icon(Icons.security), 'Ingrese el token', '', '');
+    nombre = InputTextField(Icon(Icons.person_add), 'Nombre:', '', '');
+    apellido = InputTextField(Icon(Icons.person_pin), 'Apellidos:', '', '');
+    ci = InputTextField(
+        Icon(Icons.access_alarm), 'Documento de Identidad:', '', '');
+    telefono = InputTextField(Icon(Icons.phone_android), 'Telefono:', '', '');
+    email = InputTextField(
+        Icon(Icons.alternate_email), 'Correo electrónico:', '', '');
+    complmementario = InputTextField(
+        Icon(Icons.insert_comment), 'Información complementaria', '', '');
+    sexo = InputSexo();
+
     return Column(
       children: <Widget>[
-         _crearEntidad(),
-         _crearToken('Ingrese el token:'),
-        _crearNombre('Nombres:'),
-        _crearApellidos('Apellidos:'),
-        _crearApellidos('Especialidad:'),
-        Row( children: <Widget>[
+        _crearEntidad(),
+        entidad,
+        token,
+        nombre,
+        apellido,
+        _crearTipoEspecialidad(),
+        Row(
+          children: <Widget>[
             Expanded(
-              child: _crearCI('Documento de Identidad'),),
-             _crearExpedido(),
+              child: ci,
+            ),
+            _crearExpedido(),
           ],
         ),
-        _crearTelefono('Telefono'),
-        _crearSexo('Sexo'),
-        _crearEmail('Correo ELectrónico'),
+        telefono,
+        sexo,
+        email,
         _crearEsCovid('Ayuda Covid'),
 
-        _crearObservacion('Información complementaria'),
+        complmementario,
         _crearBoton(resource.save),
-        // _forgetPassword(),
       ],
-      
     );
   }
 
@@ -262,139 +254,12 @@ List<DropdownMenuItem<String>> getEntidadDropdown() {
       title: Text(text),
       activeColor: Colors.deepPurple,
       onChanged: (value) => setState(() {
-     //   producto.disponible = value;
+        //   producto.disponible = value;
       }),
     );
   }
 
-  Widget _crearObservacion(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextFormField(
-        textCapitalization: TextCapitalization.sentences,
-        initialValue: hospital.nombre,
-        enableInteractiveSelection: true,
-        enableSuggestions: true,
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-          //  hintText: 'Ingrese el correo elecrrónico válido',
-          focusColor: Colors.blue,
-          labelText: text,
-          icon: Icon(Icons.edit, color: Colors.orange),
-        ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
-        onSaved: (value) => hospital.nombre = value,
-      ),
-    );
-  }
-
- Widget _crearNombre(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextFormField(
-        initialValue: hospital.nombre,
-        textCapitalization: TextCapitalization.sentences,
-        enableInteractiveSelection: true,
-
-        enableSuggestions: true,
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          focusColor: Colors.blue,
-          hintText: 'Nombre',
-          labelText: text,
-          icon: Icon(Icons.person_pin, color: Colors.orange),
-        ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
-        onSaved: (value) => hospital.nombre = value,
-      ),
-    );
-  }
-
-  Widget _crearApellidos(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextFormField(
-        textCapitalization: TextCapitalization.sentences,
-        initialValue: hospital.nombre,
-        enableInteractiveSelection: true,
-        enableSuggestions: true,
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-          //  hintText: 'Ingrese el correo elecrrónico válido',
-          focusColor: Colors.blue,
-          labelText: text,
-          icon: Icon(Icons.person_outline, color: Colors.orange),
-        ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
-        onSaved: (value) => hospital.nombre = value,
-      ),
-    );
-  }
- 
-  Widget _crearTelefono(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextFormField(
-        initialValue: hospital.nombre,
-        keyboardType: TextInputType.number,
-        enableInteractiveSelection: true,
-        enableSuggestions: true,
-        decoration: InputDecoration(
-          //  hintText: 'Ingrese el correo elecrrónico válido',
-          focusColor: Colors.blue,
-          labelText: text,
-          icon: Icon(Icons.phone, color: Colors.orange),
-        ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
-        onSaved: (value) => hospital.nombre = value,
-      ),
-    );
-  }
-
-  Widget _crearCI(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextFormField(
-        initialValue: hospital.nombre,
-        keyboardType: TextInputType.text,
-        enableInteractiveSelection: true,
-        maxLength: 10,
-        enableSuggestions: true,
-        decoration: InputDecoration(
-          //  hintText: 'Ingrese el correo elecrrónico válido',
-          focusColor: Colors.blue,
-          labelText: text,
-          icon: Icon(Icons.note, color: Colors.orange),
-        ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
-        onSaved: (value) => hospital.nombre = value,
-      ),
-    );
-  }
-
-Widget _crearToken(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextFormField(
-        initialValue: hospital.nombre,
-        keyboardType: TextInputType.text,
-        enableInteractiveSelection: true,
-        maxLength: 10,
-        enableSuggestions: true,
-        decoration: InputDecoration(
-          hintText: 'Ingrese el token proporcionado',
-          helperText: 'ej: 4XDF43F',
-          focusColor: Colors.blue,
-          labelText: text,
-          icon: Icon(Icons.note, color: Colors.orange),
-        ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
-        onSaved: (value) => hospital.nombre = value,
-      ),
-    );
-  }
-
- Widget _crearExpedido() {
+  Widget _crearExpedido() {
     return Row(
       children: <Widget>[
         DropdownButton(
@@ -410,13 +275,24 @@ Widget _crearToken(String text) {
     );
   }
 
- Widget _crearEntidad() {
+  List<DropdownMenuItem<String>> getEntidadDropdown() {
+    List<DropdownMenuItem<String>> lista = new List();
+
+    _entidad.forEach((entidad) {
+      lista.add(DropdownMenuItem(
+        child: Text(entidad),
+        value: entidad,
+      ));
+    });
+    return lista;
+  }
+
+  Widget _crearEntidad() {
     return Row(
       children: <Widget>[
         SizedBox(width: 30.0),
-        
         Text('Entidad:'),
-         SizedBox(width: 30.0),
+        SizedBox(width: 30.0),
         DropdownButton(
           value: _opcionEntidad,
           items: getEntidadDropdown(),
@@ -430,58 +306,51 @@ Widget _crearToken(String text) {
       ],
     );
   }
-  
 
-   Widget _crearSexo(String text) {
-    return Column(
+List<DropdownMenuItem<String>> getTipoEntidadDropdown() {
+    List<DropdownMenuItem<String>> lista = new List();
+
+    _tipoEntidad.forEach((tipoEntidad) {
+      lista.add(DropdownMenuItem(
+        child: Text(tipoEntidad),
+        value: tipoEntidad,
+      ));
+    });
+    return lista;
+  }
+
+  Widget _crearTipoEspecialidad() {
+    return Row(
       children: <Widget>[
-        ListTile(
-          title: Text('Masculino'),
-          leading: Radio(
-            value: 0,
-            activeColor: Colors.orangeAccent,
-            groupValue: _selectedRadio,
-            onChanged: (value) {
-              _setSelectedRadio(value);
-            },
-          ),
-        ),
-        ListTile(
-          title: Text('Femenino'),
-          leading: Radio(
-            value: 1,
-            activeColor: Colors.orangeAccent,
-            groupValue: _selectedRadio,
-            onChanged: (value) {
-              _setSelectedRadio(value);
-            },
-          ),
+        SizedBox(width: 30.0),
+        Text('Especialidad:'),
+        SizedBox(width: 30.0),
+        DropdownButton(
+          value: _opcionEspecialidad,
+          items: getTipoEntidadDropdown(),
+          icon: Icon(Icons.supervised_user_circle, color: Colors.orange),
+          onChanged: (opt) {
+            setState(() {
+              _opcionEspecialidad = opt;
+            });
+          },
         ),
       ],
     );
   }
+  // List<DropdownMenuItem<String>>  _crearEntidad()
+  // {
+  //   return FutureBuilder(
+  //     future: generic.getAll(new Hospital()),
+  //     builder: (BuildContext context, AsyncSnapshot<List<Entity>> snapshot) {
+  //       if (snapshot.hasData) {
 
-  Widget _crearEmail(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextFormField(
-        initialValue: hospital.nombre,
-        enableInteractiveSelection: true,
-        maxLength: 30,
-        enableSuggestions: true,
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          //  hintText: 'Ingrese el correo elecrrónico válido',
-          focusColor: Colors.blue,
-          labelText: 'Correo electrónico:',
-          helperText: 'ej: juan.perez@gmail.com',
-          icon: Icon(Icons.alternate_email, color: Colors.orange),
-        ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
-        onSaved: (value) => hospital.nombre = value,
-      ),
-    );
-  }
+  //       } else
+  //         return Center(child: CircularProgressIndicator());
+  //     },
+
+  //   );
+  // }
 
   _crearContenedorCampos() {
     return BoxDecoration(
@@ -496,19 +365,6 @@ Widget _crearToken(String text) {
         ]);
   }
 
-  _crearIconAppImagenes() {
-    return IconButton(
-      icon: Icon(Icons.photo_size_select_actual),
-      onPressed: _seleccionarFoto,
-    );
-  }
-
-  _crearIconAppCamara() {
-    return IconButton(
-      icon: Icon(Icons.camera_alt),
-      onPressed: _tomarFoto,
-    );
-  }
 
   Widget _crearBoton(String text) {
     return Container(
@@ -534,30 +390,34 @@ Widget _crearToken(String text) {
       _save = true;
     });
 
-    if (hospital.nombre == null) {
-      // generic.add(citizen);
-      print("INSERTOOOO");
-    } else {
-      //  generic.update(citizen);
-      print("MODIFICO");
-    }
+    voluntario.perNombrepersonal = nombre.objectValue;
+    voluntario.perApellido = apellido.objectValue;
+    print('NOMBREERE: ${voluntario.perNombrepersonal}');
+    print('ubicaion: ${voluntario.perApellido}');
 
-    setState(() {
-      _save = false;
-    });
+    // if (hospital.nombre == null) {
+    //   // generic.add(citizen);
+    //   print("INSERTOOOO");
+    // } else {
+    //   //  generic.update(citizen);
+    //   print("MODIFICO");
+    // }
+
+    // setState(() {
+    //   _save = false;
+    // });
 
     //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
   }
 
-  _seleccionarFoto() async =>  _procesarImagen(ImageSource.gallery); 
-  _tomarFoto() async =>        _procesarImagen(ImageSource.camera);
+  _seleccionarFoto() async => _procesarImagen(ImageSource.gallery);
+  _tomarFoto() async => _procesarImagen(ImageSource.camera);
   _procesarImagen(ImageSource origen) async {
     foto = await ImagePicker.pickImage(source: origen);
 
     if (foto != null) {
-      hospital.nombre = null;
+      voluntario.perNombrepersonal = null;
     }
     setState(() {});
   }
-
 }

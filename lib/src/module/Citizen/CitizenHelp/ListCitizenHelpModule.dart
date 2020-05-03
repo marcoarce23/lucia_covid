@@ -3,17 +3,19 @@ import 'package:intl/intl.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/ListEntity.dart';
+import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenInstitution/CitizenInstitutionModule.dart';
 
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 
-class ListAmbulanceModule extends StatefulWidget {
+class ListCitizenHelpModule extends StatefulWidget {
   @override
-  _ListAmbulanceModuleState createState() => _ListAmbulanceModuleState();
+  _ListCitizenHelpModuleState createState() => _ListCitizenHelpModuleState();
 }
 
-class _ListAmbulanceModuleState extends State<ListAmbulanceModule> {
+class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
 final generic = new Generic();
+ int _currentIndex =0; 
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,33 @@ final generic = new Generic();
           ),
           futureItemsInstitution(context)
         ],
+      ),
+       bottomNavigationBar: _bottomNavigationBar(context)
+    );
+  }
+  Widget _bottomNavigationBar(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(
+          canvasColor: Colors.white,
+          primaryColor: Colors.blue,
+          textTheme: Theme.of(context).textTheme.copyWith(
+              caption: TextStyle(color: Colors.blueGrey))),
+      child: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (value) {
+          setState(() {
+             _currentIndex = value;
+            callHelp(_currentIndex, context);
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person, size: 25.0), title: Text('Colabora')),
+        
+          BottomNavigationBarItem(
+              icon: Icon(Icons.bubble_chart, size: 25.0),
+              title: Text('Listado solicitudes')),
+         ],
       ),
     );
   }

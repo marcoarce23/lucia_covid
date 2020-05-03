@@ -103,7 +103,7 @@ List<String> _tipoSubCatalogo = [
         
           BottomNavigationBarItem(
               icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Materiales')),
+              title: Text('Listado Multimedia')),
          ],
       ),
     );

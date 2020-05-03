@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
-import 'package:lucia_covid/src/Util/Validator.dart' as validator;
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 
 class AtentionEntityModule extends StatefulWidget {
   AtentionEntityModule({Key key}) : super(key: key);
@@ -17,13 +16,22 @@ class AtentionEntityModule extends StatefulWidget {
 
 class _AtentionEntityModuleState extends State<AtentionEntityModule> {
  bool _save = false;
-  bool _lun = false;
-  bool _mar = false;
-  bool _mie = false;
-  bool _jue = false;
-  bool _vie = false;
-  bool _sab = false;
-  bool _dom = false;
+  
+   InputCheckBox lunes;
+  InputCheckBox martes;
+  InputCheckBox miercoles;
+  InputCheckBox jueves;
+  InputCheckBox viernes;
+  InputCheckBox sabado;
+  InputCheckBox domingo;
+
+     InputTextField lunesH;
+  InputTextField martesH;
+  InputTextField miercolesH;
+  InputTextField juevesH;
+  InputTextField viernesH;
+  InputTextField sabadoH;
+  InputTextField domingoH;
   
   int _currentIndex;
 
@@ -87,10 +95,8 @@ TimeOfDay _time;
               icon: Icon(Icons.person, size: 25.0), title: Text('Institucion')),
           BottomNavigationBarItem(
               icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Atención')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.supervised_user_circle, size: 25.0),
-              title: Text('Eventos')),
+              title: Text('Horario Atención')),
+         
         ],
       ),
     );
@@ -273,30 +279,24 @@ TimeOfDay _time;
   }
 
 
- Widget _crearTime() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextField(
-        enableInteractiveSelection: false,
-        controller: _inputFieldTimeController,
-        decoration: InputDecoration(
-            // border: OutlineInputBorder(
-            //   borderRadius: BorderRadius.circular(20.0)
-            // ),
-            hintText: 'Hora del evento',
-            labelText: 'Hora del evento',
-            //    suffixIcon: Icon(Icons.perm_contact_calendar),
-            icon: Icon(Icons.timer, color: Colors.orange)),
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-          _selectTime(context);
-        },
-      ),
-    );
-  }
-
 
   Widget _crearCampos() {
+        lunes= InputCheckBox('Lun');
+martes= InputCheckBox('Mar');
+miercoles= InputCheckBox('Mie');
+jueves= InputCheckBox('Jue');
+viernes= InputCheckBox('Vie');
+sabado= InputCheckBox('Sab');
+domingo= InputCheckBox('Dom');
+
+        lunesH= InputTextField(Icon(Icons.watch_later), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
+martesH= InputTextField(Icon(Icons.watch_later), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
+miercolesH= InputTextField(Icon(Icons.watch_later), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
+juevesH= InputTextField(Icon(Icons.watch_later), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
+viernesH= InputTextField(Icon(Icons.watch_later), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
+sabadoH= InputTextField(Icon(Icons.watch_later), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
+domingoH= InputTextField(Icon(Icons.watch_later), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
+
     return Column(
       children: <Widget>[
         Text(
@@ -306,18 +306,15 @@ TimeOfDay _time;
         Row(
           children: <Widget>[
             Expanded(
-              child: _crearLu(),
+              child: lunes,
               
             ),
 
              Expanded(
-              child: _crearTime(),
+              child: lunesH,
               
             ),
-             Expanded(
-              child: _crearTime(),
-              
-            ),
+         
           //  _crearTime(),
           ],
         ),
@@ -325,92 +322,74 @@ TimeOfDay _time;
          Row(
           children: <Widget>[
             Expanded(
-              child: _crearLu(),
+              child: martes,
             ),
              Expanded(
-              child: _crearTime(),
+              child: martesH,
               
             ),
-             Expanded(
-              child: _crearTime(),
-              
-            ),
+            
           ],
         ),
 
          Row(
           children: <Widget>[
             Expanded(
-              child: _crearLu(),
+              child: miercoles,
             ),
              Expanded(
-              child: _crearTime(),
+              child: miercolesH,
               
             ),
-             Expanded(
-              child: _crearTime(),
-              
-            ),
+            
           ],
         ),
          Row(
           children: <Widget>[
             Expanded(
-              child: _crearLu(),
+              child: jueves,
             ),
              Expanded(
-              child: _crearTime(),
+              child: juevesH,
               
             ),
-             Expanded(
-              child: _crearTime(),
-              
-            ),
+            
           ],
         ),
          Row(
           children: <Widget>[
             Expanded(
-              child: _crearLu(),
+              child: viernes,
             ),
              Expanded(
-              child: _crearTime(),
+              child: viernesH,
               
             ),
-             Expanded(
-              child: _crearTime(),
-              
-            ),
+            
           ],
         ),
          Row(
           children: <Widget>[
             Expanded(
-              child: _crearLu(),
+              child: sabado,
             ),
              Expanded(
-              child: _crearTime(),
+              child: sabadoH,
               
             ),
-             Expanded(
-              child: _crearTime(),
-              
-            ),
+            
           ],
         ),
          Row(
           children: <Widget>[
             Expanded(
-              child: _crearLu(),
+              child: domingo,
             ),
              Expanded(
-              child: _crearTime(),
+              child: domingoH,
               
             ),
-             Expanded(
-              child: _crearTime(),
-              
-            ),
+            
           ],
         ),
         
@@ -419,106 +398,7 @@ TimeOfDay _time;
     );
   }
 
-  Widget _crearLu() {
-    return CheckboxListTile(
-        title: new Text('Lun.'), 
-        value: _lun, 
-        onChanged: (value) {
-          setState(() {
-             _lun = value;
-          });
-        }
-    );
-  }
-
- Widget _crearMa() {
-    return CheckboxListTile(
-        title: new Text('Mar.'), 
-        value: _mar, 
-        onChanged: (value) {
-          setState(() {
-             _mar = value;
-          });
-        }
-    );
-  }
-   Widget _crearMi() {
-    return CheckboxListTile(
-        title: new Text('Mie.'), 
-        value: _mie, 
-        onChanged: (value) {
-          setState(() {
-             _mie = value;
-          });
-        }
-    );
-  }
-   Widget _crearJu() {
-    return CheckboxListTile(
-        title: new Text('Jue.'), 
-        value: _jue, 
-        onChanged: (value) {
-          setState(() {
-             _jue = value;
-          });
-        }
-    );
-  }
-   Widget _crearVi() {
-    return CheckboxListTile(
-        title: new Text('Vie.'), 
-        value: _vie, 
-        onChanged: (value) {
-          setState(() {
-             _vie = value;
-          });
-        }
-    );
-  }
-   Widget _crearSa() {
-    return CheckboxListTile(
-        title: new Text('Sab.'), 
-        value: _sab, 
-        onChanged: (value) {
-          setState(() {
-             _sab = value;
-          });
-        }
-    );
-  }
-   Widget _crearDo() {
-    return CheckboxListTile(
-        title: new Text('Dom.'), 
-        value: _dom, 
-        onChanged: (value) {
-          setState(() {
-             _dom = value;
-          });
-        }
-    );
-  }
-  Widget _crearTitulo(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextFormField(
-        initialValue: hospital.nombre,
-        textCapitalization: TextCapitalization.sentences,
-        enableInteractiveSelection: true,
-        enableSuggestions: true,
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          focusColor: Colors.blue,
-          hintText: text,
-          labelText: text,
-          icon: Icon(Icons.add_box, color: Colors.orange),
-        ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
-        onSaved: (value) => hospital.nombre = value,
-      ),
-    );
-  }
-
-  _crearContenedorCampos() {
+   _crearContenedorCampos() {
     return BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(35.0),
@@ -534,19 +414,19 @@ TimeOfDay _time;
 
 
 
-  _crearContenedorCamposRRSS() {
-    return BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(35.0),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.black26,
-              blurRadius: 7.0,
-              offset: Offset(0.0, 5.0),
-              spreadRadius: 7.0)
-        ]
-      );
-  }
+  // _crearContenedorCamposRRSS() {
+  //   return BoxDecoration(
+  //       color: Colors.white,
+  //       borderRadius: BorderRadius.circular(35.0),
+  //       boxShadow: <BoxShadow>[
+  //         BoxShadow(
+  //             color: Colors.black26,
+  //             blurRadius: 7.0,
+  //             offset: Offset(0.0, 5.0),
+  //             spreadRadius: 7.0)
+  //       ]
+  //     );
+  // }
   Widget _crearBoton(String text) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 100.0),
@@ -586,43 +466,43 @@ TimeOfDay _time;
     //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
   }
 
-  Widget _crearBotonRRSS(String text) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 100.0),
-      width: MediaQuery.of(context).size.width,
-      child: RaisedButton.icon(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: Colors.blue,
-        textColor: Colors.white,
-        label: Text(text),
-        icon: Icon(Icons.save),
-        onPressed: (_save) ? null : _submit,
-      ),
-    );
-  }
+  // Widget _crearBotonRRSS(String text) {
+  //   return Container(
+  //     padding: EdgeInsets.symmetric(horizontal: 100.0),
+  //     width: MediaQuery.of(context).size.width,
+  //     child: RaisedButton.icon(
+  //       shape:
+  //           RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+  //       color: Colors.blue,
+  //       textColor: Colors.white,
+  //       label: Text(text),
+  //       icon: Icon(Icons.save),
+  //       onPressed: (_save) ? null : _submit,
+  //     ),
+  //   );
+  // }
 
-  _submit2() async {
-    if (!formKey.currentState.validate()) return;
+  // _submit2() async {
+  //   if (!formKey.currentState.validate()) return;
 
-    formKey.currentState.save();
-    setState(() {
-      _save = true;
-    });
+  //   formKey.currentState.save();
+  //   setState(() {
+  //     _save = true;
+  //   });
 
-    if (hospital.nombre == null) {
-      // generic.add(citizen);
-      print("INSERTOOOO");
-    } else {
-      //  generic.update(citizen);
-      print("MODIFICO");
-    }
+  //   if (hospital.nombre == null) {
+  //     // generic.add(citizen);
+  //     print("INSERTOOOO");
+  //   } else {
+  //     //  generic.update(citizen);
+  //     print("MODIFICO");
+  //   }
 
-    setState(() {
-      _save = false;
-    });
+  //   setState(() {
+  //     _save = false;
+  //   });
 
-    //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
-  }
+  //   //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
+  // }
 
 }

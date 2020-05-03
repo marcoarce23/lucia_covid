@@ -2,14 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
-import 'package:image_picker/image_picker.dart';
-
-import 'package:lucia_covid/src/Util/Validator.dart' as validator;
+import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 
 class CitizenHelpModule extends StatefulWidget {
 
@@ -19,9 +17,13 @@ class CitizenHelpModule extends StatefulWidget {
 }
 
 class _CitizenHelpModuleState extends State<CitizenHelpModule> {
+   InputTextField nombre;
+   InputPhoneField telefono;
+  InputMultilineField ubicacion;
+
  bool _save = false;
   File foto;
-
+ int _currentIndex =0; 
   String _opcionSeleccionadaTipoAyuda = '';
   String _opcionSeleccionadaPrioridad = '';
 
@@ -94,6 +96,7 @@ List<DropdownMenuItem<String>> getOpcionesPrioridad() {
           _crearForm(context),
         ],
       ),
+      bottomNavigationBar: _bottomNavigationBar(context)
     );
   }
 
@@ -101,9 +104,37 @@ List<DropdownMenuItem<String>> getOpcionesPrioridad() {
     return AppBar(
       title: Text('AYUDA A UN AMIG@'),
       backgroundColor: Colors.orange,
-      actions: <Widget>[_crearIconAppImagenes(), _crearIconAppCamara()],
+    
     );
   }
+
+    Widget _bottomNavigationBar(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(
+          canvasColor: Colors.white,
+          primaryColor: Colors.blue,
+          textTheme: Theme.of(context).textTheme.copyWith(
+              caption: TextStyle(color: Colors.blueGrey))),
+      child: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (value) {
+          setState(() {
+             _currentIndex = value;
+            callHelp(_currentIndex, context);
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person, size: 25.0), title: Text('Colabora')),
+        
+          BottomNavigationBarItem(
+              icon: Icon(Icons.bubble_chart, size: 25.0),
+              title: Text('Listado solicitudes')),
+         ],
+      ),
+    );
+  }
+
 
 Widget informacionProfesional(BuildContext context) {
     return Center(
@@ -157,15 +188,6 @@ Widget informacionProfesional(BuildContext context) {
             ),
 
             Divider(),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                crearIconoProfesional(Icons.mail, 'Correo'),
-                crearIconoProfesional(Icons.phone, 'Correo'),
-                crearIconoProfesional(Icons.bug_report, 'Ayuda con covid'),
-              ],
-            ),
           ],
         ),
       ),
@@ -247,82 +269,24 @@ Image imagenProfesional() {
   }
 
   Widget _crearCampos() {
+
+    nombre =   InputTextField(Icon(Icons.business), 'Persona a poyar', '', '');
+    telefono =  InputPhoneField(Icon(Icons.business), 'Telefono de referencia', '', '');
+    ubicacion =  InputMultilineField(Icon(Icons.business), 'Donde la encuentro', '', '');
     return Column(
       children: <Widget>[
           Text('AYUDA A UN AMIG@', style: TextStyle(fontSize: 18, color: Colors.black),),
-        _crearNombre('Persona a poyar'),
-        _crearTelefonoContacto('Telefono de referencia'),
-        _crearUbicacion('Ubicación'),
-       
-           _crearTipoApoyo(),
-         
+        nombre,
+        telefono,
+        ubicacion,
+        _crearTipoApoyo(),
         _crearTipoPrioridad(),
         _crearBoton(resource.save),
       ],
     );
   }
 
-  Widget _crearNombre(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextFormField(
-        initialValue: hospital.nombre,
-        textCapitalization: TextCapitalization.sentences,
-        enableInteractiveSelection: true,
-        enableSuggestions: true,
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          focusColor: Colors.blue,
-          hintText: 'Nombre',
-          labelText: text,
-          icon: Icon(Icons.person_pin, color: Colors.orange),
-        ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
-        onSaved: (value) => hospital.nombre = value,
-      ),
-    );
-  }
-
-  Widget _crearUbicacion(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextFormField(
-        textCapitalization: TextCapitalization.sentences,
-        initialValue: hospital.nombre,
-        enableInteractiveSelection: true,
-        enableSuggestions: true,
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-          //  hintText: 'Ingrese el correo elecrrónico válido',
-          focusColor: Colors.blue,
-          labelText: text,
-          icon: Icon(Icons.person_outline, color: Colors.orange),
-        ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
-        onSaved: (value) => hospital.nombre = value,
-      ),
-    );
-  }
-
-  Widget _crearTelefonoContacto(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextFormField(
-        initialValue: hospital.nombre,
-        keyboardType: TextInputType.number,
-        enableInteractiveSelection: true,
-        enableSuggestions: true,
-        decoration: InputDecoration(
-          //  hintText: 'Ingrese el correo elecrrónico válido',
-          focusColor: Colors.blue,
-          labelText: text,
-          icon: Icon(Icons.phone, color: Colors.orange),
-        ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
-        onSaved: (value) => hospital.nombre = value,
-      ),
-    );
-  }
+ 
 
   Widget _crearTipoApoyo() {
     return Row(
@@ -381,19 +345,7 @@ SizedBox(width:35.0),
         ]);
   }
 
-  _crearIconAppImagenes() {
-    return IconButton(
-      icon: Icon(Icons.photo_size_select_actual),
-      onPressed: _seleccionarFoto,
-    );
-  }
-
-  _crearIconAppCamara() {
-    return IconButton(
-      icon: Icon(Icons.camera_alt),
-      onPressed: _tomarFoto,
-    );
-  }
+  
 
   Widget _crearBoton(String text) {
     return Container(
@@ -433,14 +385,5 @@ SizedBox(width:35.0),
 
     //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
   }
-  _seleccionarFoto() async => _procesarImagen(ImageSource.gallery);
-  _tomarFoto() async => _procesarImagen(ImageSource.camera);
-  _procesarImagen(ImageSource origen) async {
-    foto = await ImagePicker.pickImage(source: origen);
 
-    if (foto != null) {
-      hospital.nombre = null;
-    }
-    setState(() {});
-  }
 }

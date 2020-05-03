@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
-import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
-import 'package:lucia_covid/src/module/Citizen/CitizenNews/CitizenNewsModule.dart';
 import 'package:lucia_covid/src/module/CitizenPage/CitizenModule.dart';
+import 'package:lucia_covid/src/module/Entity/EntityModule.dart';
 import 'package:lucia_covid/src/module/InitialPages/SlideShowModule.dart';
 import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
 import 'package:lucia_covid/src/module/Login/RegisterLoginModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
-import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
+
 import 'package:lucia_covid/src/module/SplashScreen/SplashScreenModule.dart';
+import 'package:lucia_covid/src/module/Voluntary/AtentionModule.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
       //home: new ListCitizenModule(),
       //initialRoute: SplashScreenModule(),
 
-      home: new CitizenLayoutMenuModule(),//(,//IntroScreen(),
+      home: new EntityModule(),//(,//IntroScreen(),
 
       routes: <String, WidgetBuilder>{
         'Splash': (BuildContext context) => new SplashScreenModule(),
