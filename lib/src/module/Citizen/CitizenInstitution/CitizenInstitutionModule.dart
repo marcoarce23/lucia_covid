@@ -46,35 +46,37 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
         ),
         //backgroundColor: AppTheme.themeColorNaranja,
       ),
-      body: Column(children: <Widget>[
-        cabeceraInstitucion(screenHeigh, screenwidth),
+      body: SingleChildScrollView(
+              child: Column(children: <Widget>[
+          cabeceraInstitucion(screenHeigh, screenwidth),
 
-        Align(
-          alignment: Alignment.topLeft,
-          child: Container(
-            child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  "Grupo de voluntarios",
-                  style: AppTheme.themeTitulo,
-                )),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    "Grupo de voluntarios",
+                    style: AppTheme.themeTitulo,
+                  )),
+            ),
           ),
-        ),
-        futureCuerpoProfesionales(context),
-        Align(
-          alignment: Alignment.topLeft,
-          child: Container(
-            child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  "Galeria de fotos",
-                  style: AppTheme.themeTitulo,
-                )),
+          futureCuerpoProfesionales(context),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    "Galeria de fotos",
+                    style: AppTheme.themeTitulo,
+                  )),
+            ),
           ),
-        ),
-        futureMultimedia(context),
-        //cuerpoProfesionales()
-      ]),
+          futureMultimedia(context),
+          //cuerpoProfesionales()
+        ]),
+      ),
     );
   }
 

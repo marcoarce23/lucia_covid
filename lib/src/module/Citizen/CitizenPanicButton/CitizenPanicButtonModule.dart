@@ -25,7 +25,7 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
                 IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
             elevation: 0,
             title: Text(
-              "Botón de pánico",
+              "Botón de ayuda",
               style: TextStyle(
                   color: AppTheme.themeColorNaranja,
                   fontSize: 17,
@@ -43,9 +43,9 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
                     style: AppTheme.themeTitulo,
                   ),
                 ),
-                ButtonPanic(titulo: "Boton COVID"),
+                ButtonPanic(titulo: "Boton ayuda "),
                 ButtonPanic(titulo: "Boton emergencia medica"),
-                ButtonPanic(titulo: "Boton emergencia por comida"),
+                ButtonPanic(titulo: "Boton por abastecimiento"),
               ],
             ),
           )),
@@ -110,12 +110,12 @@ class _ButtonPanic extends State<ButtonPanic> {
               //color: Colors.white
             ),
             //color: Colors.red,
-            margin: EdgeInsets.only(top: 5, left: 20, right: 20),
+            margin: EdgeInsets.only(top: 5, left: 15, right: 15),
             child: Padding(
-                padding: const EdgeInsets.only(top: 2.0,),
+                padding: const EdgeInsets.only(top: 0.0,),
                 child: ListTile(
                   title: Container(
-                    padding: EdgeInsets.only(top: 1, left: 10),
+                    padding: EdgeInsets.only(top: 1, left: 5),
                     //height: 20.0,
                     child: Column(
                       children: <Widget>[
@@ -138,7 +138,7 @@ class _ButtonPanic extends State<ButtonPanic> {
                         Row(
                           children: <Widget>[
                             Text(
-                              "Alta",
+                              "Muy Alta",
                               style: TextStyle(
                                   fontSize: 12, fontWeight: FontWeight.w700),
                             ),
@@ -151,7 +151,7 @@ class _ButtonPanic extends State<ButtonPanic> {
                                     checkLow = false;
                                   });
                                 }),
-                            Text("Media",
+                            Text("Alta",
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.w700)),
                             Checkbox(
@@ -163,7 +163,7 @@ class _ButtonPanic extends State<ButtonPanic> {
                                     checkLow = false;
                                   });
                                 }),
-                            Text("Bajas",
+                            Text("Media",
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.w700)),
                             Checkbox(
@@ -185,6 +185,18 @@ class _ButtonPanic extends State<ButtonPanic> {
                             labelText: "Detalle",
                             border: InputBorder.none,
                             hintText: 'Ingrese alguna observacion',
+                            hintStyle:
+                                TextStyle(fontSize: 12, color: Colors.black),
+                          ),
+                        ),
+                        TextFormField(
+                          style: TextStyle(color: Colors.black, fontSize: 13),
+                          decoration: InputDecoration(
+                            labelStyle:
+                                TextStyle(fontSize: 13, color: Colors.black),
+                            labelText: "Nro telefonico",
+                            border: InputBorder.none,
+                            hintText: 'Ingrese el número de telefono para comunicarnos',
                             hintStyle:
                                 TextStyle(fontSize: 12, color: Colors.black),
                           ),
@@ -226,61 +238,4 @@ class _ButtonPanic extends State<ButtonPanic> {
     */
   }
 
-  Widget contentPanicButton() {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        margin: new EdgeInsets.only(left: 120.0, top: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              height: 20.0,
-              child: Row(
-                children: <Widget>[
-                  Text("Altas"),
-                  Checkbox(
-                      value: checkHigh,
-                      onChanged: (bool value) {
-                        setState(() {
-                          checkHigh = true;
-                          checkModerate = false;
-                          checkLow = false;
-                        });
-                      }),
-                  Text("Medias"),
-                  Checkbox(
-                      value: checkModerate,
-                      onChanged: (bool value) {
-                        setState(() {
-                          checkHigh = false;
-                          checkModerate = true;
-                          checkLow = false;
-                        });
-                      }),
-                  Text("Bajas"),
-                  Checkbox(
-                      value: checkLow,
-                      onChanged: (bool value) {
-                        setState(() {
-                          checkHigh = false;
-                          checkModerate = false;
-                          checkLow = true;
-                        });
-                      })
-                ],
-              ),
-            ),
-            TextFormField(
-              style: TextStyle(color: Colors.white, fontSize: 14),
-              decoration: InputDecoration(
-                  labelText: "Detalle",
-                  border: InputBorder.none,
-                  hintText: 'Ingrese alguna observacion'),
-            )
-          ],
-        ),
-      ),
-    );
-  }
 }

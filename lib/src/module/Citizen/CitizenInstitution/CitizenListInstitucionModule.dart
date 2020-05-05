@@ -19,7 +19,7 @@ class _CitizenListInstitucionModuleState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+      appBar: AppBar(
         iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
         elevation: 0,
         title: Text(
@@ -38,7 +38,10 @@ class _CitizenListInstitucionModuleState
             Container(
               child: Padding(
                   padding: EdgeInsets.all(10),
-                  child: Text("Lista de instituciones registradas" ,style:  AppTheme.themeTitulo, )),
+                  child: Text(
+                    "Lista de instituciones registradas",
+                    style: AppTheme.themeTitulo,
+                  )),
             ),
             Card(
               elevation: 4,
@@ -81,6 +84,7 @@ class _CitizenListInstitucionModuleState
               break;
             default:
               //mostramos los datos
+              print(snapshot.data);
               return listItemsInstitution(context, snapshot);
           }
         });

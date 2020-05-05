@@ -104,9 +104,9 @@ Future<List<InstitucionesItems>> getInstitucionesItems() async {
 
   InstitucionesItems item1 = new InstitucionesItems();
   item1.idInstitucion = 1;
-  item1.nombreInstitucion = "Cala Cala";
-  item1.tipoInstitucion = "Religioso";
-  item1.ubicacion = "Cochabamba";
+  item1.nombreInstitucion = "Cala";
+  item1.tipoInstitucion = "Reloso";
+  item1.ubicacion = "Cochaba";
   item1.ayudaConCovid = "0";
   item1.fechaConCovid = new DateTime(2020, 1, 30);
   item1.miembros = 50;
@@ -125,7 +125,7 @@ Future<List<InstitucionesItems>> getInstitucionesItems() async {
   item2.url =
       "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg";
   lista.add(item2);
-
+/*
   InstitucionesItems item3 = new InstitucionesItems();
   item3.idInstitucion = 3;
   item3.nombreInstitucion = "San Joaquin";
@@ -173,6 +173,7 @@ Future<List<InstitucionesItems>> getInstitucionesItems() async {
   item6.url =
       "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg";
   lista.add(item6);
+  */
 
   return lista;
 }
