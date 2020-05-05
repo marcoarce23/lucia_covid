@@ -658,6 +658,39 @@ class Login extends Entity {
       };
 }
 
+class LoginSignIn extends Entity {
+  String email;
+  String persona;
+  String avatar;
+  String id;
+  String imei;
+  
+  
+
+  
+  LoginSignIn(
+      {this.id , this.email, this.persona, this.avatar, this.imei });
+
+  fromJson(Map<String, dynamic> json) => new LoginSignIn(
+      email: json["EMAIL"],
+      persona: json["PERSONA"],
+      avatar: json["AVATAR"],
+      id: json["ID"],
+      imei: json["IMEI"],
+     
+      );
+
+  Map<String, dynamic> toJson() => {
+        "EMAIL": email,
+        "PERSONA": persona,
+        "AVATAR": avatar,
+        "ID": id,
+        "IMEI": imei,
+
+    
+      };
+}
+
 class ProfesionalesAgrupados extends Entity {
   int idInstitucion;
   String profesion;

@@ -7,6 +7,7 @@ import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Validator.dart' as validator;
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 
 class MultimediaModule extends StatefulWidget {
   MultimediaModule({Key key}) : super(key: key);
@@ -72,6 +73,7 @@ List<String> _tipoSubCatalogo = [
             _crearForm(context),
           ],
         ),
+        drawer: DrawerCitizen(),
         bottomNavigationBar: _bottomNavigationBar(context));
   }
 

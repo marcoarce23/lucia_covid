@@ -6,6 +6,7 @@ import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 
 class AtentionModule extends StatefulWidget {
   @override
@@ -50,6 +51,7 @@ class _AtentionModuleState extends State<AtentionModule>
     return Scaffold(
         key: scaffoldKey,
         appBar: _appBar(),
+        drawer: DrawerCitizen(),
         body: Stack(
           children: <Widget>[
             _crearForm(context),

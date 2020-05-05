@@ -8,6 +8,7 @@ import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 
 class VoluntaryModule extends StatefulWidget {
   const VoluntaryModule({Key key}) : super(key: key);
@@ -153,6 +154,7 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
             _crearForm(context),
           ],
         ),
+        drawer: DrawerCitizen(),
         bottomNavigationBar: _bottomNavigationBar(context));
   }
 

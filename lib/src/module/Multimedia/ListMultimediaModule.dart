@@ -7,6 +7,7 @@ import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/ListEntity.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 import 'package:lucia_covid/src/module/Multimedia/MultimediaModule.dart';
 
 class ListMultimediaModule extends StatefulWidget {
@@ -25,6 +26,7 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(),
+      drawer: DrawerCitizen(),
           body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

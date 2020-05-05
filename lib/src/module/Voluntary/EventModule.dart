@@ -9,6 +9,7 @@ import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 
 
 class EventModule extends StatefulWidget {
@@ -61,6 +62,7 @@ InputTextField fotoa;
             _crearForm(context),
           ],
         ),
+        drawer: DrawerCitizen(),
         bottomNavigationBar: _bottomNavigationBar(context)
         );
   }

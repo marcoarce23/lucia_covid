@@ -6,6 +6,7 @@ import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 
 class AtentionEntityModule extends StatefulWidget {
   AtentionEntityModule({Key key}) : super(key: key);
@@ -64,6 +65,7 @@ TimeOfDay _time;
             _crearForm(context),
           ],
         ),
+        drawer: DrawerCitizen(),
         bottomNavigationBar: _bottomNavigationBar(context));
   }
 

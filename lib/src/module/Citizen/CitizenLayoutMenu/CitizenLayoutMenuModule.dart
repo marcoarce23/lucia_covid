@@ -4,13 +4,16 @@ import 'package:lucia_covid/src/Widget/DrawerWidget/DrawerWiguet.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenEvents/CitizenEventsModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenHelp/CitizenAtentionRegisterModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenHelp/CitizenHelpModule.dart';
-import 'package:lucia_covid/src/module/Citizen/CitizenHome/CitizenHomeModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenInstitution/CitizenListInstitucionModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenMultimedia/CitizenMultimediaModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenPanicButton/CitizenPanicButtonModule.dart';
 import 'package:lucia_covid/src/module/Entity/EntityModule.dart';
+import 'package:lucia_covid/src/module/Entity/EventEntityModule.dart';
+import 'package:lucia_covid/src/module/Login/SIgnOutModule.dart';
 import 'package:lucia_covid/src/module/Map/MapModule.dart';
 import 'package:lucia_covid/src/module/Multimedia/MultimediaModule.dart';
+import 'package:lucia_covid/src/module/Settings/ConfigurationModule.dart';
+import 'package:lucia_covid/src/module/Voluntary/EventModule.dart';
 import 'package:lucia_covid/src/module/Voluntary/FoundVoluntaryModule.dart';
 
 import 'package:lucia_covid/src/module/Voluntary/VoluntaryModule.dart';
@@ -162,21 +165,21 @@ class DrawerCitizen extends StatelessWidget {
             'Eventos de Entidades',
             () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EntityModule()),
+                  MaterialPageRoute(builder: (context) => EventEntityModule()),
                 )),
         CustomListTile(
             Icons.edit_location,
             'Registo voluntario',
             () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EntityModule()),
+                  MaterialPageRoute(builder: (context) => VoluntaryModule()),
                 )),
         CustomListTile(
             Icons.person_add,
             'Eventos Voluntarios',
             () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => VoluntaryModule()),
+                  MaterialPageRoute(builder: (context) => EventModule()),
                 )),
         CustomListTile(
             Icons.add_photo_alternate,
@@ -199,7 +202,7 @@ class DrawerCitizen extends StatelessWidget {
             () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => CitizenAtentionRegisterModule()),
+                      builder: (context) => ConfigurationModule()),
                 )),
         CustomListTile(
             Icons.exit_to_app,
@@ -207,7 +210,7 @@ class DrawerCitizen extends StatelessWidget {
             () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => CitizenAtentionRegisterModule()),
+                      builder: (context) => SignOutModule()),
                 )),
       ],
     ));

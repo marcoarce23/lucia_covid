@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/styles.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 
 class IntroScreenModule extends StatefulWidget {
+   static final String routeName = 'introScreen';
+
   @override
   _IntroScreenModuleState createState() => _IntroScreenModuleState();
 }
 
 class _IntroScreenModuleState extends State<IntroScreenModule> {
+
+  final prefs = new PreferensUser();
   final int _numPages = 3;
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    prefs.ultimaPagina = IntroScreenModule.routeName;
+  }
 
   List<Widget> _buildPageIndicator() {
     List<Widget> list = [];

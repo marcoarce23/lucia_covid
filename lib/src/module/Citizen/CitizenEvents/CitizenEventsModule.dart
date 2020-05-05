@@ -5,9 +5,6 @@ import 'package:lucia_covid/src/Model/ListEntity.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
-import 'dart:math' as math;
-
-import 'CitizenEventsDetailModule.dart';
 
 String selectedCategorie = "Recomendaciones";
 
@@ -185,13 +182,13 @@ class _CitizenEventsModuleState extends State<CitizenEventsModule> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(
-                              "Institucion: ${objetivo}",
+                              "Institucion: $objetivo",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 12),
                             ),
                             voluntario.length > 0
                                 ? Text(
-                                    "Institucion: ${voluntario}",
+                                    "Institucion: $voluntario",
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 12),
                                   )

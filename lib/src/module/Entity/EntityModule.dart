@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:lucia_covid/src/Util/Validator.dart' as validator;
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 
 
 class EntityModule extends StatefulWidget {
@@ -72,6 +73,7 @@ _currentIndex = 0;
           _crearForm(context),
         ],
       ),
+      drawer: DrawerCitizen(),
       bottomNavigationBar: _bottomNavigationBar(context)
     );
   }

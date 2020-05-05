@@ -9,15 +9,18 @@ import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Validator.dart' as validator;
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
-import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
-
 import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
 import 'package:lucia_covid/src/module/Login/RegisterLoginModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
 import 'package:page_transition/page_transition.dart';
+import 'dart:async';
 
+import 'package:flutter/services.dart';
+import 'package:imei_plugin/imei_plugin.dart';
 
 class SignUpModule extends StatefulWidget {
+  static final String routeName = 'login';
+
   @override
   _SignUpModuleState createState() => _SignUpModuleState();
 }
@@ -27,41 +30,74 @@ class _SignUpModuleState extends State<SignUpModule> {
   final formKey = GlobalKey<FormState>();
   final generic = new Generic();
   final prefs = new PreferensUser();
+  LoginSignIn login = new LoginSignIn();
+  String _platformImei = 'Unknown';
+  String uniqueId = "Unknown";
+  var result;
+
   GoogleSignInAccount currentUser;
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['profile', 'email']);
 
-  Hospital hospital = new Hospital();
-
-@override
+  @override
   void initState() {
     super.initState();
+    prefs.ultimaPagina = SignUpModule.routeName;
+    initPlatformState();
 
     _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
       setState(() {
         currentUser = account;
       });
     });
-
-   // _googleSignIn.signInSilently();
+    _googleSignIn.signInSilently();
   }
 
-    Future<void> handleSignIn() async {
-    String _tieneUsuario = '0';
-    try {
-      await _googleSignIn.signIn();
-      if(_tieneUsuario == '0')
-         // Navigator.of(context).push(PageRouteTheme(RegisterLoginModule()));
-         Navigator.push(context, PageTransition(
-                        curve: Curves.bounceOut,
-                        type: PageTransitionType.rotate,
-                        alignment: Alignment.topCenter,
-                        child: RegisterLoginModule(),
-                  ));
-      else
-          Navigator.of(context).push(PageRouteTheme(CitizenLayoutMenuModule()));
-    } catch (error) {
-      print(error);
-    }
+  Future<void> initPlatformState() async {
+    String platformImei = 'Failed to get platform version.';
+    String idunique;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+
+    platformImei =
+        await ImeiPlugin.getImei(shouldShowRequestPermissionRationale: false);
+    idunique = await ImeiPlugin.getId();
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      _platformImei = platformImei;
+      uniqueId = idunique;
+    });
+  }
+
+  Future<void> handleSignIn() async {
+    // try {
+    await _googleSignIn.signIn();
+
+    login.id = currentUser.id;
+    login.email = currentUser.email;
+    login.persona = currentUser.displayName;
+    login.avatar = 'currentUser.photoUrl';
+    login.imei = _platformImei;
+
+    print('iddd:${login.id}');
+    print('IMEI:${login.imei}');
+    final dataMap = generic.add(login);
+
+    await dataMap.then((x) => result = x["TIPO_RESPUESTA"]);
+    print('DDDDD:$result');
+    if (result == '0')
+      Navigator.push(context, PageTransition(
+                      curve: Curves.bounceOut,
+                      type: PageTransitionType.rotate,
+                      alignment: Alignment.topCenter,
+                      child: IntroScreenModule(),
+                ));
+    else
+      Navigator.of(context).push(PageRouteTheme(SignUpModule()));
+    // catch(Exception error){error.toString();}
   }
 
   Future<void> handleSignOut() async {
@@ -96,15 +132,18 @@ class _SignUpModuleState extends State<SignUpModule> {
               margin: EdgeInsets.symmetric(vertical: 10.0),
               // padding: EdgeInsets.symmetric( vertical: 30.0 ),
               decoration: _crearContenedorCampos(),
-              child     : _crearCampos(),
+              child: _crearCampos(),
             ),
-             SizedBox(height: 20.0),
+            SizedBox(height: 20.0),
             _dividerOr(),
             _gmailButton(),
             _registerCount(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
-              child: Divider(color:Colors.orange, thickness: 2.0,),
+              child: Divider(
+                color: Colors.orange,
+                thickness: 2.0,
+              ),
             ),
             copyRigth(),
           ],
@@ -116,8 +155,9 @@ class _SignUpModuleState extends State<SignUpModule> {
   Widget _crearCampos() {
     return Column(
       children: <Widget>[
-        SizedBox(height:15.0),
-        Text('Bienvenido a "Lucia Te Cuida."', style: TextStyle(fontSize: 20.0)),
+        SizedBox(height: 15.0),
+        Text('Bienvenido a "Lucia Te Cuida."',
+            style: TextStyle(fontSize: 20.0)),
         _crearEmail('Correo ELectrónico'),
         _crearPassword('Contraseña:'),
         _crearBoton(resource.signIn),
@@ -125,7 +165,7 @@ class _SignUpModuleState extends State<SignUpModule> {
       ],
     );
   }
-  
+
   _crearContenedorCampos() {
     return BoxDecoration(
         color: Colors.white,
@@ -149,12 +189,12 @@ class _SignUpModuleState extends State<SignUpModule> {
         color: Colors.blue,
         textColor: Colors.white,
         label: Text(
-                'Ingresar',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
-                ),
-              ),
+          'Ingresar',
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.white,
+          ),
+        ),
         icon: Icon(Icons.check),
         onPressed: (_save) ? null : _submit,
       ),
@@ -165,21 +205,20 @@ class _SignUpModuleState extends State<SignUpModule> {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
       child: TextFormField(
-        initialValue: hospital.nombre,
+        initialValue: login.email,
         enableInteractiveSelection: true,
         maxLength: 30,
-        
         enableSuggestions: true,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
-        //  hintText: 'Ingrese el correo elecrrónico válido',
-         focusColor: Colors.blue,
-          labelText:  'Correo electrónico:',
+          //  hintText: 'Ingrese el correo elecrrónico válido',
+          focusColor: Colors.blue,
+          labelText: 'Correo electrónico:',
           helperText: 'ej: juan.perez@gmail.com',
           icon: Icon(Icons.alternate_email, color: Colors.orange),
         ),
         validator: (value) => validator.validateTextfieldEmpty(value),
-        onSaved: (value) => hospital.nombre = value,
+        onSaved: (value) => login.email = value,
       ),
     );
   }
@@ -193,15 +232,23 @@ class _SignUpModuleState extends State<SignUpModule> {
         decoration: InputDecoration(
           labelText: text,
           icon: Icon(Icons.lock_outline, color: Colors.orange),
-           helperText: 'Nota: caracter especial, un numero.',
+          helperText: 'Nota: caracter especial, un numero.',
         ),
         validator: (value) => validator.validateTextfieldLength(value, 6),
-        onSaved: (value) => hospital.nombre = value,
+        onSaved: (value) => login.id = value,
       ),
     );
   }
 
   void _submit() async {
+
+      login.id  = currentUser.id;
+      login.email  = currentUser.email;
+      login.persona  = currentUser.displayName;
+      login.avatar  = 'currentUser.photoUrl';
+
+    //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => IntroScreenModule()));
+
     if (!formKey.currentState.validate()) return;
 
     formKey.currentState.save();
@@ -209,17 +256,14 @@ class _SignUpModuleState extends State<SignUpModule> {
       _save = true;
     });
 
-    if (true) {
-      // generic.add(citizen);
-        Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => IntroScreenModule()));
-    }
-    else
-    {
-          setState(() {
-          _save = false;
-          });
-        Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SignUpModule()));
-    }
+    // if (true) {
+    //   // generic.add(citizen);
+    //     Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => IntroScreenModule()));
+    // }
+    // else
+    // {
+
+    // }
   }
 
   Widget _dividerOr() {
@@ -253,18 +297,16 @@ class _SignUpModuleState extends State<SignUpModule> {
   Widget _forgetPassword() {
     return FlatButton(
         child: Text('Olvidaste tu contraseña ?'),
-        onPressed: () => //Navigator.of(context).pushNamed('forgetPassword'),
-            Navigator.of(context).push(PageRouteTheme(ForgetPassword())));
+        onPressed: () =>  Navigator.of(context).push(PageRouteTheme(ForgetPassword())));
   }
 
   _registerCount() {
     return FlatButton(
-      child: Text('Crea una nueva cuenta. Aqui.'),
-      onPressed: () =>  Navigator.of(context).push(PageRouteTheme(RegisterLoginModule()))
-      );
+        child: Text('Crea una nueva cuenta. Aqui.'),
+        onPressed: () =>
+            Navigator.of(context).push(PageRouteTheme(RegisterLoginModule())));
   }
 
-  
   Widget _gmailButton() {
     return OutlineButton(
       splashColor: Colors.grey,

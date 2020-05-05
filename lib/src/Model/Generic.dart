@@ -24,7 +24,8 @@ const Map<SomeStatus, String> SomeStatusName = {
 class Generic {
 
   final String url        =      'http://covid19.ruta88.net/COVID/Hospitales/srvHospital.svc/HOSPITALES/hola';
-  final String urlAdd     =      'http://covid19.ruta88.net/COVID/Hospitales/srvHospital.svc/CARGA_HOSPITALES1';
+  final String urlAdd     =     'http://covid19.ruta88.net/COVID/Login/srvLogin.svc/login_signin';
+  // 'http://covid19.ruta88.net/COVID/Hospitales/srvHospital.svc/CARGA_HOSPITALES1';
   final String urlUpdate  =      'http://covid19.ruta88.net/COVID/Hospitales/srvHospital.svc/CARGA_HOSPITALES1';
   final String primaryKey =      '_devuelveHospitalesResult';
 
@@ -32,7 +33,7 @@ class Generic {
     return url;
   }
 
-  String getUrlAdd(String entity) {
+  String getUrlAdd() {
     return urlAdd;
   }
 
@@ -73,7 +74,7 @@ class Generic {
 
   Future<Map<String, dynamic>> add(Entity objeto) async {
       String _body = json.encode(objeto.toJson());
-      final url = SomeStatusName[SomeStatus.getHosptalAdd];
+      final url = getUrlAdd();
       final response = await http.post(url, headers: {"Content-Type": "application/json"}, body: _body);
 
       return dataMap(response);

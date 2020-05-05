@@ -397,8 +397,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                   ],
                 ),
               );
-              (imagen);
-            }),
+           }),
       ),
     );
   }
