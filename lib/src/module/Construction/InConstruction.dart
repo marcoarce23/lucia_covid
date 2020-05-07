@@ -11,12 +11,14 @@ class InConstruction extends StatelessWidget {
 appBar: AppBar(
         iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
         elevation: 0,
-        title: Text(
-          "En construccion",
-          style: TextStyle(
-              color: AppTheme.themeColorNaranja,
-              fontSize: 17,
-              fontWeight: FontWeight.w400),
+        title: Center(
+          child: Text(
+            "En construccion",
+            style: TextStyle(
+                color: AppTheme.themeColorNaranja,
+                fontSize: 17,
+                fontWeight: FontWeight.w400),
+          ),
         ),
         //backgroundColor: AppTheme.themeColorNaranja,
       )
