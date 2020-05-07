@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
+import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class VoluntaryModule extends StatefulWidget {
   const VoluntaryModule({Key key}) : super(key: key);
@@ -18,64 +19,34 @@ class VoluntaryModule extends StatefulWidget {
 }
 
 class _VoluntaryModuleState extends State<VoluntaryModule> {
-  InputTextField entidad;
-  InputTextField token;
+  InputDropDown tipoEntidad;
+  InputDropDown tipoEspecialidad;
   InputTextField nombre;
-  InputTextField apellido;
+    InputEmailField email;
+      InputPhoneField telefono;
   InputTextField ci;
-  InputTextField telefono;
-  InputTextField email;
   InputTextField complmementario;
-  InputSexo sexo;
+    InputTextField  facebook ;
+  InputTextField  twitter ;
+  InputUrlField  paginaWeb ;
+  InputDropDown expedido;
+InputSexo sexo;
 
   bool _save = false;
+  bool esCovid =false;
   File foto;
-
-  String _opcionSeleccionada = '';
-  String _opcionEntidad = '';
-  String _opcionEspecialidad;
-  String _fecha = '';
-  TextEditingController _inputFieldDateController = new TextEditingController();
-  List<String> _expedido = [
-    'CHQ',
-    'LPZ',
-    'CBB',
-    'ORU',
-    'PTS',
-    'TRJ',
-    'SCZ',
-    'BNI',
-    'PND'
-  ];
-  List<String> _entidad = [
-    'Seleccionar',
-    'Dejame Apoyarte',
-    'BOL -110',
-    'SAR',
-    'Narices Frias'
-  ];
-
-  List<String> _tipoEntidad = [
-    'Medicina',
-    'Psicologia',
-    'Religioso',
-    'Medicina Tradicional',
-    'Psquiatria'
-  ];
-
-  int _currentIndex;
+ var result;
+  
+   int _currentIndex;
 
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
-  Voluntary voluntario = new Voluntary();
+  Voluntary entity = new Voluntary();
 
   @override
   void initState() {
     _currentIndex = 0;
-    _opcionSeleccionada = 'LPZ';
-    _opcionEntidad = 'Seleccionar';
-    _opcionEspecialidad = 'Medicina'; 
     super.initState();
   }
 
@@ -110,40 +81,13 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
     );
   }
 
-  selectDate(BuildContext context) async {
-    DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: new DateTime.now(),
-      firstDate: new DateTime(2020, 3),
-      lastDate: new DateTime(2025, 12),
-      //    locale: Locale('es', 'ES')
-    );
 
-    if (picked != null) {
-      setState(() {
-        _fecha = picked.toString().substring(0, 10);
-        _inputFieldDateController.text = _fecha;
-      });
-    }
-  }
-
-  List<DropdownMenuItem<String>> getOpcionesDropdown() {
-    List<DropdownMenuItem<String>> lista = new List();
-
-    _expedido.forEach((expedido) {
-      lista.add(DropdownMenuItem(
-        child: Text(expedido),
-        value: expedido,
-      ));
-    });
-    return lista;
-  }
 
   @override
   Widget build(BuildContext context) {
-    final Voluntary voluntaryData = ModalRoute.of(context).settings.arguments;
+    final Voluntary entityData = ModalRoute.of(context).settings.arguments;
 
-    if (voluntaryData != null) voluntario = voluntaryData;
+    if (entityData != null) entity = entityData;
 
     return Scaffold(
         key: scaffoldKey,
@@ -179,8 +123,6 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
       onPressed: _tomarFoto,
     );
   }
-
- 
   
   Widget _crearForm(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -209,42 +151,48 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
   }
 
   Widget _crearCampos() {
-    entidad =
-        InputTextField(Icon(Icons.business), 'Institución/entidad', '', '');
-    token = InputTextField(Icon(Icons.security), 'Ingrese el token', '', '');
-    nombre = InputTextField(Icon(Icons.person_add), 'Nombre:', '', '');
-    apellido = InputTextField(Icon(Icons.person_pin), 'Apellidos:', '', '');
-    ci = InputTextField(
-        Icon(Icons.access_alarm), 'Documento de Identidad:', '', '');
-    telefono = InputTextField(Icon(Icons.phone_android), 'Telefono:', '', '');
-    email = InputTextField(
-        Icon(Icons.alternate_email), 'Correo electrónico:', '', '');
-    complmementario = InputTextField(
-        Icon(Icons.insert_comment), 'Información complementaria', '', '');
+    tipoEntidad = InputDropDown(Icons.person_pin ,'Institución:','26', urlGetClasificador + '23');
+    tipoEspecialidad = InputDropDown(Icons.person_pin ,'Especialidad:','26',urlGetClasificador + '23');
+    expedido = InputDropDown(Icons.person_pin ,'Expedido:', '26', urlGetClasificador + '23');
+    nombre = InputTextField(Icon(Icons.business), 'Nombre voluntario:', '. ', '.');
+    ci = InputTextField(Icon(Icons.business), 'Nombre voluntario:', '. ', '.');
+    telefono =  InputPhoneField(Icon(Icons.business), 'Telefono de referencia', ' .', '');
+    complmementario = InputTextField(Icon(Icons.business), 'Información complementaria:', ' .', '.');
+   email =   InputEmailField(Icon(Icons.business), 'Correo Electronico:', '. ', '','Ingrese su correo electronico');
+       facebook =   InputTextField(Icon(Icons.business), 'Cuenta Facebook:', ' .', '.');
+    twitter =   InputTextField(Icon(Icons.business), 'Cuenta Twitter:', ' .', '.');
+    paginaWeb =   InputUrlField(Icon(Icons.business), 'Pagina Web/block:', '. ', '.');
     sexo = InputSexo();
 
     return Column(
       children: <Widget>[
-        _crearEntidad(),
-        entidad,
-        token,
+         Text('INFORMACION GENERAL',  style: TextStyle(fontSize: 18, color: Colors.black),),
+         tipoEntidad,
+         tipoEspecialidad,
+         _crearEsCovid('Ayuda Covid'),
         nombre,
-        apellido,
-        _crearTipoEspecialidad(),
+
+         telefono,
         Row(
           children: <Widget>[
             Expanded(
               child: ci,
             ),
-            _crearExpedido(),
+            expedido,
           ],
         ),
-        telefono,
-        sexo,
-        email,
-        _crearEsCovid('Ayuda Covid'),
+         sexo,
+         complmementario,
+             Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Divider(color: Colors.orange, thickness: 2.0,),
+        ),
 
-        complmementario,
+        Text('REDES SOCIALES',  style: TextStyle(fontSize: 18, color: Colors.black),),
+                 email,
+         facebook,
+         twitter,
+         paginaWeb,
         _crearBoton(resource.save),
       ],
     );
@@ -252,107 +200,14 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
 
   Widget _crearEsCovid(String text) {
     return SwitchListTile(
-      value: true,
+      value: esCovid,
       title: Text(text),
       activeColor: Colors.deepPurple,
       onChanged: (value) => setState(() {
-        //   producto.disponible = value;
+          esCovid = value;
       }),
     );
   }
-
-  Widget _crearExpedido() {
-    return Row(
-      children: <Widget>[
-        DropdownButton(
-          value: _opcionSeleccionada,
-          items: getOpcionesDropdown(),
-          onChanged: (opt) {
-            setState(() {
-              _opcionSeleccionada = opt;
-            });
-          },
-        ),
-      ],
-    );
-  }
-
-  List<DropdownMenuItem<String>> getEntidadDropdown() {
-    List<DropdownMenuItem<String>> lista = new List();
-
-    _entidad.forEach((entidad) {
-      lista.add(DropdownMenuItem(
-        child: Text(entidad),
-        value: entidad,
-      ));
-    });
-    return lista;
-  }
-
-  Widget _crearEntidad() {
-    return Row(
-      children: <Widget>[
-        SizedBox(width: 30.0),
-        Text('Entidad:'),
-        SizedBox(width: 30.0),
-        DropdownButton(
-          value: _opcionEntidad,
-          items: getEntidadDropdown(),
-          icon: Icon(Icons.supervised_user_circle, color: Colors.orange),
-          onChanged: (opt) {
-            setState(() {
-              _opcionEntidad = opt;
-            });
-          },
-        ),
-      ],
-    );
-  }
-
-List<DropdownMenuItem<String>> getTipoEntidadDropdown() {
-    List<DropdownMenuItem<String>> lista = new List();
-
-    _tipoEntidad.forEach((tipoEntidad) {
-      lista.add(DropdownMenuItem(
-        child: Text(tipoEntidad),
-        value: tipoEntidad,
-      ));
-    });
-    return lista;
-  }
-
-  Widget _crearTipoEspecialidad() {
-    return Row(
-      children: <Widget>[
-        SizedBox(width: 30.0),
-        Text('Especialidad:'),
-        SizedBox(width: 30.0),
-        DropdownButton(
-          value: _opcionEspecialidad,
-          items: getTipoEntidadDropdown(),
-          icon: Icon(Icons.supervised_user_circle, color: Colors.orange),
-          onChanged: (opt) {
-            setState(() {
-              _opcionEspecialidad = opt;
-            });
-          },
-        ),
-      ],
-    );
-  }
-  // List<DropdownMenuItem<String>>  _crearEntidad()
-  // {
-  //   return FutureBuilder(
-  //     future: generic.getAll(new Hospital()),
-  //     builder: (BuildContext context, AsyncSnapshot<List<Entity>> snapshot) {
-  //       if (snapshot.hasData) {
-
-  //       } else
-  //         return Center(child: CircularProgressIndicator());
-  //     },
-
-  //   );
-  // }
 
   _crearContenedorCampos() {
     return BoxDecoration(
@@ -366,7 +221,6 @@ List<DropdownMenuItem<String>> getTipoEntidadDropdown() {
               spreadRadius: 7.0)
         ]);
   }
-
 
   Widget _crearBoton(String text) {
     return Container(
@@ -392,10 +246,47 @@ List<DropdownMenuItem<String>> getTipoEntidadDropdown() {
       _save = true;
     });
 
-    voluntario.perNombrepersonal = nombre.objectValue;
-    voluntario.perApellido = apellido.objectValue;
-    print('NOMBREERE: ${voluntario.perNombrepersonal}');
-    print('ubicaion: ${voluntario.perApellido}');
+ 
+
+    entity.idcovPersonal = 0;
+    entity.idcovInstitucion = int.parse(tipoEntidad.objectValue);
+    entity.idcovLogin= 0;
+    entity.idaTipopersonal = int.parse(tipoEspecialidad.objectValue);
+    entity.perNombrepersonal = nombre.objectValue;
+    entity.perCorreo = email.objectValue;
+    entity.perTelefono = telefono.objectValue;
+    if(esCovid)      entity.perAyudacovid  = 1;
+    else          entity.perAyudacovid  = 0;
+    entity.perCI = ci.objectValue;
+    entity.idaExtension = int.parse(expedido.objectValue);
+    entity.idaSexo = 0;
+    entity.perInformacionComplementaria = complmementario.objectValue;
+entity.perFacebbok = facebook.objectValue;
+entity.perTwitter = twitter.objectValue;
+entity.perPaginaWeb = paginaWeb.objectValue;
+    entity.usuario = 'marcoarce23@gmail.com';
+
+// "IDCOV_PERSONAL":0,
+// "IDCOV_INSTITUCION":0,
+// "IDCOV_LOGIN":0,
+// "IDA_TIPOPERSONAL":0,
+// "PER_NOMBREPERSONAL":"PER_NOMBREPERSONAL",
+// "PER_CORREO":"PER_CORREO",
+// "PER_TELEFONO":"PER_TELEFONO",
+// "PER_AYUDACOVID":0,
+// "PER_CI":"PER_CI",
+// "IDA_EXTENCIONCI":0,
+// "IDA_SEXO":0,
+// "PER_INFORMACIONCOMPLEMENTARIA":"PER_INFORMACIONCOMPLEMENTARIA",
+
+    final dataMap = generic.add(entity, urlAddPersonal);
+
+    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+    print('resultado:$result');
+
+    setState(() {
+      _save = false;
+    });
 
     // if (hospital.nombre == null) {
     //   // generic.add(citizen);
@@ -417,9 +308,9 @@ List<DropdownMenuItem<String>> getTipoEntidadDropdown() {
   _procesarImagen(ImageSource origen) async {
     foto = await ImagePicker.pickImage(source: origen);
 
-    if (foto != null) {
-      voluntario.perNombrepersonal = null;
-    }
+    // if (foto != null) {
+    //   voluntario.perNombrepersonal = null;
+    // }
     setState(() {});
   }
 }

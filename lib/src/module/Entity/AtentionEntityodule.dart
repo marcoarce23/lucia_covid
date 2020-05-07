@@ -7,6 +7,7 @@ import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
+import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class AtentionEntityModule extends StatefulWidget {
   AtentionEntityModule({Key key}) : super(key: key);
@@ -33,29 +34,43 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
   InputTextField viernesH;
   InputTextField sabadoH;
   InputTextField domingoH;
+
+   bool selectLunes =false;
+  bool selectMartes=false;
+  bool selectMiercoles=false;
+  bool selectJueves=false;
+  bool selectViernes=false;
+  bool selectSabado=false;
+  bool selectDomingo=false;
+
+  int intLunes =0;
+  int intMartes=0;
+  int intMiercoles=0;
+  int intJueves=0;
+  int intViernes=0;
+  int intSabado=0;
+  int intDomingo=0;
+
+  var result;
   
   int _currentIndex;
-
-TimeOfDay _time;
- TextEditingController _inputFieldTimeController = new TextEditingController();
 
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
-  Hospital hospital = new Hospital();
+  InstitucionAtencion entity = new InstitucionAtencion();
 
   @override
   void initState() {
     _currentIndex = 0;
-    _time = new TimeOfDay.now();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Hospital hospitalData = ModalRoute.of(context).settings.arguments;
+    final InstitucionAtencion entityData = ModalRoute.of(context).settings.arguments;
 
-    if (hospitalData != null) hospital = hospitalData;
+    if (entityData != null) entity = entityData;
 
     return Scaffold(
         key: scaffoldKey,
@@ -259,37 +274,15 @@ TimeOfDay _time;
     );
   }
 
- _selectTime(BuildContext context) async {
-    TimeOfDay picked = await showTimePicker(
-      context: context,
-      initialTime: _time,
-      builder: (BuildContext context, Widget child) {
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-           child: child,
-    );
-  },
-   //   locale: Locale('es', 'ES')
-    );
-
-    if (picked != null) {
-      setState(() {
-        _time = picked;
-        _inputFieldTimeController.text = _time.toString();
-      });
-    }
-  }
-
-
 
   Widget _crearCampos() {
-        lunes= InputCheckBox('Lun');
-martes= InputCheckBox('Mar');
-miercoles= InputCheckBox('Mie');
-jueves= InputCheckBox('Jue');
-viernes= InputCheckBox('Vie');
-sabado= InputCheckBox('Sab');
-domingo= InputCheckBox('Dom');
+        lunes= InputCheckBox('Lun', selectLunes);
+martes= InputCheckBox('Mar',selectMartes);
+miercoles= InputCheckBox('Mie',selectMiercoles);
+jueves= InputCheckBox('Jue',selectJueves);
+viernes= InputCheckBox('Vie',selectViernes);
+sabado= InputCheckBox('Sab',selectSabado);
+domingo= InputCheckBox('Dom',selectDomingo);
 
         lunesH= InputTextField(Icon(Icons.watch_later), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
 martesH= InputTextField(Icon(Icons.watch_later), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
@@ -453,13 +446,37 @@ domingoH= InputTextField(Icon(Icons.watch_later), 'Horarios de atención', '', '
       _save = true;
     });
 
-    if (hospital.nombre == null) {
-      // generic.add(citizen);
-      print("INSERTOOOO");
-    } else {
-      //  generic.update(citizen);
-      print("MODIFICO");
-    }
+    if (lunes.objectValue == true) { intLunes =1; selectLunes = true;}
+if (martes.objectValue == true)  {  intMartes =1;selectMartes = true;}
+if (miercoles.objectValue == true)  {  intMiercoles =1;selectMiercoles = true;}
+if (jueves.objectValue == true)  {  intJueves =1;selectJueves = true;}
+if (viernes.objectValue == true)  {  intViernes =1;selectViernes = true;}
+if (sabado.objectValue == true)  {  intSabado =1;selectSabado = true;}
+if (domingo.objectValue == true)  {  intDomingo =1;selectDomingo = true;}
+
+    entity.idInstitucionPersonal = 123456;
+    entity.idInstitucion = 0;
+    entity.perLunes= intLunes;
+    entity.perMartes = intMartes;
+    entity.perMiercoles = intMiercoles;
+    entity.perJueves = intJueves;
+    entity.perViernes = intViernes;
+    entity.perSabado = intSabado;
+    entity.perDomingo = intDomingo;
+   entity.perLunesH = lunesH.objectValue;
+    entity.perMartesH = martesH.objectValue;
+    entity.perMiercolesH = miercolesH.objectValue;
+    entity.perJuevesH = juevesH.objectValue;
+    entity.perViernesH = viernesH.objectValue;
+    entity.perSabadoH = sabadoH.objectValue;
+    entity.perDomingoH = domingoH.objectValue;
+     entity.usuario = 'marcoarce23@gmail.com';
+
+final dataMap = generic.add(entity, urlAddInstitucion);
+
+    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+    print('resultado:$result');
+
 
     setState(() {
       _save = false;

@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,32 +7,35 @@ import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
+import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class CitizenHelpModule extends StatefulWidget {
-
-
   @override
   _CitizenHelpModuleState createState() => _CitizenHelpModuleState();
 }
 
 class _CitizenHelpModuleState extends State<CitizenHelpModule> {
-   InputTextField nombre;
-   InputPhoneField telefono;
+  InputTextField nombre;
+  InputPhoneField telefono;
   InputMultilineField ubicacion;
+  InputDropDown tipoAyuda;
 
- bool _save = false;
-  File foto;
- int _currentIndex =0; 
-  String _opcionSeleccionadaTipoAyuda = '';
+  bool _save = false;
+  int _currentIndex = 0;
   String _opcionSeleccionadaPrioridad = '';
+  var result;
+  var list;
 
-  List<String> _tipoPrioridad = ['<Seleccionar_Prioridad>',
+
+  List<String> _tipoPrioridad = [
+    '<Seleccionar_Prioridad>',
     'Muy Alta',
     'Alta',
     'Media'
   ];
 
-   List<String> _tipoAyuda = [ '<Seleccionar_Ayuda>',
+  List<String> _tipoAyuda = [
+    '<Seleccionar_Ayuda>',
     'Salud - Covid',
     'Salud',
     'Económica',
@@ -43,100 +45,99 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
-  Hospital hospital = new Hospital();
+  RegistroAmigo registroAmigo = new RegistroAmigo();
+
 
   @override
   void initState() {
-
-    _opcionSeleccionadaTipoAyuda = '<Seleccionar_Ayuda>';
-    _opcionSeleccionadaPrioridad= '<Seleccionar_Prioridad>';
-
-    super.initState();
+    _opcionSeleccionadaPrioridad = '<Seleccionar_Prioridad>';
+     super.initState();
+    
   }
 
-
-
-  List<DropdownMenuItem<String>> getOpcionesTipoAyuda() {
-    List<DropdownMenuItem<String>> lista = new List();
-
-    _tipoAyuda.forEach((tipoAyuda) {
-      lista.add(DropdownMenuItem(
-        child: Text(tipoAyuda),
-        value: tipoAyuda,
-      ));
-    });
-    return lista;
-  }
-
-List<DropdownMenuItem<String>> getOpcionesPrioridad() {
+ List<DropdownMenuItem<String>> getOpcionesPrioridad() {
     List<DropdownMenuItem<String>> lista = new List();
 
     _tipoPrioridad.forEach((tipoPrioridad) {
       lista.add(DropdownMenuItem(
         child: Text(tipoPrioridad),
         value: tipoPrioridad,
-      ));
+      )
+      );
     });
     return lista;
   }
 
+ List<DropdownMenuItem<String>> getipoAy(AsyncSnapshot snapshot) {
+    
+    List<DropdownMenuItem<String>> lista = new List();
+
+    for (var i = 0; i < snapshot.data.length; i++) {
+      GetClasificador item = snapshot.data[i];
+      lista.add(DropdownMenuItem(
+        child: Text(item.nombre),
+        value: item.id.toString(),//tipoPrioridad.id,
+      )
+      );
+    }
+    return lista;
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
-    final Hospital hospitalData = ModalRoute.of(context).settings.arguments;
+    final RegistroAmigo registroAmigoData =
+        ModalRoute.of(context).settings.arguments;
 
-    if (hospitalData != null) hospital = hospitalData;
-
-
+    if (registroAmigoData != null) registroAmigo = registroAmigoData;
 
     return Scaffold(
-      key: scaffoldKey,
-      appBar: _appBar(),
-      body: Stack(
-        children: <Widget>[
-          _crearForm(context),
-        ],
-      ),
-      bottomNavigationBar: _bottomNavigationBar(context)
-    );
+        key: scaffoldKey,
+        appBar: _appBar(),
+        body: Stack(
+          children: <Widget>[
+            _crearForm(context),
+          ],
+        ),
+        bottomNavigationBar: _bottomNavigationBar(context));
   }
 
   AppBar _appBar() {
     return AppBar(
       title: Text('AYUDA A UN AMIG@'),
       backgroundColor: Colors.orange,
-    
     );
   }
 
-    Widget _bottomNavigationBar(BuildContext context) {
+  Widget _bottomNavigationBar(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
           canvasColor: Colors.white,
           primaryColor: Colors.blue,
-          textTheme: Theme.of(context).textTheme.copyWith(
-              caption: TextStyle(color: Colors.blueGrey))),
+          textTheme: Theme.of(context)
+              .textTheme
+              .copyWith(caption: TextStyle(color: Colors.blueGrey))),
       child: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (value) {
           setState(() {
-             _currentIndex = value;
+            _currentIndex = value;
             callHelp(_currentIndex, context);
           });
         },
         items: [
           BottomNavigationBarItem(
               icon: Icon(Icons.person, size: 25.0), title: Text('Colabora')),
-        
           BottomNavigationBarItem(
               icon: Icon(Icons.bubble_chart, size: 25.0),
               title: Text('Listado solicitudes')),
-         ],
+        ],
       ),
     );
   }
 
-
-Widget informacionProfesional(BuildContext context) {
+  Widget informacionProfesional(BuildContext context) {
     return Center(
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 4),
@@ -164,8 +165,7 @@ Widget informacionProfesional(BuildContext context) {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                        text:
-                            '\n' + 'Carnet: 4538412 CBB',
+                        text: '\n' + 'Carnet: 4538412 CBB',
                         style: TextStyle(
                           color: Colors.black45,
                           fontWeight: FontWeight.w400,
@@ -173,8 +173,7 @@ Widget informacionProfesional(BuildContext context) {
                         ),
                       ),
                       TextSpan(
-                        text:
-                            '\n' + 'CElular: 72038768',
+                        text: '\n' + 'CElular: 72038768',
                         style: TextStyle(
                           color: Colors.black45,
                           fontWeight: FontWeight.w400,
@@ -186,7 +185,6 @@ Widget informacionProfesional(BuildContext context) {
                 )
               ],
             ),
-
             Divider(),
           ],
         ),
@@ -194,16 +192,16 @@ Widget informacionProfesional(BuildContext context) {
     );
   }
 
-Image imagenProfesional() {
+  Image imagenProfesional() {
     Image imagenAvatar;
 
     //if (profesionalesDeInstitucion.sexo == "F") {
-      imagenAvatar = Image.asset(
-        "assets/image/circled_user_female.png",
-        width: 50,
-        height: 50,
-        fit: BoxFit.fill,
-       );
+    imagenAvatar = Image.asset(
+      "assets/image/circled_user_female.png",
+      width: 50,
+      height: 50,
+      fit: BoxFit.fill,
+    );
     // } else {
     //   imagenAvatar = Image.asset(
     //     "assets/image/circled_user_male.png",
@@ -246,15 +244,12 @@ Image imagenProfesional() {
         key: formKey,
         child: Column(
           children: <Widget>[
-              informacionProfesional(context),
-
+            informacionProfesional(context),
             SafeArea(
               child: Container(
                 height: 10.0,
               ),
             ),
-
-
             Container(
               width: size.width * 0.90,
               margin: EdgeInsets.symmetric(vertical: 0.0),
@@ -269,17 +264,22 @@ Image imagenProfesional() {
   }
 
   Widget _crearCampos() {
-
-    nombre =   InputTextField(Icon(Icons.business), 'Persona a poyar', '', '');
+    nombre = InputTextField(Icon(Icons.business), 'Persona a poyar', '', '');
     telefono =  InputPhoneField(Icon(Icons.business), 'Telefono de referencia', '', '');
-    ubicacion =  InputMultilineField(Icon(Icons.business), 'Donde la encuentro', '', '');
+    ubicacion =   InputMultilineField(Icon(Icons.business), 'Donde la encuentro', '', '');
+
+      tipoAyuda = InputDropDown(Icons.person_pin ,'Tipod e ayuda','26',urlGetClasificador+'/23');
+
     return Column(
       children: <Widget>[
-          Text('AYUDA A UN AMIG@', style: TextStyle(fontSize: 18, color: Colors.black),),
+        Text(
+          'AYUDA A UN AMIG@',
+          style: TextStyle(fontSize: 18, color: Colors.black),
+        ),
         nombre,
         telefono,
         ubicacion,
-        _crearTipoApoyo(),
+        tipoAyuda,
         _crearTipoPrioridad(),
         _crearBoton(resource.save),
       ],
@@ -287,37 +287,37 @@ Image imagenProfesional() {
   }
 
  
+List<DropdownMenuItem<String>> getOpcionesTipoApoyo() {
+    List<DropdownMenuItem<String>> lista = new List();
 
-  Widget _crearTipoApoyo() {
-    return Row(
-      children: <Widget>[
-    SizedBox(width:30.0),
-       
-        Text('Tipo de apoyo:'),
-         SizedBox(width: 15.0),
-
-        DropdownButton(
-          value: _opcionSeleccionadaTipoAyuda,
-          icon: Icon(Icons.person_pin, color: Colors.orange),
-          items: getOpcionesTipoAyuda(),
-          onChanged: (opt) {
-            setState(() {
-              _opcionSeleccionadaTipoAyuda = opt;
-            });
-          },
-        ),
-      ],
-    );
+    _tipoAyuda.forEach((tipoAyuda) {
+      lista.add(DropdownMenuItem(
+        child: Text(tipoAyuda),
+        value: tipoAyuda,
+      )
+      );
+    });
+    return lista;
   }
 
-Widget _crearTipoPrioridad() {
+  List<DropdownMenuItem<String>> getOpcionesTipoAyuda() {
+    List<DropdownMenuItem<String>> lista = new List();
+
+    _tipoAyuda.forEach((tipoAyuda) {
+      lista.add(DropdownMenuItem(
+        child: Text(tipoAyuda),
+        value: tipoAyuda,
+      ));
+    });
+    return lista;
+  }
+
+  Widget _crearTipoPrioridad() {
     return Row(
       children: <Widget>[
-SizedBox(width:35.0),
-       
+        SizedBox(width: 35.0),
         Text('Prioridad:'),
-         SizedBox(width: 15.0),
-
+        SizedBox(width: 15.0),
         DropdownButton(
           value: _opcionSeleccionadaPrioridad,
           icon: Icon(Icons.person_pin, color: Colors.orange),
@@ -345,8 +345,6 @@ SizedBox(width:35.0),
         ]);
   }
 
-  
-
   Widget _crearBoton(String text) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 100.0),
@@ -371,13 +369,32 @@ SizedBox(width:35.0),
       _save = true;
     });
 
-    if (hospital.nombre == null) {
-      // generic.add(citizen);
-      print("INSERTOOOO");
-    } else {
-      //  generic.update(citizen);
-      print("MODIFICO");
-    }
+    registroAmigo.idcovRegistroAmigo = 0;
+    registroAmigo.regPersona = nombre.objectValue;
+    registroAmigo.regTelefono = telefono.objectValue;
+    registroAmigo.regUbicacion = ubicacion.objectValue;
+    registroAmigo.regPrioridad = _opcionSeleccionadaPrioridad;
+    registroAmigo.regTipoAPoyo = tipoAyuda.objectValue;
+    registroAmigo.usuario = 'marcoarce23@gmail.com';
+
+    // if (registroAmigo.idcovRegistroAmigo == null) {
+
+    print("valores: ${registroAmigo.regPersona}");
+    print("valores: ${registroAmigo.regTelefono}");
+    print("valores: ${registroAmigo.regPrioridad}");
+    print("valores: ${registroAmigo.regUbicacion}");
+    print("valores: ${registroAmigo.regTipoAPoyo}");
+    print("valores: ${registroAmigo.usuario}");
+
+    final dataMap = generic.add(registroAmigo, urlAddVoluntary);
+
+    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+    print('resultado:$result');
+
+    // } else {
+    //   //  generic.update(citizen);
+    //   print("MODIFICO");
+    // }
 
     setState(() {
       _save = false;
@@ -385,5 +402,4 @@ SizedBox(width:35.0),
 
     //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
   }
-
 }

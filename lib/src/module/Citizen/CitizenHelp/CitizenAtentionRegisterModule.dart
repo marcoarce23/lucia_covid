@@ -19,7 +19,6 @@ class _CitizenAtentionRegisterModuleState
     extends State<CitizenAtentionRegisterModule> {
   bool _save = false;
   int _selectedRadio;
-  String _opcionSeleccionadaTipoAyuda = '';
   String _opcionSeleccionadaPrioridad = '';
   String _fecha = '';
   TextEditingController _inputFieldDateController = new TextEditingController();
@@ -49,7 +48,6 @@ class _CitizenAtentionRegisterModuleState
   @override
   void initState() {
     _selectedRadio = 0;
-    _opcionSeleccionadaTipoAyuda = '<Seleccionar_Ayuda>';
     _opcionSeleccionadaPrioridad = '<Seleccionar_Medio>';
 
     super.initState();
@@ -392,27 +390,7 @@ class _CitizenAtentionRegisterModuleState
     );
   }
 
-  Widget _crearTipoApoyo() {
-    return Row(
-      children: <Widget>[
-        SizedBox(width: 30.0),
-        Text('Tipo de apoyo:'),
-        SizedBox(width: 15.0),
-        DropdownButton(
-          value: _opcionSeleccionadaTipoAyuda,
-          icon: Icon(Icons.person_pin, color: Colors.orange),
-          items: getOpcionesTipoAyuda(),
-          onChanged: (opt) {
-            setState(() {
-              _opcionSeleccionadaTipoAyuda = opt;
-            });
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _crearTipoPrioridad() {
+   Widget _crearTipoPrioridad() {
     return Row(
       children: <Widget>[
         SizedBox(width: 25.0),

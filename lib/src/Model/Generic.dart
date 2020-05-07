@@ -23,38 +23,15 @@ const Map<SomeStatus, String> SomeStatusName = {
 
 class Generic {
 
-  final String url        =      'http://covid19.ruta88.net/COVID/Hospitales/srvHospital.svc/HOSPITALES/hola';
-  final String urlAdd     =     'http://covid19.ruta88.net/COVID/Login/srvLogin.svc/login_signin';
-  // 'http://covid19.ruta88.net/COVID/Hospitales/srvHospital.svc/CARGA_HOSPITALES1';
-  final String urlUpdate  =      'http://covid19.ruta88.net/COVID/Hospitales/srvHospital.svc/CARGA_HOSPITALES1';
-  final String primaryKey =      '_devuelveHospitalesResult';
-
-  String getUrl() {
-    return url;
-  }
-
-  String getUrlAdd() {
-    return urlAdd;
-  }
-
-  String getUrlUpdate() {
-    print(SomeStatusName[SomeStatus.element2]); // prints: "Element 2"
-
-    return urlUpdate;
-  }
-
-  String getPrimaryKey() {
-    return primaryKey;
-  }
-
-  Future<List<Entity>> getAll(Entity objeto) async 
+  Future<List<Entity>> getAll(Entity objeto, String urlGet, String primaryKey) async 
   {
-      final _url = getUrl();
-      final _primaryKey = getPrimaryKey();
+      final _url = urlGet;
+      final _primaryKey = primaryKey;
 
       final List<Entity> list = new List();
       Map<String, dynamic> decodeData;
-
+//  print(_url);
+//  print(_primaryKey);
       final response = await http.get(_url);
 
       if (response.statusCode == 200) {
@@ -72,26 +49,29 @@ class Generic {
       return list;
   }
 
-  Future<Map<String, dynamic>> add(Entity objeto) async {
-      String _body = json.encode(objeto.toJson());
-      final url = getUrlAdd();
-      final response = await http.post(url, headers: {"Content-Type": "application/json"}, body: _body);
 
+Future<Map<String, dynamic>> add(Entity objeto, String urlService) async {
+      String _body = json.encode(objeto.toJson());
+      print('body: $_body');
+      final url = urlService;
+      print('url: $url');
+      final response = await http.post(url, headers: {"Content-Type": "application/json"}, body: _body);
+      
       return dataMap(response);
   }
 
   Future<Map<String, dynamic>> update(Entity objeto) async {
       String _body = json.encode(objeto.toJson());
-      final url = getUrlUpdate();
+      final url = 'getUrlUpdate()';
       final response = await http.put(url, headers: {"Content-Type": "application/json"}, body: _body);
 
       return dataMap(response);
   }
 
-  Future<Map<String, dynamic>> delete(dynamic idObjeto) async {
-     // final url = 'productos/$idObjeto.json';
-      // final response = await http.delete(url);
-      //dataMap(response)
+  Future<Map<String, dynamic>> delete(String url) async {
+    
+       final response = await http.delete(url);
+      dataMap(response);
       return null;
   }
 

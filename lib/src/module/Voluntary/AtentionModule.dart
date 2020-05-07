@@ -7,6 +7,7 @@ import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
+import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class AtentionModule extends StatefulWidget {
   @override
@@ -15,10 +16,6 @@ class AtentionModule extends StatefulWidget {
 
 class _AtentionModuleState extends State<AtentionModule> 
 {
-   InputUrlField facebook;
-  InputUrlField twitter;
-  InputUrlField youtube;
-  InputUrlField web;
 
   InputCheckBox lunes;
   InputCheckBox martes;
@@ -27,14 +24,31 @@ class _AtentionModuleState extends State<AtentionModule>
   InputCheckBox viernes;
   InputCheckBox sabado;
   InputCheckBox domingo;
+
+  bool selectLunes =false;
+  bool selectMartes=false;
+  bool selectMiercoles=false;
+  bool selectJueves=false;
+  bool selectViernes=false;
+  bool selectSabado=false;
+  bool selectDomingo=false;
+
+  int intLunes =0;
+  int intMartes=0;
+  int intMiercoles=0;
+  int intJueves=0;
+  int intViernes=0;
+  int intaSabado=0;
+  int intDomingo=0;
   
   int _currentIndex;
   bool _save =false;
+  var result;
 
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
-  Hospital hospital = new Hospital();
+  VoluntarioAtencion entity = new VoluntarioAtencion();
 
   @override
   void initState() {
@@ -44,9 +58,9 @@ class _AtentionModuleState extends State<AtentionModule>
 
   @override
   Widget build(BuildContext context) {
-    final Hospital hospitalData = ModalRoute.of(context).settings.arguments;
+    final VoluntarioAtencion entityData = ModalRoute.of(context).settings.arguments;
 
-    if (hospitalData != null) hospital = hospitalData;
+    if (entityData != null) entity = entityData;
 
     return Scaffold(
         key: scaffoldKey,
@@ -247,21 +261,11 @@ class _AtentionModuleState extends State<AtentionModule>
 
 
   Widget _crearCamposRRSS() {
-    facebook = InputUrlField(Icon(Icons.alternate_email), 'Facebook:', '', '');
-twitter = InputUrlField(Icon(Icons.alternate_email), 'Twitter:', '', '');
-youtube = InputUrlField(Icon(Icons.alternate_email), 'YouTube:', '', '');
-web = InputUrlField(Icon(Icons.alternate_email), 'Página Web/bloc:', '', '');
+
 
     return Column(
       children: <Widget>[
-        Text(
-          'REDES SOCIALES',
-          style: TextStyle(fontSize: 18, color: Colors.black),
-        ),
-        facebook,
-        twitter,
-        youtube,
-        web,
+
 
 Padding(
   padding: const EdgeInsets.all(12.0),
@@ -271,15 +275,17 @@ _crearCampos(),
       ],
     );
   }
+
+  
   Widget _crearCampos() {
 
-    lunes= InputCheckBox('Lun');
-martes= InputCheckBox('Mar');
-miercoles= InputCheckBox('Mie');
-jueves= InputCheckBox('Jue');
-viernes= InputCheckBox('Vie');
-sabado= InputCheckBox('Sab');
-domingo= InputCheckBox('Dom');
+    lunes= InputCheckBox('Lun',selectLunes);
+martes= InputCheckBox('Mar', selectMartes);
+miercoles= InputCheckBox('Mie', selectMiercoles);
+jueves= InputCheckBox('Jue', selectJueves);
+viernes= InputCheckBox('Vie', selectViernes);
+sabado= InputCheckBox('Sab', selectSabado);
+domingo= InputCheckBox('Dom', selectDomingo);
 
     return Column(
       children: <Widget>[
@@ -301,10 +307,11 @@ domingo= InputCheckBox('Dom');
            
           ],
         ),
+        
         Row(
           children: <Widget>[
              Expanded(
-              child: jueves,
+              child: domingo,
             ),
             Expanded(
               child: viernes,
@@ -315,24 +322,14 @@ domingo= InputCheckBox('Dom');
           
           ],
         ),
+         domingo,
+
+      
+  
         _crearBoton(resource.save),
       ],
     );
   }
-  _crearContenedorCampos() {
-    return BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(35.0),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.black26,
-              blurRadius: 7.0,
-              offset: Offset(0.0, 5.0),
-              spreadRadius: 7.0)
-        ]
-      );
-  }
-
   _crearContenedorCamposRRSS() {
     return BoxDecoration(
         color: Colors.white,
@@ -370,13 +367,32 @@ domingo= InputCheckBox('Dom');
       _save = true;
     });
 
-    if (hospital.nombre == null) {
-      // generic.add(citizen);
-      print("INSERTOOOO");
-    } else {
-      //  generic.update(citizen);
-      print("MODIFICO");
-    }
+    if (lunes.objectValue == true) { intLunes =1; selectLunes = true;}
+if (martes.objectValue == true)  {  intMartes =1;selectMartes = true;}
+if (miercoles.objectValue == true)  {  intMiercoles =1;selectMiercoles = true;}
+if (jueves.objectValue == true)  {  intJueves =1;selectJueves = true;}
+if (viernes.objectValue == true)  {  intViernes =1;selectViernes = true;}
+if (sabado.objectValue == true)  {  intaSabado =1;selectSabado = true;}
+if (domingo.objectValue == true)  {  intDomingo =1;selectDomingo = true;}
+
+    entity.idCovAtencion = 0;
+    entity.idCovEntityPersonal = 123456;
+    entity.perLunes= intLunes;
+    entity.perMartes = intMartes;
+    entity.perMiercoles = intMiercoles;
+    entity.perJueves = intJueves;
+    entity.perViernes = intViernes;
+    entity.perSabado = intaSabado;
+    entity.perDomingo = intDomingo;
+     entity.usuario = 'marcoarce23@gmail.com';
+
+    final dataMap = generic.add(entity, urlAddInstitucion);
+
+    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+    print('resultado:$result');
+
+
+
 
     setState(() {
       _save = false;

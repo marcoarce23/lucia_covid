@@ -6,16 +6,16 @@ import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
-import 'package:lucia_covid/src/Util/Validator.dart' as validator;
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
+import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
 import 'package:lucia_covid/src/module/Login/RegisterLoginModule.dart';
+import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
 import 'package:page_transition/page_transition.dart';
 import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:imei_plugin/imei_plugin.dart';
 
 class SignUpModule extends StatefulWidget {
@@ -26,6 +26,9 @@ class SignUpModule extends StatefulWidget {
 }
 
 class _SignUpModuleState extends State<SignUpModule> {
+  InputEmailField correo;
+  InputTextPassword contrasenia;
+
   bool _save = false;
   final formKey = GlobalKey<FormState>();
   final generic = new Generic();
@@ -56,10 +59,13 @@ class _SignUpModuleState extends State<SignUpModule> {
     String platformImei = 'Failed to get platform version.';
     String idunique;
     // Platform messages may fail, so we use a try/catch PlatformException.
-
-    platformImei =
-        await ImeiPlugin.getImei(shouldShowRequestPermissionRationale: false);
-    idunique = await ImeiPlugin.getId();
+    try {
+      platformImei =
+          await ImeiPlugin.getImei(shouldShowRequestPermissionRationale: false);
+      idunique = await ImeiPlugin.getId();
+    } catch (error) {
+      print(error);
+    }
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
@@ -73,31 +79,35 @@ class _SignUpModuleState extends State<SignUpModule> {
   }
 
   Future<void> handleSignIn() async {
-    // try {
-    await _googleSignIn.signIn();
+    try {
+      await _googleSignIn.signIn();
 
-    login.id = currentUser.id;
-    login.email = currentUser.email;
-    login.persona = currentUser.displayName;
-    login.avatar = 'currentUser.photoUrl';
-    login.imei = _platformImei;
+      login.id = currentUser.id;
+      login.email = currentUser.email;
+      login.persona = currentUser.displayName;
+      login.avatar = 'currentUser.photoUrl';
+      login.imei = _platformImei;
 
-    print('iddd:${login.id}');
-    print('IMEI:${login.imei}');
-    final dataMap = generic.add(login);
+      print('iddd:${login.id}');
+      print('IMEI:${login.imei}');
+      final dataMap = generic.add(login, urlAddSignIn);
 
-    await dataMap.then((x) => result = x["TIPO_RESPUESTA"]);
-    print('DDDDD:$result');
-    if (result == '0')
-      Navigator.push(context, PageTransition(
-                      curve: Curves.bounceOut,
-                      type: PageTransitionType.rotate,
-                      alignment: Alignment.topCenter,
-                      child: IntroScreenModule(),
-                ));
-    else
-      Navigator.of(context).push(PageRouteTheme(SignUpModule()));
-    // catch(Exception error){error.toString();}
+      await dataMap.then((x) => result = x["TIPO_RESPUESTA"]);
+      print('DDDDD:$result');
+      if (result == '0')
+        Navigator.push(
+            context,
+            PageTransition(
+              curve: Curves.bounceOut,
+              type: PageTransitionType.rotate,
+              alignment: Alignment.topCenter,
+              child: IntroScreenModule(),
+            ));
+      else
+        Navigator.of(context).push(PageRouteTheme(SignUpModule()));
+    } catch (error) {
+      print(error);
+    }
   }
 
   Future<void> handleSignOut() async {
@@ -153,13 +163,17 @@ class _SignUpModuleState extends State<SignUpModule> {
   }
 
   Widget _crearCampos() {
+    correo = InputEmailField(Icon(Icons.business), 'Correo electrónico', '',
+        'Ingresar su correo electrónico', 'ej: cuenta@correo.com');
+    contrasenia = InputTextPassword(
+        Icon(Icons.business), 'Contraseña:', '', 'Ingrese su contraseña');
     return Column(
       children: <Widget>[
         SizedBox(height: 15.0),
         Text('Bienvenido a "Lucia Te Cuida."',
             style: TextStyle(fontSize: 20.0)),
-        _crearEmail('Correo ELectrónico'),
-        _crearPassword('Contraseña:'),
+        correo,
+        contrasenia,
         _crearBoton(resource.signIn),
         _forgetPassword(),
       ],
@@ -189,7 +203,7 @@ class _SignUpModuleState extends State<SignUpModule> {
         color: Colors.blue,
         textColor: Colors.white,
         label: Text(
-          'Ingresar',
+          text,
           style: TextStyle(
             fontSize: 18,
             color: Colors.white,
@@ -201,53 +215,14 @@ class _SignUpModuleState extends State<SignUpModule> {
     );
   }
 
-  Widget _crearEmail(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextFormField(
-        initialValue: login.email,
-        enableInteractiveSelection: true,
-        maxLength: 30,
-        enableSuggestions: true,
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          //  hintText: 'Ingrese el correo elecrrónico válido',
-          focusColor: Colors.blue,
-          labelText: 'Correo electrónico:',
-          helperText: 'ej: juan.perez@gmail.com',
-          icon: Icon(Icons.alternate_email, color: Colors.orange),
-        ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
-        onSaved: (value) => login.email = value,
-      ),
-    );
-  }
 
-  Widget _crearPassword(String text) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextFormField(
-        obscureText: true,
-        maxLength: 10,
-        decoration: InputDecoration(
-          labelText: text,
-          icon: Icon(Icons.lock_outline, color: Colors.orange),
-          helperText: 'Nota: caracter especial, un numero.',
-        ),
-        validator: (value) => validator.validateTextfieldLength(value, 6),
-        onSaved: (value) => login.id = value,
-      ),
-    );
-  }
 
   void _submit() async {
-
-      login.id  = currentUser.id;
-      login.email  = currentUser.email;
-      login.persona  = currentUser.displayName;
-      login.avatar  = 'currentUser.photoUrl';
-
-    //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => IntroScreenModule()));
+    login.id = '0';
+    login.email = correo.objectValue;
+    login.persona = contrasenia.objectValue;
+    login.avatar = currentUser.photoUrl ??
+        'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14046.jpg';
 
     if (!formKey.currentState.validate()) return;
 
@@ -256,14 +231,33 @@ class _SignUpModuleState extends State<SignUpModule> {
       _save = true;
     });
 
-    // if (true) {
-    //   // generic.add(citizen);
-    //     Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => IntroScreenModule()));
-    // }
-    // else
-    // {
+    if (login.email != null) {
+      //   // generic.add(citizen);
+      if (result == '0' && prefs.correoElectronico != '-1')
+        Navigator.push(
+            context,
+            PageTransition(
+              curve: Curves.bounceOut,
+              type: PageTransitionType.rotate,
+              alignment: Alignment.topCenter,
+              child: CitizenLayoutMenuModule(),
+            ));
+      else
+        Navigator.push(
+            context,
+            PageTransition(
+              curve: Curves.bounceOut,
+              type: PageTransitionType.rotate,
+              alignment: Alignment.topCenter,
+              child: IntroScreenModule(),
+            ));
+    } else {
+      Scaffold.of(context).showSnackBar(new SnackBar(
+          content: new Text('El usuario no existe!!. VUelva a ingresar')));
 
-    // }
+      return;
+    }
+    _save = false;
   }
 
   Widget _dividerOr() {
@@ -297,7 +291,8 @@ class _SignUpModuleState extends State<SignUpModule> {
   Widget _forgetPassword() {
     return FlatButton(
         child: Text('Olvidaste tu contraseña ?'),
-        onPressed: () =>  Navigator.of(context).push(PageRouteTheme(ForgetPassword())));
+        onPressed: () =>
+            Navigator.of(context).push(PageRouteTheme(ForgetPassword())));
   }
 
   _registerCount() {

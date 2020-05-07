@@ -314,7 +314,7 @@ class _EventEntityModuleState extends State<EventEntityModule> {
       initialDate: new DateTime.now(),
       firstDate: new DateTime(2020, 4),
       lastDate: new DateTime(2025, 12),
-      locale: Locale('es', 'ES')
+    //  locale: Locale('es', 'ES')
     );
 
     if (picked != null) {
@@ -349,8 +349,9 @@ class _EventEntityModuleState extends State<EventEntityModule> {
   Widget _crearFecha(String text) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-      child: TextField(
-        enableInteractiveSelection: false,
+      child: TextFormField(
+        enableInteractiveSelection: true,
+        initialValue: hospital.nombre,
         controller: _inputFieldDateController,
         decoration: InputDecoration(
             // border: OutlineInputBorder(

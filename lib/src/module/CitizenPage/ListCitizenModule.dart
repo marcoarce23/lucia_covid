@@ -20,7 +20,7 @@ class ListCitizenModule extends StatelessWidget {
 
   Widget _showData() {
     return FutureBuilder(
-      future: generic.getAll(new Hospital()),
+      future: generic.getAll(new Hospital(),'http://covid19.ruta88.net/COVID/Clasificador/srvClasificador.svc/Clasificador/23', '_DevuelveClasificadorResult'),
       builder: (BuildContext context, AsyncSnapshot<List<Entity>> snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(
@@ -33,7 +33,7 @@ class ListCitizenModule extends StatelessWidget {
     );
   }
 
-  Widget _createItem(BuildContext context,Hospital entityList) {
+  Widget _createItem(BuildContext context, Hospital entityList) {
 
     prefs.correoElectronico = 'marcoarce23@gmail.com';
 
@@ -55,8 +55,8 @@ class ListCitizenModule extends StatelessWidget {
         child: Column(
           children: <Widget>[
             ListTile(
-              title: Text('nombre: ${entityList.nombre} - ubicaicon: ${entityList.ubicacion}'),
-              subtitle: Text('${entityList.id} - correo: ${prefs.correoElectronico}'),
+              title: Text('nombre: ${entityList.nombre} - ubicaicon: ${entityList.nombre}'),
+              subtitle: Text('${entityList.nombre} - correo: ${prefs.correoElectronico}'),
               onTap: () =>
                 //  Navigator.pushNamed(context, 'citizen', arguments: entityList),
                  Navigator.pushNamed(context, 'citizen'),

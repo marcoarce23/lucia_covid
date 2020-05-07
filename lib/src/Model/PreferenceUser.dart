@@ -42,7 +42,7 @@ class PreferensUser
 
       // GET y SET del _colorSecundario
       get ci {
-        return _prefs.getString('ci') ?? '0000000';
+        return _prefs.getString('ci') ?? 'unknow';
       }
 
       set ci( String value ) {
@@ -51,7 +51,7 @@ class PreferensUser
 
       // GET y SET del correo
       get correoElectronico {
-        return _prefs.getString('correo') ?? '< vacio@correo.com >';
+        return _prefs.getString('correo') ?? '-1';
       }
 
       set correoElectronico( String value ) {
@@ -60,7 +60,7 @@ class PreferensUser
 
  // GET y SET del correo
       get correoGmail {
-        return _prefs.getString('correoGmail') ?? '< vacio@gmail.com >';
+        return _prefs.getString('correoGmail') ?? '-1';
       }
 
       set correoGmail( String value ) {
@@ -69,7 +69,7 @@ class PreferensUser
 
       // GET y SET del nombreUsuario
       get nombreUsuario {
-        return _prefs.getString('nombreUsuario') ?? '< Estoy vacio >';
+        return _prefs.getString('nombreUsuario') ?? 'unknow';
       }
 
       set nombreUsuario( String value ) {

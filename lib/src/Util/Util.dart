@@ -14,6 +14,16 @@ import 'package:http/http.dart' as http;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
+
+int daysInMonth(int month) {
+  var now = DateTime.now();
+
+  var lastDayDateTime = (month < 12) ?
+    new DateTime(now.year, month + 1, 0) : new DateTime(now.year + 1, 1, 0);
+
+  return lastDayDateTime.day;
+}
+
 Future<LatLng> getLocationt() async {
   
    final Location location = Location();

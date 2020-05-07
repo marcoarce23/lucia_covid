@@ -1,5 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:lucia_covid/src/Model/Entity.dart';
+import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Util/Validator.dart' as validator;
+import 'package:lucia_covid/src/Widget/InputField/MaskEdit.dart';
+import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
+
+inputDecoration(String hint, String text, Icon icon){
+ InputDecoration(
+
+  fillColor: Colors.white,
+  filled : true,
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.white, width: 2.0)
+  ),
+
+    focusedBorder : OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.orange, width:2.0)
+    ),
+);
+}
+
 
 class InputTextField extends StatefulWidget {
   String objectValue;
@@ -7,32 +27,51 @@ class InputTextField extends StatefulWidget {
   final Icon icon;
   final String hint;
 
-  InputTextField(this.icon, this.text, this.objectValue, this.hint);
+   InputTextField(this.icon, this.text, this.objectValue, this.hint);
 
   @override
   _InputTextFieldState createState() => _InputTextFieldState();
 }
 
 class _InputTextFieldState extends State<InputTextField> {
+  String mask = 'AAAAAAAAAAAAAAAA';
+    var controller;
+
   @override
   Widget build(BuildContext context) {
     return getWidget();
   }
 
   Widget getWidget() {
+
+     controller = new MaskedTextController(mask: mask);
+    
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
       child: TextFormField(
+       // 
         initialValue: widget.objectValue,
         textCapitalization: TextCapitalization.sentences,
-        enableInteractiveSelection: true,
         enableSuggestions: true,
+        
         keyboardType: TextInputType.text,
+        controller: controller,
+      //  decoration : InputDecoration( //inputDecoration(widget.hint, widget.text, widget.icon),
         decoration: InputDecoration(
           focusColor: Colors.blue,
-          hintText: widget.hint,
-          labelText: widget.text,
-          icon: widget.icon,
+           hintText: widget.hint,
+           labelText: widget.text,
+           icon: widget.icon,
+//errorText: 'XXXXX',
+           fillColor: Colors.white,
+  filled : true,
+  // enabledBorder: OutlineInputBorder(
+  //   borderSide: BorderSide(color: Colors.orange, width: 1.0)
+  // ),
+
+    // focusedBorder : OutlineInputBorder(
+    //     borderSide: BorderSide(color: Colors.orange,)
+    // ),
         ),
         onChanged: (value) {
           setState(() {
@@ -45,7 +84,6 @@ class _InputTextFieldState extends State<InputTextField> {
     );
   }
 }
-
 
 class InputTextPassword extends StatefulWidget {
   String objectValue;
@@ -66,8 +104,7 @@ class _InputTextPasswordState extends State<InputTextPassword> {
   }
 
   Widget getWidget() {
-   
-   return Padding(
+    return Padding(
       padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
       child: TextFormField(
         initialValue: widget.objectValue,
@@ -87,7 +124,6 @@ class _InputTextPasswordState extends State<InputTextPassword> {
   }
 }
 
-
 class InputEmailField extends StatefulWidget {
   String objectValue;
   final String text;
@@ -95,7 +131,8 @@ class InputEmailField extends StatefulWidget {
   final String hint;
   final String helperText;
 
-  InputEmailField(this.icon, this.text, this.objectValue, this.hint, this.helperText);
+  InputEmailField(
+      this.icon, this.text, this.objectValue, this.hint, this.helperText);
 
   @override
   _InputEmailFielddState createState() => _InputEmailFielddState();
@@ -134,9 +171,6 @@ class _InputEmailFielddState extends State<InputEmailField> {
     );
   }
 }
-
-
-
 
 class InputPhoneField extends StatefulWidget {
   String objectValue;
@@ -226,7 +260,6 @@ class _InputUrlState extends State<InputUrlField> {
   }
 }
 
-
 class InputNumberField extends StatefulWidget {
   String objectValue;
   final String text;
@@ -315,25 +348,21 @@ class _InputMultilineFieldState extends State<InputMultilineField> {
   }
 }
 
-
-
 class InputSexo extends StatefulWidget {
-
-  InputSexo( );
+  InputSexo();
 
   @override
   _InputSexoState createState() => _InputSexoState();
 }
 
 class _InputSexoState extends State<InputSexo> {
-    int _selectedRadio = 0;
+  int _selectedRadio = 0;
   @override
   Widget build(BuildContext context) {
     return getWidget();
   }
 
   Widget getWidget() {
-   
     return Column(
       children: <Widget>[
         ListTile(
@@ -361,43 +390,108 @@ class _InputSexoState extends State<InputSexo> {
       ],
     );
   }
-   setSelectedRadio(int value) {
+
+  setSelectedRadio(int value) {
     setState(() {
       _selectedRadio = value;
     });
   }
 }
 
-
-
-
 class InputCheckBox extends StatefulWidget {
+  bool objectValue;
   final String text;
-  
-  InputCheckBox(this.text );
+
+  InputCheckBox(this.text, this.objectValue);
 
   @override
   _InputCheckBoxState createState() => _InputCheckBoxState();
 }
 
 class _InputCheckBoxState extends State<InputCheckBox> {
-  bool  _selected = false;
   @override
   Widget build(BuildContext context) {
     return getWidget();
   }
 
   Widget getWidget() {
-   
     return CheckboxListTile(
-        title: new Text(widget.text), 
-        value: _selected, 
+        title: new Text(widget.text),
+        value: widget.objectValue,
         onChanged: (value) {
           setState(() {
-             _selected = value;
+            widget.objectValue = value;
           });
-        }
-    );
+        });
   }
 }
 
+class InputDropDown extends StatefulWidget {
+  String objectValue;
+  final String text;
+  final IconData icon;
+  final String values;
+
+  InputDropDown(this.icon, this.text, this.objectValue, this.values);
+
+  @override
+  _InputDropDownState createState() => _InputDropDownState();
+}
+
+class _InputDropDownState extends State<InputDropDown> {
+  final generic = new Generic();
+
+@override
+  void initState() {
+     widget.objectValue = widget.objectValue;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return getWidget();
+  }
+
+  List<DropdownMenuItem<String>> getDropDown(AsyncSnapshot snapshot) {
+    List<DropdownMenuItem<String>> lista = new List();
+
+    for (var i = 0; i < snapshot.data.length; i++) {
+      GetClasificador item = snapshot.data[i];
+      lista.add(DropdownMenuItem(
+        child: Text(item.nombre),
+        value: item.id.toString(), 
+      ));
+    }
+    return lista;
+  }
+
+  Widget getWidget() {
+    return Center(
+        child: FutureBuilder(
+            future: generic.getAll(new GetClasificador(), widget.values, primaryKeyGetClasifidor),
+            builder: (context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                return Row(
+                  children: <Widget>[
+                    SizedBox(width: 35.0),
+                    Text(widget.text),
+                    SizedBox(width: 15.0),
+                    DropdownButton(
+                      icon: Icon(widget.icon, color: Colors.orange),
+                      value: widget.objectValue,
+                      items: getDropDown(snapshot),
+                      onChanged: (value) {
+                        setState(() {
+                          widget.objectValue = value;
+                          print('valor combo: ${widget.objectValue}');
+                        });
+                      },
+                    ),
+                  ],
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            }));
+  }
+}

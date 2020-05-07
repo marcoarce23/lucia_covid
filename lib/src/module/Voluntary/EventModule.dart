@@ -39,20 +39,21 @@ InputTextField fotoa;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
-  Evento evento = new Evento();
+  Evento entity = new Evento();
 
   @override
   void initState() {
     _currentIndex = 0;
     _time = new TimeOfDay.now();
+    _fecha = new DateTime.now().toString().substring(0,10);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Evento eventoData = ModalRoute.of(context).settings.arguments;
+    final Evento entityData = ModalRoute.of(context).settings.arguments;
 
-    if (eventoData != null) evento = eventoData;
+    if (entityData != null) entity = entityData;
 
     return Scaffold(
         key: scaffoldKey,
@@ -97,7 +98,7 @@ _crearIconAppImagenes() {
     foto = await ImagePicker.pickImage(source: origen);
 
     if (foto != null) {
-      evento.regTelefono = null;
+    //  evento.regTelefono = null;
     }
     setState(() {});
   }
@@ -425,13 +426,13 @@ _crearIconAppImagenes() {
       _save = true;
     });
 
-    if (evento.idcovRegistroAmigo == null) {
-      // generic.add(citizen);
-      print("INSERTOOOO");
-    } else {
-      //  generic.update(citizen);
-      print("MODIFICO");
-    }
+    // if (evento.idcovRegistroAmigo == null) {
+    //   // generic.add(citizen);
+    //   print("INSERTOOOO");
+    // } else {
+    //   //  generic.update(citizen);
+    //   print("MODIFICO");
+    // }
 
     setState(() {
       _save = false;

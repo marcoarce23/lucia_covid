@@ -19,13 +19,10 @@ class MultimediaModule extends StatefulWidget {
 class _MultimediaModuleState extends State<MultimediaModule> {
 bool _save = false;
   String _fecha = '';
-  TimeOfDay _time;
   int _currentIndex;
   TextEditingController _inputFieldDateController = new TextEditingController();
-  TextEditingController _inputFieldTimeController = new TextEditingController();
 
     String _opcionCategoria = '';
-String _opcionSubCategoria = '';
 
 List<String> _tipoCatalogo = [
     'Medicina',
@@ -53,9 +50,8 @@ List<String> _tipoSubCatalogo = [
   @override
   void initState() {
     _currentIndex = 0;
-    _time = new TimeOfDay.now();
     _opcionCategoria = 'Medicina';
-    _opcionSubCategoria='General';
+
     super.initState();
   }
 
@@ -307,26 +303,7 @@ List<String> _tipoSubCatalogo = [
     );
   }
 
-  Widget _crearSubCatalogo() {
-    return Row(
-      children: <Widget>[
-        SizedBox(width: 30.0),
-        Text('TSub - Categoria:'),
-        SizedBox(width: 15.0),
-        DropdownButton(
-          value: _opcionSubCategoria,
-          icon: Icon(Icons.person_pin, color: Colors.orange),
-          items: getSubCategoria(),
-          onChanged: (opt) {
-            setState(() {
-              _opcionSubCategoria = opt;
-            });
-          },
-        ),
-      ],
-    );
-  }
-
+ 
   Widget _crearTitulo(String text) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
