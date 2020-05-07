@@ -125,7 +125,7 @@ Future<List<InstitucionesItems>> getInstitucionesItems() async {
   item2.url =
       "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg";
   lista.add(item2);
-/*
+
   InstitucionesItems item3 = new InstitucionesItems();
   item3.idInstitucion = 3;
   item3.nombreInstitucion = "San Joaquin";
@@ -173,7 +173,7 @@ Future<List<InstitucionesItems>> getInstitucionesItems() async {
   item6.url =
       "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg";
   lista.add(item6);
-  */
+  
 
   return lista;
 }

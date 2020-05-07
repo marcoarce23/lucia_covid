@@ -6,6 +6,8 @@ import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenMultimedia/CitizenImageDetailModule.dart';
 import 'package:lucia_covid/src/module/General/PageViewModule.dart';
+import 'package:lucia_covid/src/module/Voluntary/FoundAllVoluntaryModule.dart';
+import 'package:lucia_covid/src/module/Voluntary/FoundVoluntaryModule.dart';
 import 'package:lucia_covid/src/module/Voluntary/ListVoluntary.dart';
 
 class CitizenInstitutionModule extends StatefulWidget {
@@ -47,9 +49,8 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
         //backgroundColor: AppTheme.themeColorNaranja,
       ),
       body: SingleChildScrollView(
-              child: Column(children: <Widget>[
+        child: Column(children: <Widget>[
           cabeceraInstitucion(screenHeigh, screenwidth),
-
           Align(
             alignment: Alignment.topLeft,
             child: Container(
@@ -242,8 +243,8 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ListVoluntaryModule(
-                   //   profesional: profesional,
+                builder: (context) => FoundAllVoluntaryModule(
+                       profesional: profesional,
                     )),
           );
         },
