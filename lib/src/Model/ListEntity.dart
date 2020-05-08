@@ -111,7 +111,7 @@ Future<List<InstitucionesItems>> getInstitucionesItems() async {
   item1.fechaConCovid = new DateTime(2020, 1, 30);
   item1.miembros = 50;
   item1.url =
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg";
+      "https://drive.google.com/file/d/1SKri16i8UJPBUFhD2VTaB-zowqUrUexQ/view";
   lista.add(item1);
 
   InstitucionesItems item2 = new InstitucionesItems();

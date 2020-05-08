@@ -18,7 +18,7 @@ Map<String, WidgetBuilder> getApplicationRoute() {
   };
 }
 
-
+  //////          MARCO           //////
   // METODOS GET
   final String primaryKeyGetClasifidor = '_DevuelveClasificadorResult';
   String urlGetClasificador  = 'http://covid19.ruta88.net/COVID/Clasificador/srvClasificador.svc/Clasificador/';
