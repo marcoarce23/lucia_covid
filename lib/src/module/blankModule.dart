@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucia_covid/src/Provider/PushNotificationProvider.dart';
 
 
 class BlankModule extends StatefulWidget {
@@ -8,6 +9,8 @@ class BlankModule extends StatefulWidget {
 
 class _BlankModuleState extends State<BlankModule>
     with TickerProviderStateMixin {
+
+        final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
   AnimationController animationController;
 
   AnimationController animationControllerPanel;
@@ -24,6 +27,19 @@ class _BlankModuleState extends State<BlankModule>
         duration: const Duration(milliseconds: 600), vsync: this);
     tabBody = null;
     super.initState();
+
+    final pushProvider = new PushNotificationProvider();
+    pushProvider.initNotifications();
+
+    // pushProvider.mensajes.listen( (data) {
+
+    //   // Navigator.pushNamed(context, 'mensaje');
+    //   print('Argumento del Push');
+    //   print(data);
+
+    //   navigatorKey.currentState.pushNamed('mensaje', arguments: data );
+
+    // });
   }
 
   @override

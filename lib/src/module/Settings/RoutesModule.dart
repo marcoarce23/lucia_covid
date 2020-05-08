@@ -23,6 +23,21 @@ Map<String, WidgetBuilder> getApplicationRoute() {
   final String primaryKeyGetClasifidor = '_DevuelveClasificadorResult';
   String urlGetClasificador  = 'http://covid19.ruta88.net/COVID/Clasificador/srvClasificador.svc/Clasificador/';
 
+  final String primaryKeyGetAyudaAmigo= '_DevuelveClasificadorResult';
+  String urlGetDevuelveAyuda =   'http://covid19.ruta88.net/COVID/AyudaAmigo/srvAyudaAmigo.svc/DevuelveAyudas';
+
+  final String primaryKeyGetInsitucion= '';
+  String urlGetInstitucion =   '';
+
+  final String primaryKeyGetVoluntario = '';
+  String urlGetVoluntario =   '';
+
+  final String primaryKeyGetAtencionVoluntario = '';
+  String urlGetAtencionVoluntario =   '';
+
+  final String primaryKeyGetAtencionInstitucion = '';
+  String urlGetAtencionInstitucion =   '';
+
  // METODO POST
     final String urlAddVoluntary     = 'http://covid19.ruta88.net/COVID/AyudaAmigo/srvAyudaAmigo.svc/AyudaAmigo';
     final String urlAddSignIn     = 'http://covid19.ruta88.net/COVID/Login/srvLogin.svc/login_signin';
@@ -32,7 +47,7 @@ Map<String, WidgetBuilder> getApplicationRoute() {
 
 // METODO DELETE
 
-    // final String urlGetSignIn     = 'http://covid19.ruta88.net/COVID/Hospitales/srvHospital.svc/HOSPITALES/hola';
+   final String urlDeleteAyudaAmigo     = 'http://covid19.ruta88.net/COVID/AyudaAmigo/srvAyudaAmigo.svc/EliminarAyudaAmigo/';
     
     // final String urlUpdateSignIn  = 'http://covid19.ruta88.net/COVID/Login/srvLogin.svc/login_signin';
     // final String urlDeleteSignIn  = 'http://covid19.ruta88.net/COVID/Login/srvLogin.svc/login_signin';

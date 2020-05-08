@@ -9,6 +9,113 @@ import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
+class _HeaderWaveGradientPainter extends CustomPainter {
+
+  
+
+  @override
+
+  void paint(Canvas canvas, Size size) {
+
+    
+
+    final Rect rect = new Rect.fromCircle(
+
+      center: Offset(0.0, 55.0),
+
+      radius: 180
+
+    );
+
+
+
+    final Gradient gradiente = new LinearGradient(
+
+      begin: Alignment.topCenter,
+
+      end: Alignment.bottomCenter,
+
+      colors: <Color>[
+
+        Color(0xff6D05E8),
+
+        Color(0xffC012FF),
+
+        Color(0xff6D05FA),
+
+      ],
+
+      stops: [
+
+        0.2,
+
+        0.5,
+
+        1.0,
+
+      ]
+
+    );
+
+
+
+
+
+    final lapiz = new Paint()..shader = gradiente.createShader(rect);
+
+
+
+    // Propiedades
+
+    // lapiz.color = Color(0xff615AAB);
+
+    // lapiz.color = Colors.red;
+
+    lapiz.style = PaintingStyle.fill; // .fill .stroke
+
+    lapiz.strokeWidth = 20;
+
+
+
+    final path = new Path();
+
+
+
+    // Dibujar con el path y el lapiz
+
+    path.lineTo( 0, size.height * 0.25 );
+
+    path.quadraticBezierTo(size.width * 0.25, size.height * 0.30, size.width * 0.5, size.height * 0.25 );
+
+    path.quadraticBezierTo(size.width * 0.75, size.height * 0.20, size.width, size.height * 0.25 );
+
+    path.lineTo( size.width, 0 );
+
+
+
+  
+
+
+
+
+
+    canvas.drawPath(path, lapiz );
+
+  }
+
+
+
+  @override
+
+  bool shouldRepaint(CustomPainter oldDelegate) {
+
+    return true;
+
+  }
+
+
+
+}
 class CitizenHelpModule extends StatefulWidget {
   @override
   _CitizenHelpModuleState createState() => _CitizenHelpModuleState();
@@ -97,6 +204,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
         appBar: _appBar(),
         body: Stack(
           children: <Widget>[
+          
             _crearForm(context),
           ],
         ),
@@ -251,6 +359,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
               ),
             ),
             Container(
+              
               width: size.width * 0.90,
               margin: EdgeInsets.symmetric(vertical: 0.0),
               decoration: _crearContenedorCampos(),

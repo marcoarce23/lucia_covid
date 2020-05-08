@@ -55,7 +55,7 @@ class _InputTextFieldState extends State<InputTextField> {
         enableSuggestions: true,
         
         keyboardType: TextInputType.text,
-        controller: controller,
+     //   controller: controller,
       //  decoration : InputDecoration( //inputDecoration(widget.hint, widget.text, widget.icon),
         decoration: InputDecoration(
           focusColor: Colors.blue,

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
+import 'package:lucia_covid/src/Provider/MEnsaje.dart';
+import 'package:lucia_covid/src/Provider/PushNotificationProvider.dart';
 import 'package:lucia_covid/src/Widget/InputField/MaskEdit.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 import 'package:lucia_covid/src/module/CitizenPage/CitizenModule.dart';
 import 'package:lucia_covid/src/module/Entity/EntityModule.dart';
 import 'package:lucia_covid/src/module/Entity/EventEntityModule.dart';
@@ -21,7 +24,7 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
 
 //   Widget _cpf() {
 //     String mask = '00000000000';
@@ -138,12 +141,40 @@ class MyApp extends StatelessWidget {
 //     );
 //   }
 // }
-  final prefs = new PreferensUser();
+
+  
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+
+ 
+  @override
+  void initState() {
+    super.initState();
+
+    final pushProvider = new PushNotificationProvider();
+    pushProvider.initNotifications();
+
+    pushProvider.mensajes.listen( (data) {
+
+      // Navigator.pushNamed(context, 'mensaje');
+      print('Argumento del Push');
+      print(data);
+
+      navigatorKey.currentState.pushNamed('mensaje', arguments: data );
+
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'resource.titleApp',
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
@@ -152,7 +183,7 @@ class MyApp extends StatelessWidget {
       //home: new ListCitizenModule(),
       //initialRoute: SplashScreenModule(),
 
-      home: new VoluntaryModule(),//(,//IntroScreen(),
+      home: new CitizenLayoutMenuModule(),//(,//IntroScreen(),
 
       routes: <String, WidgetBuilder>{
         'Splash': (BuildContext context) => new SplashScreenModule(),
@@ -161,6 +192,7 @@ class MyApp extends StatelessWidget {
         'forgetPassword': (BuildContext context) => new ForgetPassword(),
         'registerLogin': (BuildContext context) => new RegisterLoginModule(),
         'sliderShowModule': (BuildContext context) => new SliderShowModule(),
+        'mensaje': (BuildContext context) => new MensajePage(),
       },
     );
   }

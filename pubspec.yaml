@@ -48,11 +48,19 @@ dependencies:
   intro_slider: ^2.2.9
   page_transition: ^1.1.5
   imei_plugin: ^1.1.6
+  firebase_messaging: ^6.0.13
+  firebase_analytics: ^5.0.1
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.7.5
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

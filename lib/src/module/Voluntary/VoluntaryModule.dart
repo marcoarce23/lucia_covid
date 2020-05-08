@@ -44,6 +44,8 @@ InputSexo sexo;
   final generic = new Generic();
   Voluntary entity = new Voluntary();
 
+  
+
   @override
   void initState() {
     _currentIndex = 0;
@@ -86,6 +88,7 @@ InputSexo sexo;
   @override
   Widget build(BuildContext context) {
     final Voluntary entityData = ModalRoute.of(context).settings.arguments;
+final arg = ModalRoute.of(context).settings.arguments;
 
     if (entityData != null) entity = entityData;
 
@@ -94,6 +97,7 @@ InputSexo sexo;
         appBar: _appBar(),
         body: Stack(
           children: <Widget>[
+            Text(arg),
             crearFondoForm(context),
             _crearForm(context),
           ],
