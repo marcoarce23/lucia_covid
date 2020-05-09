@@ -466,7 +466,8 @@ class BotonPanico extends Entity {
   int idaPrioridad;
   double botCordenadalat;
   double botCordenadalon;
-  DateTime botFecha;
+  //DateTime botFecha;
+  String botFecha;
   int idaEstadoSolicitud;
   String botTelefono;
   String usuario;
@@ -475,7 +476,7 @@ class BotonPanico extends Entity {
       {this.idcovBotonpanico = 0,
       this.idaCatalogo,
       this.botDetalle,
-      this.idaPrioridad,
+      this.idaPrioridad=70,
       this.botCordenadalat,
       this.botCordenadalon,
       this.botFecha,

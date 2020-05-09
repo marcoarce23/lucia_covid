@@ -49,5 +49,12 @@ Map<String, WidgetBuilder> getApplicationRoute() {
   final String urlDeleteVoluntario =  'http://covid19.ruta88.net/COVID/Personal/srvPersonal.svc/EliminarPersonal/';
  final String urlDeleteInstitucion =  'http://covid19.ruta88.net/COVID/Institucion/srvInstitucion.svc/DevuelveInstitucion/EliminarInstitucion';
 
+//////          CHRISS           //////
+
+// METODOS GET
 
 
+// METODO POST
+final String urlAddBotonPanico     = 'http://covid19.ruta88.net/COVID/BotonPanico/srvBotonPanico.svc/BotonAyuda';
+
+// METODO DELETE

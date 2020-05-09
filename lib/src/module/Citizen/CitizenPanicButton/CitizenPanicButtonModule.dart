@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
+import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
+import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class CitizenPanicButtonModule extends StatefulWidget {
   const CitizenPanicButtonModule({Key key}) : super(key: key);
@@ -68,6 +70,7 @@ class ButtonPanic extends StatefulWidget {
 
 class _ButtonPanic extends State<ButtonPanic> {
   BotonPanico botonPanico = new BotonPanico();
+  final generic = new Generic();
 
   bool checkMuyAlto = false;
   bool checkAlto = false;
@@ -88,6 +91,16 @@ class _ButtonPanic extends State<ButtonPanic> {
 
   Widget buttonPanic() {
     botonPanico.idaCatalogo = int.parse(widget.tipoBoton);
+    //botonPanico.botFecha=DateTime.now();
+    botonPanico.botFecha =
+        DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
+
+    botonPanico.botCordenadalat = 6.66;
+    botonPanico.botCordenadalon = 6.66;
+    botonPanico.usuario = "Coav";
+
+    ///72 Solicitud enviada
+    botonPanico.idaEstadoSolicitud = 72;
 
     var textStyle = TextStyle(
         fontSize: 18,
@@ -136,7 +149,7 @@ class _ButtonPanic extends State<ButtonPanic> {
                             Text(
                                 DateFormat('dd/MM/yyyy').format(DateTime.now()),
                                 style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.w700)),
+                                    fontSize: 14, fontWeight: FontWeight.w700, color: AppTheme.themeColorVerde  )),
                           ],
                         ),
                         Align(
@@ -156,6 +169,10 @@ class _ButtonPanic extends State<ButtonPanic> {
                                 value: checkMuyAlto,
                                 onChanged: (bool value) {
                                   setState(() {
+                                    print(value);
+
+                                    botonPanico.idaPrioridad = 68;
+                                    print(botonPanico.idaPrioridad);
                                     checkMuyAlto = true;
                                     checkAlto = false;
                                     checkMedio = false;
@@ -168,6 +185,10 @@ class _ButtonPanic extends State<ButtonPanic> {
                                 value: checkAlto,
                                 onChanged: (bool value) {
                                   setState(() {
+                                    print(value);
+                                    botonPanico.idaPrioridad = 69;
+                                    print(botonPanico.idaPrioridad);
+
                                     checkMuyAlto = false;
                                     checkAlto = true;
                                     checkMedio = false;
@@ -180,6 +201,10 @@ class _ButtonPanic extends State<ButtonPanic> {
                                 value: checkMedio,
                                 onChanged: (bool value) {
                                   setState(() {
+                                    print(value);
+                                    botonPanico.idaPrioridad = 70;
+                                    print(botonPanico.idaPrioridad);
+
                                     checkMuyAlto = false;
                                     checkAlto = false;
                                     checkMedio = true;
@@ -191,27 +216,54 @@ class _ButtonPanic extends State<ButtonPanic> {
                           style: TextStyle(color: Colors.black, fontSize: 13),
                           decoration: InputDecoration(
                             labelStyle:
-                                TextStyle(fontSize: 13, color: Colors.black),
+                                TextStyle(fontSize: 14, color: Colors.black),
                             labelText: "Detalle",
                             border: InputBorder.none,
                             hintText: 'Ingrese alguna observacion',
                             hintStyle:
-                                TextStyle(fontSize: 12, color: Colors.black),
+                                TextStyle(fontSize: 14, color: Colors.black),
                           ),
-        
+                          onChanged: (value) {
+                            botonPanico.botDetalle = value;
+                          },
                         ),
                         TextFormField(
+                          keyboardType: TextInputType.phone,
                           style: TextStyle(color: Colors.black, fontSize: 13),
                           decoration: InputDecoration(
                             labelStyle:
-                                TextStyle(fontSize: 13, color: Colors.black),
-                            labelText: "Nro telefonico",
+                                TextStyle(fontSize: 14, color: Colors.black),
+                            labelText: "Nro  telefono",
+                            
                             border: InputBorder.none,
                             hintText:
                                 'Ingrese el número de telefono para comunicarnos',
                             hintStyle:
-                                TextStyle(fontSize: 12, color: Colors.black),
+                                TextStyle(fontSize: 14, color: Colors.black),
                           ),
+                          onChanged: (value) {
+                            botonPanico.botTelefono = value;
+                          },
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                                    "Fecha de envio: ",
+                                    style: TextStyle(
+                                        fontSize: 14, fontWeight: FontWeight.w700)),
+                            Text(
+                                    DateFormat('dd/MM/yyyy HH:mm').format(DateTime.now()),
+                                    style: TextStyle(
+                                        fontSize: 14, fontWeight: FontWeight.w700)),
+                          ],
+                        ), 
+                        Row(
+                          children: <Widget>[
+                            Text(
+                                        "Estado: Solicitud de ayuda enviada ",
+                                        style: TextStyle(
+                                            fontSize: 14, fontWeight: FontWeight.w700)),
+                          ],
                         ),
                         Center(
                           child: FlatButton(
@@ -221,11 +273,7 @@ class _ButtonPanic extends State<ButtonPanic> {
                             disabledTextColor: Colors.black,
                             splashColor: Colors.greenAccent,
                             onPressed: () {
-
-
-
-                              Scaffold.of(context)
-                                  .showSnackBar(messageWarning("esta todo ok"));
+                              _submit();
                             },
                             child: Icon(Icons.pan_tool),
                           ),
@@ -235,22 +283,22 @@ class _ButtonPanic extends State<ButtonPanic> {
                   ),
                 ))),
       ],
-    );
+    );  
+  }
 
-    /*
-    return Container(
-        height: 100.0,
-        margin: const EdgeInsets.symmetric(
-          vertical: 16.0,
-          horizontal: 24.0,
-        ),
-        child: new Stack(
-          children: <Widget>[
-            backgroundContainer(),
-            imageButton(),
-            contentPanicButton(),
-          ],
-        ));
-    */
+  _submit() async {
+    print(botonPanico);
+
+    final dataMap = generic.add(botonPanico, urlAddBotonPanico);
+    var result;
+    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+    if (result == "0") {
+      Scaffold.of(context).showSnackBar(messageOk("Se registro correctamente"));
+    } else {
+      Scaffold.of(context)
+          .showSnackBar(messageNOk("Ocurrio un error inseperado"));
+    }
+
+    print('resultado:$result');
   }
 }
