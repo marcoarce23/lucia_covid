@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/Widget/Message/Message.dart';
 
 class CitizenPanicButtonModule extends StatefulWidget {
   const CitizenPanicButtonModule({Key key}) : super(key: key);
@@ -43,9 +45,10 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
                     style: AppTheme.themeTitulo,
                   ),
                 ),
-                ButtonPanic(titulo: "Boton ayuda "),
-                ButtonPanic(titulo: "Boton emergencia medica"),
-                ButtonPanic(titulo: "Boton por abastecimiento"),
+                ButtonPanic(titulo: "Boton ayuda ", tipoBoton: "64"),
+                ButtonPanic(titulo: "Boton emergencia medica", tipoBoton: "65"),
+                ButtonPanic(
+                    titulo: "Boton por abastecimiento", tipoBoton: "66"),
               ],
             ),
           )),
@@ -55,21 +58,24 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
 
 class ButtonPanic extends StatefulWidget {
   final String titulo;
+  final String tipoBoton;
 
-  const ButtonPanic({Key key, this.titulo}) : super(key: key);
+  const ButtonPanic({Key key, this.titulo, this.tipoBoton}) : super(key: key);
 
   @override
   _ButtonPanic createState() => _ButtonPanic();
 }
 
 class _ButtonPanic extends State<ButtonPanic> {
-  bool checkHigh = false;
-  bool checkModerate = false;
-  bool checkLow = false;
+  BotonPanico botonPanico = new BotonPanico();
+
+  bool checkMuyAlto = false;
+  bool checkAlto = false;
+  bool checkMedio = false;
 
   @override
   void initState() {
-    checkLow = true;
+    checkMedio = true;
     super.initState();
   }
 
@@ -81,11 +87,13 @@ class _ButtonPanic extends State<ButtonPanic> {
   }
 
   Widget buttonPanic() {
+    botonPanico.idaCatalogo = int.parse(widget.tipoBoton);
+
     var textStyle = TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w900,
         color: AppTheme.themeColorVerde);
-        
+
     return Stack(
       children: <Widget>[
         Positioned(
@@ -93,7 +101,7 @@ class _ButtonPanic extends State<ButtonPanic> {
             left: 235,
             child: Opacity(
               opacity: 0.3,
-                          child: Image.asset(
+              child: Image.asset(
                 'assets/image/button_panic.png',
                 width: 180,
                 height: 150,
@@ -112,7 +120,9 @@ class _ButtonPanic extends State<ButtonPanic> {
             //color: Colors.red,
             margin: EdgeInsets.only(top: 5, left: 15, right: 15),
             child: Padding(
-                padding: const EdgeInsets.only(top: 0.0,),
+                padding: const EdgeInsets.only(
+                  top: 0.0,
+                ),
                 child: ListTile(
                   title: Container(
                     padding: EdgeInsets.only(top: 1, left: 5),
@@ -143,36 +153,36 @@ class _ButtonPanic extends State<ButtonPanic> {
                                   fontSize: 12, fontWeight: FontWeight.w700),
                             ),
                             Checkbox(
-                                value: checkHigh,
+                                value: checkMuyAlto,
                                 onChanged: (bool value) {
                                   setState(() {
-                                    checkHigh = true;
-                                    checkModerate = false;
-                                    checkLow = false;
+                                    checkMuyAlto = true;
+                                    checkAlto = false;
+                                    checkMedio = false;
                                   });
                                 }),
                             Text("Alta",
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.w700)),
                             Checkbox(
-                                value: checkModerate,
+                                value: checkAlto,
                                 onChanged: (bool value) {
                                   setState(() {
-                                    checkHigh = false;
-                                    checkModerate = true;
-                                    checkLow = false;
+                                    checkMuyAlto = false;
+                                    checkAlto = true;
+                                    checkMedio = false;
                                   });
                                 }),
                             Text("Media",
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.w700)),
                             Checkbox(
-                                value: checkLow,
+                                value: checkMedio,
                                 onChanged: (bool value) {
                                   setState(() {
-                                    checkHigh = false;
-                                    checkModerate = false;
-                                    checkLow = true;
+                                    checkMuyAlto = false;
+                                    checkAlto = false;
+                                    checkMedio = true;
                                   });
                                 })
                           ],
@@ -196,7 +206,8 @@ class _ButtonPanic extends State<ButtonPanic> {
                                 TextStyle(fontSize: 13, color: Colors.black),
                             labelText: "Nro telefonico",
                             border: InputBorder.none,
-                            hintText: 'Ingrese el número de telefono para comunicarnos',
+                            hintText:
+                                'Ingrese el número de telefono para comunicarnos',
                             hintStyle:
                                 TextStyle(fontSize: 12, color: Colors.black),
                           ),
@@ -209,7 +220,8 @@ class _ButtonPanic extends State<ButtonPanic> {
                             disabledTextColor: Colors.black,
                             splashColor: Colors.greenAccent,
                             onPressed: () {
-                              /*...*/
+                              Scaffold.of(context)
+                                  .showSnackBar(messageWarning("esta todo ok"));
                             },
                             child: Icon(Icons.pan_tool),
                           ),
@@ -237,5 +249,4 @@ class _ButtonPanic extends State<ButtonPanic> {
         ));
     */
   }
-
 }

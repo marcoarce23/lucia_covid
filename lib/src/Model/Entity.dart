@@ -425,10 +425,10 @@ class RegistroAmigo extends Entity {
 class BotonPanico extends Entity {
   int idcovBotonpanico;
   int idaCatalogo;
-  String botDetalle;
+  String botDetalle;  
   int idaPrioridad;
-  String botCordenadalat;
-  String botCordenadalon;
+  double botCordenadalat;
+  double botCordenadalon;
   DateTime botFecha;
   int idaEstadoSolicitud;
   String botTelefono;

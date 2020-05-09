@@ -18,10 +18,10 @@ appBar: AppBar(
                 color: AppTheme.themeColorNaranja,
                 fontSize: 17,
                 fontWeight: FontWeight.w400),
-          ),
-        ),
+              ),
+                ),
         //backgroundColor: AppTheme.themeColorNaranja,
-      )
+          )
 
     );
     

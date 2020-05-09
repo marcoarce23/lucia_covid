@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Widget/DrawerWidget/DrawerWiguet.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenEmergency/CitizenEmergencyModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenEvents/CitizenEventsModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenHelp/CitizenAtentionRegisterModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenHelp/CitizenHelpModule.dart';
@@ -114,14 +115,16 @@ class DrawerCitizen extends StatelessWidget {
             'Encuentra a un voluntario',
             () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FoundVoluntaryModule()),
+                  MaterialPageRoute(
+                      builder: (context) => FoundVoluntaryModule()),
                 )),
         CustomListTile(
             Icons.event_available,
             'Eventos de las instituciones',
             () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CitizenEventsModule()),
+                  MaterialPageRoute(
+                      builder: (context) => CitizenEventsModule()),
                 )),
         CustomListTile(
             Icons.photo_size_select_actual,
@@ -138,6 +141,14 @@ class DrawerCitizen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => CitizenPanicButtonModule()),
+                )),
+        CustomListTile(
+            Icons.hotel,
+            'Asistencia de ayuda',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CitizenEmergencyModule()),
                 )),
         CustomListTile(
             Icons.accessibility,
@@ -209,12 +220,9 @@ class DrawerCitizen extends StatelessWidget {
             'Salir',
             () => Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => SignOutModule()),
+                  MaterialPageRoute(builder: (context) => SignOutModule()),
                 )),
       ],
     ));
   }
 }
-
-
