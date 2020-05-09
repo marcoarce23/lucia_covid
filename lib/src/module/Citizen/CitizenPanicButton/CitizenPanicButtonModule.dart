@@ -198,6 +198,7 @@ class _ButtonPanic extends State<ButtonPanic> {
                             hintStyle:
                                 TextStyle(fontSize: 12, color: Colors.black),
                           ),
+        
                         ),
                         TextFormField(
                           style: TextStyle(color: Colors.black, fontSize: 13),
@@ -220,6 +221,9 @@ class _ButtonPanic extends State<ButtonPanic> {
                             disabledTextColor: Colors.black,
                             splashColor: Colors.greenAccent,
                             onPressed: () {
+
+
+
                               Scaffold.of(context)
                                   .showSnackBar(messageWarning("esta todo ok"));
                             },

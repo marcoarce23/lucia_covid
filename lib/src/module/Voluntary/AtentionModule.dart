@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
@@ -15,9 +16,7 @@ class AtentionModule extends StatefulWidget {
   _AtentionModuleState createState() => _AtentionModuleState();
 }
 
-class _AtentionModuleState extends State<AtentionModule> 
-{
-
+class _AtentionModuleState extends State<AtentionModule> {
   InputCheckBox lunes;
   InputCheckBox martes;
   InputCheckBox miercoles;
@@ -26,24 +25,24 @@ class _AtentionModuleState extends State<AtentionModule>
   InputCheckBox sabado;
   InputCheckBox domingo;
 
-  bool selectLunes =false;
-  bool selectMartes=false;
-  bool selectMiercoles=false;
-  bool selectJueves=false;
-  bool selectViernes=false;
-  bool selectSabado=false;
-  bool selectDomingo=false;
+  bool selectLunes = false;
+  bool selectMartes = false;
+  bool selectMiercoles = false;
+  bool selectJueves = false;
+  bool selectViernes = false;
+  bool selectSabado = false;
+  bool selectDomingo = false;
 
-  int intLunes =0;
-  int intMartes=0;
-  int intMiercoles=0;
-  int intJueves=0;
-  int intViernes=0;
-  int intaSabado=0;
-  int intDomingo=0;
-  
+  int intLunes = 0;
+  int intMartes = 0;
+  int intMiercoles = 0;
+  int intJueves = 0;
+  int intViernes = 0;
+  int intaSabado = 0;
+  int intDomingo = 0;
+
   int _currentIndex;
-  bool _save =false;
+  bool _save = false;
   var result;
 
   final formKey = GlobalKey<FormState>();
@@ -59,7 +58,8 @@ class _AtentionModuleState extends State<AtentionModule>
 
   @override
   Widget build(BuildContext context) {
-    final VoluntarioAtencion entityData = ModalRoute.of(context).settings.arguments;
+    final VoluntarioAtencion entityData =
+        ModalRoute.of(context).settings.arguments;
 
     if (entityData != null) entity = entityData;
 
@@ -100,50 +100,43 @@ class _AtentionModuleState extends State<AtentionModule>
         },
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 25.0), title: Text('Voluntarios')),
+              icon: FaIcon(
+                FontAwesomeIcons.userCircle,
+                size: 25,
+              ),
+              title: Text('Voluntario')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.bubble_chart, size: 25.0),
+              icon: FaIcon(
+                FontAwesomeIcons.calendarCheck,
+                size: 25,
+              ),
               title: Text('Atención')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.supervised_user_circle, size: 25.0),
+              icon: FaIcon(
+                FontAwesomeIcons.users,
+                size: 25,
+              ),
               title: Text('Integrantes')),
         ],
       ),
     );
   }
 
-// Widget widget() {
-//   return new TimePickerSpinner(
-//     is24HourMode: false,
-//     normalTextStyle: TextStyle(
-//       fontSize: 24,
-//       color: Colors.deepOrange
-//     ),
-//     highlightedTextStyle: TextStyle(
-//       fontSize: 24,
-//       color: Colors.yellow
-//     ),
-//     spacing: 50,
-//     itemHeight: 80,
-//     isForce2Digits: true,
-//     onTimeChange: (time) {
-//       setState(() {
-//         _dateTime = time;
-//       });
-//     },
-//   );
-// }
-
   Widget informacionProfesional(BuildContext context) {
     return Center(
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 4),
         padding: EdgeInsets.all(15.0),
-        width: MediaQuery.of(context).size.width - 50,
+        width: MediaQuery.of(context).size.width -20 ,
+       
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18),
-          color: Colors.black12,
-        ),
+          gradient: LinearGradient(colors: <Color>[
+        Color.fromRGBO(243, 124, 18, 1.0),
+        Color.fromRGBO(255, 209, 18, 3.0),
+        Color.fromRGBO(243, 156, 18, 1.0),
+        Color.fromRGBO(243, 223, 18, 1.0)
+      ])),
         child: Column(
           children: <Widget>[
             Row(
@@ -153,31 +146,31 @@ class _AtentionModuleState extends State<AtentionModule>
                 imagenProfesional(),
                 RichText(
                   text: TextSpan(
-                    text: 'Corina Balderrama.', // 'Dr Dan MlayahFX',
+                    text: 'Voluntario(a) : Corina Balderrama.', // 'Dr Dan MlayahFX',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                     // fontWeight: FontWeight.w600,
                       height: 1.5,
                     ),
                     children: <TextSpan>[
                       TextSpan(
                         text: '\n' + 'Especialidad: Psicologa',
                         style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        //  fontWeight: FontWeight.w400,
                           fontSize: 15,
                         ),
                       ),
                       TextSpan(
                         text: '\n' + 'Grupo: Dejame Ayudarte',
                         style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                         // fontWeight: FontWeight.w400,
                           fontSize: 15,
                         ),
                       ),
-                     ],
+                    ],
                   ),
                 )
               ],
@@ -246,65 +239,100 @@ class _AtentionModuleState extends State<AtentionModule>
                 height: 10.0,
               ),
             ),
-             Container(
+            Container(
               width: size.width * 0.94,
               margin: EdgeInsets.symmetric(vertical: 0.0),
               decoration: _crearContenedorCamposRRSS(),
               child: _crearCamposRRSS(),
             ),
-   Text(
-          'HORARIOS DE ATENCIÓN',
-          style: TextStyle(fontSize: 18, color: Colors.black),
+            Divider(height: 35,),
+           
+            Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(width: 20,),
+            Text(
+              '1. Seleccionar los días de atención',
+              style: TextStyle(fontSize: 13, color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(width: 15.0),
+            FaIcon(
+              FontAwesomeIcons.calendarCheck,
+              color: Colors.blue,
+              size: 15,
+            ),
+          ],
         ),
-           Text(
-          'HORARIOS DE ATENCIÓN',
-          style: TextStyle(fontSize: 18, color: Colors.black),
+        
+         Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(width: 25,),
+            Text(
+              '2. Definir si la atención se realiza fin de semana.',
+              style: TextStyle(fontSize: 13, color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(width: 15.0),
+            FaIcon(
+              FontAwesomeIcons.calendarCheck,
+              color: Colors.blue,
+              size: 15,
+            ),
+          ],
         ),
-           Text(
-          'HORARIOS DE ATENCIÓN',
-          style: TextStyle(fontSize: 18, color: Colors.black),
-        ),
-           copyRigth(),
+      //  SizedBox(width: 15,),
+         
+         SizedBox(height: 20.0),
+         Divider(thickness: 1.0, color: Colors.orange, endIndent: 60.0, indent: 60.0),
+            copyRigth(),
           ],
         ),
       ),
     );
   }
 
-
   Widget _crearCamposRRSS() {
-
-
     return Column(
       children: <Widget>[
-
-
-Padding(
-  padding: const EdgeInsets.all(12.0),
-  child:   Divider(thickness: 2.0, color: Colors.orange),
-),
-_crearCampos(),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+         
+        ),
+        _crearCampos(),
       ],
     );
   }
 
-  
   Widget _crearCampos() {
-
-    lunes= InputCheckBox('Lun',selectLunes);
-martes= InputCheckBox('Mar', selectMartes);
-miercoles= InputCheckBox('Mie', selectMiercoles);
-jueves= InputCheckBox('Jue', selectJueves);
-viernes= InputCheckBox('Vie', selectViernes);
-sabado= InputCheckBox('Sab', selectSabado);
-domingo= InputCheckBox('Dom', selectDomingo);
+    lunes = InputCheckBox('Lun', selectLunes);
+    martes = InputCheckBox('Mar', selectMartes);
+    miercoles = InputCheckBox('Mie', selectMiercoles);
+    jueves = InputCheckBox('Jue', selectJueves);
+    viernes = InputCheckBox('Vie', selectViernes);
+    sabado = InputCheckBox('Sab', selectSabado);
+    domingo = InputCheckBox('Dom', selectDomingo);
 
     return Column(
       children: <Widget>[
-        Text(
-          'HORARIOS DE ATENCIÓN',
-          style: TextStyle(fontSize: 18, color: Colors.black),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'HORARIOS DE ATENCION',
+              style: TextStyle(fontSize: 18, color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(width: 15.0),
+            FaIcon(
+              FontAwesomeIcons.calendarCheck,
+              color: Colors.blue,
+              size: 25,
+            ),
+          ],
         ),
+        Divider(thickness: 2.0, color: Colors.orange),
         Row(
           children: <Widget>[
             Expanded(
@@ -316,14 +344,12 @@ domingo= InputCheckBox('Dom', selectDomingo);
             Expanded(
               child: miercoles,
             ),
-           
           ],
         ),
-        
         Row(
           children: <Widget>[
-             Expanded(
-              child: domingo,
+            Expanded(
+              child: jueves,
             ),
             Expanded(
               child: viernes,
@@ -331,18 +357,14 @@ domingo= InputCheckBox('Dom', selectDomingo);
             Expanded(
               child: sabado,
             ),
-          
           ],
         ),
-         domingo,
-
-      
-  
+        domingo,
         _crearBoton(resource.save),
-      
       ],
     );
   }
+
   _crearContenedorCamposRRSS() {
     return BoxDecoration(
         color: Colors.white,
@@ -353,9 +375,9 @@ domingo= InputCheckBox('Dom', selectDomingo);
               blurRadius: 7.0,
               offset: Offset(0.0, 5.0),
               spreadRadius: 7.0)
-        ]
-      );
+        ]);
   }
+
   Widget _crearBoton(String text) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 100.0),
@@ -366,7 +388,7 @@ domingo= InputCheckBox('Dom', selectDomingo);
         color: Colors.blue,
         textColor: Colors.white,
         label: Text(text),
-        icon: Icon(Icons.save),
+        icon: FaIcon(FontAwesomeIcons.edit, color: Colors.white, ),
         onPressed: (_save) ? null : _submit,
       ),
     );
@@ -380,32 +402,50 @@ domingo= InputCheckBox('Dom', selectDomingo);
       _save = true;
     });
 
-    if (lunes.objectValue == true) { intLunes =1; selectLunes = true;}
-if (martes.objectValue == true)  {  intMartes =1;selectMartes = true;}
-if (miercoles.objectValue == true)  {  intMiercoles =1;selectMiercoles = true;}
-if (jueves.objectValue == true)  {  intJueves =1;selectJueves = true;}
-if (viernes.objectValue == true)  {  intViernes =1;selectViernes = true;}
-if (sabado.objectValue == true)  {  intaSabado =1;selectSabado = true;}
-if (domingo.objectValue == true)  {  intDomingo =1;selectDomingo = true;}
+    if (lunes.objectValue == true) {
+      intLunes = 1;
+      selectLunes = true;
+    }
+    if (martes.objectValue == true) {
+      intMartes = 1;
+      selectMartes = true;
+    }
+    if (miercoles.objectValue == true) {
+      intMiercoles = 1;
+      selectMiercoles = true;
+    }
+    if (jueves.objectValue == true) {
+      intJueves = 1;
+      selectJueves = true;
+    }
+    if (viernes.objectValue == true) {
+      intViernes = 1;
+      selectViernes = true;
+    }
+    if (sabado.objectValue == true) {
+      intaSabado = 1;
+      selectSabado = true;
+    }
+    if (domingo.objectValue == true) {
+      intDomingo = 1;
+      selectDomingo = true;
+    }
 
     entity.idCovAtencion = 0;
     entity.idCovEntityPersonal = 123456;
-    entity.perLunes= intLunes;
+    entity.perLunes = intLunes;
     entity.perMartes = intMartes;
     entity.perMiercoles = intMiercoles;
     entity.perJueves = intJueves;
     entity.perViernes = intViernes;
     entity.perSabado = intaSabado;
     entity.perDomingo = intDomingo;
-     entity.usuario = 'marcoarce23@gmail.com';
+    entity.usuario = 'marcoarce23@gmail.com';
 
     final dataMap = generic.add(entity, urlAddInstitucion);
 
     await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
     print('resultado:$result');
-
-
-
 
     setState(() {
       _save = false;

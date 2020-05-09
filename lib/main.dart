@@ -14,6 +14,7 @@ import 'package:lucia_covid/src/module/InitialPages/SlideShowModule.dart';
 import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
 import 'package:lucia_covid/src/module/Login/RegisterLoginModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
+import 'package:lucia_covid/src/module/Multimedia/ListMultimediaModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/SplashScreenModule.dart';
 import 'package:lucia_covid/src/module/Voluntary/EventModule.dart';
 import 'package:lucia_covid/src/module/Voluntary/ListVoluntary.dart';
@@ -187,7 +188,7 @@ class _MyAppState extends State<MyApp> {
       //home: new ListCitizenModule(),
       //initialRoute: SplashScreenModule(),
 
-      home: new ListEntityModule(),//(,//IntroScreen(),
+      home: new VoluntaryModule(),//(,//IntroScreen(),
 
       routes: <String, WidgetBuilder>{
         'Splash': (BuildContext context) => new SplashScreenModule(),

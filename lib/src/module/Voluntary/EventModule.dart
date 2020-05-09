@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
@@ -280,17 +282,17 @@ _crearIconAppImagenes() {
 
   Widget _crearCampos() {
 
-       titulo = InputTextField(Icon(Icons.business), 'Titulo del evento:', '', '');
-        objetivo = InputMultilineField(Icon(Icons.business), 'Objetivo:', '', '');
-        dirigidoA=InputMultilineField(Icon(Icons.business), 'Dirigido A:', '', '');
-        expositor=InputTextField(Icon(Icons.business), 'Expositor:', '', '');
-        ubicacion=InputMultilineField(Icon(Icons.business), 'Ubicacion:', '', '');
+       titulo = InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Titulo del evento:', '', '');
+        objetivo = InputMultilineField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Objetivo:', '', '');
+        dirigidoA=InputMultilineField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Dirigido A:', '', '');
+        expositor=InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Expositor:', '', '');
+        ubicacion=InputMultilineField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Ubicacion:', '', '');
 
 
     return Column(
       children: <Widget>[
         Text(
-          'REGISTRO DE EVENTOS',
+          'REGISTRO DE EVENTOS XXX',
           style: TextStyle(fontSize: 20, color: Colors.black),
         ),
         titulo,
@@ -298,8 +300,10 @@ _crearIconAppImagenes() {
         dirigidoA,
         expositor,
         ubicacion,
+        
          _crearFecha('Fecha Evento'),
         _crearTime('hora'),
+
         _crearBoton(resource.save),
       ],
     );
@@ -313,13 +317,14 @@ _crearIconAppImagenes() {
       initialDate: new DateTime.now(),
       firstDate: new DateTime(2020, 4),
       lastDate: new DateTime(2025, 12),
-      locale: Locale('es', 'ES')
+     // locale: Locale('es', 'ES')
     );
 
     if (picked != null) {
       setState(() {
-        _fecha = picked.toString().substring(0, 10);
+        _fecha = DateFormat("dd/MM/yyyy").format(picked);
         _inputFieldDateController.text = _fecha;
+        print(_inputFieldDateController.text );
       });
     }
   }
@@ -328,6 +333,7 @@ _crearIconAppImagenes() {
     TimeOfDay picked = await showTimePicker(
       context: context,
       initialTime: _time,
+
       builder: (BuildContext context, Widget child) {
         return MediaQuery(
           data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
@@ -340,7 +346,11 @@ _crearIconAppImagenes() {
     if (picked != null) {
       setState(() {
         _time = picked;
-        _inputFieldTimeController.text = _time.toString();
+        print('XXXXX');
+        print(_time.hour);
+        print(_time.minute);
+        _inputFieldTimeController.text = _time.hour.toString()+':'+_time.minute.toString();//TimeOfDay(hour: _time.hour, minute: _time.minute).toString();
+         print('XXXddddXX ${_inputFieldTimeController.text}');  
       });
     }
   }
@@ -378,7 +388,7 @@ _crearIconAppImagenes() {
             //   borderRadius: BorderRadius.circular(20.0)
             // ),
             hintText: 'Hora del evento',
-            labelText: 'Hora del evento',
+            labelText: 'Hora del evento (23:59)',
             //    suffixIcon: Icon(Icons.perm_contact_calendar),
             icon: Icon(Icons.timer, color: Colors.orange)),
         onTap: () {
@@ -425,6 +435,17 @@ _crearIconAppImagenes() {
     setState(() {
       _save = true;
     });
+    entity.idcovEvento = 0;
+  entity. eveTitulo = titulo.objectValue;
+  entity.eveObjetivo = objetivo.objectValue;
+  entity.eveDirigidoA = dirigidoA.objectValue;
+  entity.eveExpositor = expositor.objectValue;
+  entity.eveUbicacion = ubicacion.objectValue;
+  entity.eveFecha = _inputFieldDateController.text;
+  entity.eveHora = _inputFieldTimeController.text;
+  entity.eveFoto='foto';
+  entity.usuario='marcoarce23';
+
 
     // if (evento.idcovRegistroAmigo == null) {
     //   // generic.add(citizen);

@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/Widget/Message/Message.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class ListVoluntaryModule extends StatefulWidget {
-
-  const ListVoluntaryModule({Key key, }) : super(key: key);
+  const ListVoluntaryModule({
+    Key key,
+  }) : super(key: key);
 
   @override
   _ListVoluntaryModuleState createState() => _ListVoluntaryModuleState();
 }
 
 class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
-  final generic = new Generic();
+final generic = new Generic();
   int _currentIndex = 0;
   var result;
 
@@ -22,7 +27,9 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("VOLUNTARIOS"),
+          title: Text("LISTA DE VOLUNTARIOS"),
+          backgroundColor: Colors.orange,
+     
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,6 +55,7 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
             futureItemsEntity(context)
           ],
         ),
+        drawer: DrawerCitizen(),
         bottomNavigationBar: _bottomNavigationBar(context));
   }
 
@@ -67,15 +75,15 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
             callPage(_currentIndex, context);
           });
         },
-       items: [
+        items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 25.0, color: Colors.black),
+              icon: FaIcon(FontAwesomeIcons.userCircle, size: 25,),
               title: Text('Voluntario')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.supervised_user_circle, size: 25.0),
+              icon: FaIcon(FontAwesomeIcons.calendarCheck,size: 25, ),
               title: Text('Atención')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.bubble_chart, size: 25.0),
+              icon: FaIcon(FontAwesomeIcons.users, size: 25, ),
               title: Text('Integrantes')),
         ],
       ),
@@ -84,7 +92,8 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
 
   Widget futureItemsEntity(BuildContext context) {
     return FutureBuilder(
-        future: generic.getAll(new Voluntary(), urlGetVoluntario, primaryKeyGetVoluntario),
+        future: generic.getAll(
+            new Voluntary(), urlGetVoluntario, primaryKeyGetVoluntario),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -107,44 +116,32 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
         itemBuilder: (context, index) {
           Voluntary entityItem = snapshot.data[index];
 
-          return InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ListVoluntaryModule(),
-                  ));
-            },
-            child: Card(
-                elevation: 2,
-                //margin:                      const EdgeInsets.only(left: 10, right: 10),
-                child: Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(25.0),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                              color: Colors.black38,
-                              blurRadius: 7.0,
-                              offset: Offset(0.0, 5.0),
-                              spreadRadius: 7.0)
-                        ]),
-                    padding: EdgeInsets.all(10),
-                    width: MediaQuery.of(context).size.width - 30,
-                    height: 90,
-                    child: Row(
-                      //mainAxisAlignment: MainAxisAlignment.start,
-                      //crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        iconEntity(entityItem),
-                        dividerLine(),
-                        listEntity(context, entityItem),
-                      ],
-                    ),
-                  ),
-                )),
+          return Container(
+            decoration: BoxDecoration(
+         //     border: BoxBorder.,
+        //  borderRadius: BorderRadius.circular(18),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+              color: Colors.black26,
+              blurRadius: 7.0,
+              offset: Offset(0.0, 5.0),
+              spreadRadius: 7.0)
+        ],
+          gradient: LinearGradient(colors: <Color>[
+        Color.fromRGBO(254, 253, 252, 1.0),
+        Color.fromRGBO(255, 205, 90, 3.0),
+        Color.fromRGBO(243, 174, 61, 1.0),
+      //  Color.fromRGBO(243, 223, 18, 1.0)
+      ])),
+            child: ListTile(
+              leading: iconEntity(entityItem),
+              title: listEntity(context, entityItem),
+              trailing:  FaIcon(FontAwesomeIcons.phoneVolume, color: Colors.black, size: 35,),
+              onTap: ()=> sendSMS(72038768),
+            ),
+            
           );
+          
         },
       ),
     );
@@ -154,7 +151,6 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
     final item = entityItem.idcovPersonal;
 
     return Dismissible(
-      
       key: Key(item.toString()), //UniqueKey(),
       background: Container(
         color: Colors.red,
@@ -167,21 +163,20 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
       onDismissed: (value) {
         setState(() {
           //   items.
-      //    print('El registro:$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
-          generic.add(new RegistroAmigo(),'$urlDeleteVoluntario${item.toString()}/marcoarce23');
-          final dataMap = generic.add(entityItem, '$urlDeleteVoluntario${item.toString()}/marcoarce23');
-     
-     dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
-    print('resultado:$result');
+          //    print('El registro:$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
+          generic.add(new RegistroAmigo(),
+              '$urlDeleteVoluntario${item.toString()}/marcoarce23');
+          final dataMap = generic.add(
+              entityItem, '$urlDeleteVoluntario${item.toString()}/marcoarce23');
 
-
+          dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+          print('resultado:$result');
         });
 
-        if(result != null || result != '-1')
-            Scaffold.of(context).showSnackBar( new SnackBar(content: new Text('Registro eliminado')));
+        if (result != null || result != '-1')
+           Scaffold.of(context).showSnackBar(messageOk("Registro eliminado."));
         else
-        Scaffold.of(context).showSnackBar( new SnackBar(content: new Text('Problemas al eliminar el registro!!!')));
-
+          Scaffold.of(context).showSnackBar(messageNOk("Se produjo un error, vuelva a intentarlo."));
       },
 
       child: Row(
@@ -211,7 +206,6 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
                 'Especialidad: ${entityItem.idaTipopersonal}',
                 style: TextStyle(color: Colors.black45, fontSize: 14),
               )),
-
               Row(
                 children: <Widget>[
                   Icon(
@@ -224,7 +218,6 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
                   )
                 ],
               ),
-
             ],
           ),
         ],
@@ -232,20 +225,20 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
     );
   }
 
-   Container iconEntity(Voluntary entityItem) {
+  Container iconEntity(Voluntary entityItem) {
     return Container(
         child: Column(
       children: <Widget>[
-        Icon(
-          Icons.person_pin,
-          size: 35,
-          color: AppTheme.themeColorNaranja,
-        ),
+       
+           FaIcon(FontAwesomeIcons.userTie, color: Colors.black, size: 35,),
+          
+ 
+
         Text(
           '${entityItem.perCI}',
           style: TextStyle(
               fontSize: 11,
-              color: AppTheme.themeColorNaranja,
+              color: Colors.black,
               fontWeight: FontWeight.w400),
         ),
       ],

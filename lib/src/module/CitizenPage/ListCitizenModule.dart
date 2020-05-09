@@ -59,7 +59,7 @@ class ListCitizenModule extends StatelessWidget {
               title: Text('nombre: ${entity.regPersona} - Tipo ayuda: ${entity.regTipoAPoyo} - Prioridad: ${entity.regPrioridad}'),
               subtitle: Text('Telef. contacto: ${entity.regTelefono} - Ubicación: ${entity.regUbicacion}'),
               onTap: () =>
-                //  Navigator.pushNamed(context, 'citizen', arguments: entityList),
+                //  Navigator.pushNamed(context, 'citizen', arguments: entity),
                  Navigator.pushNamed(context, 'citizen'),
             ),
           ],

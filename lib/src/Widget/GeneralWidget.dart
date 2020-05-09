@@ -1,14 +1,28 @@
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
    Widget copyRigth() {
+     
      return    Column(
-       crossAxisAlignment :  CrossAxisAlignment.center,
+       mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text('(imagen) Lucia de cuida. ', style: TextStyle(fontSize: 13.0)),
-            SizedBox(height: 20.0),
-            Text('Derechos Reservados', style: TextStyle(fontSize: 12.0)),
-             Text('CopyRight@LuciaTeCuida.2020', style: TextStyle(fontSize: 12.0)),
+     
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(width:160.0),
+                Text('Lucia de cuida. ', style: TextStyle(fontSize: 14.0)),
+                FaIcon(
+              FontAwesomeIcons.cat,
+              color: Colors.blue,
+              size: 18,
+            ),
+              ],
+            ),
+            // SizedBox(height: 5.0),
+            // Text('Derechos Reservados', style: TextStyle(fontSize: 12.0)),
+            
           ],
         );
         

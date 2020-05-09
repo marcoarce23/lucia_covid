@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
@@ -163,10 +164,10 @@ class _SignUpModuleState extends State<SignUpModule> {
   }
 
   Widget _crearCampos() {
-    correo = InputEmailField(Icon(Icons.business), 'Correo electrónico', '',
+    correo = InputEmailField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Correo electrónico', '',
         'Ingresar su correo electrónico', 'ej: cuenta@correo.com');
     contrasenia = InputTextPassword(
-        Icon(Icons.business), 'Contraseña:', '', 'Ingrese su contraseña');
+        FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Contraseña:', '', 'Ingrese su contraseña');
     return Column(
       children: <Widget>[
         SizedBox(height: 15.0),

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
@@ -137,18 +138,18 @@ class _EntityModuleState extends State<EntityModule> {
 
   Widget _crearCampos() {
 
-    tipoInstitucion = InputDropDown(Icons.person_pin ,'Tipo institución:','3', urlGetClasificador +'2');
-    ubicacion = InputDropDown(Icons.person_pin ,'Departamento/ciudad:','60', urlGetClasificador +'53');
-    nombre = InputTextField(Icon(Icons.business), 'Nombre de la institución:', '', '');
-    token = InputTextField(Icon(Icons.business), 'Nombre de la institución:', '', '');
-    direccion = InputTextField(Icon(Icons.business), 'Dirección/ubicacion:', '', '');
-    telefono =  InputPhoneField(Icon(Icons.business), 'Telefono de referencia', '', '');
-    informacion = InputTextField(Icon(Icons.business), 'Información complementaria:', '', '');
-    facebook =   InputTextField(Icon(Icons.business), 'Cuenta Facebook:', '', '');
-    twitter =   InputTextField(Icon(Icons.business), 'Cuenta Twitter:', '', '');
-    paginaWeb =   InputUrlField(Icon(Icons.business), 'Pagina Web/block:', '', '');
-    youtube =   InputTextField(Icon(Icons.business), 'Cuenta YouTube:', '', '');
-    email =   InputEmailField(Icon(Icons.business), 'Correo Electronico:', '', '','Ingrese su correo electronico');
+    tipoInstitucion = InputDropDown(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ),'Tipo institución:','3', urlGetClasificador +'2');
+    ubicacion = InputDropDown(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ) ,'Departamento/ciudad:','60', urlGetClasificador +'53');
+    nombre = InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Nombre de la institución:', '', '');
+    token = InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Nombre de la institución:', '', '');
+    direccion = InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Dirección/ubicacion:', '', '');
+    telefono =  InputPhoneField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Telefono de referencia', '', '');
+    informacion = InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Información complementaria:', '', '');
+    facebook =   InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Cuenta Facebook:', '', '');
+    twitter =   InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Cuenta Twitter:', '', '');
+    paginaWeb =   InputUrlField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Pagina Web/block:', '', '');
+    youtube =   InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Cuenta YouTube:', '', '');
+    email =   InputEmailField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Correo Electronico:', '', '','Ingrese su correo electronico');
 
     return Column(
       children: <Widget>[

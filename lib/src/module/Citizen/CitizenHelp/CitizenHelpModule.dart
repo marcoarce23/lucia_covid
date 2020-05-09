@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
@@ -194,8 +195,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
 
   @override
   Widget build(BuildContext context) {
-    final RegistroAmigo registroAmigoData =
-        ModalRoute.of(context).settings.arguments;
+    final RegistroAmigo registroAmigoData = ModalRoute.of(context).settings.arguments;
 
     if (registroAmigoData != null) registroAmigo = registroAmigoData;
 
@@ -373,11 +373,11 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
   }
 
   Widget _crearCampos() {
-    nombre = InputTextField(Icon(Icons.business), 'Persona a poyar', '', '');
-    telefono =  InputPhoneField(Icon(Icons.business), 'Telefono de referencia', '', '');
-    ubicacion =   InputMultilineField(Icon(Icons.business), 'Donde la encuentro', '', '');
+    nombre = InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Persona a poyar', registroAmigo.regPersona, '');
+    telefono =  InputPhoneField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Telefono de referencia', registroAmigo.regTelefono, '');
+    ubicacion =   InputMultilineField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Donde la encuentro', '', '');
 
-      tipoAyuda = InputDropDown(Icons.person_pin ,'Tipod e ayuda','49',urlGetClasificador+'/47');
+      tipoAyuda = InputDropDown(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ) ,'Tipod e ayuda','49',urlGetClasificador+'/47');
 
     return Column(
       children: <Widget>[
@@ -499,11 +499,6 @@ List<DropdownMenuItem<String>> getOpcionesTipoApoyo() {
 
     await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
     print('resultado:$result');
-
-    // } else {
-    //   //  generic.update(citizen);
-    //   print("MODIFICO");
-    // }
 
     setState(() {
       _save = false;

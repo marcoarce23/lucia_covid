@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Util/Validator.dart' as validator;
@@ -24,7 +25,7 @@ inputDecoration(String hint, String text, Icon icon){
 class InputTextField extends StatefulWidget {
   String objectValue;
   final String text;
-  final Icon icon;
+  final FaIcon icon;
   final String hint;
 
    InputTextField(this.icon, this.text, this.objectValue, this.hint);
@@ -88,7 +89,7 @@ class _InputTextFieldState extends State<InputTextField> {
 class InputTextPassword extends StatefulWidget {
   String objectValue;
   final String text;
-  final Icon icon;
+  final FaIcon icon;
   final String hint;
 
   InputTextPassword(this.icon, this.text, this.objectValue, this.hint);
@@ -127,7 +128,7 @@ class _InputTextPasswordState extends State<InputTextPassword> {
 class InputEmailField extends StatefulWidget {
   String objectValue;
   final String text;
-  final Icon icon;
+  final FaIcon icon;
   final String hint;
   final String helperText;
 
@@ -175,7 +176,7 @@ class _InputEmailFielddState extends State<InputEmailField> {
 class InputPhoneField extends StatefulWidget {
   String objectValue;
   final String text;
-  final Icon icon;
+  final FaIcon icon;
   final String hint;
 
   InputPhoneField(this.icon, this.text, this.objectValue, this.hint);
@@ -219,7 +220,7 @@ class _InputPhoneFieldState extends State<InputPhoneField> {
 class InputUrlField extends StatefulWidget {
   String objectValue;
   final String text;
-  final Icon icon;
+  final FaIcon icon;
   final String hint;
 
   InputUrlField(this.icon, this.text, this.objectValue, this.hint);
@@ -263,7 +264,7 @@ class _InputUrlState extends State<InputUrlField> {
 class InputNumberField extends StatefulWidget {
   String objectValue;
   final String text;
-  final Icon icon;
+  final FaIcon icon;
   final String hint;
 
   InputNumberField(this.icon, this.text, this.objectValue, this.hint);
@@ -307,7 +308,7 @@ class _InputNumberFieldState extends State<InputNumberField> {
 class InputMultilineField extends StatefulWidget {
   String objectValue;
   final String text;
-  final Icon icon;
+  final FaIcon icon;
   final String hint;
 
   InputMultilineField(this.icon, this.text, this.objectValue, this.hint);
@@ -429,7 +430,7 @@ class _InputCheckBoxState extends State<InputCheckBox> {
 class InputDropDown extends StatefulWidget {
   String objectValue;
   final String text;
-  final IconData icon;
+  final FaIcon icon;
   final String values;
 
   InputDropDown(this.icon, this.text, this.objectValue, this.values);
@@ -478,7 +479,7 @@ class _InputDropDownState extends State<InputDropDown> {
                     Text(widget.text),
                     SizedBox(width: 15.0),
                     DropdownButton(
-                      icon: Icon(widget.icon, color: Colors.orange),
+                      icon: widget.icon,
                       value: valor,
                       items: getDropDown(snapshot),
                       onChanged: (value) {

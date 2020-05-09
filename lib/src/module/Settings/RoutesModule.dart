@@ -46,7 +46,7 @@ Map<String, WidgetBuilder> getApplicationRoute() {
 
 // METODO DELETE
   final String urlDeleteAyudaAmigo =  'http://covid19.ruta88.net/COVID/AyudaAmigo/srvAyudaAmigo.svc/EliminarAyudaAmigo/';
-  final String urlDeleteVoluntario =  'http://covid19.ruta88.net/COVID/Personal/srvPersonal.svc//EliminarPersonal/';
+  final String urlDeleteVoluntario =  'http://covid19.ruta88.net/COVID/Personal/srvPersonal.svc/EliminarPersonal/';
  final String urlDeleteInstitucion =  'http://covid19.ruta88.net/COVID/Institucion/srvInstitucion.svc/DevuelveInstitucion/EliminarInstitucion';
 
 

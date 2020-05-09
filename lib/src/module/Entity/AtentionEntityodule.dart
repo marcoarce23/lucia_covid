@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
@@ -284,13 +285,13 @@ viernes= InputCheckBox('Vie',selectViernes);
 sabado= InputCheckBox('Sab',selectSabado);
 domingo= InputCheckBox('Dom',selectDomingo);
 
-        lunesH= InputTextField(Icon(Icons.watch_later), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
-martesH= InputTextField(Icon(Icons.watch_later), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
-miercolesH= InputTextField(Icon(Icons.watch_later), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
-juevesH= InputTextField(Icon(Icons.watch_later), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
-viernesH= InputTextField(Icon(Icons.watch_later), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
-sabadoH= InputTextField(Icon(Icons.watch_later), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
-domingoH= InputTextField(Icon(Icons.watch_later), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
+  lunesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
+  martesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
+  miercolesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
+  juevesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
+  viernesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
+  sabadoH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
+  domingoH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
 
     return Column(
       children: <Widget>[

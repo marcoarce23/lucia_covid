@@ -6,8 +6,9 @@ import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class ListMultimediaModule extends StatefulWidget {
-
-  const ListMultimediaModule({Key key, }) : super(key: key);
+  const ListMultimediaModule({
+    Key key,
+  }) : super(key: key);
 
   @override
   _ListMultimediaModuleState createState() => _ListMultimediaModuleState();
@@ -64,24 +65,24 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
         onTap: (value) {
           setState(() {
             _currentIndex = value;
-           callMultimedia(_currentIndex, context);
+            callMultimedia(_currentIndex, context);
           });
         },
         items: [
           BottomNavigationBarItem(
               icon: Icon(Icons.person, size: 25.0), title: Text('Multimedia')),
-        
           BottomNavigationBarItem(
               icon: Icon(Icons.bubble_chart, size: 25.0),
               title: Text('Listado Multimedia')),
-         ],
+        ],
       ),
     );
   }
 
   Widget futureItemsEntity(BuildContext context) {
     return FutureBuilder(
-        future: generic.getAll(new Voluntary(), urlGetVoluntario, primaryKeyGetVoluntario),
+        future: generic.getAll(
+            new Voluntary(), urlGetVoluntario, primaryKeyGetVoluntario),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -104,43 +105,10 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
         itemBuilder: (context, index) {
           Voluntary entityItem = snapshot.data[index];
 
-          return InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ListMultimediaModule(),
-                  ));
-            },
-            child: Card(
-                elevation: 2,
-                //margin:                      const EdgeInsets.only(left: 10, right: 10),
-                child: Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(25.0),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                              color: Colors.black38,
-                              blurRadius: 7.0,
-                              offset: Offset(0.0, 5.0),
-                              spreadRadius: 7.0)
-                        ]),
-                    padding: EdgeInsets.all(10),
-                    width: MediaQuery.of(context).size.width - 30,
-                    height: 90,
-                    child: Row(
-                      //mainAxisAlignment: MainAxisAlignment.start,
-                      //crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        iconEntity(entityItem),
-                        dividerLine(),
-                        listEntity(context, entityItem),
-                      ],
-                    ),
-                  ),
-                )),
+          return ListTile(
+            leading: iconEntity(entityItem),
+            title: listEntity(context, entityItem),
+            trailing: Icon(Icons.arrow_right),
           );
         },
       ),
@@ -151,7 +119,6 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
     final item = entityItem.idcovPersonal;
 
     return Dismissible(
-      
       key: Key(item.toString()), //UniqueKey(),
       background: Container(
         color: Colors.red,
@@ -164,21 +131,22 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
       onDismissed: (value) {
         setState(() {
           //   items.
-      //    print('El registro:$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
-          generic.add(new RegistroAmigo(),'$urlDeleteVoluntario${item.toString()}/marcoarce23');
-          final dataMap = generic.add(entityItem, '$urlDeleteVoluntario${item.toString()}/marcoarce23');
-     
-     dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
-    print('resultado:$result');
+          //    print('El registro:$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
+          generic.add(new RegistroAmigo(),
+              '$urlDeleteVoluntario${item.toString()}/marcoarce23');
+          final dataMap = generic.add(
+              entityItem, '$urlDeleteVoluntario${item.toString()}/marcoarce23');
 
-
+          dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+          print('resultado:$result');
         });
 
-        if(result != null || result != '-1')
-            Scaffold.of(context).showSnackBar( new SnackBar(content: new Text('Registro eliminado')));
+        if (result != null || result != '-1')
+          Scaffold.of(context).showSnackBar(
+              new SnackBar(content: new Text('Registro eliminado')));
         else
-        Scaffold.of(context).showSnackBar( new SnackBar(content: new Text('Problemas al eliminar el registro!!!')));
-
+          Scaffold.of(context).showSnackBar(new SnackBar(
+              content: new Text('Problemas al eliminar el registro!!!')));
       },
 
       child: Row(
@@ -208,7 +176,6 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
                 'Especialidad: ${entityItem.idaTipopersonal}',
                 style: TextStyle(color: Colors.black45, fontSize: 14),
               )),
-
               Row(
                 children: <Widget>[
                   Icon(
@@ -221,7 +188,6 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
                   )
                 ],
               ),
-
             ],
           ),
         ],
@@ -229,7 +195,7 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
     );
   }
 
-   Container iconEntity(Voluntary entityItem) {
+  Container iconEntity(Voluntary entityItem) {
     return Container(
         child: Column(
       children: <Widget>[

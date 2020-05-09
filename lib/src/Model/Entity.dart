@@ -160,8 +160,8 @@ class Evento extends Entity {
   String eveDirigidoA;
   String eveExpositor;
   String eveUbicacion;
-  DateTime eveFecha;
-  DateTime eveHora;
+  String eveFecha;
+  String eveHora;
   String eveFoto;
   String usuario;
 
