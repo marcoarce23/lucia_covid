@@ -121,11 +121,15 @@ class _FoundAllVoluntaryModuleState extends State<FoundAllVoluntaryModule> {
   Column crearIconoProfesional(icon, title) {
     return Column(
       children: <Widget>[
+       InkWell(
+            onTap: () => sendEmailAdvanced('marcoarce23@gmail.com', 'SOLICITUD CONSULTA MEDICA', 'Estimado Sr. Marco Arce, solcitud pder contactarme cn su persona.'), //sendSMS(72038768),
+            child:
         Icon(
           icon,
           size: 18,
           color: AppTheme.themeColorAzul,
         ),
+       ),
         /*
         Text(
           title,
