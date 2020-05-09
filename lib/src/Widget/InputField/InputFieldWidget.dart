@@ -56,12 +56,12 @@ class _InputTextFieldState extends State<InputTextField> {
         
         keyboardType: TextInputType.text,
      //   controller: controller,
-      //  decoration : InputDecoration( //inputDecoration(widget.hint, widget.text, widget.icon),
-        decoration: InputDecoration(
+          decoration: InputDecoration(
           focusColor: Colors.blue,
            hintText: widget.hint,
            labelText: widget.text,
            icon: widget.icon,
+     
 //errorText: 'XXXXX',
            fillColor: Colors.white,
   filled : true,
@@ -440,10 +440,11 @@ class InputDropDown extends StatefulWidget {
 
 class _InputDropDownState extends State<InputDropDown> {
   final generic = new Generic();
+  String valor= '';
 
 @override
   void initState() {
-     widget.objectValue = widget.objectValue;
+     valor= widget.objectValue;
     super.initState();
   }
 
@@ -478,12 +479,12 @@ class _InputDropDownState extends State<InputDropDown> {
                     SizedBox(width: 15.0),
                     DropdownButton(
                       icon: Icon(widget.icon, color: Colors.orange),
-                      value: widget.objectValue,
+                      value: valor,
                       items: getDropDown(snapshot),
                       onChanged: (value) {
                         setState(() {
-                          widget.objectValue = value;
-                          print('valor combo: ${widget.objectValue}');
+                          valor = value;
+                          print('valor combo: $valor');
                         });
                       },
                     ),

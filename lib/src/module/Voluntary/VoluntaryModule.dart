@@ -74,7 +74,7 @@ InputSexo sexo;
               title: Text('Voluntario')),
           BottomNavigationBarItem(
               icon: Icon(Icons.supervised_user_circle, size: 25.0),
-              title: Text('Atención-RRSS')),
+              title: Text('Atención')),
           BottomNavigationBarItem(
               icon: Icon(Icons.bubble_chart, size: 25.0),
               title: Text('Integrantes')),
@@ -88,7 +88,6 @@ InputSexo sexo;
   @override
   Widget build(BuildContext context) {
     final Voluntary entityData = ModalRoute.of(context).settings.arguments;
-final arg = ModalRoute.of(context).settings.arguments;
 
     if (entityData != null) entity = entityData;
 
@@ -97,7 +96,6 @@ final arg = ModalRoute.of(context).settings.arguments;
         appBar: _appBar(),
         body: Stack(
           children: <Widget>[
-            Text(arg),
             crearFondoForm(context),
             _crearForm(context),
           ],
@@ -155,17 +153,17 @@ final arg = ModalRoute.of(context).settings.arguments;
   }
 
   Widget _crearCampos() {
-    tipoEntidad = InputDropDown(Icons.person_pin ,'Institución:','26', urlGetClasificador + '23');
-    tipoEspecialidad = InputDropDown(Icons.person_pin ,'Especialidad:','26',urlGetClasificador + '23');
+    tipoEntidad = InputDropDown(Icons.person_pin ,'Institución:','7', urlGetClasificador + '2');
+    tipoEspecialidad = InputDropDown(Icons.person_pin ,'Especialidad:','11',urlGetClasificador + '10');
     expedido = InputDropDown(Icons.person_pin ,'Expedido:', '26', urlGetClasificador + '23');
-    nombre = InputTextField(Icon(Icons.business), 'Nombre voluntario:', '. ', '.');
-    ci = InputTextField(Icon(Icons.business), 'Nombre voluntario:', '. ', '.');
-    telefono =  InputPhoneField(Icon(Icons.business), 'Telefono de referencia', ' .', '');
-    complmementario = InputTextField(Icon(Icons.business), 'Información complementaria:', ' .', '.');
-   email =   InputEmailField(Icon(Icons.business), 'Correo Electronico:', '. ', '','Ingrese su correo electronico');
-       facebook =   InputTextField(Icon(Icons.business), 'Cuenta Facebook:', ' .', '.');
-    twitter =   InputTextField(Icon(Icons.business), 'Cuenta Twitter:', ' .', '.');
-    paginaWeb =   InputUrlField(Icon(Icons.business), 'Pagina Web/block:', '. ', '.');
+    nombre = InputTextField(Icon(Icons.business), 'Nombre voluntario:', '', '.');
+    ci = InputTextField(Icon(Icons.business), 'Nombre voluntario:', '', '.');
+    telefono =  InputPhoneField(Icon(Icons.business), 'Telefono de referencia', '', '');
+    complmementario = InputTextField(Icon(Icons.business), 'Información complementaria:', '', '.');
+   email =   InputEmailField(Icon(Icons.business), 'Correo Electronico:', '', '','Ingrese su correo electronico');
+       facebook =   InputTextField(Icon(Icons.business), 'Cuenta Facebook:', '', '.');
+    twitter =   InputTextField(Icon(Icons.business), 'Cuenta Twitter:', '', '.');
+    paginaWeb =   InputUrlField(Icon(Icons.business), 'Pagina Web/block:', '', '.');
     sexo = InputSexo();
 
     return Column(

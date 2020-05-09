@@ -388,7 +388,7 @@ class RegistroAmigo extends Entity {
   String regPersona;
   String regTelefono;
   String regUbicacion;
-  String regTipoAPoyo;
+  int regTipoAPoyo;
   String regPrioridad;
   String usuario;
 

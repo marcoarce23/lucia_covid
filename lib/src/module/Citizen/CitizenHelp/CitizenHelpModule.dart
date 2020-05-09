@@ -236,10 +236,10 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
         },
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 25.0), title: Text('Colabora')),
-          BottomNavigationBarItem(
               icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Listado solicitudes')),
+              title: Text('Ayudalo')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person, size: 25.0), title: Text('Solicitudes')),
         ],
       ),
     );
@@ -359,7 +359,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
               ),
             ),
             Container(
-              
+
               width: size.width * 0.90,
               margin: EdgeInsets.symmetric(vertical: 0.0),
               decoration: _crearContenedorCampos(),
@@ -377,7 +377,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
     telefono =  InputPhoneField(Icon(Icons.business), 'Telefono de referencia', '', '');
     ubicacion =   InputMultilineField(Icon(Icons.business), 'Donde la encuentro', '', '');
 
-      tipoAyuda = InputDropDown(Icons.person_pin ,'Tipod e ayuda','26',urlGetClasificador+'/23');
+      tipoAyuda = InputDropDown(Icons.person_pin ,'Tipod e ayuda','49',urlGetClasificador+'/47');
 
     return Column(
       children: <Widget>[
@@ -483,7 +483,7 @@ List<DropdownMenuItem<String>> getOpcionesTipoApoyo() {
     registroAmigo.regTelefono = telefono.objectValue;
     registroAmigo.regUbicacion = ubicacion.objectValue;
     registroAmigo.regPrioridad = _opcionSeleccionadaPrioridad;
-    registroAmigo.regTipoAPoyo = tipoAyuda.objectValue;
+    registroAmigo.regTipoAPoyo = int.parse(tipoAyuda.objectValue);
     registroAmigo.usuario = 'marcoarce23@gmail.com';
 
     // if (registroAmigo.idcovRegistroAmigo == null) {
@@ -492,7 +492,7 @@ List<DropdownMenuItem<String>> getOpcionesTipoApoyo() {
     print("valores: ${registroAmigo.regTelefono}");
     print("valores: ${registroAmigo.regPrioridad}");
     print("valores: ${registroAmigo.regUbicacion}");
-    print("valores: ${registroAmigo.regTipoAPoyo}");
+    print("valores: ${registroAmigo.regTipoAPoyo.toString()}");
     print("valores: ${registroAmigo.usuario}");
 
     final dataMap = generic.add(registroAmigo, urlAddVoluntary);

@@ -99,7 +99,10 @@ class _EntityModuleState extends State<EntityModule> {
               icon: Icon(Icons.person, size: 25.0), title: Text('Institucion')),
           BottomNavigationBarItem(
               icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Horario Atención')),
+              title: Text('Atención')),
+           BottomNavigationBarItem(
+              icon: Icon(Icons.bubble_chart, size: 25.0),
+              title: Text('Instituciones')),
          
         ],
       ),
@@ -134,8 +137,8 @@ class _EntityModuleState extends State<EntityModule> {
 
   Widget _crearCampos() {
 
-    tipoInstitucion = InputDropDown(Icons.person_pin ,'Tipo institución:','26', urlGetClasificador +'23');
-    ubicacion = InputDropDown(Icons.person_pin ,'Departamento/ciudad:','26', urlGetClasificador +'23');
+    tipoInstitucion = InputDropDown(Icons.person_pin ,'Tipo institución:','3', urlGetClasificador +'2');
+    ubicacion = InputDropDown(Icons.person_pin ,'Departamento/ciudad:','60', urlGetClasificador +'53');
     nombre = InputTextField(Icon(Icons.business), 'Nombre de la institución:', '', '');
     token = InputTextField(Icon(Icons.business), 'Nombre de la institución:', '', '');
     direccion = InputTextField(Icon(Icons.business), 'Dirección/ubicacion:', '', '');

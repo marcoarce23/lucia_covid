@@ -8,6 +8,7 @@ import 'package:lucia_covid/src/module/Citizen/CitizenHelp/ListCitizenHelpModule
 import 'package:lucia_covid/src/module/Entity/AtentionEntityodule.dart';
 import 'package:lucia_covid/src/module/Entity/EntityModule.dart';
 import 'package:lucia_covid/src/module/Entity/EventEntityModule.dart';
+import 'package:lucia_covid/src/module/Entity/ListEntityModule.dart';
 import 'package:lucia_covid/src/module/Multimedia/ListMultimediaModule.dart';
 import 'package:lucia_covid/src/module/Multimedia/MultimediaModule.dart';
 import 'package:lucia_covid/src/module/Voluntary/AtentionModule.dart';
@@ -50,10 +51,10 @@ callPageEventVoluntary(int currentIdex, BuildContext context) {
           CupertinoPageRoute(builder: (BuildContext context) => AtentionEntityModule()));
     if (currentIdex == 2)
       Navigator.of(context).push(CupertinoPageRoute(
-          builder: (BuildContext context) => EventEntityModule()));
+          builder: (BuildContext context) => ListEntityModule()));
   }
 
- callMaterial(int currentIdex, BuildContext context) {
+ callMultimedia(int currentIdex, BuildContext context) {
     print('INDEX:$currentIdex');
     if (currentIdex == 0)
       Navigator.of(context).push(CupertinoPageRoute(

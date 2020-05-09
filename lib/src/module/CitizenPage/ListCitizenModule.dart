@@ -3,6 +3,7 @@ import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class ListCitizenModule extends StatelessWidget {
   final generic = new Generic();
@@ -20,7 +21,7 @@ class ListCitizenModule extends StatelessWidget {
 
   Widget _showData() {
     return FutureBuilder(
-      future: generic.getAll(new Hospital(),'http://covid19.ruta88.net/COVID/Clasificador/srvClasificador.svc/Clasificador/23', '_DevuelveClasificadorResult'),
+      future: generic.getAll(new RegistroAmigo(),urlGetDevuelveAyuda, primaryKeyGetAyudaAmigo),
       builder: (BuildContext context, AsyncSnapshot<List<Entity>> snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(
@@ -33,7 +34,7 @@ class ListCitizenModule extends StatelessWidget {
     );
   }
 
-  Widget _createItem(BuildContext context, Hospital entityList) {
+  Widget _createItem(BuildContext context, RegistroAmigo entity) {
 
     prefs.correoElectronico = 'marcoarce23@gmail.com';
 
@@ -55,8 +56,8 @@ class ListCitizenModule extends StatelessWidget {
         child: Column(
           children: <Widget>[
             ListTile(
-              title: Text('nombre: ${entityList.nombre} - ubicaicon: ${entityList.nombre}'),
-              subtitle: Text('${entityList.nombre} - correo: ${prefs.correoElectronico}'),
+              title: Text('nombre: ${entity.regPersona} - Tipo ayuda: ${entity.regTipoAPoyo} - Prioridad: ${entity.regPrioridad}'),
+              subtitle: Text('Telef. contacto: ${entity.regTelefono} - Ubicación: ${entity.regUbicacion}'),
               onTap: () =>
                 //  Navigator.pushNamed(context, 'citizen', arguments: entityList),
                  Navigator.pushNamed(context, 'citizen'),

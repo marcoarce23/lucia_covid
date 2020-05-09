@@ -72,7 +72,7 @@ Future<Map<String, dynamic>> add(Entity objeto, String urlService) async {
     
        final response = await http.delete(url);
       dataMap(response);
-      return null;
+      return dataMap(response);
   }
 
   Map dataMap(Response response) {

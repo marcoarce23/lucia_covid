@@ -92,7 +92,7 @@ List<String> _tipoSubCatalogo = [
         onTap: (value) {
           setState(() {
              _currentIndex = value;
-            callMaterial(_currentIndex, context);
+            callMultimedia(_currentIndex, context);
           });
         },
         items: [

@@ -3,16 +3,20 @@ import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Provider/MEnsaje.dart';
 import 'package:lucia_covid/src/Provider/PushNotificationProvider.dart';
 import 'package:lucia_covid/src/Widget/InputField/MaskEdit.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenHelp/ListCitizenHelpModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 import 'package:lucia_covid/src/module/CitizenPage/CitizenModule.dart';
+import 'package:lucia_covid/src/module/CitizenPage/ListCitizenModule.dart';
 import 'package:lucia_covid/src/module/Entity/EntityModule.dart';
 import 'package:lucia_covid/src/module/Entity/EventEntityModule.dart';
+import 'package:lucia_covid/src/module/Entity/ListEntityModule.dart';
 import 'package:lucia_covid/src/module/InitialPages/SlideShowModule.dart';
 import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
 import 'package:lucia_covid/src/module/Login/RegisterLoginModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/SplashScreenModule.dart';
 import 'package:lucia_covid/src/module/Voluntary/EventModule.dart';
+import 'package:lucia_covid/src/module/Voluntary/ListVoluntary.dart';
 import 'package:lucia_covid/src/module/Voluntary/VoluntaryModule.dart';
 
 
@@ -155,18 +159,18 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    final pushProvider = new PushNotificationProvider();
-    pushProvider.initNotifications();
+    // final pushProvider = new PushNotificationProvider();
+    // pushProvider.initNotifications();
 
-    pushProvider.mensajes.listen( (data) {
+    // pushProvider.mensajes.listen( (data) {
 
-      // Navigator.pushNamed(context, 'mensaje');
-      print('Argumento del Push');
-      print(data);
+    //   // Navigator.pushNamed(context, 'mensaje');
+    //   print('Argumento del Push');
+    //   print(data);
 
-      navigatorKey.currentState.pushNamed('mensaje', arguments: data );
+    //   navigatorKey.currentState.pushNamed('mensaje', arguments: data );
 
-    });
+    // });
 
   }
 
@@ -174,7 +178,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'resource.titleApp',
-      navigatorKey: navigatorKey,
+  //    navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
@@ -183,7 +187,7 @@ class _MyAppState extends State<MyApp> {
       //home: new ListCitizenModule(),
       //initialRoute: SplashScreenModule(),
 
-      home: new CitizenLayoutMenuModule(),//(,//IntroScreen(),
+      home: new ListEntityModule(),//(,//IntroScreen(),
 
       routes: <String, WidgetBuilder>{
         'Splash': (BuildContext context) => new SplashScreenModule(),

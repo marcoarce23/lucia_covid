@@ -5,6 +5,7 @@ import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
@@ -76,7 +77,7 @@ class _AtentionModuleState extends State<AtentionModule>
 
   AppBar _appBar() {
     return AppBar(
-      title: Text('INFORMACION COMPLEMENTARIA'),
+      title: Text('DIAS DE ATENCIÓN'),
       backgroundColor: Colors.orange,
     );
   }
@@ -102,7 +103,7 @@ class _AtentionModuleState extends State<AtentionModule>
               icon: Icon(Icons.person, size: 25.0), title: Text('Voluntarios')),
           BottomNavigationBarItem(
               icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Atención-RRSS')),
+              title: Text('Atención')),
           BottomNavigationBarItem(
               icon: Icon(Icons.supervised_user_circle, size: 25.0),
               title: Text('Integrantes')),
@@ -251,8 +252,19 @@ class _AtentionModuleState extends State<AtentionModule>
               decoration: _crearContenedorCamposRRSS(),
               child: _crearCamposRRSS(),
             ),
-
-            crearLucia(),
+   Text(
+          'HORARIOS DE ATENCIÓN',
+          style: TextStyle(fontSize: 18, color: Colors.black),
+        ),
+           Text(
+          'HORARIOS DE ATENCIÓN',
+          style: TextStyle(fontSize: 18, color: Colors.black),
+        ),
+           Text(
+          'HORARIOS DE ATENCIÓN',
+          style: TextStyle(fontSize: 18, color: Colors.black),
+        ),
+           copyRigth(),
           ],
         ),
       ),
@@ -327,6 +339,7 @@ domingo= InputCheckBox('Dom', selectDomingo);
       
   
         _crearBoton(resource.save),
+      
       ],
     );
   }
