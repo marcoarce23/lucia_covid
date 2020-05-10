@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
-import 'package:lucia_covid/src/Model/ListEntity.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'CitizenInstitutionModule.dart';
+import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class CitizenListInstitucionModule extends StatefulWidget {
   @override
@@ -39,7 +40,7 @@ class _CitizenListInstitucionModuleState
               child: Padding(
                   padding: EdgeInsets.all(10),
                   child: Text(
-                    "Lista de instituciones registradas",
+                    "Lista de instituciones registradas.",
                     style: AppTheme.themeTitulo,
                   )),
             ),
@@ -76,7 +77,8 @@ class _CitizenListInstitucionModuleState
 
   Widget futureItemsInstitution(BuildContext context) {
     return FutureBuilder(
-        future: getInstitucionesItems(),
+        future: generic.getAll(new InstitucionesItems(),
+            urlGetListaInstituciones, primaryKeyGetListaInstituciones),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -101,13 +103,18 @@ class _CitizenListInstitucionModuleState
           InstitucionesItems institutionItem = snapshot.data[index];
           return InkWell(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CitizenInstitutionModule(
-                          institutionItem: institutionItem,
-                        )),
-              );
+              if (institutionItem.miembros > 0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CitizenInstitutionModule(
+                            institutionItem: institutionItem,
+                          )),
+                );
+              } else {
+                Scaffold.of(context).showSnackBar(messageHelp(
+                    "Aun no cuenta con miembros en ${institutionItem.nombreInstitucion}"));
+              }
             },
             child: ListTile(
               leading: iconInstitution(institutionItem),
@@ -143,8 +150,8 @@ class _CitizenListInstitucionModuleState
             ),
             Container(
                 child: Text(
-              " 53 miembreos ",
-              style: TextStyle(color: Colors.black45, fontSize: 12),
+              "cuenta con ${institutionItem.miembros} miembros",
+              style: TextStyle(color: Colors.black87, fontSize: 12),
             )),
             tieneCovid(institutionItem),
           ],
@@ -156,12 +163,11 @@ class _CitizenListInstitucionModuleState
   Text tieneCovid(InstitucionesItems institutionItem) {
     String respuesta;
 
-    if (institutionItem.ayudaConCovid == "0") {
+    if (institutionItem.idaAyudaCovid == 0) {
       respuesta = "";
     } else {
       var formatter = new DateFormat('dd/MM/yyyy');
-      respuesta =
-          "Ayuda COVID-19 desde ${formatter.format(institutionItem.fechaConCovid)}";
+      respuesta = "Ayuda COVID-19 desde ${institutionItem.fechaConCovid}";
     }
 
     return Text(

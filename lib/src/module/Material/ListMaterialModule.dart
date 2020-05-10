@@ -167,7 +167,7 @@ final generic = new Generic();
     } else {
       var formatter = new DateFormat('dd/MM/yyyy');
       respuesta =
-          "Fecha de Publicacion ${formatter.format(institutionItem.fechaConCovid)}";
+          "Fecha de Publicacion ${institutionItem.fechaConCovid}";
     }
 
     return Text(

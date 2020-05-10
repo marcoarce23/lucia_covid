@@ -4,14 +4,17 @@ import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/ListEntity.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class FoundAllVoluntaryModule extends StatefulWidget {
   final ProfesionalesAgrupados profesional;
 
-  const FoundAllVoluntaryModule({Key key, @required this.profesional}) : super(key: key);
+  const FoundAllVoluntaryModule({Key key, @required this.profesional})
+      : super(key: key);
 
   @override
-  _FoundAllVoluntaryModuleState createState() => _FoundAllVoluntaryModuleState();
+  _FoundAllVoluntaryModuleState createState() =>
+      _FoundAllVoluntaryModuleState();
 }
 
 class _FoundAllVoluntaryModuleState extends State<FoundAllVoluntaryModule> {
@@ -35,34 +38,40 @@ class _FoundAllVoluntaryModuleState extends State<FoundAllVoluntaryModule> {
       ),
       body: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             children: <Widget>[
-              GestureDetector(
-                child: Hero(
-                  tag: widget.profesional.imagenFondo,
-                  child: ImageOpaqueAssets(widget.profesional.imagenFondo,
-                      Colors.white, Size(170.0, 150.0), 0.50),
-                ),
+              SizedBox(
+                width: 15,
+              ),
+              ImageOpaqueNetworkCustomize(widget.profesional.imagenFondo,
+                  Colors.white, Size(100, 100), 0.8, BoxFit.cover),
+              SizedBox(
+                width: 10,
               ),
               Expanded(
                 child: RichText(
                   overflow: TextOverflow.clip,
                   text: TextSpan(
-                    text:  widget.profesional.descripcion,
-                    style:  TextStyle(fontSize: 12, color: Colors.black) ,
+                    text: widget.profesional.descripcion,
+                    style: TextStyle(fontSize: 12, color: Colors.black),
                   ),
                 ),
               )
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Container(
-              child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text("Lista de instituciones registradas" ,style:  AppTheme.themeTitulo, )),
-            ),
+            child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  "Lista de profesionales / voluntarios registradas",
+                  style: AppTheme.themeTitulo,
+                )),
+          ),
           futureCuerpoProfesionales(context),
         ],
       )),
@@ -121,32 +130,31 @@ class _FoundAllVoluntaryModuleState extends State<FoundAllVoluntaryModule> {
   Column crearIconoProfesional(icon, title) {
     return Column(
       children: <Widget>[
-       InkWell(
-            onTap: () => sendEmailAdvanced('marcoarce23@gmail.com', 'SOLICITUD CONSULTA MEDICA', 'Estimado Sr. Marco Arce, solcitud pder contactarme cn su persona.'), //sendSMS(72038768),
-            child:
-        Icon(
-          icon,
-          size: 18,
-          color: AppTheme.themeColorAzul,
-        ),
-       ),
-        /*
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 10,
-            fontWeight: FontWeight.w300,
+        InkWell(
+          onTap: () => sendEmailAdvanced(
+              'marcoarce23@gmail.com',
+              'SOLICITUD CONSULTA MEDICA',
+              'Estimado Sr. Marco Arce, solcitud pder contactarme cn su persona.'), //sendSMS(72038768),
+          child: Icon(
+            icon,
+            size: 18,
             color: AppTheme.themeColorAzul,
           ),
-        ),
-        */
+        ),      
       ],
     );
   }
 
   Widget futureCuerpoProfesionales(BuildContext context) {
     return FutureBuilder(
-        future: getListaProfesionalesDeInstitucion(),
+        future: generic.getAll(
+            new ProfesionalesDeInstitucion(),
+            urlGetListaProfesionalesInstitucion +
+                '/' +
+                widget.profesional.idInstitucion.toString() +
+                '/' +
+                widget.profesional.idProfesion.toString(),
+            primaryKeyListaProfesionalesInstitucion),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:

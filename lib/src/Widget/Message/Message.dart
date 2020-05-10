@@ -53,12 +53,34 @@ SnackBar messageWarning(String mensaje) {
         SizedBox(
           width: 20,
         ),
-        Text("Error!", style: TextStyle(fontWeight: FontWeight.w800, color: Colors.black),  ),
+        Text("Advertencia!", style: TextStyle(fontWeight: FontWeight.w800, color: Colors.black),  ),
          SizedBox(
           width: 20,
         ),
         Expanded(
           child: Text(mensaje,style:TextStyle( color: Colors.black)),
+        )
+      ],
+    ),
+  );
+}
+
+
+SnackBar messageHelp(String mensaje) {
+  return SnackBar(
+    backgroundColor: Colors.blue,
+    content: Row(
+      children: <Widget>[
+        FaIcon(FontAwesomeIcons.infoCircle, color: Colors.white),
+        SizedBox(
+          width: 20,
+        ),
+        Text("Ayuda!", style: TextStyle(fontWeight: FontWeight.w800, color: Colors.white),  ),
+         SizedBox(
+          width: 20,
+        ),
+        Expanded(
+          child: Text(mensaje,style:TextStyle( color: Colors.white)),
         )
       ],
     ),

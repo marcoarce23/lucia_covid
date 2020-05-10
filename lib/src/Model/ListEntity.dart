@@ -108,7 +108,7 @@ Future<List<InstitucionesItems>> getInstitucionesItems() async {
   item1.tipoInstitucion = "Reloso";
   item1.ubicacion = "Cochaba";
   item1.ayudaConCovid = "0";
-  item1.fechaConCovid = new DateTime(2020, 1, 30);
+  item1.fechaConCovid = "30/01/2020";
   item1.miembros = 50;
   item1.url =
       "https://drive.google.com/file/d/1SKri16i8UJPBUFhD2VTaB-zowqUrUexQ/view";
@@ -120,7 +120,7 @@ Future<List<InstitucionesItems>> getInstitucionesItems() async {
   item2.tipoInstitucion = "Religioso";
   item2.ubicacion = "Cochabamba";
   item2.ayudaConCovid = "1";
-  item2.fechaConCovid = new DateTime(2020, 1, 20);
+  item2.fechaConCovid ="20/01/2020" ;
   item2.miembros = 10;
   item2.url =
       "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg";
@@ -132,7 +132,7 @@ Future<List<InstitucionesItems>> getInstitucionesItems() async {
   item3.tipoInstitucion = "Religioso";
   item3.ubicacion = "La paz";
   item3.ayudaConCovid = "1";
-  item3.fechaConCovid = new DateTime(2020, 1, 31);
+  item3.fechaConCovid ="31/01/2020";
   item3.miembros = 15;
   item3.url =
       "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg";
@@ -144,36 +144,12 @@ Future<List<InstitucionesItems>> getInstitucionesItems() async {
   item4.tipoInstitucion = "Religioso";
   item4.ubicacion = "La paz";
   item4.ayudaConCovid = "1";
-  item4.fechaConCovid = new DateTime(2020, 1, 31);
+  item4.fechaConCovid ="31/01/2020";
   item4.miembros = 15;
   item4.url =
       "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg";
   lista.add(item4);
 
-  InstitucionesItems item5 = new InstitucionesItems();
-  item5.idInstitucion = 5;
-  item5.nombreInstitucion = "San Joaquin";
-  item5.tipoInstitucion = "Religioso";
-  item5.ubicacion = "La paz";
-  item5.ayudaConCovid = "1";
-  item5.fechaConCovid = new DateTime(2020, 1, 1);
-  item5.miembros = 15;
-  item5.url =
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg";
-  lista.add(item5);
-
-  InstitucionesItems item6 = new InstitucionesItems();
-  item6.idInstitucion = 6;
-  item6.nombreInstitucion = "San Joaquin";
-  item6.tipoInstitucion = "Hospital";
-  item6.ubicacion = "La paz";
-  item6.ayudaConCovid = "1";
-  item6.fechaConCovid = new DateTime(2020, 1, 1);
-  item6.miembros = 15;
-  item6.url =
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg/450px-Iglesia_Santa_Ana_De_Cala_CalaFachada.jpg";
-  lista.add(item6);
-  
 
   return lista;
 }

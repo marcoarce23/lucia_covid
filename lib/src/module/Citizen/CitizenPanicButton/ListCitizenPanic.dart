@@ -162,7 +162,7 @@ final generic = new Generic();
     } else {
       var formatter = new DateFormat('dd/MM/yyyy');
       respuesta =
-          "Ayuda COVID-19 desde ${formatter.format(institutionItem.fechaConCovid)}";
+          "Ayuda COVID-19 desde ${institutionItem.fechaConCovid}";
     }
 
     return Text(

@@ -25,8 +25,10 @@ class Institucion extends Entity {
   String desUbicacion;
 
   Institucion({
-    this.idInstitucion, this.foto,
-    this.insLat,     this.insLng,
+    this.idInstitucion,
+    this.foto,
+    this.insLat,
+    this.insLng,
     this.tipoInstitucion,
     this.token,    this.nombreInstitucion,
     this.ubicacion,    this.direccion,
@@ -102,7 +104,7 @@ class InstitucionAtencion extends Entity {
   String usuario;
 
   InstitucionAtencion({
-    this.idInstitucion =0,
+    this.idInstitucion = 0,
     this.idInstitucionPersonal,
     this.perLunes,
     this.perMartes,
@@ -320,7 +322,6 @@ String usuario;
    this.desExpedido,
       this.usuario});
 
-
   fromJson(Map<String, dynamic> json) => new Voluntary(
       idcovPersonal: json["IDCOV_PERSONAL"],
       foto: json["PER_FOTO"],
@@ -361,7 +362,7 @@ String usuario;
         "PER_INFORMACIONCOMPLEMENTARIA": perInformacionComplementaria,
         "PER_CUENTAFACEBOOK": perFacebbok,
         "PER_CUENTATWITTER": perTwitter,
-     //   "PER_CUENTATWITTER": perYouTube,
+        //   "PER_CUENTATWITTER": perYouTube,
         "PER_PAGINAWEB": perPaginaWeb,
         "DES_INSTITUCION": desInstitucion,
         "DES_ESPECIALIDAD": desEspecialidad,
@@ -462,7 +463,7 @@ class RegistroAmigo extends Entity {
 class BotonPanico extends Entity {
   int idcovBotonpanico;
   int idaCatalogo;
-  String botDetalle;  
+  String botDetalle;
   int idaPrioridad;
   double botCordenadalat;
   double botCordenadalon;
@@ -476,7 +477,7 @@ class BotonPanico extends Entity {
       {this.idcovBotonpanico = 0,
       this.idaCatalogo,
       this.botDetalle,
-      this.idaPrioridad=70,
+      this.idaPrioridad = 70,
       this.botCordenadalat,
       this.botCordenadalon,
       this.botFecha,
@@ -510,7 +511,6 @@ class BotonPanico extends Entity {
       };
 }
 
-
 class GetClasificador extends Entity {
   int id;
   String nombre;
@@ -519,18 +519,16 @@ class GetClasificador extends Entity {
   GetClasificador({this.id, this.nombre, this.detalle});
 
   fromJson(Map<String, dynamic> json) => new GetClasificador(
-    id: json["ID"],
-    nombre : json["NOMBRE"],
-    detalle : json["DETALLE"],
-    );
+        id: json["ID"],
+        nombre: json["NOMBRE"],
+        detalle: json["DETALLE"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "ID": id,
-    "NOMBRE": nombre,
-    "DETALLE": detalle,
-  
-
-    };
+        "ID": id,
+        "NOMBRE": nombre,
+        "DETALLE": detalle,
+      };
 }
 
 
@@ -581,8 +579,6 @@ class LoginSigIn extends Entity {
 
 
 // ---------------------------------------------------------
-
-
 
 class Catalogo extends Entity {
   int idcovCatalogo;
@@ -831,6 +827,7 @@ class Clasificador extends Entity {
 
 class ProfesionalesAgrupados extends Entity {
   int idInstitucion;
+  int idProfesion;
   String profesion;
   int cantidadProfesionales;
   String imagenFondo;
@@ -840,22 +837,25 @@ class ProfesionalesAgrupados extends Entity {
       {this.idInstitucion,
       this.profesion,
       this.cantidadProfesionales,
+      this.idProfesion,
       this.descripcion,
       this.imagenFondo});
 
   fromJson(Map<String, dynamic> json) => new ProfesionalesAgrupados(
-      idInstitucion: json["idInstitucion"],
-      profesion: json["profesion"],
-      cantidadProfesionales: json["cantidadProfesionales"],
-      descripcion: json["descripcion"],
-      imagenFondo: json["imagenFondo"]);
+      idInstitucion: json["ID_INSTITUCION"],
+      profesion: json["TIPO_PERSONAL"],
+      cantidadProfesionales: json["CANTIDAD_PROFESIONALES"],
+      idProfesion: json["IDA_TIPOPERSONAL"],
+      descripcion: json["DESCRIPCION"],
+      imagenFondo: json["URLIMAGEN"]);
 
   Map<String, dynamic> toJson() => {
-        "idInstitucion": idInstitucion,
-        "profesion": profesion,
-        "cantidadProfesionales": cantidadProfesionales,
-        "descripcion": descripcion,
-        "imagenFondo": imagenFondo
+        "ID_INSTITUCION": idInstitucion,
+        "TIPO_PERSONAL": profesion,
+        "CANTIDAD_PROFESIONALES": cantidadProfesionales,
+        "IDA_TIPOPERSONAL": idProfesion,
+        "DESCRIPCION": descripcion,
+        "URLIMAGEN": imagenFondo
       };
 }
 
@@ -884,24 +884,28 @@ class ProfesionalesDeInstitucion extends Entity {
       this.sexo});
 
   fromJson(Map<String, dynamic> json) => new ProfesionalesDeInstitucion(
-      idPersonal: json["idPersonal"],
-      nombreInstitucion: json["nombreInstitucion"],
-      tipoProfesion: json["tipoProfesion"],
-      nombreProfesional: json["nombreProfesional"],
-      ayudaConCovid: json["ayudaConCovid"],
-      ci: json["ci"],
-      idInstitucion: json["idInstitucion"],
+      idPersonal: json["IDCOV_PERSONAL"],
+      nombreInstitucion: json["INS_NOMBREINSTITUCION"],
+      tipoProfesion: json["TIPO_PERSONAL"],
+      nombreProfesional: json["PER_NOMBREPERSONAL"],
+      ayudaConCovid: json["PER_AYUDACOVID"],
+      ci: json["PER_CI"],
+      idInstitucion: json["IDCOV_INSTITUCION"],
+      correo: json["PER_CORREO"],
+      telefono: json["PER_TELEFONO"],
       sexo: json["sexo"]);
 
   Map<String, dynamic> toJson() => {
-        "idPersonal": idPersonal,
-        "nombreInstitucion": nombreInstitucion,
-        "tipoProfesion": tipoProfesion,
-        "nombreProfesional": nombreProfesional,
-        "ayudaConCovid": ayudaConCovid,
-        "ci": ci,
-        "idInstitucion": idInstitucion,
-        "sexo": sexo
+        "IDCOV_PERSONAL": idPersonal,
+        "INS_NOMBREINSTITUCION": nombreInstitucion,
+        "TIPO_PERSONAL": tipoProfesion,
+        "PER_NOMBREPERSONAL": nombreProfesional,
+        "PER_AYUDACOVID": ayudaConCovid,
+        "PER_CORREO": correo,
+        "PER_TELEFONO": telefono,
+        "PER_CI": ci,
+        "IDCOV_INSTITUCION": idInstitucion,
+        "IDA_SEXO": sexo
       };
 }
 
@@ -910,40 +914,72 @@ class InstitucionesItems extends Entity {
   String nombreInstitucion;
   String tipoInstitucion;
   String ubicacion;
+  int idaAyudaCovid; /////
   String ayudaConCovid;
-  DateTime fechaConCovid;
+  String fechaConCovid;
   String url;
   int miembros;
+  String urlPaginaWeb;
+  String urlPaginaFacebook;
+  String urlPaginaYoutube;
+  String urlPaginaTwitter;
+  String correo;
+  String informacionComplementaria;
+  String telefono;
 
   InstitucionesItems(
       {this.idInstitucion,
       this.nombreInstitucion,
       this.tipoInstitucion,
       this.ubicacion,
+      this.idaAyudaCovid,
       this.ayudaConCovid,
       this.fechaConCovid,
+      this.correo = "",
+      this.informacionComplementaria,
+      this.telefono,
+      this.urlPaginaWeb,
+      this.urlPaginaFacebook,
+      this.urlPaginaYoutube,
+      this.urlPaginaTwitter,
       this.url,
       this.miembros});
 
   fromJson(Map<String, dynamic> json) => new InstitucionesItems(
-      idInstitucion: json["idInstitucion"],
-      nombreInstitucion: json["nombreInstitucion"],
-      tipoInstitucion: json["tipoInstitucion"],
-      ubicacion: json["ubicacion"],
-      ayudaConCovid: json["ayudaConCovid"],
-      fechaConCovid: json["fechaConCovid"],
-      url: json["url"],
-      miembros: json["miembros"]);
+      idInstitucion: json["ID_INSTITUCION"],
+      nombreInstitucion: json["NOMBRE_INSTITUCION"],
+      idaAyudaCovid: json["IDA_ESTADOCOVD"],
+      tipoInstitucion: json["TIPO_INSTITUCION"],
+      ubicacion: json["UBICACION"],
+      ayudaConCovid: json["ESTADO_COVID"],
+      fechaConCovid: json["FECHA_COVID"],
+      correo: json["INS_CORREOINSTITUCIONAL"],
+      informacionComplementaria: json["INS_INFORMACIONCOMPLEMENTARIA"],
+      telefono: json["INS_TELEFONO"],
+      urlPaginaWeb: json["INS_PAGINAWEB"],
+      urlPaginaFacebook: json["INS_CUENTACEBOOK"],
+      urlPaginaYoutube: json["INS_CUENTAYOUTUBE"],
+      urlPaginaTwitter: json["INS_CUENTATWITTER"],
+      url: json["INS_FOTO"],
+      miembros: json["CANTIDAD_PROFESIONALES"]);
 
   Map<String, dynamic> toJson() => {
-        "idInstitucion": idInstitucion,
-        "nombreInstitucion": nombreInstitucion,
-        "tipoInstitucion": tipoInstitucion,
-        "ubicacion": ubicacion,
-        "ayudaConCovid": ayudaConCovid,
-        "fechaConCovid": fechaConCovid,
-        "url": url,
-        "miembros": miembros
+        "ID_INSTITUCION": idInstitucion,
+        "NOMBRE_INSTITUCION": nombreInstitucion,
+        "IDA_ESTADOCOVD": idaAyudaCovid,
+        "TIPO_INSTITUCION": tipoInstitucion,
+        "UBICACION": ubicacion,
+        "ESTADO_COVID": ayudaConCovid,
+        "FECHA_COVID": fechaConCovid,
+        "INS_FOTO": url,
+        "INS_CORREOINSTITUCIONAL": correo,
+        "INS_INFORMACIONCOMPLEMENTARIA": informacionComplementaria,
+        "INS_TELEFONO": telefono,
+        "INS_PAGINAWEB": urlPaginaWeb,
+        "INS_CUENTACEBOOK": urlPaginaFacebook,
+        "INS_CUENTAYOUTUBE": urlPaginaYoutube,
+        "INS_CUENTATWITTER": urlPaginaTwitter,
+        "CANTIDAD_PROFESIONALES": miembros
       };
 }
 

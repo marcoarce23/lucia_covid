@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -20,8 +19,9 @@ final String userName=null;
 int daysInMonth(int month) {
   var now = DateTime.now();
 
-  var lastDayDateTime = (month < 12) ?
-    new DateTime(now.year, month + 1, 0) : new DateTime(now.year + 1, 1, 0);
+  var lastDayDateTime = (month < 12)
+      ? new DateTime(now.year, month + 1, 0)
+      : new DateTime(now.year + 1, 1, 0);
 
   return lastDayDateTime.day;
 }
@@ -58,65 +58,58 @@ sharedImage(String imagePath, String nameImage, String nameAttachExtension, Stri
                         'image/$extensionImage', text: detail);
     }
 
- openWeb(String url) async 
-    {
-      String message =  'Error al abrir la página';
-       if(await canLaunch(url)) {
-          await launch(url);
-       }
-       return message;
-    }
-
-    callNumber(int number) async 
-    {
-      String message =  'No s epudo hacer la llamada';
-      var url = 'tel:${number.toString()}';
-       if(await canLaunch(url)) {
-          await launch(url);
-       }
-       return message;
-    }
-
-   
-   
-    sendEmail(String email, String subject) async 
-    {
-      String message =  'No s epudo enviar el correo';
-      var url = 'mailto:$email?subject= $subject&';
-       if(await canLaunch(url)) {
-          await launch(url);
-       }
-       return message;
-    }
-
-sendEmailAdvanced(String email, String subject, String body) async 
-    {
-      String message =  'No s epudo enviar el correo';
-      var url = 'mailto:$email?subject= $subject&body=$body';
-       if(await canLaunch(url)) {
-          await launch(url);
-       }
-       return message;
-    }
-    sendSMS(int number) async 
-    {
-      String message =  'No s epudo enviar el mensaje';
-      var url = 'sms:${number.toString()}';
-       if(await canLaunch(url)) {
-          await launch(url);
-       }
-       return message;
-    }
-
-    loadPDF(String path) async {
-    var response = await http.get(path);
-
-    var dir = await getApplicationDocumentsDirectory();
-    File file = new File("${dir.path}/data.pdf");
-    file.writeAsBytesSync(response.bodyBytes, flush: true);
-    return file.path;
+openWeb(String url) async {
+  String message = 'Error al abrir la página';
+  if (await canLaunch(url)) {
+    await launch(url);
   }
+  return message;
+}
 
+callNumber(int number) async {
+  String message = 'No s epudo hacer la llamada';
+  var url = 'tel:${number.toString()}';
+  if (await canLaunch(url)) {
+    await launch(url);
+  }
+  return message;
+}
+
+sendEmail(String email, String subject) async {
+  String message = 'No s epudo enviar el correo';
+  var url = 'mailto:$email?subject= $subject&';
+  if (await canLaunch(url)) {
+    await launch(url);
+  }
+  return message;
+}
+
+sendEmailAdvanced(String email, String subject, String body) async {
+  String message = 'No s epudo enviar el correo';
+  var url = 'mailto:$email?subject= $subject&body=$body';
+  if (await canLaunch(url)) {
+    await launch(url);
+  }
+  return message;
+}
+
+sendSMS(int number) async {
+  String message = 'No s epudo enviar el mensaje';
+  var url = 'sms:${number.toString()}';
+  if (await canLaunch(url)) {
+    await launch(url);
+  }
+  return message;
+}
+
+loadPDF(String path) async {
+  var response = await http.get(path);
+
+  var dir = await getApplicationDocumentsDirectory();
+  File file = new File("${dir.path}/data.pdf");
+  file.writeAsBytesSync(response.bodyBytes, flush: true);
+  return file.path;
+}
 
 class ImageOpaqueAssets extends StatelessWidget {
   final String imageAssetUrl;
@@ -124,7 +117,8 @@ class ImageOpaqueAssets extends StatelessWidget {
   final Size sizeImage;
   final double opacity;
 
-  const ImageOpaqueAssets( this.imageAssetUrl,  this.color,  this.sizeImage, this.opacity );
+  const ImageOpaqueAssets(
+      this.imageAssetUrl, this.color, this.sizeImage, this.opacity);
 
   @override
   Widget build(BuildContext context) {
@@ -144,8 +138,6 @@ class ImageOpaqueAssets extends StatelessWidget {
   }
 }
 
-
-
 class ImageOpaqueNetworkCustomize extends StatelessWidget {
   final String imageNetwordUrl;
   final Color color;
@@ -153,37 +145,38 @@ class ImageOpaqueNetworkCustomize extends StatelessWidget {
   final BoxFit boxFit;
   final double opacity;
 
-  const ImageOpaqueNetworkCustomize(
-       this.imageNetwordUrl,  this.color , this.sizeImage, this.opacity,this.boxFit );
+  const ImageOpaqueNetworkCustomize(this.imageNetwordUrl, this.color,
+      this.sizeImage, this.opacity, this.boxFit);
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Image.network(
-          imageNetwordUrl,
-          width: sizeImage.width,//,double.maxFinite,
-          height:sizeImage.height,// double.maxFinite,
-          fit: boxFit,
+        Opacity(
+          opacity: opacity,
+          child: Image.network(
+            imageNetwordUrl,
+            width: sizeImage.width, //,double.maxFinite,
+            height: sizeImage.height, // double.maxFinite,
+            fit: boxFit,
+          ),
         ),
         Container(
           height: sizeImage.height,
           width: sizeImage.width,
-          color: color.withOpacity(opacity),
+          //color: color.withOpacity(opacity),
         )
       ],
     );
   }
 }
 
-
 class ImageOpaqueNetwork extends StatelessWidget {
   final String imageNetwordUrl;
   final Color color;
   final Size sizeImage;
 
-  const ImageOpaqueNetwork(
-       this.imageNetwordUrl,  this.color , this.sizeImage );
+  const ImageOpaqueNetwork(this.imageNetwordUrl, this.color, this.sizeImage);
 
   @override
   Widget build(BuildContext context) {
@@ -191,8 +184,8 @@ class ImageOpaqueNetwork extends StatelessWidget {
       children: <Widget>[
         Image.network(
           imageNetwordUrl,
-          width: sizeImage.width,//,double.maxFinite,
-          height:sizeImage.height,// double.maxFinite,
+          width: sizeImage.width, //,double.maxFinite,
+          height: sizeImage.height, // double.maxFinite,
           fit: BoxFit.fill,
         ),
         Container(
@@ -225,9 +218,6 @@ class ImageOvalAsset extends StatelessWidget {
   }
 }
 
-
-
-
 class ImageOvalNetwork extends StatelessWidget {
   final String imageNetworkUrl;
   final Size sizeImage;
@@ -246,7 +236,7 @@ class ImageOvalNetwork extends StatelessWidget {
             image: new DecorationImage(
                 fit: BoxFit.fill, image: new NetworkImage(imageNetworkUrl))));
   }
-} 
+}
 
 class RadialProgress extends StatefulWidget {
   final double goalCompleted;
@@ -257,18 +247,19 @@ class RadialProgress extends StatefulWidget {
 
   const RadialProgress(
       {Key key,
-        @required this.child,
-        this.goalCompleted = 0.7,
-        this.progressColor = Colors.white,
-        this.progressBackgroundColor = Colors.white,
-        this.width = 8})
+      @required this.child,
+      this.goalCompleted = 0.7,
+      this.progressColor = Colors.white,
+      this.progressBackgroundColor = Colors.white,
+      this.width = 8})
       : super(key: key);
 
   @override
   _RadialProgressState createState() => _RadialProgressState();
 }
 
-class _RadialProgressState extends State<RadialProgress> with SingleTickerProviderStateMixin {
+class _RadialProgressState extends State<RadialProgress>
+    with SingleTickerProviderStateMixin {
   AnimationController _radialProgressAnimationController;
   Animation<double> _progressAnimation;
   final Duration fadeInDuration = Duration(milliseconds: 500);
@@ -280,9 +271,10 @@ class _RadialProgressState extends State<RadialProgress> with SingleTickerProvid
   @override
   void initState() {
     super.initState();
-    _radialProgressAnimationController = AnimationController(vsync: this, duration: fillDuration);
-    _progressAnimation =
-    Tween(begin: 0.0, end: 360.0).animate(CurvedAnimation(parent: _radialProgressAnimationController, curve: Curves.easeIn))
+    _radialProgressAnimationController =
+        AnimationController(vsync: this, duration: fillDuration);
+    _progressAnimation = Tween(begin: 0.0, end: 360.0).animate(CurvedAnimation(
+        parent: _radialProgressAnimationController, curve: Curves.easeIn))
       ..addListener(() {
         setState(() {
           progressDegrees = widget.goalCompleted * _progressAnimation.value;
@@ -316,11 +308,11 @@ class _RadialProgressState extends State<RadialProgress> with SingleTickerProvid
 }
 
 class RadialPainter extends CustomPainter {
-  
   double progressInDegrees, width;
   final Color progressColor, progressBackgroundColor;
 
-  RadialPainter(this.progressInDegrees, this.progressColor, this.progressBackgroundColor, this.width);
+  RadialPainter(this.progressInDegrees, this.progressColor,
+      this.progressBackgroundColor, this.width);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -340,7 +332,11 @@ class RadialPainter extends CustomPainter {
       ..strokeWidth = width;
 
     canvas.drawArc(
-        Rect.fromCircle(center: center, radius: size.width / 2), math.radians(-90), math.radians(progressInDegrees), false, progressPaint);
+        Rect.fromCircle(center: center, radius: size.width / 2),
+        math.radians(-90),
+        math.radians(progressInDegrees),
+        false,
+        progressPaint);
   }
 
   @override
@@ -348,6 +344,3 @@ class RadialPainter extends CustomPainter {
     return true;
   }
 }
-
-
-

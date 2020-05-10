@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/ListEntity.dart';
@@ -7,6 +8,7 @@ import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenMultimedia/CitizenImageDetailModule.dart';
 import 'package:lucia_covid/src/module/General/PageViewModule.dart';
 import 'package:lucia_covid/src/module/Voluntary/FoundAllVoluntaryModule.dart';
+import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class CitizenInstitutionModule extends StatefulWidget {
   final InstitucionesItems institutionItem;
@@ -117,7 +119,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                 height: 20,
               ),
               Text(
-                "Institución",
+                "Institución / Grupo voluntarios",
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
               ),
               Text(widget.institutionItem.nombreInstitucion),
@@ -133,10 +135,10 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Icon(
-                    Icons.pin_drop,
+                  FaIcon(
+                    FontAwesomeIcons.streetView,
                     color: Colors.black,
-                    size: 15,
+                    size: 14,
                   ),
                   SizedBox(
                     width: 5,
@@ -147,81 +149,150 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 20,
+              Text(
+                "Correo ",
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  ClipOval(
-                    child: Material(
-                      color: Colors.white, // button color
-                      child: InkWell(
-                        splashColor: AppTheme
-                            .backGroundInstitutionPrimary, // inkwell color
-                        child: SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: Image.asset('assets/image/facebook.jpg',
-                                fit: BoxFit.cover)),
-                        onTap: () {},
+                  FaIcon(
+                    FontAwesomeIcons.mailBulk,
+                    color: Colors.black,
+                    size: 14,
+                  ),
+                  Text(widget.institutionItem.correo),
+                ],
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Opacity(
+                    opacity:
+                        (widget.institutionItem.urlPaginaFacebook.length > 1)
+                            ? 1
+                            : 0,
+                    child: ClipOval(
+                      child: Material(
+                        color: Colors.white, // button color
+                        child: InkWell(
+                            splashColor: AppTheme
+                                .backGroundInstitutionPrimary, // inkwell color
+                            child: SizedBox(
+                                width: 30,
+                                height: 30,
+                                child: Image.asset('assets/image/facebook.jpg',
+                                    fit: BoxFit.cover)),
+                            onTap: () => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        PageViewModule(
+                                          title: widget.institutionItem
+                                              .nombreInstitucion,
+                                          selectedUrl: widget.institutionItem
+                                              .urlPaginaFacebook,
+                                        )))),
                       ),
                     ),
                   ),
-                  ClipOval(
-                    child: Material(
-                      color: Colors.white, // button color
-                      child: InkWell(
-                        splashColor: AppTheme
-                            .backGroundInstitutionPrimary, // inkwell color
-                        child: SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: Image.asset(
-                              'assets/image/twitter.jpg',
-                              fit: BoxFit.cover,
-                            )),
-                        onTap: () {},
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Opacity(
+                    opacity:
+                        (widget.institutionItem.urlPaginaTwitter.length > 1)
+                            ? 1
+                            : 0,
+                    child: ClipOval(
+                      child: Material(
+                        color: Colors.white, // button color
+                        child: InkWell(
+                            splashColor: AppTheme
+                                .backGroundInstitutionPrimary, // inkwell color
+                            child: SizedBox(
+                                width: 30,
+                                height: 30,
+                                child: Image.asset(
+                                  'assets/image/twitter.jpg',
+                                  fit: BoxFit.cover,
+                                )),
+                            onTap: () => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        PageViewModule(
+                                          title: widget.institutionItem
+                                              .nombreInstitucion,
+                                          selectedUrl: widget
+                                              .institutionItem.urlPaginaTwitter,
+                                        )))),
                       ),
                     ),
                   ),
-                  ClipOval(
-                    child: Material(
-                      color: Colors.white, // button color
-                      child: InkWell(
-                        splashColor: AppTheme
-                            .backGroundInstitutionPrimary, // inkwell color
-                        child: SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: Image.asset(
-                              'assets/image/youtube.jpg',
-                              fit: BoxFit.cover,
-                            )),
-                        onTap: () {},
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Opacity(
+                    opacity:
+                        (widget.institutionItem.urlPaginaYoutube.length > 1)
+                            ? 1
+                            : 0,
+                    child: ClipOval(
+                      child: Material(
+                        color: Colors.white, // button color
+                        child: InkWell(
+                            splashColor: AppTheme
+                                .backGroundInstitutionPrimary, // inkwell color
+                            child: SizedBox(
+                                width: 30,
+                                height: 30,
+                                child: Image.asset(
+                                  'assets/image/youtube.jpg',
+                                  fit: BoxFit.cover,
+                                )),
+                            onTap: () => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        PageViewModule(
+                                          title: widget.institutionItem
+                                              .nombreInstitucion,
+                                          selectedUrl: widget
+                                              .institutionItem.urlPaginaYoutube,
+                                        )))),
                       ),
                     ),
                   ),
-                  ClipOval(
-                    child: Material(
-                      color: Colors.white, // button color
-                      child: InkWell(
-                        splashColor: AppTheme
-                            .backGroundInstitutionPrimary, // inkwell color
-                        child: SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: Image.asset(
-                              'assets/image/instagram.png',
-                              fit: BoxFit.cover,
-                            )),
-                        onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    PageViewModule(
-                                      title: 'https://www.youtube.com',
-                                      selectedUrl: 'https://www.youtube.com',
-                                    ))),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Opacity(
+                    opacity: (widget.institutionItem.urlPaginaWeb.length > 1)
+                        ? 1
+                        : 0,
+                    child: ClipOval(
+                      child: Material(
+                        color: Colors.white, // button color
+                        child: InkWell(
+                          splashColor: AppTheme
+                              .backGroundInstitutionPrimary, // inkwell color
+                          child: SizedBox(
+                              width: 30,
+                              height: 30,
+                              child: Image.asset(
+                                'assets/image/instagram.png',
+                                fit: BoxFit.cover,
+                              )),
+                          onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      PageViewModule(
+                                        title: widget
+                                            .institutionItem.nombreInstitucion,
+                                        selectedUrl:
+                                            widget.institutionItem.urlPaginaWeb,
+                                      ))),
+                        ),
                       ),
                     ),
                   ),
@@ -242,7 +313,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
             context,
             MaterialPageRoute(
                 builder: (context) => FoundAllVoluntaryModule(
-                       profesional: profesional,
+                      profesional: profesional,
                     )),
           );
         },
@@ -257,16 +328,12 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
               padding: const EdgeInsets.all(10),
               child: Stack(
                 children: <Widget>[
-                  GestureDetector(
-                    child: Hero(
-                      tag: profesional.imagenFondo,
-                      child: ImageOpaqueAssets(
-                          profesional.imagenFondo,
-                          Colors.white,
-                          Size(double.maxFinite, double.maxFinite),
-                          0.50),
-                    ),
-                  ),
+                  ImageOpaqueNetworkCustomize(
+                      profesional.imagenFondo,
+                      Colors.white,
+                      Size(double.maxFinite, double.maxFinite),
+                      0.5,
+                      BoxFit.cover),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -303,7 +370,12 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
 
   Widget futureCuerpoProfesionales(BuildContext context) {
     return FutureBuilder(
-        future: /*generic.getAll(new Hospital())*/ getListaProfesionalesAgrupadosInstitucion(),
+        future: generic.getAll(
+            new ProfesionalesAgrupados(),
+            urlGetGrupoProfesionales +
+                '/' +
+                widget.institutionItem.idInstitucion.toString(),
+            primaryKeyGrupoProfesionales),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -396,7 +468,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                   ],
                 ),
               );
-           }),
+            }),
       ),
     );
   }
