@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 
 class CitizenImageDetailModule extends StatefulWidget {
-  final MultimediaImagen multimediaImagen;
+  final ListaMultimedia multimediaImagen;
 
   const CitizenImageDetailModule({Key key, @required this.multimediaImagen})
       : super(key: key);
@@ -25,7 +25,7 @@ class _CitizenImageDetailModuleState extends State<CitizenImageDetailModule> {
             child: FadeInImage.assetNetwork(
           placeholder: "assets/loading/loadingImage.gif",
           placeholderScale: 0.5,
-          image: widget.multimediaImagen.url,
+          image: widget.multimediaImagen.mulEnlace,
           fit: BoxFit.cover,
         )),
       ),

@@ -390,7 +390,12 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
 
   Widget futureMultimedia(BuildContext context) {
     return FutureBuilder(
-        future: /*generic.getAll(new Hospital())*/ getImagenesMultimedia(),
+        future: 
+         Generic().getAll(
+            new ListaMultimedia(),
+            urlGetListaMultimediaPorInstitucion + '/'+ widget.institutionItem.idInstitucion.toString()+
+                '/74',
+            primaryKeyListaMultimediaPorInstitucion),         
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -413,7 +418,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
             physics: ClampingScrollPhysics(),
             itemCount: snapshot.data.length,
             itemBuilder: (context, index) {
-              MultimediaImagen imagen = snapshot.data[index];
+              ListaMultimedia imagen = snapshot.data[index];
               return InkWell(
                 onTap: () {
                   Navigator.push(
@@ -431,7 +436,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                       child: FadeInImage.assetNetwork(
                         placeholder: "assets/loading/loadingImage.gif",
                         placeholderScale: 0.2,
-                        image: imagen.url,
+                        image: imagen.mulEnlace,
                         width: 150,
                         height: 150,
                         fit: BoxFit.cover,
@@ -448,7 +453,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                             color: Colors.white70,
                             padding: EdgeInsets.only(left: 18),
                             child: Text(
-                              imagen.titulo,
+                              imagen.mulTitulo,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontSize: 12, fontWeight: FontWeight.w500),
@@ -458,7 +463,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                             color: Colors.white70,
                             padding: EdgeInsets.only(left: 18),
                             child: Text(
-                              imagen.subtitulo,
+                              imagen.mulResumen,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontSize: 10, fontWeight: FontWeight.w500),

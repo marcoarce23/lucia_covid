@@ -82,10 +82,18 @@ final String primaryKeyListaProfesionalesInstitucion =
     '_DevuelveListaProfesionalesInstitucionResult';
 String urlGetListaProfesionalesInstitucion =
     'http://covid19.ruta88.net/COVID/Personal/srvPersonal.svc/DevuelveListaProfesionalesInstitucion';
+    
+final String primaryKeyListaMultimedia =
+    '_DevuelveListaMultimediaResult';
+String urlGetListaMultimedia =
+    'http://covid19.ruta88.net/COVID/Multimedia/srvMultimedia.svc/ListaMultimedias';
 
 
 
-
+final String primaryKeyListaMultimediaPorInstitucion =
+    '_DevuelveListaMultimediaPorInstitucionResult';
+String urlGetListaMultimediaPorInstitucion =
+    'http://covid19.ruta88.net/COVID/Multimedia/srvMultimedia.svc/ListaMultimediasPorInstitucion';
 
 // METODO POST
 final String urlAddBotonPanico =

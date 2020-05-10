@@ -983,6 +983,63 @@ class InstitucionesItems extends Entity {
       };
 }
 
+
+
+class ListaMultimedia extends Entity {
+  String categoria;
+    int idaCategoria;
+    int idcovInstitucion;
+    int idcovMultimedia;
+    String insNombreinstitucion;
+    String mulEnlace;
+    String mulFechafin;
+    String mulFechainicio;
+    String mulResumen;
+    String mulTitulo; 
+
+   ListaMultimedia({
+        this.categoria,
+        this.idaCategoria,
+        this.idcovInstitucion,
+        this.idcovMultimedia,
+        this.insNombreinstitucion,
+        this.mulEnlace,
+        this.mulFechafin,
+        this.mulFechainicio,
+        this.mulResumen,
+        this.mulTitulo
+    });
+
+
+
+  fromJson(Map<String, dynamic> json) => new ListaMultimedia(
+       categoria: json["CATEGORIA"],
+        idaCategoria: json["IDA_CATEGORIA"],
+        idcovInstitucion: json["IDCOV_INSTITUCION"],
+        idcovMultimedia: json["IDCOV_MULTIMEDIA"],
+        insNombreinstitucion: json["INS_NOMBREINSTITUCION"],
+        mulEnlace: json["MUL_ENLACE"],
+        mulFechafin: json["MUL_FECHAFIN"],
+        mulFechainicio: json["MUL_FECHAINICIO"],
+        mulResumen: json["MUL_RESUMEN"],
+        mulTitulo: json["MUL_TITULO"]
+  );
+
+  Map<String, dynamic> toJson() => {
+        "CATEGORIA": categoria,
+        "IDA_CATEGORIA": idaCategoria,
+        "IDCOV_INSTITUCION": idcovInstitucion,
+        "IDCOV_MULTIMEDIA": idcovMultimedia,
+        "INS_NOMBREINSTITUCION": insNombreinstitucion,
+        "MUL_ENLACE": mulEnlace,
+        "MUL_FECHAFIN": mulFechafin,
+        "MUL_FECHAINICIO": mulFechainicio,
+        "MUL_RESUMEN": mulResumen,
+        "MUL_TITULO": mulTitulo
+      };
+}
+
+
 class MultimediaImagen extends Entity {
   int idInstitucion;
   String titulo;

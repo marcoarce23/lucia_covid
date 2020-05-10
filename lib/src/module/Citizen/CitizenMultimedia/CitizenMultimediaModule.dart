@@ -1,16 +1,19 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
+import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/ListEntity.dart';
-
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 import 'package:lucia_covid/src/module/General/PageViewModule.dart';
-
 import 'CitizenImageDetailModule.dart';
+import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
+
+
 
 class CitizenMultimediaModule extends StatefulWidget {
   const CitizenMultimediaModule({Key key}) : super(key: key);
+
 
   @override
   _CitizenMultimediaModuleState createState() =>
@@ -18,10 +21,12 @@ class CitizenMultimediaModule extends StatefulWidget {
 }
 
 class _CitizenMultimediaModuleState extends State<CitizenMultimediaModule> {
+  final generic = new Generic();
   int page = 0;
   GlobalKey _bottomNavigationKey = GlobalKey();
   final List<Widget> optionPage = [PagePicture(), PageVideo(), PageDocuments()];
-
+ 
+ 
   @override
   void initState() {
     page = 0;
@@ -115,7 +120,11 @@ class PagePicture extends StatelessWidget {
 
   Widget futureImagenes(BuildContext context) {
     return FutureBuilder(
-        future: /*generic.getAll(new Hospital())*/ getImagenesMultimedia(),
+        future: Generic().getAll(
+            new ListaMultimedia(),
+            urlGetListaMultimedia +
+                '/74',
+            primaryKeyListaMultimedia), 
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -131,7 +140,7 @@ class PagePicture extends StatelessWidget {
   Widget buildImage(BuildContext context, AsyncSnapshot snapshot) {
     List<Widget> lista = new List<Widget>();
     for (var i = 0; i < snapshot.data.length; i++) {
-      MultimediaImagen multimediaImagen = snapshot.data[i];
+      ListaMultimedia multimediaImagen = snapshot.data[i];
       lista.add(imageGalery(context, multimediaImagen));
     }
     return Wrap(
@@ -139,7 +148,7 @@ class PagePicture extends StatelessWidget {
     );
   }
 
-  Widget imageGalery(BuildContext context, MultimediaImagen multimediaImagen) {
+  Widget imageGalery(BuildContext context, ListaMultimedia multimediaImagen) {
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -157,7 +166,7 @@ class PagePicture extends StatelessWidget {
             child: FadeInImage.assetNetwork(
               placeholder: "assets/loading/loadingImage.gif",
               placeholderScale: 0.2,
-              image: multimediaImagen.url,
+              image: multimediaImagen.mulEnlace,
               width: 150,
               height: 150,
               fit: BoxFit.cover,
@@ -174,7 +183,7 @@ class PagePicture extends StatelessWidget {
                   color: Colors.white70,
                   padding: EdgeInsets.only(left: 18),
                   child: Text(
-                    multimediaImagen.titulo,
+                    multimediaImagen.mulTitulo,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                   )),
@@ -183,7 +192,7 @@ class PagePicture extends StatelessWidget {
                   color: Colors.white70,
                   padding: EdgeInsets.only(left: 18),
                   child: Text(
-                    multimediaImagen.subtitulo,
+                    multimediaImagen.mulResumen,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 10, fontWeight: FontWeight.w500),
                   )),
@@ -246,7 +255,11 @@ class _PageVideoState extends State<PageVideo> {
 
   Widget futureVideo(BuildContext context) {
     return FutureBuilder(
-        future: /*generic.getAll(new Hospital())*/ getVideosMultimedia(),
+        future: Generic().getAll(
+            new ListaMultimedia(),
+            urlGetListaMultimedia +
+                '/75',
+            primaryKeyListaMultimedia),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -267,13 +280,13 @@ class _PageVideoState extends State<PageVideo> {
           physics: ClampingScrollPhysics(),
           itemCount: snapshot.data.length,
           itemBuilder: (context, index) {
-            MultimediaVideo item = snapshot.data[index];
+            ListaMultimedia item = snapshot.data[index];
             return itemVideo(context, item);
           }),
     );
   }
 
-  Widget itemVideo(BuildContext context, MultimediaVideo multimediaVideo) {
+  Widget itemVideo(BuildContext context, ListaMultimedia multimediaVideo) {
     return InkWell(
         child: ListTile(
           leading: Icon(
@@ -281,11 +294,11 @@ class _PageVideoState extends State<PageVideo> {
             size: 35,
           ),
           title: Text(
-            multimediaVideo.titulo,
+            multimediaVideo.mulTitulo,
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
           ),
           subtitle: Text(
-            multimediaVideo.subtitulo,
+            multimediaVideo.mulResumen,
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
           ),
           trailing: Icon(Icons.navigate_next),
@@ -293,8 +306,8 @@ class _PageVideoState extends State<PageVideo> {
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (BuildContext context) => PageViewModule(
-                    title: multimediaVideo.titulo,
-                    selectedUrl: multimediaVideo.url,
+                    title: multimediaVideo.mulTitulo,
+                    selectedUrl: multimediaVideo.mulEnlace,
                   )));
         });
   }
@@ -341,7 +354,11 @@ class PageDocuments extends StatelessWidget {
 
   Widget futureDocumentos(BuildContext context) {
     return FutureBuilder(
-        future: /*generic.getAll(new Hospital())*/ getDocumentosMultimedia(),
+        future: Generic().getAll(
+            new ListaMultimedia(),
+            urlGetListaMultimedia +
+                '/76',
+            primaryKeyListaMultimedia),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -362,14 +379,14 @@ class PageDocuments extends StatelessWidget {
           physics: ClampingScrollPhysics(),
           itemCount: snapshot.data.length,
           itemBuilder: (context, index) {
-            MultimediaDocumentos item = snapshot.data[index];
+            ListaMultimedia item = snapshot.data[index];
             return itemDocumento(context, item);
           }),
     );
   }
 
   Widget itemDocumento(
-      BuildContext context, MultimediaDocumentos multimediaDocumento) {
+      BuildContext context, ListaMultimedia multimediaDocumento) {
     return InkWell(
         child: ListTile(
           leading: Icon(
@@ -377,11 +394,11 @@ class PageDocuments extends StatelessWidget {
             size: 35,
           ),
           title: Text(
-            multimediaDocumento.titulo,
+            multimediaDocumento.mulTitulo,
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
           ),
           subtitle: Text(
-            multimediaDocumento.subtitulo,
+            multimediaDocumento.mulResumen,
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
           ),
           trailing: Icon(Icons.navigate_next),
@@ -389,8 +406,8 @@ class PageDocuments extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (BuildContext context) => PageViewModule(
-                    title: multimediaDocumento.titulo,
-                    selectedUrl: multimediaDocumento.url,
+                    title: multimediaDocumento.mulTitulo,
+                    selectedUrl: multimediaDocumento.mulEnlace,
                   )));
         });
   }
