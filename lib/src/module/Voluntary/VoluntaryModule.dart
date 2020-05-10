@@ -318,41 +318,49 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
   }
 
   _submit() async {
-    if (!formKey.currentState.validate()) return;
 
-    formKey.currentState.save();
-    setState(() {
-      _save = true;
-    });
+  String fotoUrl;
+  
+    if ( foto != null ) {
+      fotoUrl = await generic.subirImagen(foto);
+      print('fotoURL :$fotoUrl');
+    }
 
-    entity.idcovPersonal = 0;
-    entity.idcovInstitucion = int.parse(tipoEntidad.objectValue);
-    entity.idcovLogin = 0;
-    entity.idaTipopersonal = int.parse(tipoEspecialidad.objectValue);
-    entity.perNombrepersonal = nombre.objectValue;
-    entity.perCorreo = email.objectValue;
-    entity.perTelefono = telefono.objectValue;
-    if (esCovid)
-      entity.perAyudacovid = 1;
-    else
-      entity.perAyudacovid = 0;
-    entity.perCI = ci.objectValue;
-    entity.idaExtension = int.parse(expedido.objectValue);
-    entity.idaSexo = 0;
-    entity.perInformacionComplementaria = complmementario.objectValue;
-    entity.perFacebbok = facebook.objectValue;
-    entity.perTwitter = twitter.objectValue;
-    entity.perPaginaWeb = paginaWeb.objectValue;
-    entity.usuario = 'marcoarce23@gmail.com';
+    // if (!formKey.currentState.validate()) return;
 
-    final dataMap = generic.add(entity, urlAddPersonal);
+    // formKey.currentState.save();
+    // setState(() {
+    //   _save = true;
+    // });
 
-    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
-    print('resultado:$result');
+    // entity.idcovPersonal = 0;
+    // entity.idcovInstitucion = int.parse(tipoEntidad.objectValue);
+    // entity.idcovLogin = 0;
+    // entity.idaTipopersonal = int.parse(tipoEspecialidad.objectValue);
+    // entity.perNombrepersonal = nombre.objectValue;
+    // entity.perCorreo = email.objectValue;
+    // entity.perTelefono = telefono.objectValue;
+    // if (esCovid)
+    //   entity.perAyudacovid = 1;
+    // else
+    //   entity.perAyudacovid = 0;
+    // entity.perCI = ci.objectValue;
+    // entity.idaExtension = int.parse(expedido.objectValue);
+    // entity.idaSexo = 0;
+    // entity.perInformacionComplementaria = complmementario.objectValue;
+    // entity.perFacebbok = facebook.objectValue;
+    // entity.perTwitter = twitter.objectValue;
+    // entity.perPaginaWeb = paginaWeb.objectValue;
+    // entity.usuario = 'marcoarce23@gmail.com';
 
-    setState(() {
-      _save = false;
-    });
+    // final dataMap = generic.add(entity, urlAddPersonal);
+
+    // await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+    // print('resultado:$result');
+
+    // setState(() {
+    //   _save = false;
+    // });
 
     //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
   }

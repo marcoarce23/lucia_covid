@@ -84,45 +84,67 @@ Future<Map<String, dynamic>> add(Entity objeto, String urlService) async {
     return dataMap;
   }
 
-  Future<String> subirImagen( File imagen ) async {
+ Future<String> subirImagen( File imagen ) async {
 
-    final url = Uri.parse('https://api.cloudinary.com/v1_1/dc0tufkzf/image/upload?upload_preset=cwye3brj');
-    final targetPath ='';
+    final url = Uri.parse('https://api.cloudinary.com/v1_1/propia/image/upload?upload_preset=luwzr1vw');
     final mimeType = mime(imagen.path).split('/'); //image/jpeg
-
-    var result = await FlutterImageCompress.compressAndGetFile(imagen.absolute.path, targetPath, quality: 88, rotate: 180,);
-
-    print(imagen.lengthSync());
-    print(result.lengthSync());
-
-    final imageUploadRequest = http.MultipartRequest(
-      'POST',
-      url
-    );
-
-    final file = await http.MultipartFile.fromPath(
-      'file', 
-      imagen.path,
-      contentType: MediaType( mimeType[0], mimeType[1] )
-    );
+    final imageUploadRequest = http.MultipartRequest('POST', url );
+    final file = await http.MultipartFile.fromPath( 'file',imagen.path, contentType: MediaType( mimeType[0], mimeType[1]));
 
     imageUploadRequest.files.add(file);
-
 
     final streamResponse = await imageUploadRequest.send();
     final resp = await http.Response.fromStream(streamResponse);
 
     if ( resp.statusCode != 200 && resp.statusCode != 201 ) {
-      print('Algo salio mal');
-      print( resp.body );
+      print('Algo salio mal ${resp.body}');
       return null;
     }
 
     final respData = json.decode(resp.body);
     print( respData);
-
     return respData['secure_url'];
-  }  
+  }
+
+  // Future<String> subirImagen( File imagen ) async {
+
+  //   final url = Uri.parse('https://api.cloudinary.com/v1_1/dc0tufkzf/image/upload?upload_preset=cwye3brj');
+  //   final targetPath ='';
+  //   final mimeType = mime(imagen.path).split('/'); //image/jpeg
+
+  //   var result = await FlutterImageCompress.compressAndGetFile(imagen.absolute.path, targetPath, quality: 88, rotate: 180,);
+
+  //   print(imagen.lengthSync());
+  //   print(result.lengthSync());
+
+  //   final imageUploadRequest = http.MultipartRequest(
+  //     'POST',
+  //     url
+  //   );
+
+  //   final file = await http.MultipartFile.fromPath(
+  //     'file', 
+  //     imagen.path,
+  //     contentType: MediaType( mimeType[0], mimeType[1] )
+  //   );
+
+  //   imageUploadRequest.files.add(file);
+
+
+  //   final streamResponse = await imageUploadRequest.send();
+  //   final resp = await http.Response.fromStream(streamResponse);
+
+  //   if ( resp.statusCode != 200 && resp.statusCode != 201 ) {
+  //     print('Algo salio mal');
+  //     print( resp.body );
+  //     return null;
+  //   }
+
+  //   final respData = json.decode(resp.body);
+  //   print( respData);
+
+  //   return respData['secure_url'];
+  // }  
 
   // Future<File> _compressAndGetFile(File file, String targetPath) async {
   //   var result = await FlutterImageCompress.compressAndGetFile(

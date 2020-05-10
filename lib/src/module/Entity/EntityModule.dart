@@ -141,7 +141,7 @@ class _EntityModuleState extends State<EntityModule> {
     tipoInstitucion = InputDropDown(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ),'Tipo institución:','3', urlGetClasificador +'2');
     ubicacion = InputDropDown(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ) ,'Departamento/ciudad:','60', urlGetClasificador +'53');
     nombre = InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Nombre de la institución:', '', '');
-    token = InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Nombre de la institución:', '', '');
+    token = InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'INgrese el token:', '', 'Ej:546AMDEr');
     direccion = InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Dirección/ubicacion:', '', '');
     telefono =  InputPhoneField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Telefono de referencia', '', '');
     informacion = InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Información complementaria:', '', '');

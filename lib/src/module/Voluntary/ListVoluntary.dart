@@ -137,7 +137,7 @@ final generic = new Generic();
               leading: iconEntity(entityItem),
               title: listEntity(context, entityItem),
               trailing:  FaIcon(FontAwesomeIcons.phoneVolume, color: Colors.black, size: 35,),
-              onTap: ()=> sendSMS(72038768),
+              onTap: ()=> callNumber(72038768),
             ),
             
           );
