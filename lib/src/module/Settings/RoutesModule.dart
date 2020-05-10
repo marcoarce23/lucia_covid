@@ -67,7 +67,6 @@ final String urlDeleteInstitucion =
 //////          CHRISS           //////
 
 // METODOS GET
-
 final String primaryKeyGetListaInstituciones =
     '_DevuelveListaInstitucionesResult';
 String urlGetListaInstituciones =
@@ -88,12 +87,16 @@ final String primaryKeyListaMultimedia =
 String urlGetListaMultimedia =
     'http://covid19.ruta88.net/COVID/Multimedia/srvMultimedia.svc/ListaMultimedias';
 
-
-
 final String primaryKeyListaMultimediaPorInstitucion =
     '_DevuelveListaMultimediaPorInstitucionResult';
 String urlGetListaMultimediaPorInstitucion =
     'http://covid19.ruta88.net/COVID/Multimedia/srvMultimedia.svc/ListaMultimediasPorInstitucion';
+final String primaryKeyTodosGruposProfesionales =
+    '_DevuelveTodosGrupoProfesionalesResult';
+String urlGetTodosGruposProfesionales =
+    'http://covid19.ruta88.net/COVID/Institucion/srvInstitucion.svc/DevuelveTodosGrupoProfesionales';
+
+
 
 // METODO POST
 final String urlAddBotonPanico =

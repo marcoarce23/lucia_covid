@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
+import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/ListEntity.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
-
+import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 import 'FoundAllVoluntaryModule.dart';
 
 class FoundVoluntaryModule extends StatelessWidget {
@@ -60,7 +62,8 @@ class FoundVoluntaryModule extends StatelessWidget {
 
   Widget futureCuerpoProfesionales(BuildContext context) {
     return FutureBuilder(
-        future: /*generic.getAll(new Hospital())*/ getListaProfesionalesAgrupadosInstitucion(),
+        future: Generic().getAll(new ProfesionalesAgrupados(),
+            urlGetTodosGruposProfesionales, primaryKeyTodosGruposProfesionales),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -89,13 +92,18 @@ class FoundVoluntaryModule extends StatelessWidget {
     return SingleChildScrollView(
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => FoundAllVoluntaryModule(
-                      profesional: profesional,
-                    )),
-          );
+          if (profesional.cantidadProfesionales > 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => FoundAllVoluntaryModule(
+                        profesional: profesional,
+                      )),
+            );
+          } else {
+            Scaffold.of(context).showSnackBar(messageHelp(
+                "Aun no cuenta con miembros en el grupo de ${profesional.profesion}"));
+          }
         },
         child: Container(
           height: 150,
