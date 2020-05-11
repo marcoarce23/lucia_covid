@@ -292,7 +292,7 @@ Future<List<MultimediaDocumentos>> getDocumentosMultimedia() async {
   return lista;
 }
 
-
+/*
 Future<List<EventosItem>> getEventos() async {
   List<EventosItem> lista = new List<EventosItem>();
 
@@ -352,3 +352,4 @@ Future<List<EventosItem>> getEventos() async {
 
   return   lista;
 }
+*/

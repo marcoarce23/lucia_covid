@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
+import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/ListEntity.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
+
+import 'CitizenEventsDetailModule.dart';
 
 String selectedCategorie = "Recomendaciones";
 
@@ -79,7 +83,8 @@ class _CitizenEventsModuleState extends State<CitizenEventsModule> {
 
   Widget futureEvento(BuildContext context) {
     return FutureBuilder(
-        future: getEventos(),
+        future: Generic().getAll(
+            new EventosItem(), urlGetListaEventos, primaryKeyListaEventos),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -101,16 +106,62 @@ class _CitizenEventsModuleState extends State<CitizenEventsModule> {
           itemCount: snapshot.data.length,
           itemBuilder: (context, index) {
             EventosItem item = snapshot.data[index];
-            return noticia(item.titulo, item.objetivo, item.url,
-                item.fechaYhora, item.institucion, item.voluntario);
+            return noticia(item);
           }),
     );
   }
 
-  Widget noticia(String titulo, String objetivo, String url,
-      DateTime fechaYhora, String institucion, String voluntario) {
+  Widget noticia(EventosItem eventoItem) {
+    DateTime tempDate = new DateFormat("dd/MM/yyyy").parse(eventoItem.fecha);
+
+    String mes;
+    switch (tempDate.month) {
+      case 1:
+        mes = "Ene";
+        break;
+      case 2:
+        mes = "Feb";
+        break;
+      case 3:
+        mes = "Mar";
+        break;
+      case 4:
+        mes = "Abr";
+        break;
+      case 5:
+        mes = "May";
+        break;
+      case 6:
+        mes = "Jun";
+        break;
+      case 7:
+        mes = "Jul";
+        break;
+      case 8:
+        mes = "Ago";
+        break;
+      case 9:
+        mes = "Sep";
+        break;
+      case 10:
+        mes = "Oct";
+        break;
+      case 11:
+        mes = "Nov";
+        break;
+      case 12:
+        mes = "Dic";
+        break;
+    }
+
     return InkWell(
-      onTap: () {       
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CitizenEventsDetailModule(
+                      eventosItem: eventoItem,
+                    )));
       },
       child: Container(
         height: 100,
@@ -120,8 +171,8 @@ class _CitizenEventsModuleState extends State<CitizenEventsModule> {
         child: Stack(
           children: <Widget>[
             ImageOpaqueNetworkCustomize(
-                url,
-                AppTheme.themeColorVerde  ,
+                eventoItem.url,
+                AppTheme.themeColorVerde,
                 Size(MediaQuery.of(context).size.width, 100),
                 0.5,
                 BoxFit.cover),
@@ -134,21 +185,21 @@ class _CitizenEventsModuleState extends State<CitizenEventsModule> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      new DateFormat("dd").format(fechaYhora),
+                      new DateFormat("dd").format(tempDate),
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 30,
                           fontWeight: FontWeight.w900),
                     ),
                     Text(
-                      new DateFormat("MMM").format(fechaYhora),
+                      mes,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 24,
                           fontWeight: FontWeight.w900),
                     ),
                     Text(
-                      new DateFormat("HH:mm").format(fechaYhora),
+                      eventoItem.hora,
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ],
@@ -162,7 +213,7 @@ class _CitizenEventsModuleState extends State<CitizenEventsModule> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          titulo,
+                          eventoItem.titulo,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
@@ -172,7 +223,7 @@ class _CitizenEventsModuleState extends State<CitizenEventsModule> {
                           height: 8,
                         ),
                         Text(
-                          objetivo,
+                          eventoItem.objetivo,
                           style: TextStyle(color: Colors.white, fontSize: 14),
                         ),
                         SizedBox(
@@ -182,13 +233,13 @@ class _CitizenEventsModuleState extends State<CitizenEventsModule> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(
-                              "Institucion: $objetivo",
+                              "Institucion: " + eventoItem.institucion,
                               style:
                                   TextStyle(color: Colors.white, fontSize: 12),
                             ),
-                            voluntario.length > 0
+                            eventoItem.voluntario.length > 0
                                 ? Text(
-                                    "Institucion: $voluntario",
+                                    "Expositor: " + eventoItem.expositor,
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 12),
                                   )

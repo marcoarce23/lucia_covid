@@ -983,47 +983,41 @@ class InstitucionesItems extends Entity {
       };
 }
 
-
-
 class ListaMultimedia extends Entity {
   String categoria;
-    int idaCategoria;
-    int idcovInstitucion;
-    int idcovMultimedia;
-    String insNombreinstitucion;
-    String mulEnlace;
-    String mulFechafin;
-    String mulFechainicio;
-    String mulResumen;
-    String mulTitulo; 
+  int idaCategoria;
+  int idcovInstitucion;
+  int idcovMultimedia;
+  String insNombreinstitucion;
+  String mulEnlace;
+  String mulFechafin;
+  String mulFechainicio;
+  String mulResumen;
+  String mulTitulo;
 
-   ListaMultimedia({
-        this.categoria,
-        this.idaCategoria,
-        this.idcovInstitucion,
-        this.idcovMultimedia,
-        this.insNombreinstitucion,
-        this.mulEnlace,
-        this.mulFechafin,
-        this.mulFechainicio,
-        this.mulResumen,
-        this.mulTitulo
-    });
-
-
+  ListaMultimedia(
+      {this.categoria,
+      this.idaCategoria,
+      this.idcovInstitucion,
+      this.idcovMultimedia,
+      this.insNombreinstitucion,
+      this.mulEnlace,
+      this.mulFechafin,
+      this.mulFechainicio,
+      this.mulResumen,
+      this.mulTitulo});
 
   fromJson(Map<String, dynamic> json) => new ListaMultimedia(
-       categoria: json["CATEGORIA"],
-        idaCategoria: json["IDA_CATEGORIA"],
-        idcovInstitucion: json["IDCOV_INSTITUCION"],
-        idcovMultimedia: json["IDCOV_MULTIMEDIA"],
-        insNombreinstitucion: json["INS_NOMBREINSTITUCION"],
-        mulEnlace: json["MUL_ENLACE"],
-        mulFechafin: json["MUL_FECHAFIN"],
-        mulFechainicio: json["MUL_FECHAINICIO"],
-        mulResumen: json["MUL_RESUMEN"],
-        mulTitulo: json["MUL_TITULO"]
-  );
+      categoria: json["CATEGORIA"],
+      idaCategoria: json["IDA_CATEGORIA"],
+      idcovInstitucion: json["IDCOV_INSTITUCION"],
+      idcovMultimedia: json["IDCOV_MULTIMEDIA"],
+      insNombreinstitucion: json["INS_NOMBREINSTITUCION"],
+      mulEnlace: json["MUL_ENLACE"],
+      mulFechafin: json["MUL_FECHAFIN"],
+      mulFechainicio: json["MUL_FECHAINICIO"],
+      mulResumen: json["MUL_RESUMEN"],
+      mulTitulo: json["MUL_TITULO"]);
 
   Map<String, dynamic> toJson() => {
         "CATEGORIA": categoria,
@@ -1038,7 +1032,6 @@ class ListaMultimedia extends Entity {
         "MUL_TITULO": mulTitulo
       };
 }
-
 
 class MultimediaImagen extends Entity {
   int idInstitucion;
@@ -1109,11 +1102,18 @@ class MultimediaDocumentos extends Entity {
 
 class EventosItem extends Entity {
   String institucion;
+
   String voluntario;
   String titulo;
   String objetivo;
   String url;
-  DateTime fechaYhora;
+  int idInstitucion;
+  int idPersonal;
+  String dirigidoA;
+  String expositor;
+  String ubicacion;
+  String fecha;
+  String hora;
 
   EventosItem(
       {this.institucion,
@@ -1121,22 +1121,40 @@ class EventosItem extends Entity {
       this.titulo,
       this.objetivo,
       this.url,
-      this.fechaYhora});
+      this.idInstitucion,
+      this.idPersonal,
+      this.dirigidoA,
+      this.expositor,
+      this.ubicacion,
+      this.fecha,
+      this.hora});
 
   fromJson(Map<String, dynamic> json) => new EventosItem(
-      institucion: json["idInstitucion"],
-      voluntario: json["idVoluntario"],
-      titulo: json["titulo"],
-      url: json["url"],
-      objetivo: json["objetivo"],
-      fechaYhora: json["fechaYhora"]);
+      institucion: json["INS_NOMBREINSTITUCION"],
+      voluntario: json["EVE_EXPOSITOR"],
+      titulo: json["EVE_TITULO"],
+      url: json["EVE_FOTO"],
+      idInstitucion: json["IDCOV_INSTITUCION"],
+      idPersonal: json["IDCOV_PERSONAL"],
+      dirigidoA: json["EVE_DIRIGIDOA"],
+      expositor: json["EVE_EXPOSITOR"],
+      ubicacion: json["EVE_UBICACION"],
+      fecha: json["EVE_FECHA"],
+      hora: json["EVE_HORA"],
+      objetivo: json["EVE_OBJETIVO"]);
 
   Map<String, dynamic> toJson() => {
-        "idInstitucion": institucion,
-        "idVoluntario": voluntario,
-        "url": url,
-        "titulo": titulo,
-        "objetivo": objetivo,
-        "fechaYhor": fechaYhora
+        "INS_NOMBREINSTITUCION": institucion,
+        "EVE_EXPOSITOR": voluntario,
+        "EVE_FOTO": url,
+        "IDCOV_INSTITUCION": idInstitucion,
+        "IDCOV_PERSONAL": idPersonal,
+        "EVE_DIRIGIDOA": dirigidoA,
+        "EVE_EXPOSITOR": expositor,
+        "EVE_UBICACION": ubicacion,
+        "EVE_FECHA": fecha,
+        "EVE_HORA": hora,
+        "EVE_TITULO": titulo,
+        "EVE_OBJETIVO": objetivo
       };
 }

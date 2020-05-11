@@ -97,6 +97,12 @@ String urlGetTodosGruposProfesionales =
     'http://covid19.ruta88.net/COVID/Institucion/srvInstitucion.svc/DevuelveTodosGrupoProfesionales';
 
 
+final String primaryKeyListaEventos =
+    '_DevuelveListaEventosResult';
+String urlGetListaEventos =
+    'http://covid19.ruta88.net/COVID/Evento/srvEvento.svc/ListaEventos';
+
+
 
 // METODO POST
 final String urlAddBotonPanico =
