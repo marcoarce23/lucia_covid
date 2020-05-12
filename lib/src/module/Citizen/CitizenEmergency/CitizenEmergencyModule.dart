@@ -35,8 +35,7 @@ class _CitizenEmergencyModuleState extends State<CitizenEmergencyModule> {
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
-              iconTheme:
-                  IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+              iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
               elevation: 0,
               title: Text(
                 "Solicitudes de ayuda",
@@ -45,7 +44,7 @@ class _CitizenEmergencyModuleState extends State<CitizenEmergencyModule> {
                     fontSize: 17,
                     fontWeight: FontWeight.w400),
               ),
-              //backgroundColor: AppTheme.themeColorNaranja,
+              //backgroundColor: colorCuadro,
             ),
             drawer: DrawerCitizen(),
             // backgroundColor: Colors.red,
@@ -70,7 +69,7 @@ class _CitizenEmergencyModuleState extends State<CitizenEmergencyModule> {
                 ),
               ],
               currentIndex: page,
-              unselectedItemColor: Colors.black54,
+              unselectedItemColor: Colors.black,
               selectedItemColor: Colors.amber[800],
               onTap: _onItemTapped,
             )));
@@ -106,7 +105,7 @@ class _PageMedicinaState extends State<PageMedicina> {
         ),
       ),
     );
-    //backgroundColor: AppTheme.themeColorNaranja,
+    //backgroundColor: colorCuadro,
   }
 
   Widget futureMedicamentoss(BuildContext context) {
@@ -159,9 +158,14 @@ class _PageMedicinaState extends State<PageMedicina> {
   Container contenidoFinal(
       BuildContext context, SolicitudAyuda solicitudAyuda) {
     return Container(
+       decoration: BoxDecoration(
+          color: Color.fromRGBO(191, 191, 191, 0.55),
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(25.0), bottomRight: Radius.circular(25.0))),
       width: MediaQuery.of(context).size.width,
       height: 50,
-      color: Colors.blue,
+      
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
@@ -170,17 +174,17 @@ class _PageMedicinaState extends State<PageMedicina> {
               children: <Widget>[
                 FaIcon(
                   FontAwesomeIcons.checkCircle,
-                  color: Colors.white,
+                  color: Colors.blue,
                   size: 25,
                 ),
                 Text(
                   "Atender",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.blue),
                 )
               ],
             ),
             onTap: () {
-              _submit(context, solicitudAyuda);
+              _submitMedicamentosAtender(context, solicitudAyuda);
             },
           ),
           SizedBox(
@@ -191,14 +195,16 @@ class _PageMedicinaState extends State<PageMedicina> {
               InkWell(
                 child: FaIcon(
                   FontAwesomeIcons.handshake,
-                  color: Colors.white,
+                  color: Colors.blue,
                   size: 25,
                 ),
-                onTap: () {},
+                onTap: () {
+                  _submitMedicamentosConcluido(context, solicitudAyuda);
+                },
               ),
               Text(
                 "Concluido",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.blue),
               )
             ],
           )
@@ -207,7 +213,33 @@ class _PageMedicinaState extends State<PageMedicina> {
     );
   }
 
-  _submit(BuildContext context, SolicitudAyuda solicitudAyuda) async {
+  _submitMedicamentosConcluido(
+      BuildContext context, SolicitudAyuda solicitudAyuda) async {
+    registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
+    registrarAyuda.idaPersonal = 1006;
+    registrarAyuda.fecha =
+        DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
+    registrarAyuda.idaEstado = 79; // en concluido
+    registrarAyuda.usuario = "coavchristian@hotmail.com";
+
+    final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
+    var result;
+    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+    if (result == "0") {
+      setState(() {
+        Scaffold.of(context)
+            .showSnackBar(messageOk("Se concluyo la solicitud"));
+      });
+    } else {
+      Scaffold.of(context)
+          .showSnackBar(messageNOk("Ocurrio un error inseperado"));
+    }
+
+    print('resultado:$result');
+  }
+
+  _submitMedicamentosAtender(
+      BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
     registrarAyuda.idaPersonal = 1006;
     registrarAyuda.fecha =
@@ -234,20 +266,46 @@ class _PageMedicinaState extends State<PageMedicina> {
   Container contenidoCabecera(
       BuildContext context, DateTime tempDate, SolicitudAyuda solicitudAyuda) {
     Color colorCuadro;
+    String detallePrioridad;
     if (solicitudAyuda.idaPrioridad == 68) {
       colorCuadro = AppTheme.themeColorRojo;
+      detallePrioridad = "Muy alta";
     } else if (solicitudAyuda.idaPrioridad == 69) {
       colorCuadro = AppTheme.themeColorNaranja;
+      detallePrioridad = "Alta";
     } else {
       colorCuadro = AppTheme.themeColorVerde;
+      detallePrioridad = "Media";
     }
 
     return Container(
+      decoration: BoxDecoration(
+          color: Color.fromRGBO(191, 191, 191, 0.15),
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25.0), topRight: Radius.circular(25.0))),
+
       width: MediaQuery.of(context).size.width,
       height: 70,
-      color: colorCuadro,
+      //color: colorCuadro,
       child: Row(
         children: <Widget>[
+          Column(
+            children: <Widget>[
+              FaIcon(
+                FontAwesomeIcons.eye,
+                color: colorCuadro,
+                size: 30,
+              ),
+              Text(
+                detallePrioridad,
+                style: TextStyle(
+                    fontSize: 12,
+                    color: colorCuadro,
+                    fontWeight: FontWeight.w800),
+              ),
+            ],
+          ),
           SizedBox(
             width: 5,
           ),
@@ -258,16 +316,16 @@ class _PageMedicinaState extends State<PageMedicina> {
               Text(
                 new DateFormat("dd/MM/yyyy").format(tempDate),
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w800),
+                  color: colorCuadro,
+                  fontSize: 14,
+                ),
               ),
               Text(
                 new DateFormat("HH:mm").format(tempDate),
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w800),
+                  color: colorCuadro,
+                  fontSize: 14,
+                ),
               ),
             ],
           ),
@@ -282,7 +340,7 @@ class _PageMedicinaState extends State<PageMedicina> {
                 Text(
                   "Detalle:",
                   style: TextStyle(
-                      color: Colors.white,
+                      color: colorCuadro,
                       fontSize: 14,
                       fontWeight: FontWeight.w800),
                 ),
@@ -290,7 +348,7 @@ class _PageMedicinaState extends State<PageMedicina> {
                   overflow: TextOverflow.clip,
                   text: TextSpan(
                     text: solicitudAyuda.detalle,
-                    style: TextStyle(fontSize: 14, color: Colors.white),
+                    style: TextStyle(fontSize: 14, color: colorCuadro),
                   ),
                 ),
               ],
@@ -306,7 +364,7 @@ class _PageMedicinaState extends State<PageMedicina> {
               InkWell(
                 child: FaIcon(
                   FontAwesomeIcons.phoneVolume,
-                  color: Colors.white,
+                  color: colorCuadro,
                   size: 25,
                 ),
                 onTap: () {
@@ -319,12 +377,15 @@ class _PageMedicinaState extends State<PageMedicina> {
               InkWell(
                 child: FaIcon(
                   FontAwesomeIcons.comment,
-                  color: Colors.white,
+                  color: colorCuadro,
                   size: 25,
                 ),
                 onTap: () {
                   sendSMS(solicitudAyuda.telefono);
                 },
+              ),
+              SizedBox(
+                width: 10,
               )
             ],
           ),
@@ -334,8 +395,14 @@ class _PageMedicinaState extends State<PageMedicina> {
   }
 }
 
-class PageCovid extends StatelessWidget {
-  const PageCovid({Key key}) : super(key: key);
+class PageCovid extends StatefulWidget {
+  @override
+  _PageCovidState createState() => _PageCovidState();
+}
+
+class _PageCovidState extends State<PageCovid> {
+  final generic = new Generic();
+  RegistrarAyuda registrarAyuda = new RegistrarAyuda();
 
   @override
   Widget build(BuildContext context) {
@@ -356,7 +423,7 @@ class PageCovid extends StatelessWidget {
         ),
       ),
     );
-    //backgroundColor: AppTheme.themeColorNaranja,
+    //backgroundColor: colorCuadro,
   }
 
   Widget futureCovid(BuildContext context) {
@@ -400,17 +467,23 @@ class PageCovid extends StatelessWidget {
       child: Column(
         children: <Widget>[
           contenidoCabecera(context, tempDate, solicitudAyuda),
-          contenidoFinal(context),
+          contenidoFinal(context, solicitudAyuda),
         ],
       ),
     );
   }
 
-  Container contenidoFinal(BuildContext context) {
+  Container contenidoFinal(
+      BuildContext context, SolicitudAyuda solicitudAyuda) {
     return Container(
+       decoration: BoxDecoration(
+          color: Color.fromRGBO(191, 191, 191, 0.55),
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(25.0), bottomRight: Radius.circular(25.0))),
       width: MediaQuery.of(context).size.width,
       height: 50,
-      color: Colors.blue,
+      
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
@@ -419,16 +492,18 @@ class PageCovid extends StatelessWidget {
               children: <Widget>[
                 FaIcon(
                   FontAwesomeIcons.checkCircle,
-                  color: Colors.white,
+                  color: Colors.blue,
                   size: 25,
                 ),
                 Text(
                   "Atender",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.blue),
                 )
               ],
             ),
-            onTap: () {},
+            onTap: () {
+              _submitCovidAtender(context, solicitudAyuda);
+            },
           ),
           SizedBox(
             width: 5,
@@ -438,14 +513,16 @@ class PageCovid extends StatelessWidget {
               InkWell(
                 child: FaIcon(
                   FontAwesomeIcons.handshake,
-                  color: Colors.white,
+                  color: Colors.blue,
                   size: 25,
                 ),
-                onTap: () {},
+                onTap: () {
+                  _submitCovidConcluido(context, solicitudAyuda);
+                },
               ),
               Text(
                 "Concluido",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.blue),
               )
             ],
           )
@@ -454,23 +531,101 @@ class PageCovid extends StatelessWidget {
     );
   }
 
+  _submitCovidConcluido(
+      BuildContext context, SolicitudAyuda solicitudAyuda) async {
+    registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
+    registrarAyuda.idaPersonal = 1006;
+    registrarAyuda.fecha =
+        DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
+    registrarAyuda.idaEstado = 79; // en concluido
+    registrarAyuda.usuario = "coavchristian@hotmail.com";
+
+    final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
+    var result;
+    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+    if (result == "0") {
+      setState(() {
+        Scaffold.of(context)
+            .showSnackBar(messageOk("Se concluyo la solicitud"));
+      });
+    } else {
+      Scaffold.of(context)
+          .showSnackBar(messageNOk("Ocurrio un error inseperado"));
+    }
+
+    print('resultado:$result');
+  }
+
+  _submitCovidAtender(
+      BuildContext context, SolicitudAyuda solicitudAyuda) async {
+    registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
+    registrarAyuda.idaPersonal = 1006;
+    registrarAyuda.fecha =
+        DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
+    registrarAyuda.idaEstado = 78; // en cursoF
+    registrarAyuda.usuario = "coavchristian@hotmail.com";
+
+    final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
+    var result;
+    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+    if (result == "0") {
+      setState(() {
+        Scaffold.of(context)
+            .showSnackBar(messageOk("Se puso en atención su solicitud"));
+      });
+    } else {
+      Scaffold.of(context)
+          .showSnackBar(messageNOk("Ocurrio un error inseperado"));
+    }
+
+    print('resultado:$result');
+  }
+
   Container contenidoCabecera(
       BuildContext context, DateTime tempDate, SolicitudAyuda solicitudAyuda) {
-    Color colorCuadro;
+ Color colorCuadro;
+    String detallePrioridad;
     if (solicitudAyuda.idaPrioridad == 68) {
       colorCuadro = AppTheme.themeColorRojo;
+      detallePrioridad = "Muy alta";
     } else if (solicitudAyuda.idaPrioridad == 69) {
       colorCuadro = AppTheme.themeColorNaranja;
+      detallePrioridad = "Alta";
     } else {
       colorCuadro = AppTheme.themeColorVerde;
+      detallePrioridad = "Media";
     }
 
     return Container(
+       decoration: BoxDecoration(
+          color: Color.fromRGBO(191, 191, 191, 0.15),
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25.0), topRight: Radius.circular(25.0))),
       width: MediaQuery.of(context).size.width,
       height: 70,
-      color: colorCuadro,
+      
       child: Row(
         children: <Widget>[
+          
+          
+  Column(
+            children: <Widget>[
+              FaIcon(
+                FontAwesomeIcons.eye,
+                color: colorCuadro,
+                size: 30,
+              ),
+              Text(
+                detallePrioridad,
+                style: TextStyle(
+                    fontSize: 12,
+                    color: colorCuadro,
+                    fontWeight: FontWeight.w800),
+              ),
+            ],
+          ),
+
           SizedBox(
             width: 5,
           ),
@@ -481,14 +636,14 @@ class PageCovid extends StatelessWidget {
               Text(
                 new DateFormat("dd/MM/yyyy").format(tempDate),
                 style: TextStyle(
-                    color: Colors.white,
+                    color: colorCuadro,
                     fontSize: 14,
                     fontWeight: FontWeight.w800),
               ),
               Text(
                 new DateFormat("HH:mm").format(tempDate),
                 style: TextStyle(
-                    color: Colors.white,
+                    color: colorCuadro,
                     fontSize: 14,
                     fontWeight: FontWeight.w800),
               ),
@@ -505,7 +660,7 @@ class PageCovid extends StatelessWidget {
                 Text(
                   "Detalle:",
                   style: TextStyle(
-                      color: Colors.white,
+                      color: colorCuadro,
                       fontSize: 14,
                       fontWeight: FontWeight.w800),
                 ),
@@ -513,7 +668,7 @@ class PageCovid extends StatelessWidget {
                   overflow: TextOverflow.clip,
                   text: TextSpan(
                     text: solicitudAyuda.detalle,
-                    style: TextStyle(fontSize: 14, color: Colors.white),
+                    style: TextStyle(fontSize: 14, color: colorCuadro),
                   ),
                 ),
               ],
@@ -529,7 +684,7 @@ class PageCovid extends StatelessWidget {
               InkWell(
                 child: FaIcon(
                   FontAwesomeIcons.phoneVolume,
-                  color: Colors.white,
+                  color: colorCuadro,
                   size: 25,
                 ),
                 onTap: () {
@@ -542,7 +697,7 @@ class PageCovid extends StatelessWidget {
               InkWell(
                 child: FaIcon(
                   FontAwesomeIcons.comment,
-                  color: Colors.white,
+                  color: colorCuadro,
                   size: 25,
                 ),
                 onTap: () {
@@ -551,14 +706,22 @@ class PageCovid extends StatelessWidget {
               )
             ],
           ),
+           SizedBox ( width:10),
         ],
       ),
     );
   }
 }
 
-class PageMedicmanetos extends StatelessWidget {
-  const PageMedicmanetos({Key key}) : super(key: key);
+class PageMedicmanetos extends StatefulWidget {
+  @override
+  _PageMedicmanetosState createState() => _PageMedicmanetosState();
+}
+
+class _PageMedicmanetosState extends State<PageMedicmanetos> {
+  final generic = new Generic();
+
+  RegistrarAyuda registrarAyuda = new RegistrarAyuda();
 
   @override
   Widget build(BuildContext context) {
@@ -570,19 +733,19 @@ class PageMedicmanetos extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "Listado de solicitudes para ayuda con Medicamentos",
+                "Listado de solicitudes para ayuda con MEDICAMENTOS",
                 style: AppTheme.themeTitulo,
               ),
-              futureMedicamentos(context),
+              future(context),
             ],
           ),
         ),
       ),
     );
-    //backgroundColor: AppTheme.themeColorNaranja,
+    //backgroundColor: colorCuadro,
   }
 
-  Widget futureMedicamentos(BuildContext context) {
+  Widget future(BuildContext context) {
     return FutureBuilder(
         future: Generic().getAll(
             new SolicitudAyuda(),
@@ -623,17 +786,23 @@ class PageMedicmanetos extends StatelessWidget {
       child: Column(
         children: <Widget>[
           contenidoCabecera(context, tempDate, solicitudAyuda),
-          contenidoFinal(context),
+          contenidoFinal(context, solicitudAyuda),
         ],
       ),
     );
   }
 
-  Container contenidoFinal(BuildContext context) {
+  Container contenidoFinal(
+      BuildContext context, SolicitudAyuda solicitudAyuda) {
     return Container(
+       decoration: BoxDecoration(
+          color: Color.fromRGBO(191, 191, 191, 0.55),
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(25.0), bottomRight: Radius.circular(25.0))),
       width: MediaQuery.of(context).size.width,
       height: 50,
-      color: Colors.blue,
+      
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
@@ -642,16 +811,18 @@ class PageMedicmanetos extends StatelessWidget {
               children: <Widget>[
                 FaIcon(
                   FontAwesomeIcons.checkCircle,
-                  color: Colors.white,
+                  color: Colors.blue,
                   size: 25,
                 ),
                 Text(
                   "Atender",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.blue),
                 )
               ],
             ),
-            onTap: () {},
+            onTap: () {
+              _submitAtender(context, solicitudAyuda);
+            },
           ),
           SizedBox(
             width: 5,
@@ -661,14 +832,16 @@ class PageMedicmanetos extends StatelessWidget {
               InkWell(
                 child: FaIcon(
                   FontAwesomeIcons.handshake,
-                  color: Colors.white,
+                  color: Colors.blue,
                   size: 25,
                 ),
-                onTap: () {},
+                onTap: () {
+                  _submitConcluido(context, solicitudAyuda);
+                },
               ),
               Text(
                 "Concluido",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.blue),
               )
             ],
           )
@@ -677,23 +850,99 @@ class PageMedicmanetos extends StatelessWidget {
     );
   }
 
-  Container contenidoCabecera(
-      BuildContext context, DateTime tempDate, SolicitudAyuda solicitudAyuda) {
-    Color colorCuadro;
-    if (solicitudAyuda.idaPrioridad == 68) {
-      colorCuadro = AppTheme.themeColorRojo;
-    } else if (solicitudAyuda.idaPrioridad == 69) {
-      colorCuadro = AppTheme.themeColorNaranja;
+  _submitConcluido(BuildContext context, SolicitudAyuda solicitudAyuda) async {
+    registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
+    registrarAyuda.idaPersonal = 1006;
+    registrarAyuda.fecha =
+        DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
+    registrarAyuda.idaEstado = 79; // en concluido
+    registrarAyuda.usuario = "coavchristian@hotmail.com";
+
+    final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
+    var result;
+    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+    if (result == "0") {
+      setState(() {
+        Scaffold.of(context)
+            .showSnackBar(messageOk("Se concluyo la solicitud"));
+      });
     } else {
-      colorCuadro = AppTheme.themeColorVerde;
+      Scaffold.of(context)
+          .showSnackBar(messageNOk("Ocurrio un error inseperado"));
     }
 
+    print('resultado:$result');
+  }
+
+  _submitAtender(BuildContext context, SolicitudAyuda solicitudAyuda) async {
+    registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
+    registrarAyuda.idaPersonal = 1006;
+    registrarAyuda.fecha =
+        DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
+    registrarAyuda.idaEstado = 78; // en cursoF
+    registrarAyuda.usuario = "coavchristian@hotmail.com";
+
+    final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
+    var result;
+    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+    if (result == "0") {
+      setState(() {
+        Scaffold.of(context)
+            .showSnackBar(messageOk("Se puso en atención su solicitud"));
+      });
+    } else {
+      Scaffold.of(context)
+          .showSnackBar(messageNOk("Ocurrio un error inseperado"));
+    }
+
+    print('resultado:$result');
+  }
+
+  Container contenidoCabecera(
+      BuildContext context, DateTime tempDate, SolicitudAyuda solicitudAyuda) {
+ Color colorCuadro;
+    String detallePrioridad;
+    if (solicitudAyuda.idaPrioridad == 68) {
+      colorCuadro = AppTheme.themeColorRojo;
+      detallePrioridad = "Muy alta";
+    } else if (solicitudAyuda.idaPrioridad == 69) {
+      colorCuadro = AppTheme.themeColorNaranja;
+      detallePrioridad = "Alta";
+    } else {
+      colorCuadro = AppTheme.themeColorVerde;
+      detallePrioridad = "Media";
+    }
+
+
     return Container(
+       decoration: BoxDecoration(
+          color: Color.fromRGBO(191, 191, 191, 0.15),
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25.0), topRight: Radius.circular(25.0))),
       width: MediaQuery.of(context).size.width,
       height: 70,
-      color: colorCuadro,
+      
       child: Row(
         children: <Widget>[
+          
+  Column(
+            children: <Widget>[
+              FaIcon(
+                FontAwesomeIcons.eye,
+                color: colorCuadro,
+                size: 30,
+              ),
+              Text(
+                detallePrioridad,
+                style: TextStyle(
+                    fontSize: 12,
+                    color: colorCuadro,
+                    fontWeight: FontWeight.w800),
+              ),
+            ],
+          ),
+
           SizedBox(
             width: 5,
           ),
@@ -704,14 +953,14 @@ class PageMedicmanetos extends StatelessWidget {
               Text(
                 new DateFormat("dd/MM/yyyy").format(tempDate),
                 style: TextStyle(
-                    color: Colors.white,
+                    color: colorCuadro,
                     fontSize: 14,
                     fontWeight: FontWeight.w800),
               ),
               Text(
                 new DateFormat("HH:mm").format(tempDate),
                 style: TextStyle(
-                    color: Colors.white,
+                    color: colorCuadro,
                     fontSize: 14,
                     fontWeight: FontWeight.w800),
               ),
@@ -728,7 +977,7 @@ class PageMedicmanetos extends StatelessWidget {
                 Text(
                   "Detalle:",
                   style: TextStyle(
-                      color: Colors.white,
+                      color: colorCuadro,
                       fontSize: 14,
                       fontWeight: FontWeight.w800),
                 ),
@@ -736,7 +985,7 @@ class PageMedicmanetos extends StatelessWidget {
                   overflow: TextOverflow.clip,
                   text: TextSpan(
                     text: solicitudAyuda.detalle,
-                    style: TextStyle(fontSize: 14, color: Colors.white),
+                    style: TextStyle(fontSize: 14, color: colorCuadro),
                   ),
                 ),
               ],
@@ -752,7 +1001,7 @@ class PageMedicmanetos extends StatelessWidget {
               InkWell(
                 child: FaIcon(
                   FontAwesomeIcons.phoneVolume,
-                  color: Colors.white,
+                  color: colorCuadro,
                   size: 25,
                 ),
                 onTap: () {
@@ -765,7 +1014,7 @@ class PageMedicmanetos extends StatelessWidget {
               InkWell(
                 child: FaIcon(
                   FontAwesomeIcons.comment,
-                  color: Colors.white,
+                  color: colorCuadro,
                   size: 25,
                 ),
                 onTap: () {
@@ -774,14 +1023,22 @@ class PageMedicmanetos extends StatelessWidget {
               )
             ],
           ),
+          SizedBox(width: 10,)
         ],
       ),
     );
   }
 }
 
-class PageBonos extends StatelessWidget {
-  const PageBonos({Key key}) : super(key: key);
+class PageBonos extends StatefulWidget {
+  @override
+  _PageBonosState createState() => _PageBonosState();
+}
+
+class _PageBonosState extends State<PageBonos> {
+  final generic = new Generic();
+
+  RegistrarAyuda registrarAyuda = new RegistrarAyuda();
 
   @override
   Widget build(BuildContext context) {
@@ -802,7 +1059,7 @@ class PageBonos extends StatelessWidget {
         ),
       ),
     );
-    //backgroundColor: AppTheme.themeColorNaranja,
+    //backgroundColor: colorCuadro,
   }
 
   Widget futureBonos(BuildContext context) {
@@ -846,17 +1103,23 @@ class PageBonos extends StatelessWidget {
       child: Column(
         children: <Widget>[
           contenidoCabecera(context, tempDate, solicitudAyuda),
-          contenidoFinal(context),
+          contenidoFinal(context, solicitudAyuda),
         ],
       ),
     );
   }
 
-  Container contenidoFinal(BuildContext context) {
+  Container contenidoFinal(
+      BuildContext context, SolicitudAyuda solicitudAyuda) {
     return Container(
+       decoration: BoxDecoration(
+          color: Color.fromRGBO(191, 191, 191, 0.55),
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(25.0), bottomRight: Radius.circular(25.0))),
       width: MediaQuery.of(context).size.width,
       height: 50,
-      color: Colors.blue,
+      
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
@@ -865,16 +1128,18 @@ class PageBonos extends StatelessWidget {
               children: <Widget>[
                 FaIcon(
                   FontAwesomeIcons.checkCircle,
-                  color: Colors.white,
+                  color: Colors.blue,
                   size: 25,
                 ),
                 Text(
                   "Atender",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.blue),
                 )
               ],
             ),
-            onTap: () {},
+            onTap: () {
+              _submitMedicamentosAtender(context, solicitudAyuda);
+            },
           ),
           SizedBox(
             width: 5,
@@ -884,14 +1149,16 @@ class PageBonos extends StatelessWidget {
               InkWell(
                 child: FaIcon(
                   FontAwesomeIcons.handshake,
-                  color: Colors.white,
+                  color: Colors.blue,
                   size: 25,
                 ),
-                onTap: () {},
+                onTap: () {
+                  _submitMedicamentosConcluido(context, solicitudAyuda);
+                },
               ),
               Text(
                 "Concluido",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.blue),
               )
             ],
           )
@@ -900,23 +1167,99 @@ class PageBonos extends StatelessWidget {
     );
   }
 
-  Container contenidoCabecera(
-      BuildContext context, DateTime tempDate, SolicitudAyuda solicitudAyuda) {
-    Color colorCuadro;
-    if (solicitudAyuda.idaPrioridad == 68) {
-      colorCuadro = AppTheme.themeColorRojo;
-    } else if (solicitudAyuda.idaPrioridad == 69) {
-      colorCuadro = AppTheme.themeColorNaranja;
+  _submitMedicamentosConcluido(
+      BuildContext context, SolicitudAyuda solicitudAyuda) async {
+    registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
+    registrarAyuda.idaPersonal = 1006;
+    registrarAyuda.fecha =
+        DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
+    registrarAyuda.idaEstado = 79; // en concluido
+    registrarAyuda.usuario = "coavchristian@hotmail.com";
+
+    final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
+    var result;
+    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+    if (result == "0") {
+      setState(() {
+        Scaffold.of(context)
+            .showSnackBar(messageOk("Se concluyo la solicitud"));
+      });
     } else {
-      colorCuadro = AppTheme.themeColorVerde;
+      Scaffold.of(context)
+          .showSnackBar(messageNOk("Ocurrio un error inseperado"));
     }
 
+    print('resultado:$result');
+  }
+
+  _submitMedicamentosAtender(
+      BuildContext context, SolicitudAyuda solicitudAyuda) async {
+    registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
+    registrarAyuda.idaPersonal = 1006;
+    registrarAyuda.fecha =
+        DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
+    registrarAyuda.idaEstado = 78; // en cursoF
+    registrarAyuda.usuario = "coavchristian@hotmail.com";
+
+    final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
+    var result;
+    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+    if (result == "0") {
+      setState(() {
+        Scaffold.of(context)
+            .showSnackBar(messageOk("Se puso en atención su solicitud"));
+      });
+    } else {
+      Scaffold.of(context)
+          .showSnackBar(messageNOk("Ocurrio un error inseperado"));
+    }
+
+    print('resultado:$result');
+  }
+
+  Container contenidoCabecera(
+      BuildContext context, DateTime tempDate, SolicitudAyuda solicitudAyuda) {
+ Color colorCuadro;
+    String detallePrioridad;
+    if (solicitudAyuda.idaPrioridad == 68) {
+      colorCuadro = AppTheme.themeColorRojo;
+      detallePrioridad = "Muy alta";
+    } else if (solicitudAyuda.idaPrioridad == 69) {
+      colorCuadro = AppTheme.themeColorNaranja;
+      detallePrioridad = "Alta";
+    } else {
+      colorCuadro = AppTheme.themeColorVerde;
+      detallePrioridad = "Media";
+    }
+
+
     return Container(
+       decoration: BoxDecoration(
+          color: Color.fromRGBO(191, 191, 191, 0.15),
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25.0), topRight: Radius.circular(25.0))),
       width: MediaQuery.of(context).size.width,
       height: 70,
-      color: colorCuadro,
+      
       child: Row(
         children: <Widget>[
+            Column(
+            children: <Widget>[
+              FaIcon(
+                FontAwesomeIcons.eye,
+                color: colorCuadro,
+                size: 30,
+              ),
+              Text(
+                detallePrioridad,
+                style: TextStyle(
+                    fontSize: 12,
+                    color: colorCuadro,
+                    fontWeight: FontWeight.w800),
+              ),
+            ],
+          ),
           SizedBox(
             width: 5,
           ),
@@ -927,14 +1270,14 @@ class PageBonos extends StatelessWidget {
               Text(
                 new DateFormat("dd/MM/yyyy").format(tempDate),
                 style: TextStyle(
-                    color: Colors.white,
+                    color: colorCuadro,
                     fontSize: 14,
                     fontWeight: FontWeight.w800),
               ),
               Text(
                 new DateFormat("HH:mm").format(tempDate),
                 style: TextStyle(
-                    color: Colors.white,
+                    color: colorCuadro,
                     fontSize: 14,
                     fontWeight: FontWeight.w800),
               ),
@@ -951,7 +1294,7 @@ class PageBonos extends StatelessWidget {
                 Text(
                   "Detalle:",
                   style: TextStyle(
-                      color: Colors.white,
+                      color: colorCuadro,
                       fontSize: 14,
                       fontWeight: FontWeight.w800),
                 ),
@@ -959,7 +1302,7 @@ class PageBonos extends StatelessWidget {
                   overflow: TextOverflow.clip,
                   text: TextSpan(
                     text: solicitudAyuda.detalle,
-                    style: TextStyle(fontSize: 14, color: Colors.white),
+                    style: TextStyle(fontSize: 14, color: colorCuadro),
                   ),
                 ),
               ],
@@ -975,7 +1318,7 @@ class PageBonos extends StatelessWidget {
               InkWell(
                 child: FaIcon(
                   FontAwesomeIcons.phoneVolume,
-                  color: Colors.white,
+                  color: colorCuadro,
                   size: 25,
                 ),
                 onTap: () {
@@ -988,7 +1331,7 @@ class PageBonos extends StatelessWidget {
               InkWell(
                 child: FaIcon(
                   FontAwesomeIcons.comment,
-                  color: Colors.white,
+                  color: colorCuadro,
                   size: 25,
                 ),
                 onTap: () {
@@ -997,6 +1340,9 @@ class PageBonos extends StatelessWidget {
               )
             ],
           ),
+           SizedBox(
+                width: 10,
+              )
         ],
       ),
     );

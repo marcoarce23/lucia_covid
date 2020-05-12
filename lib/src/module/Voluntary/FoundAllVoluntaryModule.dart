@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/ListEntity.dart';
@@ -80,6 +81,7 @@ class _FoundAllVoluntaryModuleState extends State<FoundAllVoluntaryModule> {
 
   Widget informacionProfesional(BuildContext context,
       ProfesionalesDeInstitucion profesionalesDeInstitucion) {
+    String parametroCovid = profesionalesDeInstitucion.ayudaConCovid;
     return ListTile(
       leading: imagenProfesional(profesionalesDeInstitucion),
       title: Text(profesionalesDeInstitucion.tipoProfesion),
@@ -88,18 +90,70 @@ class _FoundAllVoluntaryModuleState extends State<FoundAllVoluntaryModule> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(profesionalesDeInstitucion.nombreProfesional),
-          crearIconoProfesional(Icons.bug_report, 'Ayuda con covid'),
+          Opacity(
+            opacity: (parametroCovid == "0") ? 0 : 1,
+            child: Row(
+              children: <Widget>[
+                Image.asset(
+                  "assets/image/COVID-19.png",
+                  width: 20,
+                  height: 20,
+                  fit: BoxFit.fill,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  "Ayuda con pacientes COVID",
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
+                )
+              ],
+            ),
+          )
         ],
       ),
       //trailing:crearIconoProfesional(Icons.mail, 'Correo')
-
       trailing: Wrap(
         children: <Widget>[
-          crearIconoProfesional(Icons.mail, 'Correo'),
+          InkWell(
+            child: FaIcon(
+              FontAwesomeIcons.phoneVolume,
+              color: Colors.blue,
+              size: 25,
+            ),
+            onTap: () {
+              callNumber(int.parse(profesionalesDeInstitucion.telefono));
+            },
+          ),
           SizedBox(
             width: 15,
           ),
-          crearIconoProfesional(Icons.phone, 'Correo'),
+          InkWell(
+            child: FaIcon(
+              FontAwesomeIcons.comment,
+              color: Colors.blue,
+              size: 25,
+            ),
+            onTap: () {
+              sendSMS(int.parse(profesionalesDeInstitucion.telefono));
+            },
+          ),
+          SizedBox(
+            width: 15,
+          ),
+          InkWell(
+            child: FaIcon(
+              FontAwesomeIcons.mailBulk,
+              color: Colors.blue,
+              size: 25,
+            ),
+            onTap: () {
+              sendEmailAdvanced(
+                  profesionalesDeInstitucion.correo,
+                  "Colaboración ${profesionalesDeInstitucion.tipoProfesion}",
+                  "Estimad@:  ${profesionalesDeInstitucion.nombreProfesional}, favor su colaboración en: ");
+            },
+          )
         ],
       ),
     );
@@ -140,7 +194,7 @@ class _FoundAllVoluntaryModuleState extends State<FoundAllVoluntaryModule> {
             size: 18,
             color: AppTheme.themeColorAzul,
           ),
-        ),      
+        ),
       ],
     );
   }
