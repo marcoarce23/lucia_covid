@@ -7,7 +7,6 @@ import 'package:lucia_covid/src/module/Citizen/CitizenHelp/CitizenHelpModule.dar
 import 'package:lucia_covid/src/module/Citizen/CitizenHelp/ListCitizenHelpModule.dart';
 import 'package:lucia_covid/src/module/Entity/AtentionEntityodule.dart';
 import 'package:lucia_covid/src/module/Entity/EntityModule.dart';
-import 'package:lucia_covid/src/module/Entity/EventEntityModule.dart';
 import 'package:lucia_covid/src/module/Entity/ListEntityModule.dart';
 import 'package:lucia_covid/src/module/Multimedia/ListMultimediaModule.dart';
 import 'package:lucia_covid/src/module/Multimedia/MultimediaModule.dart';

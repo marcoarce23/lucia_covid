@@ -10,9 +10,8 @@ import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
-import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
+import 'package:lucia_covid/src/module/Login/AgreeLoginModule.dart';
 import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
-import 'package:lucia_covid/src/module/Login/RegisterLoginModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
 import 'package:page_transition/page_transition.dart';
@@ -34,7 +33,7 @@ class _SignUpModuleState extends State<SignUpModule> {
   final formKey = GlobalKey<FormState>();
   final generic = new Generic();
   final prefs = new PreferensUser();
-  LoginSignIn login = new LoginSignIn();
+  LoginSigIn entity = new LoginSigIn();
   String _platformImei = 'Unknown';
   String uniqueId = "Unknown";
   var result;
@@ -83,18 +82,27 @@ class _SignUpModuleState extends State<SignUpModule> {
     try {
       await _googleSignIn.signIn();
 
-      login.id = currentUser.id;
-      login.email = currentUser.email;
-      login.persona = currentUser.displayName;
-      login.avatar = 'currentUser.photoUrl';
-      login.imei = _platformImei;
+      entity.idUsuario = int.parse(currentUser.id);
+      entity.idInstitucion = -1;
+      entity.nombrePersona = currentUser.displayName;
+      entity.nombreInstitucion = '-1';
+      entity.usuario = currentUser.email;
+      entity.avatar =  currentUser.photoUrl;
+      entity.password = contrasenia.objectValue;
+      entity.tokenDispositivo = prefs.token;
+      entity.imei = _platformImei;
 
-      print('iddd:${login.id}');
-      print('IMEI:${login.imei}');
-      final dataMap = generic.add(login, urlAddSignIn);
+      prefs.imei = int.parse(_platformImei);
+prefs.nombreUsuario= currentUser.displayName;
+prefs.correoElectronico = currentUser.email;
+prefs.avatarImagen =  currentUser.photoUrl;
+
+
+      final dataMap = generic.add(entity, urlAddSignIn);
 
       await dataMap.then((x) => result = x["TIPO_RESPUESTA"]);
       print('DDDDD:$result');
+
       if (result == '0')
         Navigator.push(
             context,
@@ -156,7 +164,7 @@ class _SignUpModuleState extends State<SignUpModule> {
                 thickness: 2.0,
               ),
             ),
-            copyRigth(),
+             copyRigth(),
           ],
         ),
       ),
@@ -164,15 +172,24 @@ class _SignUpModuleState extends State<SignUpModule> {
   }
 
   Widget _crearCampos() {
-    correo = InputEmailField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Correo electrónico', '',
+    correo = InputEmailField(FaIcon( FontAwesomeIcons.user, color: Colors.orange ), 'Correo electrónico', '',
         'Ingresar su correo electrónico', 'ej: cuenta@correo.com');
     contrasenia = InputTextPassword(
-        FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Contraseña:', '', 'Ingrese su contraseña');
+        FaIcon( FontAwesomeIcons.expeditedssl, color: Colors.orange ), 'Contraseña:', '', 'Ingrese su contraseña');
     return Column(
       children: <Widget>[
         SizedBox(height: 15.0),
-        Text('Bienvenido a "Lucia Te Cuida."',
-            style: TextStyle(fontSize: 20.0)),
+        Text(
+              'LUCIA TE CUIDA',
+              style: TextStyle(fontSize: 18, color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(width: 5.0),
+            FaIcon(
+              FontAwesomeIcons.keybase,
+              color: Colors.blue,
+              size: 20,
+            ),
         correo,
         contrasenia,
         _crearBoton(resource.signIn),
@@ -216,14 +233,7 @@ class _SignUpModuleState extends State<SignUpModule> {
     );
   }
 
-
-
   void _submit() async {
-    login.id = '0';
-    login.email = correo.objectValue;
-    login.persona = contrasenia.objectValue;
-    login.avatar = currentUser.photoUrl ??
-        'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14046.jpg';
 
     if (!formKey.currentState.validate()) return;
 
@@ -232,18 +242,27 @@ class _SignUpModuleState extends State<SignUpModule> {
       _save = true;
     });
 
-    if (login.email != null) {
+     entity.idUsuario = 0;
+      entity.idInstitucion = 0;
+      entity.nombrePersona = '0';
+      entity.nombreInstitucion = '0';
+      entity.usuario = correo.objectValue;
+      entity.avatar =  '';
+      entity.password = contrasenia.objectValue;
+      entity.tokenDispositivo = prefs.token;
+      entity.imei = _platformImei;
+
+      final dataMap = generic.add(entity, urlAddSignIn);
+
+      await dataMap.then((x) => result = x["TIPO_RESPUESTA"]);
       //   // generic.add(citizen);
-      if (result == '0' && prefs.correoElectronico != '-1')
-        Navigator.push(
-            context,
-            PageTransition(
-              curve: Curves.bounceOut,
-              type: PageTransitionType.rotate,
-              alignment: Alignment.topCenter,
-              child: CitizenLayoutMenuModule(),
-            ));
-      else
+      if (result == '0')
+      {
+        prefs.imei = int.parse(_platformImei);
+        prefs.nombreUsuario= currentUser.displayName;
+        prefs.correoElectronico = currentUser.email;
+        prefs.avatarImagen =  currentUser.photoUrl;
+
         Navigator.push(
             context,
             PageTransition(
@@ -252,13 +271,21 @@ class _SignUpModuleState extends State<SignUpModule> {
               alignment: Alignment.topCenter,
               child: IntroScreenModule(),
             ));
-    } else {
-      Scaffold.of(context).showSnackBar(new SnackBar(
-          content: new Text('El usuario no existe!!. VUelva a ingresar')));
-
-      return;
-    }
-    _save = false;
+      }
+      else
+      {
+        Navigator.push(
+            context,
+            PageTransition(
+              curve: Curves.bounceOut,
+              type: PageTransitionType.rotate,
+              alignment: Alignment.topCenter,
+              child: SignUpModule(),
+            ));
+    } 
+   setState(() {
+      _save = false;
+    });
   }
 
   Widget _dividerOr() {
@@ -275,7 +302,7 @@ class _SignUpModuleState extends State<SignUpModule> {
             ),
           ),
           SizedBox(height: 5.0),
-          Text('PARA PÚBLICO EN GENERAL'),
+          Text('SI CUENTAS CON CORREO GMAIL'),
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -300,7 +327,7 @@ class _SignUpModuleState extends State<SignUpModule> {
     return FlatButton(
         child: Text('Crea una nueva cuenta. Aqui.'),
         onPressed: () =>
-            Navigator.of(context).push(PageRouteTheme(RegisterLoginModule())));
+            Navigator.of(context).push(PageRouteTheme(AgreeLoginModule())));
   }
 
   Widget _gmailButton() {

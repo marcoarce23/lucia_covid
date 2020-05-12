@@ -95,7 +95,7 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
 
   Widget listItemsEntity(BuildContext context, AsyncSnapshot snapshot) {
 
-    final  _screenSize = MediaQuery.of(context).size;
+    //final  _screenSize = MediaQuery.of(context).size;
 
     return Expanded(
       child: ListView.builder(

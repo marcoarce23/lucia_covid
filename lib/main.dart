@@ -1,25 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
-import 'package:lucia_covid/src/Provider/MEnsaje.dart';
 import 'package:lucia_covid/src/Provider/PushNotificationProvider.dart';
-import 'package:lucia_covid/src/Widget/InputField/MaskEdit.dart';
-import 'package:lucia_covid/src/module/Citizen/CitizenHelp/ListCitizenHelpModule.dart';
-import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
-import 'package:lucia_covid/src/module/CitizenPage/CitizenModule.dart';
-import 'package:lucia_covid/src/module/CitizenPage/ListCitizenModule.dart';
-import 'package:lucia_covid/src/module/Entity/EntityModule.dart';
-import 'package:lucia_covid/src/module/Entity/EventEntityModule.dart';
-import 'package:lucia_covid/src/module/Entity/ListEntityModule.dart';
-import 'package:lucia_covid/src/module/InitialPages/SlideShowModule.dart';
-import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
-import 'package:lucia_covid/src/module/Login/RegisterLoginModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
-import 'package:lucia_covid/src/module/Multimedia/ListMultimediaModule.dart';
-import 'package:lucia_covid/src/module/SplashScreen/SplashScreenModule.dart';
-import 'package:lucia_covid/src/module/Voluntary/EventModule.dart';
-import 'package:lucia_covid/src/module/Voluntary/ListVoluntary.dart';
+import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 import 'package:lucia_covid/src/module/Voluntary/VoluntaryModule.dart';
-
+//import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,148 +15,30 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-
-//   Widget _cpf() {
-//     String mask = '00000000000';
-//     var controller = new MaskedTextController(mask: mask);
-
-//     return new TextField(
-//       controller: controller,
-//       keyboardType: TextInputType.number,
-//       decoration: new InputDecoration(
-//         labelText: 'CPF',
-//         hintText: mask
-//       ),
-//     );
-//   }
-
-//   Widget _onlyLetters() {
-//     String mask = 'AAAAAAAAAAAAAAAA';
-//     var controller = new MaskedTextController(mask: mask);
-
-//     return new TextField(
-//       controller: controller,
-//       keyboardType: TextInputType.text,
-//       decoration: new InputDecoration(
-//         labelText: 'Only Letters',
-//        // hintText: mask
-//       ),
-//     );
-//   }
-
-//   Widget _alphaNumeric() {
-//     String mask = 'AAAAAAAA-00000000';
-//     var controller = new MaskedTextController(mask: mask);
-
-//     return new TextField(
-//       controller: controller,
-//       keyboardType: TextInputType.text,
-//       decoration: new InputDecoration(
-//           labelText: 'Alpha Numeric',
-//           hintText: mask
-//       ),
-//     );
-//   }
-
-//   Widget _anyChar() {
-//     String mask = '0A@*';
-//     var controller = new MaskedTextController(mask: mask);
-
-//     return new TextField(
-//       controller: controller,
-//       keyboardType: TextInputType.text,
-//       decoration: new InputDecoration(
-//           labelText: 'Any Char',
-//           hintText: mask
-//       ),
-//     );
-//   }
-
-//   Widget _moneyDefault() {
-//     var controller = new MoneyMaskedTextController();
-
-//     return new TextField(
-//       controller: controller,
-//       keyboardType: TextInputType.number,
-//       decoration: new InputDecoration(
-//           labelText: 'Money (Default)',
-//       ),
-//     );
-//   }
-
-//   Widget _moneyCustomized() {
-//     var controller = new MoneyMaskedTextController(
-//       initialValue: 1000.0,
-//       decimalSeparator: '.',
-//       thousandSeparator: ',',
-//       leftSymbol: 'US\$',
-//       precision: 3
-//     );
-
-//     return new TextField(
-//       controller: controller,
-//       keyboardType: TextInputType.number,
-//       decoration: new InputDecoration(
-//         labelText: 'Money (Customized)',
-//       ),
-//     );
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Masked Text',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: Scaffold(
-//         appBar: AppBar(
-//           title: Text('Flutter Masked Text'),
-//         ),
-//         body: new Padding(
-//           padding: EdgeInsets.all(10.0),
-//           child: Column(
-//             children: <Widget>[
-//               _cpf(),
-//               _onlyLetters(),
-//               _alphaNumeric(),
-//               _anyChar(),
-//               _moneyDefault(),
-//               _moneyCustomized()
-//             ],
-//           ),
-//         )
-//         ,
-//       ),
-//     );
-//   }
-// }
-
-  
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
-
+final prefs = new PreferensUser();
  
   @override
   void initState() {
     super.initState();
 
-    // final pushProvider = new PushNotificationProvider();
-    // pushProvider.initNotifications();
+     final pushProvider = new PushNotificationProvider();
+     pushProvider.initNotifications();
 
-    // pushProvider.mensajes.listen( (data) {
+     pushProvider.mensajes.listen( (data) {
 
     //   // Navigator.pushNamed(context, 'mensaje');
     //   print('Argumento del Push');
     //   print(data);
 
     //   navigatorKey.currentState.pushNamed('mensaje', arguments: data );
-
-    // });
+        prefs.token = data;
+     });
 
   }
 
@@ -179,26 +46,72 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'resource.titleApp',
-  //    navigatorKey: navigatorKey,
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         primaryColor: Colors.white,
       ),
-      //home: new ListCitizenModule(),
-      //initialRoute: SplashScreenModule(),
+       // MULTILENGUAGE
+      // localizationsDelegates: [
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalWidgetsLocalizations.delegate,
+      // ],
+      // supportedLocales: [
+      //   const Locale('en', 'US'), // English
+      //   const Locale('es', 'ES'), // Hebrew
+      // ],
 
-      home: new VoluntaryModule(),//(,//IntroScreen(),
 
-      routes: <String, WidgetBuilder>{
-        'Splash': (BuildContext context) => new SplashScreenModule(),
-        'citizen': (BuildContext context) => new CitizenModule(),
-        'login': (BuildContext context) => new SignUpModule(),
-        'forgetPassword': (BuildContext context) => new ForgetPassword(),
-        'registerLogin': (BuildContext context) => new RegisterLoginModule(),
-        'sliderShowModule': (BuildContext context) => new SliderShowModule(),
-        'mensaje': (BuildContext context) => new MensajePage(),
-      },
+     // initialRoute: prefs.ultimaPagina,
+      home: new SignUpModule(),//(,//IntroScreen(),
+      routes:  getApplicationRoute(),
+      onGenerateRoute: (RouteSettings settings) {
+        return MaterialPageRoute(
+            builder: (BuildContext context) => SignUpModule());
+      }
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      // routes: <String, WidgetBuilder>{
+      //   'Splash': (BuildContext context) => new SplashScreenModule(),
+      //   'citizen': (BuildContext context) => new CitizenModule(),
+      //   'login': (BuildContext context) => new SignUpModule(),
+      //   'forgetPassword': (BuildContext context) => new ForgetPassword(),
+      //   'registerLogin': (BuildContext context) => new AgreeLoginModule(),
+      //   'sliderShowModule': (BuildContext context) => new SliderShowModule(),
+      //   'mensaje': (BuildContext context) => new MensajePage(),
+      // },

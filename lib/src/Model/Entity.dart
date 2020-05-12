@@ -533,7 +533,50 @@ class GetClasificador extends Entity {
 }
 
 
+class LoginSigIn extends Entity {
+  int idUsuario;
+  int idInstitucion;
+  String nombrePersona;
+  String correo;
+  String nombreInstitucion;
+  String usuario;
+  String avatar;
+  String password;
+  String imei;
+  String tokenDispositivo;
+  int primeraVez;
 
+  LoginSigIn({this.idUsuario, this.idInstitucion, this.nombrePersona, this.nombreInstitucion, this.correo, this.usuario, this.password, this.avatar,
+              this.imei, this.tokenDispositivo, this.primeraVez});
+
+  fromJson(Map<String, dynamic> json) => new LoginSigIn(
+    idUsuario: json["ID_USUARIO"],
+    idInstitucion : json["ID_INSTITUCION"],
+    nombrePersona : json["NOMBRE_PERSONA"],
+    nombreInstitucion : json["NOMBRE_INSTITUCION"],
+    correo : json["CORREO"],
+    usuario : json["USUARIO"],
+    password : json["PASSWORD"],
+    avatar : json["AVATAR"],
+    imei : json["IMEI"],
+    tokenDispositivo : json["TOKEN"],
+    primeraVez : json["PRIMERA_VEZ"],
+    );
+
+  Map<String, dynamic> toJson() => {
+    "ID_USUARIO": idUsuario,
+    "ID_INSTITUCION": idInstitucion,
+    "NOMBRE_PERSONA": nombrePersona,
+    "NOMBRE_INSTITUCION": nombreInstitucion,
+    "CORREO": correo,
+    "USUARIO": usuario,
+    "PASSWORD": password,
+    "AVATAR": avatar,
+    "IMEI": imei,
+    "TOKEN": tokenDispositivo,
+    "PRIMERA_VEZ": primeraVez,
+   };
+}
 
 
 // ---------------------------------------------------------

@@ -7,8 +7,6 @@ import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenMultimedia/CitizenImageDetailModule.dart';
 import 'package:lucia_covid/src/module/General/PageViewModule.dart';
 import 'package:lucia_covid/src/module/Voluntary/FoundAllVoluntaryModule.dart';
-import 'package:lucia_covid/src/module/Voluntary/FoundVoluntaryModule.dart';
-import 'package:lucia_covid/src/module/Voluntary/ListVoluntary.dart';
 
 class CitizenInstitutionModule extends StatefulWidget {
   final InstitucionesItems institutionItem;

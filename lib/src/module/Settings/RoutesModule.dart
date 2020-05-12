@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
+import 'package:lucia_covid/src/module/Login/AgreeLoginModule.dart';
 import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
-import 'package:lucia_covid/src/module/Login/RegisterLoginModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/SplashScreenModule.dart';
@@ -13,7 +13,7 @@ Map<String, WidgetBuilder> getApplicationRoute() {
         'citizen': (BuildContext context) => new CitizenLayoutMenuModule(),
         'login': (BuildContext context) => new SignUpModule(),
         'forgetPassword': (BuildContext context) => new ForgetPassword(),
-        'registerLogin': (BuildContext context) => new RegisterLoginModule(),
+        'registerLogin': (BuildContext context) => new AgreeLoginModule(),
         'introScreen': (BuildContext context) => new IntroScreenModule(),
   };
 }

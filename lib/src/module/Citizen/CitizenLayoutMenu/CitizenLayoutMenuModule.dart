@@ -10,7 +10,7 @@ import 'package:lucia_covid/src/module/Citizen/CitizenMultimedia/CitizenMultimed
 import 'package:lucia_covid/src/module/Citizen/CitizenPanicButton/CitizenPanicButtonModule.dart';
 import 'package:lucia_covid/src/module/Entity/EntityModule.dart';
 import 'package:lucia_covid/src/module/Entity/EventEntityModule.dart';
-import 'package:lucia_covid/src/module/Login/SIgnOutModule.dart';
+import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
 import 'package:lucia_covid/src/module/Map/MapModule.dart';
 import 'package:lucia_covid/src/module/Multimedia/MultimediaModule.dart';
 import 'package:lucia_covid/src/module/Settings/ConfigurationModule.dart';
@@ -220,7 +220,7 @@ class DrawerCitizen extends StatelessWidget {
             'Salir',
             () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SignOutModule()),
+                  MaterialPageRoute(builder: (context) => SignUpModule()),
                 )),
       ],
     ));

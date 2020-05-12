@@ -5,7 +5,6 @@ import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
-import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
@@ -60,17 +59,17 @@ Future<void> initPlatformState() async {
   
 
     void whatsAppOpen() async {
-      print("000");
-    bool whatsapp = await FlutterLaunch.hasApp(name: "whatsapp");
+  //     print("000");
+  //  // bool whatsapp = await FlutterLaunch.hasApp(name: "whatsapp");
 
-    if (whatsapp) {
-      print("111");
-      await FlutterLaunch.launchWathsApp(phone: "+59176427275", message: "bola gilll");
-      print("222");
-    } else {
-      print("333");
-      print("Whatsapp não instalado");
-    }
+  //   if (whatsapp) {
+  //     print("111");
+  //    // await FlutterLaunch.launchWathsApp(phone: "+59176427275", message: "bola gilll");
+  //     print("222");
+  //   } else {
+  //     print("333");
+  //     print("Whatsapp não instalado");
+  //   }
   }
 
   @override
