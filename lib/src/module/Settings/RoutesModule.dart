@@ -71,22 +71,18 @@ final String primaryKeyGetListaInstituciones =
     '_DevuelveListaInstitucionesResult';
 String urlGetListaInstituciones =
     'http://covid19.ruta88.net/COVID/Institucion/srvInstitucion.svc/DevuelveListaInstitucion';
-
 final String primaryKeyGrupoProfesionales =
     '_DevuelveGrupoProfesionalesResult';
 String urlGetGrupoProfesionales =
     'http://covid19.ruta88.net/COVID/Institucion/srvInstitucion.svc/DevuelveGrupoProfesionales';
-
 final String primaryKeyListaProfesionalesInstitucion =
     '_DevuelveListaProfesionalesInstitucionResult';
 String urlGetListaProfesionalesInstitucion =
-    'http://covid19.ruta88.net/COVID/Personal/srvPersonal.svc/DevuelveListaProfesionalesInstitucion';
-    
+    'http://covid19.ruta88.net/COVID/Personal/srvPersonal.svc/DevuelveListaProfesionalesInstitucion';    
 final String primaryKeyListaMultimedia =
     '_DevuelveListaMultimediaResult';
 String urlGetListaMultimedia =
     'http://covid19.ruta88.net/COVID/Multimedia/srvMultimedia.svc/ListaMultimedias';
-
 final String primaryKeyListaMultimediaPorInstitucion =
     '_DevuelveListaMultimediaPorInstitucionResult';
 String urlGetListaMultimediaPorInstitucion =
@@ -95,8 +91,6 @@ final String primaryKeyTodosGruposProfesionales =
     '_DevuelveTodosGrupoProfesionalesResult';
 String urlGetTodosGruposProfesionales =
     'http://covid19.ruta88.net/COVID/Institucion/srvInstitucion.svc/DevuelveTodosGrupoProfesionales';
-
-
 final String primaryKeyListaEventos =
     '_DevuelveListaEventosResult';
 String urlGetListaEventos =
@@ -104,8 +98,18 @@ String urlGetListaEventos =
 
 
 
+
+
+final String primaryKeyListaSolicitudesAyudas =
+    '_DevuelveListaSolicitudesResult';
+String urlGetListaSolicitudesAyudas =
+    'http://covid19.ruta88.net/COVID/BotonPanico/srvBotonPanico.svc/ListaSolicitudes';
+
+
 // METODO POST
 final String urlAddBotonPanico =
     'http://covid19.ruta88.net/COVID/BotonPanico/srvBotonPanico.svc/BotonAyuda';
+    final String urlAddSolicitudAyud =
+    'http://covid19.ruta88.net/COVID/Atencion/srvAtencion.svc/SolicitudAyuda';
 
 // METODO DELETE

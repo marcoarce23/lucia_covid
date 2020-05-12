@@ -1,280 +1,1003 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:lucia_covid/src/Model/Entity.dart';
+import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
+import 'package:lucia_covid/src/module/General/PageViewModule.dart';
+import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
+class CitizenEmergencyModule extends StatefulWidget {
+  @override
+  _CitizenEmergencyModuleState createState() => _CitizenEmergencyModuleState();
+}
 
-class CitizenEmergencyModule extends StatelessWidget {
-  
+class _CitizenEmergencyModuleState extends State<CitizenEmergencyModule> {
+  int page = 0;
+  final List<Widget> optionPage = [
+    PageMedicina(),
+    PageCovid(),
+    PageMedicmanetos(),
+    PageBonos()
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      page = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
- final items = <ItemBoton>[
-      new ItemBoton( Icon(Icons.aspect_ratio  ), 'Motor Accident', Color(0xff6989F5), Color(0xff906EF5) ),
-      new ItemBoton( Icon(Icons.assistant_photo  ), 'Medical Emergency', Color(0xff66A9F2), Color(0xff536CF6) ),
-      new ItemBoton( Icon(Icons.block  ), 'Theft / Harrasement', Color(0xffF2D572), Color(0xffE06AA3) ),
-      new ItemBoton( Icon(Icons.photo_album  ), 'Awards', Color(0xff317183), Color(0xff46997D) ),
-      
-    ];
+    return SafeArea(
+        child: Scaffold(
+            appBar: AppBar(
+              iconTheme:
+                  IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+              elevation: 0,
+              title: Text(
+                "Solicitudes de ayuda",
+                style: TextStyle(
+                    color: AppTheme.themeColorNaranja,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w400),
+              ),
+              //backgroundColor: AppTheme.themeColorNaranja,
+            ),
+            drawer: DrawerCitizen(),
+            // backgroundColor: Colors.red,
+            body: optionPage[page],
+            bottomNavigationBar: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  title: Text('Medicina'),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.business),
+                  title: Text('Covid'),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.school),
+                  title: Text('Medicamentos'),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.accessible_forward),
+                  title: Text('bonos'),
+                ),
+              ],
+              currentIndex: page,
+              unselectedItemColor: Colors.black54,
+              selectedItemColor: Colors.amber[800],
+              onTap: _onItemTapped,
+            )));
+  }
+}
 
-List<Widget> itemMap = items.map(
-      (item) => FadeInLeft(
-        duration: Duration( milliseconds: 250 ),
-        child: BotonGordo(
-          icon: item.icon,
-          texto: item.texto,
-          color1: item.color1,
-          color2: item.color2,
-          onPress: () { print('hola'); },
+class PageMedicina extends StatefulWidget {
+  @override
+  _PageMedicinaState createState() => _PageMedicinaState();
+}
+
+class _PageMedicinaState extends State<PageMedicina> {
+  final generic = new Generic();
+
+  RegistrarAyuda registrarAyuda = new RegistrarAyuda();
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Listado de solicitudes para ayuda con MEDICINA",
+                style: AppTheme.themeTitulo,
+              ),
+              futureMedicamentoss(context),
+            ],
+          ),
         ),
-      )
-    ).toList();
+      ),
+    );
+    //backgroundColor: AppTheme.themeColorNaranja,
+  }
 
+  Widget futureMedicamentoss(BuildContext context) {
+    return FutureBuilder(
+        future: Generic().getAll(
+            new SolicitudAyuda(),
+            urlGetListaSolicitudesAyudas + '/64',
+            primaryKeyListaSolicitudesAyudas),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(child: CircularProgressIndicator());
+              break;
+            default:
+              //mostramos los datos
+              return buildItemSolcitud(context, snapshot);
+          }
+        });
+  }
 
+  Widget buildItemSolcitud(BuildContext context, AsyncSnapshot snapshot) {
+    return Container(
+      child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          physics: ClampingScrollPhysics(),
+          itemCount: snapshot.data.length,
+          itemBuilder: (context, index) {
+            SolicitudAyuda item = snapshot.data[index];
+            return itemSolicitud(context, item);
+          }),
+    );
+  }
 
-     return Scaffold(
-        drawer: DrawerCitizen(),
-      // backgroundColor: Colors.red,
-      body: Stack(
+  Widget itemSolicitud(BuildContext context, SolicitudAyuda solicitudAyuda) {
+    DateTime tempDate =
+        new DateFormat("dd/MM/yyyy").parse(solicitudAyuda.fecha);
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
         children: <Widget>[
-          
-          Container(
-            margin: EdgeInsets.only( top: 200 ),
-            child: ListView(
-              physics: BouncingScrollPhysics(),
+          contenidoCabecera(context, tempDate, solicitudAyuda),
+          contenidoFinal(context, solicitudAyuda),
+        ],
+      ),
+    );
+  }
+
+  Container contenidoFinal(
+      BuildContext context, SolicitudAyuda solicitudAyuda) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 50,
+      color: Colors.blue,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          InkWell(
+            child: Column(
               children: <Widget>[
-                SizedBox( height: 90, ),
-                ...itemMap
+                FaIcon(
+                  FontAwesomeIcons.checkCircle,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                Text(
+                  "Atender",
+                  style: TextStyle(color: Colors.white),
+                )
+              ],
+            ),
+            onTap: () {
+              _submit(context, solicitudAyuda);
+            },
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Column(
+            children: <Widget>[
+              InkWell(
+                child: FaIcon(
+                  FontAwesomeIcons.handshake,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onTap: () {},
+              ),
+              Text(
+                "Concluido",
+                style: TextStyle(color: Colors.white),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  _submit(BuildContext context, SolicitudAyuda solicitudAyuda) async {
+    registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
+    registrarAyuda.idaPersonal = 1006;
+    registrarAyuda.fecha =
+        DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
+    registrarAyuda.idaEstado = 78; // en cursoF
+    registrarAyuda.usuario = "coavchristian@hotmail.com";
+
+    final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
+    var result;
+    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+    if (result == "0") {
+      setState(() {
+        Scaffold.of(context)
+            .showSnackBar(messageOk("Se puso en atención su solicitud"));
+      });
+    } else {
+      Scaffold.of(context)
+          .showSnackBar(messageNOk("Ocurrio un error inseperado"));
+    }
+
+    print('resultado:$result');
+  }
+
+  Container contenidoCabecera(
+      BuildContext context, DateTime tempDate, SolicitudAyuda solicitudAyuda) {
+    Color colorCuadro;
+    if (solicitudAyuda.idaPrioridad == 68) {
+      colorCuadro = AppTheme.themeColorRojo;
+    } else if (solicitudAyuda.idaPrioridad == 69) {
+      colorCuadro = AppTheme.themeColorNaranja;
+    } else {
+      colorCuadro = AppTheme.themeColorVerde;
+    }
+
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 70,
+      color: colorCuadro,
+      child: Row(
+        children: <Widget>[
+          SizedBox(
+            width: 5,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                new DateFormat("dd/MM/yyyy").format(tempDate),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800),
+              ),
+              Text(
+                new DateFormat("HH:mm").format(tempDate),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800),
+              ),
+            ],
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "Detalle:",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800),
+                ),
+                RichText(
+                  overflow: TextOverflow.clip,
+                  text: TextSpan(
+                    text: solicitudAyuda.detalle,
+                    style: TextStyle(fontSize: 14, color: Colors.white),
+                  ),
+                ),
               ],
             ),
           ),
-
-          _Encabezado()
-
+          SizedBox(
+            width: 5,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              InkWell(
+                child: FaIcon(
+                  FontAwesomeIcons.phoneVolume,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onTap: () {
+                  callNumber(solicitudAyuda.telefono);
+                },
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              InkWell(
+                child: FaIcon(
+                  FontAwesomeIcons.comment,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onTap: () {
+                  sendSMS(solicitudAyuda.telefono);
+                },
+              )
+            ],
+          ),
         ],
-      )
-   );
-    
-    
-     }
-}
-
-
-class _Encabezado extends StatelessWidget {
-  
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        IconHeader(
-          icon: Icon(Icons.accessibility), 
-          titulo: 'Asistencia Médica', 
-          subtitulo: 'Haz solicitado',
-          color1: Color(0xff536CF6),
-          color2: Color(0xff66A9F2),
-        ),
-
-        Positioned(
-          right: 0,
-          top: 45,
-          child: RawMaterialButton(
-            onPressed: () {},
-            shape: CircleBorder(),
-            padding: EdgeInsets.all(15.0),
-            child: Icon(Icons.add)
-          )
-        )
-
-      ],
+      ),
     );
   }
 }
 
-class ItemBoton {
+class PageCovid extends StatelessWidget {
+  const PageCovid({Key key}) : super(key: key);
 
-  final Icon icon;
-  final String texto;
-  final Color color1;
-  final Color color2;
-
-  ItemBoton( this.icon, this.texto, this.color1, this.color2 );
-}
-
-
-
-
-class BotonGordo extends StatelessWidget {
-
-  final Icon icon;
-  @required final String texto;
-  final Color color1;
-  final Color color2;
-  @required final Function onPress;
-
-  const BotonGordo({
-    this.icon ,
-    this.texto,
-    this.color1 = Colors.grey,
-    this.color2 = Colors.blueGrey,
-    this.onPress
-  });
-
-  
-  
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: this.onPress,
-      child: Stack(
-        children: <Widget>[
-          _BotonGordoBackground( this.icon, this.color1, this.color2 ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+    return SingleChildScrollView(
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox( height: 140, width: 40 ),
-              Icon(Icons.account_box),
-              SizedBox( width: 20 ),
-              Expanded(child: Text( this.texto, style: TextStyle( color: Colors.white, fontSize: 18 ) )),
-              FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ),
-              SizedBox( width: 40 ),
+              Text(
+                "Listado de solicitudes para ayuda con COVID",
+                style: AppTheme.themeTitulo,
+              ),
+              futureCovid(context),
+            ],
+          ),
+        ),
+      ),
+    );
+    //backgroundColor: AppTheme.themeColorNaranja,
+  }
+
+  Widget futureCovid(BuildContext context) {
+    return FutureBuilder(
+        future: Generic().getAll(
+            new SolicitudAyuda(),
+            urlGetListaSolicitudesAyudas + '/65',
+            primaryKeyListaSolicitudesAyudas),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(child: CircularProgressIndicator());
+              break;
+            default:
+              //mostramos los datos
+              return buildItemSolcitud(context, snapshot);
+          }
+        });
+  }
+
+  Widget buildItemSolcitud(BuildContext context, AsyncSnapshot snapshot) {
+    return Container(
+      child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          physics: ClampingScrollPhysics(),
+          itemCount: snapshot.data.length,
+          itemBuilder: (context, index) {
+            SolicitudAyuda item = snapshot.data[index];
+            return itemSolicitud(context, item);
+          }),
+    );
+  }
+
+  Widget itemSolicitud(BuildContext context, SolicitudAyuda solicitudAyuda) {
+    DateTime tempDate =
+        new DateFormat("dd/MM/yyyy").parse(solicitudAyuda.fecha);
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: <Widget>[
+          contenidoCabecera(context, tempDate, solicitudAyuda),
+          contenidoFinal(context),
+        ],
+      ),
+    );
+  }
+
+  Container contenidoFinal(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 50,
+      color: Colors.blue,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          InkWell(
+            child: Column(
+              children: <Widget>[
+                FaIcon(
+                  FontAwesomeIcons.checkCircle,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                Text(
+                  "Atender",
+                  style: TextStyle(color: Colors.white),
+                )
+              ],
+            ),
+            onTap: () {},
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Column(
+            children: <Widget>[
+              InkWell(
+                child: FaIcon(
+                  FontAwesomeIcons.handshake,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onTap: () {},
+              ),
+              Text(
+                "Concluido",
+                style: TextStyle(color: Colors.white),
+              )
             ],
           )
-
         ],
       ),
     );
   }
 
+  Container contenidoCabecera(
+      BuildContext context, DateTime tempDate, SolicitudAyuda solicitudAyuda) {
+    Color colorCuadro;
+    if (solicitudAyuda.idaPrioridad == 68) {
+      colorCuadro = AppTheme.themeColorRojo;
+    } else if (solicitudAyuda.idaPrioridad == 69) {
+      colorCuadro = AppTheme.themeColorNaranja;
+    } else {
+      colorCuadro = AppTheme.themeColorVerde;
+    }
 
-}
-
-class _BotonGordoBackground extends StatelessWidget {
-  
-    final Icon icon;
-    final Color color1;
-    final Color color2;
-
-  const _BotonGordoBackground( this.icon, this.color1, this.color2 );
-
-  @override
-  Widget build(BuildContext context) {
     return Container(
-
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
-        child: Stack(
-          children: <Widget>[
-            Positioned(
-              right: -20,
-              top: -20,
-              child: Icon(Icons.accessible_forward) 
-            )
-          ],
-        ),
-      ),
-
-      width: double.infinity,
-      height: 100,
-      margin: EdgeInsets.all( 20 ),
-      decoration: BoxDecoration(
-        boxShadow: <BoxShadow>[
-          BoxShadow( color: Colors.black.withOpacity(0.2), offset: Offset(4,6), blurRadius: 10 ),
+      width: MediaQuery.of(context).size.width,
+      height: 70,
+      color: colorCuadro,
+      child: Row(
+        children: <Widget>[
+          SizedBox(
+            width: 5,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                new DateFormat("dd/MM/yyyy").format(tempDate),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800),
+              ),
+              Text(
+                new DateFormat("HH:mm").format(tempDate),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800),
+              ),
+            ],
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "Detalle:",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800),
+                ),
+                RichText(
+                  overflow: TextOverflow.clip,
+                  text: TextSpan(
+                    text: solicitudAyuda.detalle,
+                    style: TextStyle(fontSize: 14, color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              InkWell(
+                child: FaIcon(
+                  FontAwesomeIcons.phoneVolume,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onTap: () {
+                  callNumber(solicitudAyuda.telefono);
+                },
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              InkWell(
+                child: FaIcon(
+                  FontAwesomeIcons.comment,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onTap: () {
+                  sendSMS(solicitudAyuda.telefono);
+                },
+              )
+            ],
+          ),
         ],
-        borderRadius: BorderRadius.circular(15),
-        gradient: LinearGradient(
-          colors: <Color>[
-            this.color1,
-            this.color2,
-          ]
-        )
       ),
     );
   }
 }
 
+class PageMedicmanetos extends StatelessWidget {
+  const PageMedicmanetos({Key key}) : super(key: key);
 
-
-class IconHeader extends StatelessWidget {
-
-  final Icon icon;
-  final String titulo;
-  final String subtitulo;
-  final Color color1;
-  final Color color2;
-
-  const IconHeader({
-    @required this.icon,
-    @required this.titulo,
-    @required this.subtitulo, 
-    this.color1 = Colors.grey,
-    this.color2 = Colors.blueGrey
-  });
-  
   @override
   Widget build(BuildContext context) {
-
-    final Color colorBlanco = Colors.white.withOpacity(0.7);
-
-    return Stack(
-
-      children: <Widget>[
-        _IconHeaderBackground(
-          color1: this.color1,
-          color2: this.color2,
+    return SingleChildScrollView(
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Listado de solicitudes para ayuda con Medicamentos",
+                style: AppTheme.themeTitulo,
+              ),
+              futureMedicamentos(context),
+            ],
+          ),
         ),
+      ),
+    );
+    //backgroundColor: AppTheme.themeColorNaranja,
+  }
 
-        Positioned(
-          top: -50,
-          left: -70,
-          child: Icon(Icons.account_circle)
-        ),
+  Widget futureMedicamentos(BuildContext context) {
+    return FutureBuilder(
+        future: Generic().getAll(
+            new SolicitudAyuda(),
+            urlGetListaSolicitudesAyudas + '/66',
+            primaryKeyListaSolicitudesAyudas),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(child: CircularProgressIndicator());
+              break;
+            default:
+              //mostramos los datos
+              return buildItemSolcitud(context, snapshot);
+          }
+        });
+  }
 
-        Column(
-          children: <Widget>[
-            SizedBox(height: 80, width: double.infinity ),
-            Text( this.subtitulo, style: TextStyle( fontSize: 20, color: colorBlanco ) ),
-            SizedBox(height: 20),
-            Text( this.titulo, style: TextStyle( fontSize: 25, color: colorBlanco, fontWeight: FontWeight.bold ) ),
-            SizedBox(height: 20),
-            Icon(Icons.account_circle)
-          ],
-        )
+  Widget buildItemSolcitud(BuildContext context, AsyncSnapshot snapshot) {
+    return Container(
+      child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          physics: ClampingScrollPhysics(),
+          itemCount: snapshot.data.length,
+          itemBuilder: (context, index) {
+            SolicitudAyuda item = snapshot.data[index];
+            return itemSolicitud(context, item);
+          }),
+    );
+  }
 
-      ],
+  Widget itemSolicitud(BuildContext context, SolicitudAyuda solicitudAyuda) {
+    DateTime tempDate =
+        new DateFormat("dd/MM/yyyy").parse(solicitudAyuda.fecha);
 
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: <Widget>[
+          contenidoCabecera(context, tempDate, solicitudAyuda),
+          contenidoFinal(context),
+        ],
+      ),
+    );
+  }
+
+  Container contenidoFinal(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 50,
+      color: Colors.blue,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          InkWell(
+            child: Column(
+              children: <Widget>[
+                FaIcon(
+                  FontAwesomeIcons.checkCircle,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                Text(
+                  "Atender",
+                  style: TextStyle(color: Colors.white),
+                )
+              ],
+            ),
+            onTap: () {},
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Column(
+            children: <Widget>[
+              InkWell(
+                child: FaIcon(
+                  FontAwesomeIcons.handshake,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onTap: () {},
+              ),
+              Text(
+                "Concluido",
+                style: TextStyle(color: Colors.white),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Container contenidoCabecera(
+      BuildContext context, DateTime tempDate, SolicitudAyuda solicitudAyuda) {
+    Color colorCuadro;
+    if (solicitudAyuda.idaPrioridad == 68) {
+      colorCuadro = AppTheme.themeColorRojo;
+    } else if (solicitudAyuda.idaPrioridad == 69) {
+      colorCuadro = AppTheme.themeColorNaranja;
+    } else {
+      colorCuadro = AppTheme.themeColorVerde;
+    }
+
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 70,
+      color: colorCuadro,
+      child: Row(
+        children: <Widget>[
+          SizedBox(
+            width: 5,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                new DateFormat("dd/MM/yyyy").format(tempDate),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800),
+              ),
+              Text(
+                new DateFormat("HH:mm").format(tempDate),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800),
+              ),
+            ],
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "Detalle:",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800),
+                ),
+                RichText(
+                  overflow: TextOverflow.clip,
+                  text: TextSpan(
+                    text: solicitudAyuda.detalle,
+                    style: TextStyle(fontSize: 14, color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              InkWell(
+                child: FaIcon(
+                  FontAwesomeIcons.phoneVolume,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onTap: () {
+                  callNumber(solicitudAyuda.telefono);
+                },
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              InkWell(
+                child: FaIcon(
+                  FontAwesomeIcons.comment,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onTap: () {
+                  sendSMS(solicitudAyuda.telefono);
+                },
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
 
-
-class _IconHeaderBackground extends StatelessWidget {
-
-  final Color color1;
-  final Color color2;
-
-  const _IconHeaderBackground({
-    Key key, 
-    @required this.color1, 
-    @required this.color2,
-  }) : super(key: key);
+class PageBonos extends StatelessWidget {
+  const PageBonos({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Listado de solicitudes para ayuda con Bonos",
+                style: AppTheme.themeTitulo,
+              ),
+              futureBonos(context),
+            ],
+          ),
+        ),
+      ),
+    );
+    //backgroundColor: AppTheme.themeColorNaranja,
+  }
+
+  Widget futureBonos(BuildContext context) {
+    return FutureBuilder(
+        future: Generic().getAll(
+            new SolicitudAyuda(),
+            urlGetListaSolicitudesAyudas + '/77',
+            primaryKeyListaSolicitudesAyudas),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(child: CircularProgressIndicator());
+              break;
+            default:
+              //mostramos los datos
+              return buildItemSolcitud(context, snapshot);
+          }
+        });
+  }
+
+  Widget buildItemSolcitud(BuildContext context, AsyncSnapshot snapshot) {
     return Container(
-      width: double.infinity,
-      height: 300,
-      decoration: BoxDecoration(
-        // color: Colors.red,
-        borderRadius: BorderRadius.only( bottomLeft: Radius.circular(80) ),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: <Color> [
-            this.color1,
-            this.color2,
-          ]
-        )
+      child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          physics: ClampingScrollPhysics(),
+          itemCount: snapshot.data.length,
+          itemBuilder: (context, index) {
+            SolicitudAyuda item = snapshot.data[index];
+            return itemSolicitud(context, item);
+          }),
+    );
+  }
+
+  Widget itemSolicitud(BuildContext context, SolicitudAyuda solicitudAyuda) {
+    DateTime tempDate =
+        new DateFormat("dd/MM/yyyy").parse(solicitudAyuda.fecha);
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: <Widget>[
+          contenidoCabecera(context, tempDate, solicitudAyuda),
+          contenidoFinal(context),
+        ],
+      ),
+    );
+  }
+
+  Container contenidoFinal(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 50,
+      color: Colors.blue,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          InkWell(
+            child: Column(
+              children: <Widget>[
+                FaIcon(
+                  FontAwesomeIcons.checkCircle,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                Text(
+                  "Atender",
+                  style: TextStyle(color: Colors.white),
+                )
+              ],
+            ),
+            onTap: () {},
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Column(
+            children: <Widget>[
+              InkWell(
+                child: FaIcon(
+                  FontAwesomeIcons.handshake,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onTap: () {},
+              ),
+              Text(
+                "Concluido",
+                style: TextStyle(color: Colors.white),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Container contenidoCabecera(
+      BuildContext context, DateTime tempDate, SolicitudAyuda solicitudAyuda) {
+    Color colorCuadro;
+    if (solicitudAyuda.idaPrioridad == 68) {
+      colorCuadro = AppTheme.themeColorRojo;
+    } else if (solicitudAyuda.idaPrioridad == 69) {
+      colorCuadro = AppTheme.themeColorNaranja;
+    } else {
+      colorCuadro = AppTheme.themeColorVerde;
+    }
+
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 70,
+      color: colorCuadro,
+      child: Row(
+        children: <Widget>[
+          SizedBox(
+            width: 5,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                new DateFormat("dd/MM/yyyy").format(tempDate),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800),
+              ),
+              Text(
+                new DateFormat("HH:mm").format(tempDate),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800),
+              ),
+            ],
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "Detalle:",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800),
+                ),
+                RichText(
+                  overflow: TextOverflow.clip,
+                  text: TextSpan(
+                    text: solicitudAyuda.detalle,
+                    style: TextStyle(fontSize: 14, color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              InkWell(
+                child: FaIcon(
+                  FontAwesomeIcons.phoneVolume,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onTap: () {
+                  callNumber(solicitudAyuda.telefono);
+                },
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              InkWell(
+                child: FaIcon(
+                  FontAwesomeIcons.comment,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onTap: () {
+                  sendSMS(solicitudAyuda.telefono);
+                },
+              )
+            ],
+          ),
+        ],
       ),
     );
   }

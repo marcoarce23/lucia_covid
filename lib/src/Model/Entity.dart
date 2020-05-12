@@ -1158,3 +1158,92 @@ class EventosItem extends Entity {
         "EVE_OBJETIVO": objetivo
       };
 }
+
+class SolicitudAyuda extends Entity {
+  int idaBotonPanico;
+
+  int idaCatalogo;
+  int idaPrioridad;
+  int idaEstadoSolicitud;
+  double latitud;
+  double longitud;
+  String nombreCatalogo;
+  String detalle;
+  String nombrePrioridad;
+  String fecha;
+  String nombreSolicitud;
+  int telefono;
+
+  SolicitudAyuda(
+      {this.idaCatalogo,
+      this.idaBotonPanico,
+      this.idaPrioridad,
+      this.idaEstadoSolicitud,
+      this.latitud,
+      this.longitud,
+      this.nombreCatalogo,
+      this.detalle,
+      this.nombrePrioridad,
+      this.fecha,
+      this.telefono,
+      this.nombreSolicitud});
+
+  fromJson(Map<String, dynamic> json) => new SolicitudAyuda(
+      idaCatalogo: json["IDA_CATALOGO"],
+      idaPrioridad: json["IDA_PRIORIDAD"],
+      idaEstadoSolicitud: json["IDA_ESTADOSOLICITUD"],
+      latitud: json["BOT_CORDENADALAT"],
+      longitud: json["BOT_CORDENADALON"],
+      idaBotonPanico: json["IDCOV_BOTONPANICO"],
+      nombreCatalogo: json["NOMBRE_CATALOGO"],
+      detalle: json["BOT_DETALLE"],
+      nombrePrioridad: json["NOMBRE_PRIORIDAD"],
+      telefono: json["BOT_TELEFONO"],
+      fecha: json["FECHA"],
+      nombreSolicitud: json["NOMBRE_SOLICITUD"]);
+
+  Map<String, dynamic> toJson() => {
+        "IDA_CATALOGO": idaCatalogo,
+        "IDA_PRIORIDAD": idaPrioridad,
+        "BOT_CORDENADALAT": latitud,
+        "IDA_ESTADOSOLICITUD": idaEstadoSolicitud,
+        "IDCOV_BOTONPANICO": idaBotonPanico,
+        "BOT_CORDENADALON": longitud,
+        "NOMBRE_CATALOGO": nombreCatalogo,
+        "BOT_TELEFONO": telefono,
+        "BOT_DETALLE": detalle,
+        "NOMBRE_PRIORIDAD": nombrePrioridad,
+        "FECHA": fecha,
+        "NOMBRE_SOLICITUD": nombreSolicitud
+      };
+}
+
+class RegistrarAyuda extends Entity {
+  int idaBotonPanico;
+  int idaPersonal;
+  String fecha;
+  int idaEstado;
+  String usuario;
+
+  RegistrarAyuda(
+      {this.idaBotonPanico,
+      this.idaPersonal,
+      this.fecha,
+      this.idaEstado,
+      this.usuario});
+
+  fromJson(Map<String, dynamic> json) => new RegistrarAyuda(
+      idaBotonPanico: json["IDCOV_BOTONPANICO"],
+      idaPersonal: json["IDCOV_PERSONAL"],
+      fecha: json["REG_FECHA"],
+      idaEstado: json["IDA_ESTADO"],
+      usuario: json["USUARIO"]);
+
+  Map<String, dynamic> toJson() => {
+        "IDCOV_BOTONPANICO": idaBotonPanico,
+        "IDCOV_PERSONAL": idaPersonal,
+        "REG_FECHA": fecha,
+        "IDA_ESTADO": idaEstado,
+        "USUARIO": usuario
+      };
+}

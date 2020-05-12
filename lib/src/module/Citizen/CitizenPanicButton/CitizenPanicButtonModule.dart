@@ -95,10 +95,9 @@ class _ButtonPanic extends State<ButtonPanic> {
     botonPanico.botFecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
 
-    botonPanico.botCordenadalat = 6.66;
-    botonPanico.botCordenadalon = 6.66;
+    botonPanico.botCordenadalat = -17.371913;
+    botonPanico.botCordenadalon = -66.179140;
     botonPanico.usuario = "Coav";
-
     ///72 Solicitud enviada
     botonPanico.idaEstadoSolicitud = 72;
 
