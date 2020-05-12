@@ -219,7 +219,7 @@ class _ListEntityModuleState extends State<ListEntityModule> {
                     size: 15,
                   ),
                   Text(
-                    'Ubicación: ${entityItem.ubicacion}',
+                    'Ubicación: ${entityItem.desUbicacion}',
                   )
                 ],
               ),
@@ -241,7 +241,7 @@ class _ListEntityModuleState extends State<ListEntityModule> {
           color: AppTheme.themeColorNaranja,
         ),
         Text(
-          '${entityItem.tipoInstitucion}',
+          '${entityItem.desInsitucion}',
           style: TextStyle(
               fontSize: 11,
               color: AppTheme.themeColorNaranja,

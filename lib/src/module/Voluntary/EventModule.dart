@@ -7,12 +7,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
-
+import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class EventModule extends StatefulWidget {
   @override
@@ -24,30 +25,34 @@ class _EventModuleState extends State<EventModule> {
   String _fecha = '';
   TimeOfDay _time;
   int _currentIndex;
-    File foto;
+  var result;
+  String imagen =
+      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
+  File foto;
 
   TextEditingController _inputFieldDateController = new TextEditingController();
   TextEditingController _inputFieldTimeController = new TextEditingController();
 
   InputTextField titulo;
-InputMultilineField objetivo;
-InputMultilineField dirigidoA;
-InputTextField expositor;
-InputMultilineField ubicacion;
-InputTextField fecha;
-InputTextField hora;
-InputTextField fotoa;
+  InputMultilineField objetivo;
+  InputMultilineField dirigidoA;
+  InputTextField expositor;
+  InputMultilineField ubicacion;
+  InputTextField fecha;
+  InputTextField hora;
+  InputTextField fotoa;
 
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
+  final prefs = new PreferensUser();
   Evento entity = new Evento();
 
   @override
   void initState() {
     _currentIndex = 0;
     _time = new TimeOfDay.now();
-    _fecha = new DateTime.now().toString().substring(0,10);
+    _fecha = new DateTime.now().toString().substring(0, 10);
     super.initState();
   }
 
@@ -62,12 +67,12 @@ InputTextField fotoa;
         appBar: _appBar(),
         body: Stack(
           children: <Widget>[
+            crearFondoForm(context, imagen),
             _crearForm(context),
           ],
         ),
         drawer: DrawerCitizen(),
-        bottomNavigationBar: _bottomNavigationBar(context)
-        );
+        bottomNavigationBar: _bottomNavigationBar(context));
   }
 
   AppBar _appBar() {
@@ -78,8 +83,7 @@ InputTextField fotoa;
     );
   }
 
-
-_crearIconAppImagenes() {
+  _crearIconAppImagenes() {
     return IconButton(
       icon: Icon(Icons.photo_size_select_actual),
       onPressed: _seleccionarFoto,
@@ -93,37 +97,25 @@ _crearIconAppImagenes() {
     );
   }
 
-   _seleccionarFoto() async => _procesarImagen(ImageSource.gallery);
-  _tomarFoto() async => _procesarImagen(ImageSource.camera);
-  
-  _procesarImagen(ImageSource origen) async {
-    foto = await ImagePicker.pickImage(source: origen);
-
-    if (foto != null) {
-    //  evento.regTelefono = null;
-    }
-    setState(() {});
-  }
-  
-    Widget _bottomNavigationBar(BuildContext context) {
+  Widget _bottomNavigationBar(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
           canvasColor: Colors.white,
           primaryColor: Colors.blue,
-          textTheme: Theme.of(context).textTheme.copyWith(
-              caption: TextStyle(color: Colors.blueGrey))),
+          textTheme: Theme.of(context)
+              .textTheme
+              .copyWith(caption: TextStyle(color: Colors.blueGrey))),
       child: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (value) {
           setState(() {
-             _currentIndex = value;
+            _currentIndex = value;
             callPageEventVoluntary(_currentIndex, context);
           });
         },
         items: [
           BottomNavigationBarItem(
               icon: Icon(Icons.person, size: 25.0), title: Text('Eventos')),
-        
           BottomNavigationBarItem(
               icon: Icon(Icons.bubble_chart, size: 25.0),
               title: Text('Historial Eventos')),
@@ -197,7 +189,6 @@ _crearIconAppImagenes() {
                           fontSize: 15,
                         ),
                       ),
-                     
                     ],
                   ),
                 )
@@ -281,13 +272,31 @@ _crearIconAppImagenes() {
   }
 
   Widget _crearCampos() {
-
-       titulo = InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Titulo del evento:', '', '');
-        objetivo = InputMultilineField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Objetivo:', '', '');
-        dirigidoA=InputMultilineField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Dirigido A:', '', '');
-        expositor=InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Expositor:', '', '');
-        ubicacion=InputMultilineField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Ubicacion:', '', '');
-
+    titulo = InputTextField(
+        FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
+        'Titulo del evento:',
+        '',
+        '');
+    objetivo = InputMultilineField(
+        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        'Objetivo:',
+        '',
+        '');
+    dirigidoA = InputMultilineField(
+        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        'Dirigido A:',
+        '',
+        '');
+    expositor = InputTextField(
+        FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
+        'Expositor:',
+        '',
+        '');
+    ubicacion = InputMultilineField(
+        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        'Ubicacion:',
+        '',
+        '');
 
     return Column(
       children: <Widget>[
@@ -300,16 +309,12 @@ _crearIconAppImagenes() {
         dirigidoA,
         expositor,
         ubicacion,
-        
-         _crearFecha('Fecha Evento'),
+        _crearFecha('Fecha Evento'),
         _crearTime('hora'),
-
         _crearBoton(resource.save),
       ],
     );
   }
-
- 
 
   _selectDate(BuildContext context) async {
     DateTime picked = await showDatePicker(
@@ -317,14 +322,14 @@ _crearIconAppImagenes() {
       initialDate: new DateTime.now(),
       firstDate: new DateTime(2020, 4),
       lastDate: new DateTime(2025, 12),
-     // locale: Locale('es', 'ES')
+      // locale: Locale('es', 'ES')
     );
 
     if (picked != null) {
       setState(() {
         _fecha = DateFormat("dd/MM/yyyy").format(picked);
         _inputFieldDateController.text = _fecha;
-        print(_inputFieldDateController.text );
+        print(_inputFieldDateController.text);
       });
     }
   }
@@ -337,20 +342,19 @@ _crearIconAppImagenes() {
       builder: (BuildContext context, Widget child) {
         return MediaQuery(
           data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-           child: child,
-    );
-  },
-   //   locale: Locale('es', 'ES')
+          child: child,
+        );
+      },
+      //   locale: Locale('es', 'ES')
     );
 
     if (picked != null) {
       setState(() {
         _time = picked;
-        print('XXXXX');
-        print(_time.hour);
-        print(_time.minute);
-        _inputFieldTimeController.text = _time.hour.toString()+':'+_time.minute.toString();//TimeOfDay(hour: _time.hour, minute: _time.minute).toString();
-         print('XXXddddXX ${_inputFieldTimeController.text}');  
+        _inputFieldTimeController.text = _time.hour.toString() +
+            ':' +
+            _time.minute
+                .toString(); //TimeOfDay(hour: _time.hour, minute: _time.minute).toString();
       });
     }
   }
@@ -435,30 +439,45 @@ _crearIconAppImagenes() {
     setState(() {
       _save = true;
     });
+
     entity.idcovEvento = 0;
-  entity. eveTitulo = titulo.objectValue;
-  entity.eveObjetivo = objetivo.objectValue;
-  entity.eveDirigidoA = dirigidoA.objectValue;
-  entity.eveExpositor = expositor.objectValue;
-  entity.eveUbicacion = ubicacion.objectValue;
-  entity.eveFecha = _inputFieldDateController.text;
-  entity.eveHora = _inputFieldTimeController.text;
-  entity.eveFoto='foto';
-  entity.usuario='marcoarce23';
+    entity.idcovInstitucion = int.parse(prefs.idInsitucion);
+    entity.idcovPersonal = int.parse(prefs.userId);
+    entity.eveTitulo = titulo.objectValue;
+    entity.eveObjetivo = objetivo.objectValue;
+    entity.eveDirigidoA = dirigidoA.objectValue;
+    entity.eveExpositor = expositor.objectValue;
+    entity.eveUbicacion = ubicacion.objectValue;
+    entity.eveFecha = _inputFieldDateController.text;
+    entity.eveHora = _inputFieldTimeController.text;
+    entity.eveFoto = imagen;
+    entity.usuario = prefs.nombreUsuario;
 
+    final dataMap = generic.add(entity, urlAddEvento);
 
-    // if (evento.idcovRegistroAmigo == null) {
-    //   // generic.add(citizen);
-    //   print("INSERTOOOO");
-    // } else {
-    //   //  generic.update(citizen);
-    //   print("MODIFICO");
-    // }
+    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+    print('resultado:$result');
 
     setState(() {
       _save = false;
     });
 
     //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
+  }
+
+  _seleccionarFoto() async => _procesarImagen(ImageSource.gallery);
+  _tomarFoto() async => _procesarImagen(ImageSource.camera);
+
+  _procesarImagen(ImageSource origen) async {
+    foto = await ImagePicker.pickImage(source: origen);
+
+    if (foto != null) {
+      imagen = await generic.subirImagen(foto);
+    }
+
+    setState(() {
+      entity.eveFoto = imagen;
+      print('cargadod e iagen ${entity.eveFoto}');
+    });
   }
 }

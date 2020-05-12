@@ -8,7 +8,7 @@ Widget  crearLucia(){
    );
 }
 
-Widget crearFondoForm(BuildContext context) {
+Widget crearFondoForm(BuildContext context, String imagen) {
     final size = MediaQuery.of(context).size;
 
     final fondoModaro = Container(
@@ -55,8 +55,7 @@ Widget crearFondoForm(BuildContext context) {
                   goalCompleted: 0.85,
                   child: Container(
                       child: ImageOvalNetwork(
-                          imageNetworkUrl:
-                              'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+                          imageNetworkUrl: imagen,
                           sizeImage: Size.fromWidth(90))),
                 ),
               ),

@@ -373,11 +373,11 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
   }
 
   Widget _crearCampos() {
-    nombre = InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Persona a poyar', registroAmigo.regPersona, '');
-    telefono =  InputPhoneField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Telefono de referencia', registroAmigo.regTelefono, '');
-    ubicacion =   InputMultilineField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Donde la encuentro', '', '');
+    nombre = InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Persona a poyar', registroAmigo.regPersona, 'INgrese el nombre de la persona');
+    telefono =  InputPhoneField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Telefono de referencia', registroAmigo.regTelefono, 'Registre un numero telefónico de referencia');
+    ubicacion =   InputMultilineField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Donde la encuentro', registroAmigo.regUbicacion, 'Lugar donde se encuentra la persona a ayudar');
 
-      tipoAyuda = InputDropDown(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ) ,'Tipod e ayuda','49',urlGetClasificador+'/47');
+      tipoAyuda = InputDropDown(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ) ,'Tipo de ayuda','49',urlGetClasificador+'/47');
 
     return Column(
       children: <Widget>[

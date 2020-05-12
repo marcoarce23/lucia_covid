@@ -21,6 +21,8 @@ class Institucion extends Entity {
   String perYouTube;
   String perCorreoElectronico;
   String usuario;
+  String desInsitucion;
+  String desUbicacion;
 
   Institucion({
     this.idInstitucion, this.foto,
@@ -32,6 +34,7 @@ class Institucion extends Entity {
     this.perFacebbok,    this.perTwitter,
     this.perPaginaWeb,    this.perYouTube,
     this.perCorreoElectronico,  this.usuario,
+    this.desInsitucion, this.desUbicacion
   });
 
   fromJson(Map<String, dynamic> json) => new Institucion(
@@ -51,7 +54,10 @@ class Institucion extends Entity {
       perPaginaWeb: json["INS_PAGINAWEB"],
       perYouTube: json["INS_CUENTAYOUTUBE"],
       perCorreoElectronico: json["INS_CORREOINSTITUCIONAL"],
-      usuario: json["USUARIO"]);
+      usuario: json["USUARIO"],
+      desInsitucion: json["DES_INSTITUCION"],
+      desUbicacion: json["DES_UBICACION"],);
+      
 
   Map<String, dynamic> toJson() => {
         "IDCOV_INSTITUCION": idInstitucion,
@@ -70,7 +76,9 @@ class Institucion extends Entity {
         "INS_PAGINAWEB": perPaginaWeb,
         "INS_CUENTAYOUTUBE": perYouTube,
         "INS_CORREOINSTITUCIONAL": perCorreoElectronico,
-        "USUARIO": usuario
+        "USUARIO": usuario,
+        "DES_INSTITUCION": desInsitucion,
+        "DES_UBICACION": desUbicacion
       };
 }
 
@@ -155,6 +163,8 @@ class InstitucionAtencion extends Entity {
 
 class Evento extends Entity {
   int idcovEvento;
+  int idcovInstitucion;
+  int idcovPersonal;
   String eveTitulo;
   String eveObjetivo;
   String eveDirigidoA;
@@ -167,6 +177,8 @@ class Evento extends Entity {
 
   Evento(
       {this.idcovEvento = 0,
+      this.idcovInstitucion ,
+      this.idcovPersonal,
       this.eveTitulo,
       this.eveObjetivo,
       this.eveDirigidoA,
@@ -179,6 +191,8 @@ class Evento extends Entity {
 
   fromJson(Map<String, dynamic> json) => new Evento(
         idcovEvento: json["IDCOV_EVENTO"],
+        idcovInstitucion: json["IDCOV_INSTITUCION"],
+        idcovPersonal: json["IDCOV_PERSONAL"],
         eveTitulo: json["EVE_TITULO"],
         eveObjetivo: json["EVE_OBJETIVO"],
         eveDirigidoA: json["EVE_DIRIGIDOA"],
@@ -190,8 +204,11 @@ class Evento extends Entity {
         usuario: json["USUARIO"],
       );
 
+
   Map<String, dynamic> toJson() => {
         "IDCOV_EVENTO": idcovEvento,
+        "IDCOV_INSTITUCION":idcovInstitucion,
+        "IDCOV_PERSONAL":idcovPersonal,
         "EVE_TITULO": eveTitulo,
         "EVE_OBJETIVO": eveObjetivo,
         "EVE_DIRIGIDOA": eveDirigidoA,
@@ -208,10 +225,11 @@ class Multimedia extends Entity {
   int idcovMultimedia;
   int idaCategoria;
   int idaCovInstitucion;
+  int idaTIpoMaterial;
   String mulTitulo;
   String mulResumen;
-  DateTime detFechaInicio;
-  DateTime detFechaFin;
+  String detFechaInicio;
+  String detFechaFin;
   String mulEnlace;
   String usuario;
 
@@ -219,6 +237,7 @@ class Multimedia extends Entity {
       {this.idcovMultimedia,
       this.idaCategoria = 0,
       this.idaCovInstitucion,
+      this.idaTIpoMaterial,
       this.mulTitulo,
       this.mulResumen,
       this.detFechaInicio,
@@ -229,6 +248,7 @@ class Multimedia extends Entity {
   fromJson(Map<String, dynamic> json) => new Multimedia(
         idcovMultimedia: json["IDCOV_MULTIMEDIA"],
         idaCategoria: json["IDA_CATEGORIA"],
+        idaTIpoMaterial: json["IDA_MATERIAL"],
         idaCovInstitucion: json["IDCOV_INSTITUCION"],
         mulTitulo: json["MUL_TITULO"],
         mulResumen: json["MUL_RESUMEN"],
@@ -241,6 +261,7 @@ class Multimedia extends Entity {
   Map<String, dynamic> toJson() => {
         "IDCOV_MULTIMEDIA": idcovMultimedia,
         "IDA_CATEGORIA": idaCategoria,
+        "IDA_MATERIAL": idaTIpoMaterial,
         "IDCOV_INSTITUCION": idaCovInstitucion,
         "MUL_TITULO": mulTitulo,
         "MUL_RESUMEN": mulResumen,
@@ -253,6 +274,7 @@ class Multimedia extends Entity {
 
 class Voluntary extends Entity {
   int idcovPersonal;
+  String foto;
   int idcovInstitucion;
   int idcovLogin;
   int idaTipopersonal;
@@ -268,10 +290,14 @@ class Voluntary extends Entity {
   String perFacebbok;
   String perTwitter;
   String perPaginaWeb;
+  String desInstitucion;
+String desEspecialidad;
+  String desExpedido;
 String usuario;
 
   Voluntary(
       {this.idcovPersonal = 0,
+      this.foto,
       this.idcovInstitucion,
       this.idcovLogin,
       this.idaTipopersonal,
@@ -287,12 +313,17 @@ String usuario;
       this.perFacebbok,
       this.perTwitter,
     //  this.perYouTube,
+    
       this.perPaginaWeb,
+      this.desInstitucion,
+ this.desEspecialidad,
+   this.desExpedido,
       this.usuario});
 
 
   fromJson(Map<String, dynamic> json) => new Voluntary(
       idcovPersonal: json["IDCOV_PERSONAL"],
+      foto: json["PER_FOTO"],
       idcovInstitucion: json["IDCOV_INSTITUCION"],
       idcovLogin: json["IDCOV_LOGIN"],
       idaTipopersonal: json["IDA_TIPOPERSONAL"],
@@ -307,12 +338,15 @@ String usuario;
       perInformacionComplementaria: json["PER_INFORMACIONCOMPLEMENTARIA"],
       perFacebbok: json["PER_CUENTAFACEBOOK"],
       perTwitter: json["PER_CUENTATWITTER"],
-    //  perYouTube: json["PER_CUENTAYOUTUBE"],
       perPaginaWeb: json["PER_PAGINAWEB"],
+      desInstitucion: json["DES_INSTITUCION"],
+      desEspecialidad: json["DES_ESPECIALIDAD"],
+      desExpedido: json["DES_EXPEDIDO"],
          usuario: json["USUARIO"]);
 
   Map<String, dynamic> toJson() => {
         "IDCOV_PERSONAL": idcovPersonal,
+        "PER_FOTO": foto,
         "IDCOV_INSTITUCION": idcovInstitucion,
         "IDCOV_LOGIN": idcovLogin,
         "IDA_TIPOPERSONAL": idaTipopersonal,
@@ -329,6 +363,9 @@ String usuario;
         "PER_CUENTATWITTER": perTwitter,
      //   "PER_CUENTATWITTER": perYouTube,
         "PER_PAGINAWEB": perPaginaWeb,
+        "DES_INSTITUCION": desInstitucion,
+        "DES_ESPECIALIDAD": desEspecialidad,
+        "DES_EXPEDIDO": desExpedido,
           "USUARIO": usuario
       };
 }

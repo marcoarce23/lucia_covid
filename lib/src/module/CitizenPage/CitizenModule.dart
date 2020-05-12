@@ -24,6 +24,7 @@ class _CitizenModuleState extends State<CitizenModule> {
   final generic = new Generic();
   String _opcionSeleccionada = 'LPZ';
   String _fecha = '';
+  String imagen = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
   TextEditingController _inputFieldDateController = new TextEditingController();
   List<String> _expedido = [
     'CHQ',
@@ -62,7 +63,7 @@ class _CitizenModuleState extends State<CitizenModule> {
         ),
         body: Stack(
           children: <Widget>[
-            crearFondoForm(context),
+            crearFondoForm(context, imagen),
             _crearForm(context),
           ],
         ),

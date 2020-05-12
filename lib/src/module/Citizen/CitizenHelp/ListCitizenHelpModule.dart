@@ -22,6 +22,7 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
           title: Text("Ayuda a un amig@"),
         ),
         body: Column(
+        // MediaQuery.of(context).size,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Card(
@@ -93,6 +94,9 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
   }
 
   Widget listItemsEntity(BuildContext context, AsyncSnapshot snapshot) {
+
+    final  _screenSize = MediaQuery.of(context).size;
+
     return Expanded(
       child: ListView.builder(
         shrinkWrap: true,
@@ -111,6 +115,7 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
                   ));
             },
             child: Card(
+              
                 elevation: 2,
                 //margin:                      const EdgeInsets.only(left: 10, right: 10),
                 child: Center(

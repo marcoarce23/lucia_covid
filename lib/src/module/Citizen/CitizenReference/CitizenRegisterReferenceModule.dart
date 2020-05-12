@@ -21,6 +21,8 @@ class _CitizenRegisterReferenceModuleState extends State<CitizenRegisterReferenc
   bool _save = false;
   String _opcionSeleccionada = '';
   String _opcionTipoReferencia ;
+  String imagen = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
+
   List<String> _expedido = ['CHQ','LPZ','CBB','ORU', 'PTS','TRJ', 'SCZ','BNI', 'PND' ];
   List<String> _tipoReferencia = ['familiar','tutor','hemano'];
 
@@ -73,7 +75,7 @@ List<DropdownMenuItem<String>> getTipoReferenciaDropdown() {
         appBar: _appBar(),
         body: Stack(
           children: <Widget>[
-            crearFondoForm(context),
+            crearFondoForm(context, imagen),
             _crearForm(context),
           ],
         ),

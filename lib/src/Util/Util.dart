@@ -10,9 +10,11 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:vector_math/vector_math_64.dart' as math;
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+
+final String userName=null;
 
 
 int daysInMonth(int month) {
@@ -24,10 +26,10 @@ int daysInMonth(int month) {
   return lastDayDateTime.day;
 }
 
-Future<LatLng> getLocationt() async {
+Future<LatLng> getLocation() async {
   
    final Location location = Location();
-    LocationData _location;
+    LocationData location1;
      LocationData locationResult ;
     try{
       locationResult = await location.getLocation();
@@ -38,10 +40,15 @@ Future<LatLng> getLocationt() async {
       else if (e.code == 'PERMISSION DENIED_NEVER_ASK')
       print('Permission denied enable ask');
     }
-        _location = locationResult;
-        print('Es mica casa de utillll: ${_location.latitude} -- ${_location.longitude}');
-        return  LatLng(_location.latitude, _location.longitude);
+        location1 = locationResult;
+        print('Es mica casa de utillll: ${location1.latitude} -- ${location1.longitude}');
+        return  LatLng(location1.latitude, location1.longitude);
  }
+
+ callWhatsApp(int number) async 
+    {
+     await FlutterOpenWhatsapp.sendSingleMessage("59176427275", "Eres un bolas de liga mayor");
+    }
 
 sharedImage(String imagePath, String nameImage, String nameAttachExtension, String extensionImage, String detail) async 
     {

@@ -26,6 +26,7 @@ class _CitizenInfoModuleState extends State<CitizenInfoModule> {
   List<String> _cantidad = ['0','1','2','3','4','5','6','7','8','9','10'];
   String _opcionSeleccionada = '';
    int _currentIndex;
+   String imagen = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
 
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -76,7 +77,7 @@ class _CitizenInfoModuleState extends State<CitizenInfoModule> {
         appBar: _appBar(),
         body: Stack(
           children: <Widget>[
-            crearFondoForm(context),
+            crearFondoForm(context, imagen),
             _crearForm(context),
           ],
         ),

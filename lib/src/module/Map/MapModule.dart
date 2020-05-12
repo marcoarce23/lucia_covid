@@ -80,7 +80,7 @@ class MapModuleState extends State<MapModule> {
         Align(
           alignment: Alignment.bottomCenter,
           child: InkWell(
-            onTap: getLocationt,
+            onTap: getLocation,
             child: Container(
               height: 40.0,
               width: 40.0,

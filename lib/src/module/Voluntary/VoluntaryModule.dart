@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:image_picker/image_picker.dart';
@@ -36,19 +37,19 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
 
   bool _save = false;
   bool esCovid = false;
-  File foto;
+  int _currentIndex = 0;
+  File foto ;
+  String imagen = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
+
   var result;
-
-  int _currentIndex;
-
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
+ final prefs = new PreferensUser();
   Voluntary entity = new Voluntary();
 
   @override
   void initState() {
-    _currentIndex = 0;
     super.initState();
   }
 
@@ -94,7 +95,7 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
         appBar: _appBar(),
         body: Stack(
           children: <Widget>[
-            crearFondoForm(context),
+            crearFondoForm(context, imagen),
             _crearForm(context),
           ],
         ),
@@ -164,45 +165,45 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
     expedido = InputDropDown(
         FaIcon(FontAwesomeIcons.sortDown, color: Colors.orange),
         'Expedido:',
-        '26',
-        urlGetClasificador + '23');
+        '60',
+        urlGetClasificador + '53');
     nombre = InputTextField(
         FaIcon(FontAwesomeIcons.userFriends, color: Colors.orange),
         'Nombre voluntario:',
-        '',
+        entity.perNombrepersonal,
         '.');
     ci = InputTextField(FaIcon(FontAwesomeIcons.idCard, color: Colors.orange),
-        'Documentod e Identidad:', '', '.');
+        'Documentod e Identidad:', entity.perCI, '.');
     telefono = InputPhoneField(
         FaIcon(FontAwesomeIcons.mobileAlt, color: Colors.orange),
         'Telefono de referencia',
-        '',
+        entity.perTelefono,
         '');
     complmementario = InputTextField(
         FaIcon(FontAwesomeIcons.commentAlt, color: Colors.orange),
         'Información complementaria:',
-        '',
+        entity.perInformacionComplementaria,
         '.');
     email = InputEmailField(
         FaIcon(FontAwesomeIcons.envelopeOpen, color: Colors.orange),
         'Correo Electronico:',
-        '',
+        entity.perCorreo,
         '',
         'Ingrese su correo electronico');
     facebook = InputTextField(
         FaIcon(FontAwesomeIcons.facebook, color: Colors.orange),
         'Cuenta Facebook:',
-        '',
+        entity.perFacebbok,
         '.');
     twitter = InputTextField(
         FaIcon(FontAwesomeIcons.twitter, color: Colors.orange),
         'Cuenta Twitter:',
-        '',
+        entity.perTwitter,
         '.');
     paginaWeb = InputUrlField(
         FaIcon(FontAwesomeIcons.internetExplorer, color: Colors.orange),
         'Pagina Web/block:',
-        '',
+       entity.perPaginaWeb,
         '.');
     sexo = InputSexo();
 
@@ -317,50 +318,46 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
     );
   }
 
-  _submit() async {
+  _submit() async 
+  {
 
-  String fotoUrl;
-  
-    if ( foto != null ) {
-      fotoUrl = await generic.subirImagen(foto);
-      print('fotoURL :$fotoUrl');
-    }
+   if (!formKey.currentState.validate()) return;
 
-    // if (!formKey.currentState.validate()) return;
+    formKey.currentState.save();
+    setState(() {
+      _save = true;
+    });
 
-    // formKey.currentState.save();
-    // setState(() {
-    //   _save = true;
-    // });
 
-    // entity.idcovPersonal = 0;
-    // entity.idcovInstitucion = int.parse(tipoEntidad.objectValue);
-    // entity.idcovLogin = 0;
-    // entity.idaTipopersonal = int.parse(tipoEspecialidad.objectValue);
-    // entity.perNombrepersonal = nombre.objectValue;
-    // entity.perCorreo = email.objectValue;
-    // entity.perTelefono = telefono.objectValue;
-    // if (esCovid)
-    //   entity.perAyudacovid = 1;
-    // else
-    //   entity.perAyudacovid = 0;
-    // entity.perCI = ci.objectValue;
-    // entity.idaExtension = int.parse(expedido.objectValue);
-    // entity.idaSexo = 0;
-    // entity.perInformacionComplementaria = complmementario.objectValue;
-    // entity.perFacebbok = facebook.objectValue;
-    // entity.perTwitter = twitter.objectValue;
-    // entity.perPaginaWeb = paginaWeb.objectValue;
-    // entity.usuario = 'marcoarce23@gmail.com';
+    
+      entity.idcovPersonal = 0;
+      entity.idcovInstitucion = int.parse(tipoEntidad.objectValue);
+      entity.idcovLogin = 0;
+      entity.idaTipopersonal = int.parse(tipoEspecialidad.objectValue);
+     entity.perNombrepersonal = nombre.objectValue;
+     entity.perApellido = '.';
+     entity.perCorreo = email.objectValue;
+     entity.perTelefono = telefono.objectValue;
+      if (esCovid)      entity.perAyudacovid = 1;
+      else              entity.perAyudacovid = 0;
+      entity.perCI = ci.objectValue;
+      entity.idaExtension = int.parse(expedido.objectValue);
+      entity.idaSexo = 0;
+     entity.perInformacionComplementaria = complmementario.objectValue;
+     entity.perFacebbok = facebook.objectValue;
+     entity.perTwitter = twitter.objectValue;
+     entity.perPaginaWeb = paginaWeb.objectValue;
+      entity.usuario = prefs.nombreUsuario;
 
-    // final dataMap = generic.add(entity, urlAddPersonal);
+      final dataMap = generic.add(entity, urlAddPersonal);
 
-    // await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
-    // print('resultado:$result');
+      await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+      print('resultado:$result');
+ 
 
-    // setState(() {
-    //   _save = false;
-    // });
+    setState(() {
+      _save = false;
+    });
 
     //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
   }
@@ -368,8 +365,13 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
   _seleccionarFoto() async => _procesarImagen(ImageSource.gallery);
   _tomarFoto() async => _procesarImagen(ImageSource.camera);
   _procesarImagen(ImageSource origen) async {
-    foto = await ImagePicker.pickImage(source: origen);
+    entity.foto = imagen;
+   foto = await ImagePicker.pickImage(source: origen);
 
+    if (foto != null) {
+      imagen = await generic.subirImagen(foto);
+       entity.foto = imagen;
+    }
     setState(() {});
   }
 }

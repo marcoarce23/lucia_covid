@@ -52,6 +52,9 @@ dependencies:
   firebase_analytics: ^5.0.1
   animate_do: ^1.2.1
   font_awesome_flutter: ^8.7.0
+  flutter_open_whatsapp: ^0.1.2
+
+
 
 dev_dependencies:
   flutter_test:

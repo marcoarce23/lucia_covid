@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
@@ -8,6 +9,13 @@ import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
+
+
+import 'dart:async';
+
+import 'package:flutter/services.dart';
+
+
 
 class ListVoluntaryModule extends StatefulWidget {
   const ListVoluntaryModule({
@@ -22,6 +30,48 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
 final generic = new Generic();
   int _currentIndex = 0;
   var result;
+  String _platformVersion = 'Unknown';
+
+ @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+  }
+
+Future<void> initPlatformState() async {
+    String platformVersion;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      platformVersion = await FlutterOpenWhatsapp.platformVersion;
+    } on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      _platformVersion = platformVersion;
+      print('Running on: $_platformVersion');
+    });
+  }
+  
+
+    void whatsAppOpen() async {
+      print("000");
+    bool whatsapp = await FlutterLaunch.hasApp(name: "whatsapp");
+
+    if (whatsapp) {
+      print("111");
+      await FlutterLaunch.launchWathsApp(phone: "+59176427275", message: "bola gilll");
+      print("222");
+    } else {
+      print("333");
+      print("Whatsapp não instalado");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +187,15 @@ final generic = new Generic();
               leading: iconEntity(entityItem),
               title: listEntity(context, entityItem),
               trailing:  FaIcon(FontAwesomeIcons.phoneVolume, color: Colors.black, size: 35,),
-              onTap: ()=> callNumber(72038768),
+               onTap: () { 
+
+                 whatsAppOpen();
+
+               }
+               //{ FlutterOpenWhatsapp.sendSingleMessage("59176427275", "bruto oooo");
+              //  print('Running on: $_platformVersion');}
+              
+              //callWhatsApp(59176427275),
             ),
             
           );
