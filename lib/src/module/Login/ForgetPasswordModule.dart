@@ -15,6 +15,7 @@ import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class ForgetPassword extends StatefulWidget {
+  static final String routeName = 'forget';
   @override
   _ForgetPasswordState createState() => _ForgetPasswordState();
 }
@@ -36,6 +37,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
 
   @override
   void initState() {
+    prefs.ultimaPagina = ForgetPassword.routeName;
     super.initState();
   }
 

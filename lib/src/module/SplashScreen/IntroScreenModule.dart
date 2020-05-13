@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
-
+import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
+import 'package:page_transition/page_transition.dart';
 
 class IntroScreenModule extends StatefulWidget {
-   static final String routeName = 'introScreen';
+  static final String routeName = 'introScreen';
 
   @override
   _IntroScreenModuleState createState() => _IntroScreenModuleState();
 }
 
 class _IntroScreenModuleState extends State<IntroScreenModule> {
-
   final prefs = new PreferensUser();
   final int _numPages = 3;
   final PageController _pageController = PageController(initialPage: 0);
@@ -20,8 +21,9 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
 
   @override
   void initState() {
-    super.initState();
     prefs.ultimaPagina = IntroScreenModule.routeName;
+    super.initState();
+    
   }
 
   List<Widget> _buildPageIndicator() {
@@ -72,7 +74,14 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                 Container(
                   alignment: Alignment.centerRight,
                   child: FlatButton(
-                    onPressed: (){},// => Navigator.of(context).push(PageRouteTheme(CitizenLayoutMenuModule())),
+                    onPressed: () => Navigator.push(
+                        context,
+                        PageTransition(
+                          curve: Curves.bounceOut,
+                          type: PageTransitionType.rotate,
+                          alignment: Alignment.topCenter,
+                          child: HomePageModule(),
+                        )),
                     child: Text(
                       'Saltar',
                       style: TextStyle(
@@ -82,7 +91,6 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                     ),
                   ),
                 ),
-
                 Container(
                   height: 500.0,
                   child: PageView(
@@ -110,21 +118,29 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                             ),
                             SizedBox(height: 10.0),
                             Text(
-                              'Connect people\naround the world',
+                              'Lucia Te Cuida, una APP para todos.',
                               style: kTitleStyle,
                             ),
                             SizedBox(height: 15.0),
                             Expanded(
-                            child: Text(
-                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
-                              style: kSubtitleStyle,
-                            ),
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    'Con esta aplicación móvil, queremos brindar una alternativa para aquellas personas que requieran de una atención médica.\n',
+                                    style: kSubtitleStyle,
+                                  ),
+                                  Text(
+                                    'Queremos que formes parte de sta aplicaón para apoyar a todos los que requeiren de un apoyo medico, espiritual. etc',
+                                    style: kSubtitleStyle,
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(40.0),
+                        padding: EdgeInsets.all(10.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -137,23 +153,31 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                                 width: 200.0,
                               ),
                             ),
-                            SizedBox(height: 50.0),
+                            SizedBox(height: 10.0),
                             Text(
-                              'Live your life smarter\nwith us!',
+                              'Estamos contigo para ayudarte.',
                               style: kTitleStyle,
                             ),
                             SizedBox(height: 15.0),
                             Expanded(
-                            child:Text(
-                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
-                              style: kSubtitleStyle,
-                            ),
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    'Somos un grupo de volunarios, que queremos apoyarte, con la aplciacón Lucia te CUida, podemos llegar a tí. \n\n',
+                                    style: kSubtitleStyle,
+                                  ),
+                                  Text(
+                                    'Somos un grupo de volunarios, que queremos apoyarte, con la aplciacón Lucia te CUida, podemos llegar a tí.',
+                                    style: kSubtitleStyle,
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(20.0),
+                        padding: EdgeInsets.all(5.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -166,17 +190,37 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                                 width: 200.0,
                               ),
                             ),
-                            SizedBox(height: 30.0),
-                            Text(
-                              'Get a new experience\nof imagination',
-                              style: kTitleStyle,
+                            SizedBox(height: 5.0),
+                            Column(
+                              children: <Widget>[
+                                Text(
+                                  'Recomendaciones',
+                                  style: kTitleStyle,
+                                ),
+                              ],
                             ),
-                            SizedBox(height: 15.0),
+                            SizedBox(height: 8.0),
                             Expanded(
-                            child:Text(
-                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
-                              style: kSubtitleStyle,
-                            ),
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    'Recoemndacion 1\n',
+                                    style: kSubtitleStyle,
+                                  ),
+                                  Text(
+                                    'Recomendacion 2.\n',
+                                    style: kSubtitleStyle,
+                                  ),
+                                  Text(
+                                    'Recomendacion 3.\n',
+                                    style: kSubtitleStyle,
+                                  ),
+                                  Text(
+                                    'Recomendacion 4.',
+                                    style: kSubtitleStyle,
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -231,19 +275,37 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
           ? Container(
               height: 50.0,
               width: double.infinity,
-              color: Colors.white,
+              color: Colors.white54,
               child: GestureDetector(
-                onTap: (){},// => Navigator.of(context).push(PageRouteTheme(CitizenLayoutMenuModule())),
+                onTap: () => Navigator.push(
+                    context,
+                    PageTransition(
+                      curve: Curves.bounceOut,
+                      type: PageTransitionType.rotate,
+                      alignment: Alignment.topCenter,
+                      child: HomePageModule(),
+                    )),
                 child: Center(
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 30.0),
-                    child: Text(
-                      'Comenzar',
-                      style: TextStyle(
-                        color: Color(0xFF5B16D0),
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Comenzar',
+                          style: TextStyle(
+                            color: Colors.black, //Color(0xFF5B16D0),
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(width: 10.0),
+                        FaIcon(
+                          FontAwesomeIcons.keybase,
+                          color: Colors.blue,
+                          size: 18,
+                        ),
+                      ],
                     ),
                   ),
                 ),

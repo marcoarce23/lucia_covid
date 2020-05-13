@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Provider/PushNotificationProvider.dart';
+import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
+import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
+import 'package:lucia_covid/src/module/Map/MapPositionModule.dart';
+import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
 
 //import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -43,6 +48,10 @@ final prefs = new PreferensUser();
 
   @override
   Widget build(BuildContext context) {
+     SystemChrome.setSystemUIOverlayStyle( SystemUiOverlayStyle.light.copyWith(
+      statusBarColor: Colors.transparent
+    ));
+
     return MaterialApp(
       title: 'resource.titleApp',
       navigatorKey: navigatorKey,
@@ -63,10 +72,13 @@ final prefs = new PreferensUser();
 
 
      // initialRoute: prefs.ultimaPagina,
-      home: new SignUpModule(),//(,//IntroScreen(),
+      home: new MapPositionModule(),
 
         routes: <String, WidgetBuilder>{
         'login': (BuildContext context) => new SignUpModule(),
+        'forget': (BuildContext context) => new ForgetPassword(),
+        'introScreen': (BuildContext context) => new IntroScreenModule(),
+        'home': (BuildContext context) => new HomePageModule(),
 
       },
     );

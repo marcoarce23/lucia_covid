@@ -14,7 +14,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
                 SizedBox(width:160.0),
                 Text('Lucia de cuida. ', style: TextStyle(fontSize: 14.0)),
                 FaIcon(
-              FontAwesomeIcons.cat,
+              FontAwesomeIcons.keybase,
               color: Colors.blue,
               size: 18,
             ),

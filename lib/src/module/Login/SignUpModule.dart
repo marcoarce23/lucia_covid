@@ -10,6 +10,7 @@ import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
+import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
 import 'package:page_transition/page_transition.dart';
@@ -96,7 +97,7 @@ class _SignUpModuleState extends State<SignUpModule> {
 // prefs.avatarImagen =  currentUser.photoUrl;
 // prefs..userId =  result;
 
-    //  final dataMap = generic.add(entity, urlAddSignIn);
+      //  final dataMap = generic.add(entity, urlAddSignIn);
 
       // await dataMap.then((x) => result = x["TIPO_RESPUESTA"]);
       // print('DDDDD:$result');
@@ -111,13 +112,38 @@ class _SignUpModuleState extends State<SignUpModule> {
       //         child: IntroScreenModule(),
       //       ));
       // else
-        
+
+      // if (result == "0") {
+      //   setState(() {
+      //     Scaffold.of(context).showSnackBar(messageOk("Registro exitoso."));
+      //   });
+
+        Navigator.push(
+            context,
+            PageTransition(
+              curve: Curves.bounceOut,
+              type: PageTransitionType.rotate,
+              alignment: Alignment.topCenter,
+              child: IntroScreenModule(),
+            ));
+      // } else {
+      //   Scaffold.of(context).showSnackBar(
+      //       messageNOk("Ocurrio un error inesperado, vuelta a intentarlo."));
+
+      //   Navigator.push(
+      //       context,
+      //       PageTransition(
+      //         curve: Curves.bounceOut,
+      //         type: PageTransitionType.rotate,
+      //         alignment: Alignment.topCenter,
+      //         child: SignUpModule(),
+      //       ));
+      // }
     } catch (error) {
       print('rrrr: $error');
     }
 
-   // Navigator.of(context).push(PageRouteTheme(CitizenLayoutMenuModule()));
-
+    // Navigator.of(context).push(PageRouteTheme(CitizenLayoutMenuModule()));
   }
 
   Future<void> handleSignOut() async {
@@ -165,7 +191,7 @@ class _SignUpModuleState extends State<SignUpModule> {
                 thickness: 2.0,
               ),
             ),
-             copyRigth(),
+            copyRigth(),
           ],
         ),
       ),
@@ -173,24 +199,31 @@ class _SignUpModuleState extends State<SignUpModule> {
   }
 
   Widget _crearCampos() {
-    correo = InputEmailField(FaIcon( FontAwesomeIcons.user, color: Colors.orange ), 'Correo electrónico', '',
-        'Ingresar su correo electrónico', 'ej: cuenta@correo.com');
+    correo = InputEmailField(
+        FaIcon(FontAwesomeIcons.user, color: Colors.orange),
+        'Correo electrónico',
+        '',
+        'Ingresar su correo electrónico',
+        'ej: cuenta@correo.com');
     contrasenia = InputTextPassword(
-        FaIcon( FontAwesomeIcons.expeditedssl, color: Colors.orange ), 'Contraseña:', '', 'Ingrese su contraseña');
+        FaIcon(FontAwesomeIcons.expeditedssl, color: Colors.orange),
+        'Contraseña:',
+        '',
+        'Ingrese su contraseña');
     return Column(
       children: <Widget>[
         SizedBox(height: 15.0),
         Text(
-              'LUCIA TE CUIDA',
-              style: TextStyle(fontSize: 18, color: Colors.black),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(width: 5.0),
-            FaIcon(
-              FontAwesomeIcons.keybase,
-              color: Colors.blue,
-              size: 20,
-            ),
+          'LUCIA TE CUIDA',
+          style: TextStyle(fontSize: 18, color: Colors.black),
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(width: 5.0),
+        FaIcon(
+          FontAwesomeIcons.keybase,
+          color: Colors.blue,
+          size: 20,
+        ),
         correo,
         contrasenia,
         _crearBoton(resource.signIn),
@@ -235,7 +268,6 @@ class _SignUpModuleState extends State<SignUpModule> {
   }
 
   void _submit() async {
-
     if (!formKey.currentState.validate()) return;
 
     formKey.currentState.save();
@@ -243,48 +275,45 @@ class _SignUpModuleState extends State<SignUpModule> {
       _save = true;
     });
 
-     entity.idUsuario = 0;
-      entity.idInstitucion = 0;
-      entity.nombrePersona = '0';
-      entity.nombreInstitucion = '0';
-      entity.usuario = correo.objectValue;
-      entity.avatar =  '';
-      entity.password = contrasenia.objectValue;
-      entity.tokenDispositivo = prefs.token;
-      entity.imei = _platformImei;
+    entity.idUsuario = 0;
+    entity.idInstitucion = 0;
+    entity.nombrePersona = '0';
+    entity.nombreInstitucion = '0';
+    entity.usuario = correo.objectValue;
+    entity.avatar = '';
+    entity.password = contrasenia.objectValue;
+    entity.tokenDispositivo = prefs.token;
+    entity.imei = _platformImei;
 
-      final dataMap = generic.add(entity, urlAddSignIn);
+    final dataMap = generic.add(entity, urlAddSignIn);
 
-      await dataMap.then((x) => result = x["TIPO_RESPUESTA"]);
-      //   // generic.add(citizen);
-      if (result == '0')
-      {
-        prefs.imei = int.parse(_platformImei);
-        prefs.nombreUsuario= currentUser.displayName;
-        prefs.correoElectronico = currentUser.email;
-        prefs.avatarImagen =  currentUser.photoUrl;
+    await dataMap.then((x) => result = x["TIPO_RESPUESTA"]);
+    //   // generic.add(citizen);
+    if (result == '0') {
+      prefs.imei = int.parse(_platformImei);
+      prefs.nombreUsuario = currentUser.displayName;
+      prefs.correoElectronico = currentUser.email;
+      prefs.avatarImagen = currentUser.photoUrl;
 
-        Navigator.push(
-            context,
-            PageTransition(
-              curve: Curves.bounceOut,
-              type: PageTransitionType.rotate,
-              alignment: Alignment.topCenter,
-              child: IntroScreenModule(),
-            ));
-      }
-      else
-      {
-        Navigator.push(
-            context,
-            PageTransition(
-              curve: Curves.bounceOut,
-              type: PageTransitionType.rotate,
-              alignment: Alignment.topCenter,
-              child: SignUpModule(),
-            ));
-    } 
-   setState(() {
+      Navigator.push(
+          context,
+          PageTransition(
+            curve: Curves.bounceOut,
+            type: PageTransitionType.rotate,
+            alignment: Alignment.topCenter,
+            child: IntroScreenModule(),
+          ));
+    } else {
+      Navigator.push(
+          context,
+          PageTransition(
+            curve: Curves.bounceOut,
+            type: PageTransitionType.rotate,
+            alignment: Alignment.topCenter,
+            child: SignUpModule(),
+          ));
+    }
+    setState(() {
       _save = false;
     });
   }
@@ -319,16 +348,30 @@ class _SignUpModuleState extends State<SignUpModule> {
 
   Widget _forgetPassword() {
     return FlatButton(
-        child: Text('Olvidaste tu contraseña ?'),
-        onPressed: () {});
-         //   Navigator.of(context).push(PageRouteTheme(ForgetPassword())));
+        child: Text('Olvidaste tu contraseña ?'), onPressed: ()  => Navigator.push(
+          context,
+          PageTransition(
+            curve: Curves.bounceOut,
+            type: PageTransitionType.rotate,
+            alignment: Alignment.topCenter,
+            child: ForgetPassword(),
+          ))
+          );
   }
 
   _registerCount() {
     return FlatButton(
-        child: Text('Crea una nueva cuenta. Aqui.'),
-        onPressed: () {});
-     //       Navigator.of(context).push(PageRouteTheme(AgreeLoginModule())));
+        child: Text('Crea una nueva cuenta. Aqui.'), onPressed: () => Navigator.push(
+          context,
+          PageTransition(
+            curve: Curves.bounceOut,
+            type: PageTransitionType.rotate,
+            alignment: Alignment.topCenter,
+            child: ForgetPassword(),
+          ))
+        
+      );
+    //       Navigator.of(context).push(PageRouteTheme(AgreeLoginModule())));
   }
 
   Widget _gmailButton() {

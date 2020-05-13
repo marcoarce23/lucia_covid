@@ -18,7 +18,7 @@ class MapModuleState extends State<MapModule> {
   @override
   void initState() {
     super.initState();
-    _crearMark();
+   // _crearMark();
   }
 
   _crearMark() {

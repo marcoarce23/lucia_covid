@@ -351,10 +351,7 @@ class _EventModuleState extends State<EventModule> {
     if (picked != null) {
       setState(() {
         _time = picked;
-        _inputFieldTimeController.text = _time.hour.toString() +
-            ':' +
-            _time.minute
-                .toString(); //TimeOfDay(hour: _time.hour, minute: _time.minute).toString();
+        _inputFieldTimeController.text = _time.hour.toString() + ':' + _time.minute.toString(); //TimeOfDay(hour: _time.hour, minute: _time.minute).toString();
       });
     }
   }
