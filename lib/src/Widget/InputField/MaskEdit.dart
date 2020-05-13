@@ -49,12 +49,12 @@ class MaskedTextController extends TextEditingController {
         new TextPosition(offset: (text ?? '').length));
   }
 
-  void set text(String newText) {
-    if (super.text != newText) {
-      super.text = newText;
-      this.moveCursorToEnd();
-    }
-  }
+  // void set text(String newText) {
+  //   if (super.text != newText) {
+  //     super.text = newText;
+  //     this.moveCursorToEnd();
+  //   }
+  // }
 
   static Map<String, RegExp> getDefaultTranslator() {
     return {

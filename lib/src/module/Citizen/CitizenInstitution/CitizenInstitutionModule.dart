@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
-import 'package:lucia_covid/src/Model/ListEntity.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenMultimedia/CitizenImageDetailModule.dart';
-import 'package:lucia_covid/src/module/General/PageViewModule.dart';
-import 'package:lucia_covid/src/module/Voluntary/FoundAllVoluntaryModule.dart';
+import 'package:lucia_covid/src/module/Citizen/Voluntary/FoundAllVoluntaryModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
+import 'package:lucia_covid/src/module/UtilModule/PageViewModule.dart';
 
 class CitizenInstitutionModule extends StatefulWidget {
   final InstitucionesItems institutionItem;

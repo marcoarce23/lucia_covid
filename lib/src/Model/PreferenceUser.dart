@@ -16,21 +16,7 @@ class PreferensUser
         this._prefs = await SharedPreferences.getInstance();
       }
       // GET y SET del Genero
-      get genero {
-        return _prefs.getInt('genero') ?? 1;
-      }
 
-      set genero( int value ) {
-        _prefs.setInt('genero', value);
-      }
-
-      get celular {
-        return _prefs.getInt('celular') ?? 0;
-      }
-
-      set celular( int value ) {
-        _prefs.setInt('celular', value);
-      }
 
     get imei {
         return _prefs.getInt('imei') ?? 1;
@@ -56,15 +42,6 @@ class PreferensUser
 
       set correoElectronico( String value ) {
         _prefs.setString('correo', value);
-      }
-
- // GET y SET del correo
-      get correoGmail {
-        return _prefs.getString('correoGmail') ?? '-1';
-      }
-
-      set correoGmail( String value ) {
-        _prefs.setString('correoGmail', value);
       }
 
       // GET y SET del nombreUsuario
@@ -116,7 +93,6 @@ class PreferensUser
     set avatarImagen( String value ) {
       _prefs.setString('avatarImagen', value);
     }
-
 }
 
 

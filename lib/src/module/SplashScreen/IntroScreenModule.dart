@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
-import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
-import 'package:lucia_covid/src/Util/styles.dart';
-import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
+import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+
 
 class IntroScreenModule extends StatefulWidget {
    static final String routeName = 'introScreen';
@@ -73,7 +72,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                 Container(
                   alignment: Alignment.centerRight,
                   child: FlatButton(
-                    onPressed: () => Navigator.of(context).push(PageRouteTheme(CitizenLayoutMenuModule())),
+                    onPressed: (){},// => Navigator.of(context).push(PageRouteTheme(CitizenLayoutMenuModule())),
                     child: Text(
                       'Saltar',
                       style: TextStyle(
@@ -205,7 +204,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Text(
-                                  'Next',
+                                  'Siguiente',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 22.0,
@@ -234,7 +233,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
               width: double.infinity,
               color: Colors.white,
               child: GestureDetector(
-                onTap: () => Navigator.of(context).push(PageRouteTheme(CitizenLayoutMenuModule())),
+                onTap: (){},// => Navigator.of(context).push(PageRouteTheme(CitizenLayoutMenuModule())),
                 child: Center(
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 30.0),

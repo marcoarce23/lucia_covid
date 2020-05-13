@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
@@ -166,8 +165,7 @@ class _CitizenListInstitucionModuleState
     if (institutionItem.idaAyudaCovid == 0) {
       respuesta = "";
     } else {
-      var formatter = new DateFormat('dd/MM/yyyy');
-      respuesta = "Ayuda COVID-19 desde ${institutionItem.fechaConCovid}";
+           respuesta = "Ayuda COVID-19 desde ${institutionItem.fechaConCovid}";
     }
 
     return Text(

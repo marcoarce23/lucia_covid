@@ -6,12 +6,10 @@ import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
-import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
+
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
-import 'package:lucia_covid/src/module/Login/AgreeLoginModule.dart';
-import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
 import 'package:page_transition/page_transition.dart';
@@ -82,41 +80,44 @@ class _SignUpModuleState extends State<SignUpModule> {
     try {
       await _googleSignIn.signIn();
 
-      entity.idUsuario = int.parse(currentUser.id);
-      entity.idInstitucion = -1;
-      entity.nombrePersona = currentUser.displayName;
-      entity.nombreInstitucion = '-1';
-      entity.usuario = currentUser.email;
-      entity.avatar =  currentUser.photoUrl;
-      entity.password = contrasenia.objectValue;
-      entity.tokenDispositivo = prefs.token;
-      entity.imei = _platformImei;
+//       entity.idUsuario = int.parse(currentUser.id);
+//       entity.idInstitucion = -1;
+//       entity.nombrePersona = currentUser.displayName;
+//       entity.nombreInstitucion = '-1';
+//       entity.usuario = currentUser.email;
+//       entity.avatar =  'currentUser.photoUrl';
+//       entity.password = contrasenia.objectValue;
+//       entity.tokenDispositivo = prefs.token;
+//       entity.imei = _platformImei;
 
-      prefs.imei = int.parse(_platformImei);
-prefs.nombreUsuario= currentUser.displayName;
-prefs.correoElectronico = currentUser.email;
-prefs.avatarImagen =  currentUser.photoUrl;
+//       prefs.imei = int.parse(_platformImei);
+// prefs.nombreUsuario= currentUser.displayName;
+// prefs.correoElectronico = currentUser.email;
+// prefs.avatarImagen =  currentUser.photoUrl;
+// prefs..userId =  result;
 
+    //  final dataMap = generic.add(entity, urlAddSignIn);
 
-      final dataMap = generic.add(entity, urlAddSignIn);
+      // await dataMap.then((x) => result = x["TIPO_RESPUESTA"]);
+      // print('DDDDD:$result');
 
-      await dataMap.then((x) => result = x["TIPO_RESPUESTA"]);
-      print('DDDDD:$result');
-
-      if (result == '0')
-        Navigator.push(
-            context,
-            PageTransition(
-              curve: Curves.bounceOut,
-              type: PageTransitionType.rotate,
-              alignment: Alignment.topCenter,
-              child: IntroScreenModule(),
-            ));
-      else
-        Navigator.of(context).push(PageRouteTheme(SignUpModule()));
+      // if (result == '0')
+      //   Navigator.push(
+      //       context,
+      //       PageTransition(
+      //         curve: Curves.bounceOut,
+      //         type: PageTransitionType.rotate,
+      //         alignment: Alignment.topCenter,
+      //         child: IntroScreenModule(),
+      //       ));
+      // else
+        
     } catch (error) {
-      print(error);
+      print('rrrr: $error');
     }
+
+   // Navigator.of(context).push(PageRouteTheme(CitizenLayoutMenuModule()));
+
   }
 
   Future<void> handleSignOut() async {
@@ -319,15 +320,15 @@ prefs.avatarImagen =  currentUser.photoUrl;
   Widget _forgetPassword() {
     return FlatButton(
         child: Text('Olvidaste tu contraseña ?'),
-        onPressed: () =>
-            Navigator.of(context).push(PageRouteTheme(ForgetPassword())));
+        onPressed: () {});
+         //   Navigator.of(context).push(PageRouteTheme(ForgetPassword())));
   }
 
   _registerCount() {
     return FlatButton(
         child: Text('Crea una nueva cuenta. Aqui.'),
-        onPressed: () =>
-            Navigator.of(context).push(PageRouteTheme(AgreeLoginModule())));
+        onPressed: () {});
+     //       Navigator.of(context).push(PageRouteTheme(AgreeLoginModule())));
   }
 
   Widget _gmailButton() {

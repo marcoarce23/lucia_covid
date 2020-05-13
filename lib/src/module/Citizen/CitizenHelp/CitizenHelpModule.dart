@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,113 +9,85 @@ import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
-class _HeaderWaveGradientPainter extends CustomPainter {
+// class _HeaderWaveGradientPainter extends CustomPainter {
 
-  
+//   @override
 
-  @override
+//   void paint(Canvas canvas, Size size) {
 
-  void paint(Canvas canvas, Size size) {
+//     final Rect rect = new Rect.fromCircle(
 
-    
+//       center: Offset(0.0, 55.0),
 
-    final Rect rect = new Rect.fromCircle(
+//       radius: 180
 
-      center: Offset(0.0, 55.0),
+//     );
 
-      radius: 180
+//     final Gradient gradiente = new LinearGradient(
 
-    );
+//       begin: Alignment.topCenter,
 
+//       end: Alignment.bottomCenter,
 
+//       colors: <Color>[
 
-    final Gradient gradiente = new LinearGradient(
+//         Color(0xff6D05E8),
 
-      begin: Alignment.topCenter,
+//         Color(0xffC012FF),
 
-      end: Alignment.bottomCenter,
+//         Color(0xff6D05FA),
 
-      colors: <Color>[
+//       ],
 
-        Color(0xff6D05E8),
+//       stops: [
 
-        Color(0xffC012FF),
+//         0.2,
 
-        Color(0xff6D05FA),
+//         0.5,
 
-      ],
+//         1.0,
 
-      stops: [
+//       ]
 
-        0.2,
+//     );
 
-        0.5,
+//     final lapiz = new Paint()..shader = gradiente.createShader(rect);
 
-        1.0,
+//     // Propiedades
 
-      ]
+//     // lapiz.color = Color(0xff615AAB);
 
-    );
+//     // lapiz.color = Colors.red;
 
+//     lapiz.style = PaintingStyle.fill; // .fill .stroke
 
+//     lapiz.strokeWidth = 20;
 
+//     final path = new Path();
 
+//     // Dibujar con el path y el lapiz
 
-    final lapiz = new Paint()..shader = gradiente.createShader(rect);
+//     path.lineTo( 0, size.height * 0.25 );
 
+//     path.quadraticBezierTo(size.width * 0.25, size.height * 0.30, size.width * 0.5, size.height * 0.25 );
 
+//     path.quadraticBezierTo(size.width * 0.75, size.height * 0.20, size.width, size.height * 0.25 );
 
-    // Propiedades
+//     path.lineTo( size.width, 0 );
 
-    // lapiz.color = Color(0xff615AAB);
+//     canvas.drawPath(path, lapiz );
 
-    // lapiz.color = Colors.red;
+//   }
 
-    lapiz.style = PaintingStyle.fill; // .fill .stroke
+//   @override
 
-    lapiz.strokeWidth = 20;
+//   bool shouldRepaint(CustomPainter oldDelegate) {
 
+//     return true;
 
+//   }
 
-    final path = new Path();
-
-
-
-    // Dibujar con el path y el lapiz
-
-    path.lineTo( 0, size.height * 0.25 );
-
-    path.quadraticBezierTo(size.width * 0.25, size.height * 0.30, size.width * 0.5, size.height * 0.25 );
-
-    path.quadraticBezierTo(size.width * 0.75, size.height * 0.20, size.width, size.height * 0.25 );
-
-    path.lineTo( size.width, 0 );
-
-
-
-  
-
-
-
-
-
-    canvas.drawPath(path, lapiz );
-
-  }
-
-
-
-  @override
-
-  bool shouldRepaint(CustomPainter oldDelegate) {
-
-    return true;
-
-  }
-
-
-
-}
+// }
 class CitizenHelpModule extends StatefulWidget {
   @override
   _CitizenHelpModuleState createState() => _CitizenHelpModuleState();
@@ -133,7 +104,6 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
   String _opcionSeleccionadaPrioridad = '';
   var result;
   var list;
-
 
   List<String> _tipoPrioridad = [
     '<Seleccionar_Prioridad>',
@@ -155,47 +125,41 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
   final generic = new Generic();
   RegistroAmigo registroAmigo = new RegistroAmigo();
 
-
   @override
   void initState() {
     _opcionSeleccionadaPrioridad = '<Seleccionar_Prioridad>';
-     super.initState();
-    
+    super.initState();
   }
 
- List<DropdownMenuItem<String>> getOpcionesPrioridad() {
+  List<DropdownMenuItem<String>> getOpcionesPrioridad() {
     List<DropdownMenuItem<String>> lista = new List();
 
     _tipoPrioridad.forEach((tipoPrioridad) {
       lista.add(DropdownMenuItem(
         child: Text(tipoPrioridad),
         value: tipoPrioridad,
-      )
-      );
+      ));
     });
     return lista;
   }
 
- List<DropdownMenuItem<String>> getipoAy(AsyncSnapshot snapshot) {
-    
+  List<DropdownMenuItem<String>> getipoAy(AsyncSnapshot snapshot) {
     List<DropdownMenuItem<String>> lista = new List();
 
     for (var i = 0; i < snapshot.data.length; i++) {
       GetClasificador item = snapshot.data[i];
       lista.add(DropdownMenuItem(
         child: Text(item.nombre),
-        value: item.id.toString(),//tipoPrioridad.id,
-      )
-      );
+        value: item.id.toString(), //tipoPrioridad.id,
+      ));
     }
     return lista;
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-    final RegistroAmigo registroAmigoData = ModalRoute.of(context).settings.arguments;
+    final RegistroAmigo registroAmigoData =
+        ModalRoute.of(context).settings.arguments;
 
     if (registroAmigoData != null) registroAmigo = registroAmigoData;
 
@@ -204,7 +168,6 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
         appBar: _appBar(),
         body: Stack(
           children: <Widget>[
-          
             _crearForm(context),
           ],
         ),
@@ -359,7 +322,6 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
               ),
             ),
             Container(
-
               width: size.width * 0.90,
               margin: EdgeInsets.symmetric(vertical: 0.0),
               decoration: _crearContenedorCampos(),
@@ -373,11 +335,27 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
   }
 
   Widget _crearCampos() {
-    nombre = InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Persona a poyar', registroAmigo.regPersona, 'INgrese el nombre de la persona');
-    telefono =  InputPhoneField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Telefono de referencia', registroAmigo.regTelefono, 'Registre un numero telefónico de referencia');
-    ubicacion =   InputMultilineField(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ), 'Donde la encuentro', registroAmigo.regUbicacion, 'Lugar donde se encuentra la persona a ayudar');
+    nombre = InputTextField(
+        FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
+        'Persona a poyar',
+        registroAmigo.regPersona,
+        'INgrese el nombre de la persona');
+    telefono = InputPhoneField(
+        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        'Telefono de referencia',
+        registroAmigo.regTelefono,
+        'Registre un numero telefónico de referencia');
+    ubicacion = InputMultilineField(
+        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        'Donde la encuentro',
+        registroAmigo.regUbicacion,
+        'Lugar donde se encuentra la persona a ayudar');
 
-      tipoAyuda = InputDropDown(FaIcon( FontAwesomeIcons.userMd, color: Colors.orange ) ,'Tipo de ayuda','49',urlGetClasificador+'/47');
+    tipoAyuda = InputDropDown(
+        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        'Tipo de ayuda',
+        '49',
+        urlGetClasificador + '/47');
 
     return Column(
       children: <Widget>[
@@ -395,16 +373,14 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
     );
   }
 
- 
-List<DropdownMenuItem<String>> getOpcionesTipoApoyo() {
+  List<DropdownMenuItem<String>> getOpcionesTipoApoyo() {
     List<DropdownMenuItem<String>> lista = new List();
 
     _tipoAyuda.forEach((tipoAyuda) {
       lista.add(DropdownMenuItem(
         child: Text(tipoAyuda),
         value: tipoAyuda,
-      )
-      );
+      ));
     });
     return lista;
   }

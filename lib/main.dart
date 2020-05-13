@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Provider/PushNotificationProvider.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
-import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
-import 'package:lucia_covid/src/module/Voluntary/VoluntaryModule.dart';
+
 //import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
@@ -65,11 +64,11 @@ final prefs = new PreferensUser();
 
      // initialRoute: prefs.ultimaPagina,
       home: new SignUpModule(),//(,//IntroScreen(),
-      routes:  getApplicationRoute(),
-      onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute(
-            builder: (BuildContext context) => SignUpModule());
-      }
+
+        routes: <String, WidgetBuilder>{
+        'login': (BuildContext context) => new SignUpModule(),
+
+      },
     );
   }
 }

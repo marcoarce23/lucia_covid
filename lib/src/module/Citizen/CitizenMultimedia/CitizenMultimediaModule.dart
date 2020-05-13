@@ -2,10 +2,9 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
-import 'package:lucia_covid/src/Model/ListEntity.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
-import 'package:lucia_covid/src/module/Citizen/CitizenLayoutMenu/CitizenLayoutMenuModule.dart';
-import 'package:lucia_covid/src/module/General/PageViewModule.dart';
+import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
+import 'package:lucia_covid/src/module/UtilModule/PageViewModule.dart';
 import 'CitizenImageDetailModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 

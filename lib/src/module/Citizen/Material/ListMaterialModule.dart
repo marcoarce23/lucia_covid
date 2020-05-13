@@ -1,35 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
-
-import 'package:lucia_covid/src/module/Citizen/CitizenInstitution/CitizenInstitutionModule.dart';
-
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/module/Citizen/Multimedia/MultimediaModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
-class ListCitizenPanic extends StatefulWidget {
 
+class ListMaterialModule extends StatefulWidget {
+  ListMaterialModule({Key key}) : super(key: key);
 
   @override
-  _ListCitizenPanicState createState() => _ListCitizenPanicState();
+  _ListMaterialModuleState createState() => _ListMaterialModuleState();
 }
 
-class _ListCitizenPanicState extends State<ListCitizenPanic> {
+class _ListMaterialModuleState extends State<ListMaterialModule> {
 final generic = new Generic();
 
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
-      appBar: AppBar(
-        title: Text("Solicitudes de Boton de Pánico"),
-      ),
-        body: Column(
+    return Scaffold(
+      appBar: _appBar(),
+          body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
             child: Padding(
                 padding: EdgeInsets.all(10),
-                child: Text('Lista de Boton de Pánico')),
+                child: Text("Lista de materiales publicados")),
           ),
           Card(
             elevation: 4,
@@ -57,6 +54,13 @@ final generic = new Generic();
           futureItemsInstitution(context)
         ],
       ),
+    );
+  }
+
+  AppBar _appBar() {
+    return AppBar(
+      title: Text('Documentos Multimedia'),
+      backgroundColor: Colors.orange,
     );
   }
 
@@ -93,8 +97,8 @@ final generic = new Generic();
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => CitizenInstitutionModule(
-                          institutionItem: institutionItem,
+                    builder: (context) => MultimediaModule(
+                         // institutionItem: institutionItem,
                         )),
               );
             },
@@ -148,7 +152,7 @@ final generic = new Generic();
             ),
             Container(
                 child: Text(
-              " 53 miembreos ",
+              " 53 Publicaciones ",
               style: TextStyle(color: Colors.black45, fontSize: 12),
             )),
             tieneCovid(institutionItem),
@@ -164,9 +168,8 @@ final generic = new Generic();
     if (institutionItem.ayudaConCovid == "0") {
       respuesta = "";
     } else {
-     
       respuesta =
-          "Ayuda COVID-19 desde ${institutionItem.fechaConCovid}";
+          "Fecha de Publicacion ${institutionItem.fechaConCovid}";
     }
 
     return Text(

@@ -5,16 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenHelp/CitizenHelpModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenHelp/ListCitizenHelpModule.dart';
-import 'package:lucia_covid/src/module/Entity/AtentionEntityodule.dart';
-import 'package:lucia_covid/src/module/Entity/EntityModule.dart';
-import 'package:lucia_covid/src/module/Entity/ListEntityModule.dart';
-import 'package:lucia_covid/src/module/Multimedia/ListMultimediaModule.dart';
-import 'package:lucia_covid/src/module/Multimedia/MultimediaModule.dart';
-import 'package:lucia_covid/src/module/Voluntary/AtentionModule.dart';
-import 'package:lucia_covid/src/module/Voluntary/EventModule.dart';
-import 'package:lucia_covid/src/module/Voluntary/ListEventModule.dart';
-import 'package:lucia_covid/src/module/Voluntary/ListVoluntary.dart';
-import 'package:lucia_covid/src/module/Voluntary/VoluntaryModule.dart';
+import 'package:lucia_covid/src/module/Citizen/Entity/AtentionEntityodule.dart';
+import 'package:lucia_covid/src/module/Citizen/Entity/EntityModule.dart';
+import 'package:lucia_covid/src/module/Citizen/Entity/ListEntityModule.dart';
+import 'package:lucia_covid/src/module/Citizen/Multimedia/ListMultimediaModule.dart';
+import 'package:lucia_covid/src/module/Citizen/Multimedia/MultimediaModule.dart';
+import 'package:lucia_covid/src/module/Citizen/Voluntary/AtentionModule.dart';
+import 'package:lucia_covid/src/module/Citizen/Voluntary/EventModule.dart';
+import 'package:lucia_covid/src/module/Citizen/Voluntary/ListEventModule.dart';
+import 'package:lucia_covid/src/module/Citizen/Voluntary/ListVoluntary.dart';
+import 'package:lucia_covid/src/module/Citizen/Voluntary/VoluntaryModule.dart';
+
 
 callPageEventVoluntary(int currentIdex, BuildContext context) {
     print('INDEX:$currentIdex');
@@ -72,32 +73,3 @@ callPageEventVoluntary(int currentIdex, BuildContext context) {
       Navigator.of(context).push(
           CupertinoPageRoute(builder: (BuildContext context) => ListCitizenHelpModule()));
      }
-
-class PageRouteTheme extends PageRouteBuilder
-{
-    final Widget child;
-     PageRouteTheme(this.child) 
-     :super ( pageBuilder: (BuildContext context, 
-                            Animation<double> animation, 
-                            Animation<double> secundaryAnimation)
-                            {
-                              return child;
-                            },
-              transitionsBuilder:(BuildContext context, 
-                            Animation<double> animation, 
-                            Animation<double> secundaryAnimation,
-                            Widget child)
-                            {
-                              return Transform.scale(
-                                scale: animation.value,
-                                child:  Transform.rotate(
-                                  angle:  9 -9 * animation.value,
-                                  child: FadeTransition(
-                                    opacity: animation,
-                                    child: child,
-                                  ),
-                                  ),
-                                );
-                            }
-     );
-}
