@@ -13,6 +13,7 @@ import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
+import 'package:lucia_covid/src/module/Map/MapAdressModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class EntityModule extends StatefulWidget {
@@ -84,7 +85,7 @@ class _EntityModuleState extends State<EntityModule> {
     return AppBar(
       title: Text('REGISTRO DE INSTITUCIONES', style: TextStyle(fontSize: 18, color: Colors.black),),
       backgroundColor: Colors.orange,
-      actions: <Widget>[_crearIconAppImagenes(), _crearIconAppCamara()],
+      actions: <Widget>[_crearIconAppImagenes(), _crearIconAppCamara(),  _crearIconAppMap()],
     );
   }
 
@@ -206,6 +207,16 @@ class _EntityModuleState extends State<EntityModule> {
       icon: Icon(Icons.photo_size_select_actual),
       onPressed: _seleccionarFoto,
     );
+  }
+
+  _crearIconAppMap() {
+    return IconButton(
+      icon: Icon(Icons.photo_size_select_actual),
+      onPressed: ()=> Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MapAdressModule()),
+                )  );
   }
 
   _crearIconAppCamara() {

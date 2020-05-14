@@ -5,6 +5,7 @@ import 'package:lucia_covid/src/Provider/PushNotificationProvider.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
+import 'package:lucia_covid/src/module/Map/MapAdressModule.dart';
 import 'package:lucia_covid/src/module/Map/MapPositionModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
 
@@ -72,7 +73,7 @@ final prefs = new PreferensUser();
 
 
      // initialRoute: prefs.ultimaPagina,
-      home: new MapPositionModule(),
+      home: new IntroScreenModule(),//MapAdressModule(),
 
         routes: <String, WidgetBuilder>{
         'login': (BuildContext context) => new SignUpModule(),

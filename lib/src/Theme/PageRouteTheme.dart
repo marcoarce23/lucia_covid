@@ -15,6 +15,7 @@ import 'package:lucia_covid/src/module/Citizen/Voluntary/EventModule.dart';
 import 'package:lucia_covid/src/module/Citizen/Voluntary/ListEventModule.dart';
 import 'package:lucia_covid/src/module/Citizen/Voluntary/ListVoluntary.dart';
 import 'package:lucia_covid/src/module/Citizen/Voluntary/VoluntaryModule.dart';
+import 'package:lucia_covid/src/module/Map/MapAdressModule.dart';
 
 
 callPageEventVoluntary(int currentIdex, BuildContext context) {
@@ -52,6 +53,17 @@ callPageEventVoluntary(int currentIdex, BuildContext context) {
     if (currentIdex == 2)
       Navigator.of(context).push(CupertinoPageRoute(
           builder: (BuildContext context) => ListEntityModule()));
+  }
+
+ callPageMap(int currentIdex, BuildContext context) {
+    print('INDEX:$currentIdex');
+    if (currentIdex == 0)
+      Navigator.of(context).push(CupertinoPageRoute(
+          builder: (BuildContext context) => MapAdressModule()));
+    if (currentIdex == 1)
+      Navigator.of(context).push(
+          CupertinoPageRoute(builder: (BuildContext context) => AtentionEntityModule()));
+   
   }
 
  callMultimedia(int currentIdex, BuildContext context) {

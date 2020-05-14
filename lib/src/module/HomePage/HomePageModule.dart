@@ -19,6 +19,7 @@ import 'package:lucia_covid/src/module/Citizen/Voluntary/EventModule.dart';
 import 'package:lucia_covid/src/module/Citizen/Voluntary/FoundVoluntaryModule.dart';
 import 'package:lucia_covid/src/module/Citizen/Voluntary/VoluntaryModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
+import 'package:lucia_covid/src/module/Map/MapAdressModule.dart';
 import 'package:lucia_covid/src/module/Map/MapModule.dart';
 import 'package:lucia_covid/src/module/Settings/ConfigurationModule.dart';
 
@@ -320,7 +321,7 @@ class DrawerCitizen extends StatelessWidget {
             'Solicitud de ayuda',
             () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MapModule()),
+                  MaterialPageRoute(builder: (context) => MapAdressModule()),
                 )),
         CustomListTile(
             Icons.edit_location,
