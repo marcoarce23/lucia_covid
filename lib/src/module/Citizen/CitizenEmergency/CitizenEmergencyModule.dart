@@ -6,6 +6,7 @@ import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenEmergency/CitizenAlertEmergency.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
@@ -35,7 +36,8 @@ class _CitizenEmergencyModuleState extends State<CitizenEmergencyModule> {
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
-              iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+              iconTheme:
+                  IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
               elevation: 0,
               title: Text(
                 "Solicitudes de ayuda",
@@ -99,6 +101,26 @@ class _PageMedicinaState extends State<PageMedicina> {
                 "Listado de solicitudes para ayuda con MEDICINA",
                 style: AppTheme.themeTitulo,
               ),
+               Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: FlatButton(
+                          color: AppTheme.themeColorNaranja,
+                          textColor: Colors.white,
+                          disabledColor: Colors.grey,
+                          disabledTextColor: Colors.black,
+                          splashColor: Colors.greenAccent,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      CitizenAlertEmergency("-1", "1006")),
+                            );
+                          },
+                          child: Text("Mis atenciones"),
+                        ))),
               futureMedicamentoss(context),
             ],
           ),
@@ -144,98 +166,159 @@ class _PageMedicinaState extends State<PageMedicina> {
     DateTime tempDate =
         new DateFormat("dd/MM/yyyy").parse(solicitudAyuda.fecha);
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: <Widget>[
-          contenidoCabecera(context, tempDate, solicitudAyuda),
-          contenidoFinal(context, solicitudAyuda),
-        ],
-      ),
-    );
-  }
-
-  Container contenidoFinal(
-      BuildContext context, SolicitudAyuda solicitudAyuda) {
-    return Container(
-       decoration: BoxDecoration(
-          color: Color.fromRGBO(191, 191, 191, 0.55),
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(25.0), bottomRight: Radius.circular(25.0))),
-      width: MediaQuery.of(context).size.width,
-      height: 50,
-      
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          InkWell(
-            child: Column(
-              children: <Widget>[
-                FaIcon(
-                  FontAwesomeIcons.checkCircle,
-                  color: Colors.blue,
-                  size: 25,
-                ),
-                Text(
-                  "Atender",
-                  style: TextStyle(color: Colors.blue),
-                )
-              ],
-            ),
-            onTap: () {
-              _submitMedicamentosAtender(context, solicitudAyuda);
-            },
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          Column(
-            children: <Widget>[
-              InkWell(
-                child: FaIcon(
-                  FontAwesomeIcons.handshake,
-                  color: Colors.blue,
-                  size: 25,
-                ),
-                onTap: () {
-                  _submitMedicamentosConcluido(context, solicitudAyuda);
-                },
-              ),
-              Text(
-                "Concluido",
-                style: TextStyle(color: Colors.blue),
-              )
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  _submitMedicamentosConcluido(
-      BuildContext context, SolicitudAyuda solicitudAyuda) async {
-    registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = 1006;
-    registrarAyuda.fecha =
-        DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
-    registrarAyuda.idaEstado = 79; // en concluido
-    registrarAyuda.usuario = "coavchristian@hotmail.com";
-
-    final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
-    var result;
-    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
-    if (result == "0") {
-      setState(() {
-        Scaffold.of(context)
-            .showSnackBar(messageOk("Se concluyo la solicitud"));
-      });
+    Color colorCuadro;
+    String detallePrioridad;
+    if (solicitudAyuda.idaPrioridad == 68) {
+      colorCuadro = AppTheme.themeColorRojo;
+      detallePrioridad = "Muy alta";
+    } else if (solicitudAyuda.idaPrioridad == 69) {
+      colorCuadro = AppTheme.themeColorNaranja;
+      detallePrioridad = "Alta";
     } else {
-      Scaffold.of(context)
-          .showSnackBar(messageNOk("Ocurrio un error inseperado"));
+      colorCuadro = AppTheme.themeColorVerde;
+      detallePrioridad = "Media";
     }
 
-    print('resultado:$result');
+    return contenidoAtencionSolicitudes(
+        colorCuadro, detallePrioridad, tempDate, solicitudAyuda, context);
+  }
+
+  Widget contenidoAtencionSolicitudes(
+      Color colorCuadro,
+      String detallePrioridad,
+      DateTime tempDate,
+      SolicitudAyuda solicitudAyuda,
+      BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(1.0),
+      child: Column(
+        children: <Widget>[
+          Container(
+            decoration: new BoxDecoration(boxShadow: [
+              new BoxShadow(
+                color: Colors.black12,
+                blurRadius: 30.0,
+              ),
+            ]),
+            child: Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: Column(
+                      children: <Widget>[
+                        FaIcon(
+                          FontAwesomeIcons.eye,
+                          color: colorCuadro,
+                          size: 30,
+                        ),
+                        Text(
+                          detallePrioridad,
+                          style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w800),
+                        ),
+                      ],
+                    ),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              new DateFormat("dd/MM/yyyy").format(tempDate),
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              new DateFormat("HH:mm").format(tempDate),
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Detalle:",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                          ),
+                        ),
+                        RichText(
+                          overflow: TextOverflow.clip,
+                          text: TextSpan(
+                            text: solicitudAyuda.detalle,
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                          ),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            InkWell(
+                              child: FaIcon(
+                                FontAwesomeIcons.phoneVolume,
+                                size: 20,
+                              ),
+                              onTap: () {
+                                callNumber(solicitudAyuda.telefono);
+                              },
+                            ),
+                            SizedBox(
+                              width: 25,
+                            ),
+                            InkWell(
+                              child: FaIcon(
+                                FontAwesomeIcons.comment,
+                                size: 20,
+                              ),
+                              onTap: () {
+                                sendSMS(solicitudAyuda.telefono);
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    trailing: InkWell(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          FaIcon(
+                            FontAwesomeIcons.checkCircle,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                          Text(
+                            "Atender",
+                          )
+                        ],
+                      ),
+                      onTap: () {
+                        _submitMedicamentosAtender(context, solicitudAyuda);
+                      },
+                    ),
+                  ),
+                  ButtonBar(
+                    alignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          //contenidoCabecera(context, tempDate, solicitudAyuda),
+          //contenidoFinal(context, solicitudAyuda),
+        ],
+      ),
+    );
   }
 
   _submitMedicamentosAtender(
@@ -262,137 +345,6 @@ class _PageMedicinaState extends State<PageMedicina> {
 
     print('resultado:$result');
   }
-
-  Container contenidoCabecera(
-      BuildContext context, DateTime tempDate, SolicitudAyuda solicitudAyuda) {
-    Color colorCuadro;
-    String detallePrioridad;
-    if (solicitudAyuda.idaPrioridad == 68) {
-      colorCuadro = AppTheme.themeColorRojo;
-      detallePrioridad = "Muy alta";
-    } else if (solicitudAyuda.idaPrioridad == 69) {
-      colorCuadro = AppTheme.themeColorNaranja;
-      detallePrioridad = "Alta";
-    } else {
-      colorCuadro = AppTheme.themeColorVerde;
-      detallePrioridad = "Media";
-    }
-
-    return Container(
-      decoration: BoxDecoration(
-          color: Color.fromRGBO(191, 191, 191, 0.15),
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25.0), topRight: Radius.circular(25.0))),
-
-      width: MediaQuery.of(context).size.width,
-      height: 70,
-      //color: colorCuadro,
-      child: Row(
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              FaIcon(
-                FontAwesomeIcons.eye,
-                color: colorCuadro,
-                size: 30,
-              ),
-              Text(
-                detallePrioridad,
-                style: TextStyle(
-                    fontSize: 12,
-                    color: colorCuadro,
-                    fontWeight: FontWeight.w800),
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                new DateFormat("dd/MM/yyyy").format(tempDate),
-                style: TextStyle(
-                  color: colorCuadro,
-                  fontSize: 14,
-                ),
-              ),
-              Text(
-                new DateFormat("HH:mm").format(tempDate),
-                style: TextStyle(
-                  color: colorCuadro,
-                  fontSize: 14,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Detalle:",
-                  style: TextStyle(
-                      color: colorCuadro,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800),
-                ),
-                RichText(
-                  overflow: TextOverflow.clip,
-                  text: TextSpan(
-                    text: solicitudAyuda.detalle,
-                    style: TextStyle(fontSize: 14, color: colorCuadro),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              InkWell(
-                child: FaIcon(
-                  FontAwesomeIcons.phoneVolume,
-                  color: colorCuadro,
-                  size: 25,
-                ),
-                onTap: () {
-                  callNumber(solicitudAyuda.telefono);
-                },
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              InkWell(
-                child: FaIcon(
-                  FontAwesomeIcons.comment,
-                  color: colorCuadro,
-                  size: 25,
-                ),
-                onTap: () {
-                  sendSMS(solicitudAyuda.telefono);
-                },
-              ),
-              SizedBox(
-                width: 10,
-              )
-            ],
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 class PageCovid extends StatefulWidget {
@@ -417,6 +369,26 @@ class _PageCovidState extends State<PageCovid> {
                 "Listado de solicitudes para ayuda con COVID",
                 style: AppTheme.themeTitulo,
               ),
+                   Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: FlatButton(
+                          color: AppTheme.themeColorNaranja,
+                          textColor: Colors.white,
+                          disabledColor: Colors.grey,
+                          disabledTextColor: Colors.black,
+                          splashColor: Colors.greenAccent,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      CitizenAlertEmergency("-1", "1006")),
+                            );
+                          },
+                          child: Text("Mis atenciones"),
+                        ))),
               futureCovid(context),
             ],
           ),
@@ -461,74 +433,20 @@ class _PageCovidState extends State<PageCovid> {
   Widget itemSolicitud(BuildContext context, SolicitudAyuda solicitudAyuda) {
     DateTime tempDate =
         new DateFormat("dd/MM/yyyy").parse(solicitudAyuda.fecha);
-
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: <Widget>[
-          contenidoCabecera(context, tempDate, solicitudAyuda),
-          contenidoFinal(context, solicitudAyuda),
-        ],
-      ),
-    );
-  }
-
-  Container contenidoFinal(
-      BuildContext context, SolicitudAyuda solicitudAyuda) {
-    return Container(
-       decoration: BoxDecoration(
-          color: Color.fromRGBO(191, 191, 191, 0.55),
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(25.0), bottomRight: Radius.circular(25.0))),
-      width: MediaQuery.of(context).size.width,
-      height: 50,
-      
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          InkWell(
-            child: Column(
-              children: <Widget>[
-                FaIcon(
-                  FontAwesomeIcons.checkCircle,
-                  color: Colors.blue,
-                  size: 25,
-                ),
-                Text(
-                  "Atender",
-                  style: TextStyle(color: Colors.blue),
-                )
-              ],
-            ),
-            onTap: () {
-              _submitCovidAtender(context, solicitudAyuda);
-            },
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          Column(
-            children: <Widget>[
-              InkWell(
-                child: FaIcon(
-                  FontAwesomeIcons.handshake,
-                  color: Colors.blue,
-                  size: 25,
-                ),
-                onTap: () {
-                  _submitCovidConcluido(context, solicitudAyuda);
-                },
-              ),
-              Text(
-                "Concluido",
-                style: TextStyle(color: Colors.blue),
-              )
-            ],
-          )
-        ],
-      ),
-    );
+    Color colorCuadro;
+    String detallePrioridad;
+    if (solicitudAyuda.idaPrioridad == 68) {
+      colorCuadro = AppTheme.themeColorRojo;
+      detallePrioridad = "Muy alta";
+    } else if (solicitudAyuda.idaPrioridad == 69) {
+      colorCuadro = AppTheme.themeColorNaranja;
+      detallePrioridad = "Alta";
+    } else {
+      colorCuadro = AppTheme.themeColorVerde;
+      detallePrioridad = "Media";
+    }
+    return contenidoAtencionSolicitudes(
+        colorCuadro, detallePrioridad, tempDate, solicitudAyuda, context);
   }
 
   _submitCovidConcluido(
@@ -581,132 +499,139 @@ class _PageCovidState extends State<PageCovid> {
     print('resultado:$result');
   }
 
-  Container contenidoCabecera(
-      BuildContext context, DateTime tempDate, SolicitudAyuda solicitudAyuda) {
- Color colorCuadro;
-    String detallePrioridad;
-    if (solicitudAyuda.idaPrioridad == 68) {
-      colorCuadro = AppTheme.themeColorRojo;
-      detallePrioridad = "Muy alta";
-    } else if (solicitudAyuda.idaPrioridad == 69) {
-      colorCuadro = AppTheme.themeColorNaranja;
-      detallePrioridad = "Alta";
-    } else {
-      colorCuadro = AppTheme.themeColorVerde;
-      detallePrioridad = "Media";
-    }
-
-    return Container(
-       decoration: BoxDecoration(
-          color: Color.fromRGBO(191, 191, 191, 0.15),
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25.0), topRight: Radius.circular(25.0))),
-      width: MediaQuery.of(context).size.width,
-      height: 70,
-      
-      child: Row(
+  Widget contenidoAtencionSolicitudes(
+      Color colorCuadro,
+      String detallePrioridad,
+      DateTime tempDate,
+      SolicitudAyuda solicitudAyuda,
+      BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(1.0),
+      child: Column(
         children: <Widget>[
-          
-          
-  Column(
-            children: <Widget>[
-              FaIcon(
-                FontAwesomeIcons.eye,
-                color: colorCuadro,
-                size: 30,
+          Container(
+            decoration: new BoxDecoration(boxShadow: [
+              new BoxShadow(
+                color: Colors.black12,
+                blurRadius: 30.0,
               ),
-              Text(
-                detallePrioridad,
-                style: TextStyle(
-                    fontSize: 12,
-                    color: colorCuadro,
-                    fontWeight: FontWeight.w800),
-              ),
-            ],
-          ),
-
-          SizedBox(
-            width: 5,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                new DateFormat("dd/MM/yyyy").format(tempDate),
-                style: TextStyle(
-                    color: colorCuadro,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w800),
-              ),
-              Text(
-                new DateFormat("HH:mm").format(tempDate),
-                style: TextStyle(
-                    color: colorCuadro,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w800),
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Detalle:",
-                  style: TextStyle(
-                      color: colorCuadro,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800),
-                ),
-                RichText(
-                  overflow: TextOverflow.clip,
-                  text: TextSpan(
-                    text: solicitudAyuda.detalle,
-                    style: TextStyle(fontSize: 14, color: colorCuadro),
+            ]),
+            child: Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: Column(
+                      children: <Widget>[
+                        FaIcon(
+                          FontAwesomeIcons.eye,
+                          color: colorCuadro,
+                          size: 30,
+                        ),
+                        Text(
+                          detallePrioridad,
+                          style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w800),
+                        ),
+                      ],
+                    ),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              new DateFormat("dd/MM/yyyy").format(tempDate),
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              new DateFormat("HH:mm").format(tempDate),
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Detalle:",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                          ),
+                        ),
+                        RichText(
+                          overflow: TextOverflow.clip,
+                          text: TextSpan(
+                            text: solicitudAyuda.detalle,
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                          ),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            InkWell(
+                              child: FaIcon(
+                                FontAwesomeIcons.phoneVolume,
+                                size: 20,
+                              ),
+                              onTap: () {
+                                callNumber(solicitudAyuda.telefono);
+                              },
+                            ),
+                            SizedBox(
+                              width: 25,
+                            ),
+                            InkWell(
+                              child: FaIcon(
+                                FontAwesomeIcons.comment,
+                                size: 20,
+                              ),
+                              onTap: () {
+                                sendSMS(solicitudAyuda.telefono);
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    trailing: InkWell(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          FaIcon(
+                            FontAwesomeIcons.checkCircle,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                          Text(
+                            "Atender",
+                          )
+                        ],
+                      ),
+                      onTap: () {
+                        _submitCovidAtender(context, solicitudAyuda);
+                      },
+                    ),
                   ),
-                ),
-              ],
+                  ButtonBar(
+                    alignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[],
+                  ),
+                ],
+              ),
             ),
           ),
-          SizedBox(
-            width: 5,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              InkWell(
-                child: FaIcon(
-                  FontAwesomeIcons.phoneVolume,
-                  color: colorCuadro,
-                  size: 25,
-                ),
-                onTap: () {
-                  callNumber(solicitudAyuda.telefono);
-                },
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              InkWell(
-                child: FaIcon(
-                  FontAwesomeIcons.comment,
-                  color: colorCuadro,
-                  size: 25,
-                ),
-                onTap: () {
-                  sendSMS(solicitudAyuda.telefono);
-                },
-              )
-            ],
-          ),
-           SizedBox ( width:10),
+          //contenidoCabecera(context, tempDate, solicitudAyuda),
+          //contenidoFinal(context, solicitudAyuda),
         ],
       ),
     );
@@ -736,6 +661,26 @@ class _PageMedicmanetosState extends State<PageMedicmanetos> {
                 "Listado de solicitudes para ayuda con MEDICAMENTOS",
                 style: AppTheme.themeTitulo,
               ),
+                   Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: FlatButton(
+                          color: AppTheme.themeColorNaranja,
+                          textColor: Colors.white,
+                          disabledColor: Colors.grey,
+                          disabledTextColor: Colors.black,
+                          splashColor: Colors.greenAccent,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      CitizenAlertEmergency("-1", "1006")),
+                            );
+                          },
+                          child: Text("Mis atenciones"),
+                        ))),
               future(context),
             ],
           ),
@@ -780,74 +725,20 @@ class _PageMedicmanetosState extends State<PageMedicmanetos> {
   Widget itemSolicitud(BuildContext context, SolicitudAyuda solicitudAyuda) {
     DateTime tempDate =
         new DateFormat("dd/MM/yyyy").parse(solicitudAyuda.fecha);
-
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: <Widget>[
-          contenidoCabecera(context, tempDate, solicitudAyuda),
-          contenidoFinal(context, solicitudAyuda),
-        ],
-      ),
-    );
-  }
-
-  Container contenidoFinal(
-      BuildContext context, SolicitudAyuda solicitudAyuda) {
-    return Container(
-       decoration: BoxDecoration(
-          color: Color.fromRGBO(191, 191, 191, 0.55),
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(25.0), bottomRight: Radius.circular(25.0))),
-      width: MediaQuery.of(context).size.width,
-      height: 50,
-      
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          InkWell(
-            child: Column(
-              children: <Widget>[
-                FaIcon(
-                  FontAwesomeIcons.checkCircle,
-                  color: Colors.blue,
-                  size: 25,
-                ),
-                Text(
-                  "Atender",
-                  style: TextStyle(color: Colors.blue),
-                )
-              ],
-            ),
-            onTap: () {
-              _submitAtender(context, solicitudAyuda);
-            },
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          Column(
-            children: <Widget>[
-              InkWell(
-                child: FaIcon(
-                  FontAwesomeIcons.handshake,
-                  color: Colors.blue,
-                  size: 25,
-                ),
-                onTap: () {
-                  _submitConcluido(context, solicitudAyuda);
-                },
-              ),
-              Text(
-                "Concluido",
-                style: TextStyle(color: Colors.blue),
-              )
-            ],
-          )
-        ],
-      ),
-    );
+    Color colorCuadro;
+    String detallePrioridad;
+    if (solicitudAyuda.idaPrioridad == 68) {
+      colorCuadro = AppTheme.themeColorRojo;
+      detallePrioridad = "Muy alta";
+    } else if (solicitudAyuda.idaPrioridad == 69) {
+      colorCuadro = AppTheme.themeColorNaranja;
+      detallePrioridad = "Alta";
+    } else {
+      colorCuadro = AppTheme.themeColorVerde;
+      detallePrioridad = "Media";
+    }
+    return contenidoAtencionSolicitudes(
+        colorCuadro, detallePrioridad, tempDate, solicitudAyuda, context);
   }
 
   _submitConcluido(BuildContext context, SolicitudAyuda solicitudAyuda) async {
@@ -898,132 +789,139 @@ class _PageMedicmanetosState extends State<PageMedicmanetos> {
     print('resultado:$result');
   }
 
-  Container contenidoCabecera(
-      BuildContext context, DateTime tempDate, SolicitudAyuda solicitudAyuda) {
- Color colorCuadro;
-    String detallePrioridad;
-    if (solicitudAyuda.idaPrioridad == 68) {
-      colorCuadro = AppTheme.themeColorRojo;
-      detallePrioridad = "Muy alta";
-    } else if (solicitudAyuda.idaPrioridad == 69) {
-      colorCuadro = AppTheme.themeColorNaranja;
-      detallePrioridad = "Alta";
-    } else {
-      colorCuadro = AppTheme.themeColorVerde;
-      detallePrioridad = "Media";
-    }
-
-
-    return Container(
-       decoration: BoxDecoration(
-          color: Color.fromRGBO(191, 191, 191, 0.15),
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25.0), topRight: Radius.circular(25.0))),
-      width: MediaQuery.of(context).size.width,
-      height: 70,
-      
-      child: Row(
+  Widget contenidoAtencionSolicitudes(
+      Color colorCuadro,
+      String detallePrioridad,
+      DateTime tempDate,
+      SolicitudAyuda solicitudAyuda,
+      BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(1.0),
+      child: Column(
         children: <Widget>[
-          
-  Column(
-            children: <Widget>[
-              FaIcon(
-                FontAwesomeIcons.eye,
-                color: colorCuadro,
-                size: 30,
+          Container(
+            decoration: new BoxDecoration(boxShadow: [
+              new BoxShadow(
+                color: Colors.black12,
+                blurRadius: 30.0,
               ),
-              Text(
-                detallePrioridad,
-                style: TextStyle(
-                    fontSize: 12,
-                    color: colorCuadro,
-                    fontWeight: FontWeight.w800),
-              ),
-            ],
-          ),
-
-          SizedBox(
-            width: 5,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                new DateFormat("dd/MM/yyyy").format(tempDate),
-                style: TextStyle(
-                    color: colorCuadro,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w800),
-              ),
-              Text(
-                new DateFormat("HH:mm").format(tempDate),
-                style: TextStyle(
-                    color: colorCuadro,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w800),
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Detalle:",
-                  style: TextStyle(
-                      color: colorCuadro,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800),
-                ),
-                RichText(
-                  overflow: TextOverflow.clip,
-                  text: TextSpan(
-                    text: solicitudAyuda.detalle,
-                    style: TextStyle(fontSize: 14, color: colorCuadro),
+            ]),
+            child: Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: Column(
+                      children: <Widget>[
+                        FaIcon(
+                          FontAwesomeIcons.eye,
+                          color: colorCuadro,
+                          size: 30,
+                        ),
+                        Text(
+                          detallePrioridad,
+                          style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w800),
+                        ),
+                      ],
+                    ),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              new DateFormat("dd/MM/yyyy").format(tempDate),
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              new DateFormat("HH:mm").format(tempDate),
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Detalle:",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                          ),
+                        ),
+                        RichText(
+                          overflow: TextOverflow.clip,
+                          text: TextSpan(
+                            text: solicitudAyuda.detalle,
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                          ),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            InkWell(
+                              child: FaIcon(
+                                FontAwesomeIcons.phoneVolume,
+                                size: 20,
+                              ),
+                              onTap: () {
+                                callNumber(solicitudAyuda.telefono);
+                              },
+                            ),
+                            SizedBox(
+                              width: 25,
+                            ),
+                            InkWell(
+                              child: FaIcon(
+                                FontAwesomeIcons.comment,
+                                size: 20,
+                              ),
+                              onTap: () {
+                                sendSMS(solicitudAyuda.telefono);
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    trailing: InkWell(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          FaIcon(
+                            FontAwesomeIcons.checkCircle,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                          Text(
+                            "Atender",
+                          )
+                        ],
+                      ),
+                      onTap: () {
+                        _submitAtender(context, solicitudAyuda);
+                      },
+                    ),
                   ),
-                ),
-              ],
+                  ButtonBar(
+                    alignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[],
+                  ),
+                ],
+              ),
             ),
           ),
-          SizedBox(
-            width: 5,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              InkWell(
-                child: FaIcon(
-                  FontAwesomeIcons.phoneVolume,
-                  color: colorCuadro,
-                  size: 25,
-                ),
-                onTap: () {
-                  callNumber(solicitudAyuda.telefono);
-                },
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              InkWell(
-                child: FaIcon(
-                  FontAwesomeIcons.comment,
-                  color: colorCuadro,
-                  size: 25,
-                ),
-                onTap: () {
-                  sendSMS(solicitudAyuda.telefono);
-                },
-              )
-            ],
-          ),
-          SizedBox(width: 10,)
+          //contenidoCabecera(context, tempDate, solicitudAyuda),
+          //contenidoFinal(context, solicitudAyuda),
         ],
       ),
     );
@@ -1053,6 +951,26 @@ class _PageBonosState extends State<PageBonos> {
                 "Listado de solicitudes para ayuda con Bonos",
                 style: AppTheme.themeTitulo,
               ),
+                   Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: FlatButton(
+                          color: AppTheme.themeColorNaranja,
+                          textColor: Colors.white,
+                          disabledColor: Colors.grey,
+                          disabledTextColor: Colors.black,
+                          splashColor: Colors.greenAccent,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      CitizenAlertEmergency("-1", "1006")),
+                            );
+                          },
+                          child: Text("Mis atenciones"),
+                        ))),
               futureBonos(context),
             ],
           ),
@@ -1097,74 +1015,20 @@ class _PageBonosState extends State<PageBonos> {
   Widget itemSolicitud(BuildContext context, SolicitudAyuda solicitudAyuda) {
     DateTime tempDate =
         new DateFormat("dd/MM/yyyy").parse(solicitudAyuda.fecha);
-
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: <Widget>[
-          contenidoCabecera(context, tempDate, solicitudAyuda),
-          contenidoFinal(context, solicitudAyuda),
-        ],
-      ),
-    );
-  }
-
-  Container contenidoFinal(
-      BuildContext context, SolicitudAyuda solicitudAyuda) {
-    return Container(
-       decoration: BoxDecoration(
-          color: Color.fromRGBO(191, 191, 191, 0.55),
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(25.0), bottomRight: Radius.circular(25.0))),
-      width: MediaQuery.of(context).size.width,
-      height: 50,
-      
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          InkWell(
-            child: Column(
-              children: <Widget>[
-                FaIcon(
-                  FontAwesomeIcons.checkCircle,
-                  color: Colors.blue,
-                  size: 25,
-                ),
-                Text(
-                  "Atender",
-                  style: TextStyle(color: Colors.blue),
-                )
-              ],
-            ),
-            onTap: () {
-              _submitMedicamentosAtender(context, solicitudAyuda);
-            },
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          Column(
-            children: <Widget>[
-              InkWell(
-                child: FaIcon(
-                  FontAwesomeIcons.handshake,
-                  color: Colors.blue,
-                  size: 25,
-                ),
-                onTap: () {
-                  _submitMedicamentosConcluido(context, solicitudAyuda);
-                },
-              ),
-              Text(
-                "Concluido",
-                style: TextStyle(color: Colors.blue),
-              )
-            ],
-          )
-        ],
-      ),
-    );
+    Color colorCuadro;
+    String detallePrioridad;
+    if (solicitudAyuda.idaPrioridad == 68) {
+      colorCuadro = AppTheme.themeColorRojo;
+      detallePrioridad = "Muy alta";
+    } else if (solicitudAyuda.idaPrioridad == 69) {
+      colorCuadro = AppTheme.themeColorNaranja;
+      detallePrioridad = "Alta";
+    } else {
+      colorCuadro = AppTheme.themeColorVerde;
+      detallePrioridad = "Media";
+    }
+    return contenidoAtencionSolicitudes(
+        colorCuadro, detallePrioridad, tempDate, solicitudAyuda, context);
   }
 
   _submitMedicamentosConcluido(
@@ -1217,132 +1081,139 @@ class _PageBonosState extends State<PageBonos> {
     print('resultado:$result');
   }
 
-  Container contenidoCabecera(
-      BuildContext context, DateTime tempDate, SolicitudAyuda solicitudAyuda) {
- Color colorCuadro;
-    String detallePrioridad;
-    if (solicitudAyuda.idaPrioridad == 68) {
-      colorCuadro = AppTheme.themeColorRojo;
-      detallePrioridad = "Muy alta";
-    } else if (solicitudAyuda.idaPrioridad == 69) {
-      colorCuadro = AppTheme.themeColorNaranja;
-      detallePrioridad = "Alta";
-    } else {
-      colorCuadro = AppTheme.themeColorVerde;
-      detallePrioridad = "Media";
-    }
-
-
-    return Container(
-       decoration: BoxDecoration(
-          color: Color.fromRGBO(191, 191, 191, 0.15),
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25.0), topRight: Radius.circular(25.0))),
-      width: MediaQuery.of(context).size.width,
-      height: 70,
-      
-      child: Row(
+  Widget contenidoAtencionSolicitudes(
+      Color colorCuadro,
+      String detallePrioridad,
+      DateTime tempDate,
+      SolicitudAyuda solicitudAyuda,
+      BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(1.0),
+      child: Column(
         children: <Widget>[
-            Column(
-            children: <Widget>[
-              FaIcon(
-                FontAwesomeIcons.eye,
-                color: colorCuadro,
-                size: 30,
+          Container(
+            decoration: new BoxDecoration(boxShadow: [
+              new BoxShadow(
+                color: Colors.black12,
+                blurRadius: 30.0,
               ),
-              Text(
-                detallePrioridad,
-                style: TextStyle(
-                    fontSize: 12,
-                    color: colorCuadro,
-                    fontWeight: FontWeight.w800),
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                new DateFormat("dd/MM/yyyy").format(tempDate),
-                style: TextStyle(
-                    color: colorCuadro,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w800),
-              ),
-              Text(
-                new DateFormat("HH:mm").format(tempDate),
-                style: TextStyle(
-                    color: colorCuadro,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w800),
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Detalle:",
-                  style: TextStyle(
-                      color: colorCuadro,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800),
-                ),
-                RichText(
-                  overflow: TextOverflow.clip,
-                  text: TextSpan(
-                    text: solicitudAyuda.detalle,
-                    style: TextStyle(fontSize: 14, color: colorCuadro),
+            ]),
+            child: Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: Column(
+                      children: <Widget>[
+                        FaIcon(
+                          FontAwesomeIcons.eye,
+                          color: colorCuadro,
+                          size: 30,
+                        ),
+                        Text(
+                          detallePrioridad,
+                          style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w800),
+                        ),
+                      ],
+                    ),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              new DateFormat("dd/MM/yyyy").format(tempDate),
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              new DateFormat("HH:mm").format(tempDate),
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Detalle:",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                          ),
+                        ),
+                        RichText(
+                          overflow: TextOverflow.clip,
+                          text: TextSpan(
+                            text: solicitudAyuda.detalle,
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                          ),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            InkWell(
+                              child: FaIcon(
+                                FontAwesomeIcons.phoneVolume,
+                                size: 20,
+                              ),
+                              onTap: () {
+                                callNumber(solicitudAyuda.telefono);
+                              },
+                            ),
+                            SizedBox(
+                              width: 25,
+                            ),
+                            InkWell(
+                              child: FaIcon(
+                                FontAwesomeIcons.comment,
+                                size: 20,
+                              ),
+                              onTap: () {
+                                sendSMS(solicitudAyuda.telefono);
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    trailing: InkWell(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          FaIcon(
+                            FontAwesomeIcons.checkCircle,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                          Text(
+                            "Atender",
+                          )
+                        ],
+                      ),
+                      onTap: () {
+                        _submitMedicamentosAtender(context, solicitudAyuda);
+                      },
+                    ),
                   ),
-                ),
-              ],
+                  ButtonBar(
+                    alignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[],
+                  ),
+                ],
+              ),
             ),
           ),
-          SizedBox(
-            width: 5,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              InkWell(
-                child: FaIcon(
-                  FontAwesomeIcons.phoneVolume,
-                  color: colorCuadro,
-                  size: 25,
-                ),
-                onTap: () {
-                  callNumber(solicitudAyuda.telefono);
-                },
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              InkWell(
-                child: FaIcon(
-                  FontAwesomeIcons.comment,
-                  color: colorCuadro,
-                  size: 25,
-                ),
-                onTap: () {
-                  sendSMS(solicitudAyuda.telefono);
-                },
-              )
-            ],
-          ),
-           SizedBox(
-                width: 10,
-              )
+          //contenidoCabecera(context, tempDate, solicitudAyuda),
+          //contenidoFinal(context, solicitudAyuda),
         ],
       ),
     );

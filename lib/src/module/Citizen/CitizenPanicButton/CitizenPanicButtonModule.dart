@@ -4,6 +4,7 @@ import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenEmergency/CitizenAlertEmergency.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class CitizenPanicButtonModule extends StatefulWidget {
@@ -47,6 +48,26 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
                     style: AppTheme.themeTitulo,
                   ),
                 ),
+                Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: FlatButton(
+                          color: AppTheme.themeColorNaranja,
+                          textColor: Colors.white,
+                          disabledColor: Colors.grey,
+                          disabledTextColor: Colors.black,
+                          splashColor: Colors.greenAccent,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      CitizenAlertEmergency("4", "-1")),
+                            );
+                          },
+                          child: Text("Mis solicitudes"),
+                        ))),
                 ButtonPanic(titulo: "Boton ayuda ", tipoBoton: "64"),
                 ButtonPanic(titulo: "Boton emergencia medica", tipoBoton: "65"),
                 ButtonPanic(
@@ -98,6 +119,7 @@ class _ButtonPanic extends State<ButtonPanic> {
     botonPanico.botCordenadalat = -17.371913;
     botonPanico.botCordenadalon = -66.179140;
     botonPanico.usuario = "Coav";
+
     ///72 Solicitud enviada
     botonPanico.idaEstadoSolicitud = 72;
 
@@ -108,18 +130,6 @@ class _ButtonPanic extends State<ButtonPanic> {
 
     return Stack(
       children: <Widget>[
-        Positioned(
-            top: 65,
-            left: 235,
-            child: Opacity(
-              opacity: 0.3,
-              child: Image.asset(
-                'assets/image/button_panic.png',
-                width: 180,
-                height: 150,
-                fit: BoxFit.cover,
-              ),
-            )),
         Container(
             decoration: BoxDecoration(
               border: Border.all(
@@ -145,19 +155,16 @@ class _ButtonPanic extends State<ButtonPanic> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(widget.titulo, style: textStyle),
-                            Text(
-                                DateFormat('dd/MM/yyyy').format(DateTime.now()),
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w700, color: AppTheme.themeColorVerde  )),
                           ],
                         ),
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(" Prioridad:",
                               style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.w700)),
+                                  fontSize: 14, fontWeight: FontWeight.w700)),
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(
                               "Muy Alta",
@@ -233,7 +240,6 @@ class _ButtonPanic extends State<ButtonPanic> {
                             labelStyle:
                                 TextStyle(fontSize: 14, color: Colors.black),
                             labelText: "Nro  telefono",
-                            
                             border: InputBorder.none,
                             hintText:
                                 'Ingrese el número de telefono para comunicarnos',
@@ -246,22 +252,21 @@ class _ButtonPanic extends State<ButtonPanic> {
                         ),
                         Row(
                           children: <Widget>[
+                            Text("Fecha de envio: ",
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.w700)),
                             Text(
-                                    "Fecha de envio: ",
-                                    style: TextStyle(
-                                        fontSize: 14, fontWeight: FontWeight.w700)),
-                            Text(
-                                    DateFormat('dd/MM/yyyy HH:mm').format(DateTime.now()),
-                                    style: TextStyle(
-                                        fontSize: 14, fontWeight: FontWeight.w700)),
+                                DateFormat('dd/MM/yyyy HH:mm')
+                                    .format(DateTime.now()),
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.w700)),
                           ],
-                        ), 
+                        ),
                         Row(
                           children: <Widget>[
-                            Text(
-                                        "Estado: Solicitud de ayuda enviada ",
-                                        style: TextStyle(
-                                            fontSize: 14, fontWeight: FontWeight.w700)),
+                            Text("Estado: Solicitud de ayuda enviada ",
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.w700)),
                           ],
                         ),
                         Center(
@@ -282,7 +287,7 @@ class _ButtonPanic extends State<ButtonPanic> {
                   ),
                 ))),
       ],
-    );  
+    );
   }
 
   _submit() async {

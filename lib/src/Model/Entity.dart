@@ -24,42 +24,48 @@ class Institucion extends Entity {
   String desInsitucion;
   String desUbicacion;
 
-  Institucion({
-    this.idInstitucion,
-    this.foto,
-    this.insLat,
-    this.insLng,
-    this.tipoInstitucion,
-    this.token,    this.nombreInstitucion,
-    this.ubicacion,    this.direccion,
-    this.telefono, this.perInformacionComp,
-    this.perFacebbok,    this.perTwitter,
-    this.perPaginaWeb,    this.perYouTube,
-    this.perCorreoElectronico,  this.usuario,
-    this.desInsitucion, this.desUbicacion
-  });
+  Institucion(
+      {this.idInstitucion,
+      this.foto,
+      this.insLat,
+      this.insLng,
+      this.tipoInstitucion,
+      this.token,
+      this.nombreInstitucion,
+      this.ubicacion,
+      this.direccion,
+      this.telefono,
+      this.perInformacionComp,
+      this.perFacebbok,
+      this.perTwitter,
+      this.perPaginaWeb,
+      this.perYouTube,
+      this.perCorreoElectronico,
+      this.usuario,
+      this.desInsitucion,
+      this.desUbicacion});
 
   fromJson(Map<String, dynamic> json) => new Institucion(
-      idInstitucion: json["IDCOV_INSTITUCION"],
-      foto: json["INS_FOTO"],
-      insLat: json["INS_LAT"],
-      insLng: json["INS_LNG"],
-      tipoInstitucion: json["IDA_TIPOINSTITUCION"],
-      token: json["INS_TOKEN"],
-      nombreInstitucion: json["INS_NOMBREINSTITUCION"],
-      ubicacion: json["IDA_UBICACION"],
-      direccion: json["INS_DIRECCION"],
-      telefono: json["INS_TELEFONO"],
-      perInformacionComp: json["INS_INFORMACIONCOMPLEMENTARIA"],
-      perFacebbok: json["INS_CUENTACEBOOK"],
-      perTwitter: json["INS_CUENTATWITTER"],
-      perPaginaWeb: json["INS_PAGINAWEB"],
-      perYouTube: json["INS_CUENTAYOUTUBE"],
-      perCorreoElectronico: json["INS_CORREOINSTITUCIONAL"],
-      usuario: json["USUARIO"],
-      desInsitucion: json["DES_INSTITUCION"],
-      desUbicacion: json["DES_UBICACION"],);
-      
+        idInstitucion: json["IDCOV_INSTITUCION"],
+        foto: json["INS_FOTO"],
+        insLat: json["INS_LAT"],
+        insLng: json["INS_LNG"],
+        tipoInstitucion: json["IDA_TIPOINSTITUCION"],
+        token: json["INS_TOKEN"],
+        nombreInstitucion: json["INS_NOMBREINSTITUCION"],
+        ubicacion: json["IDA_UBICACION"],
+        direccion: json["INS_DIRECCION"],
+        telefono: json["INS_TELEFONO"],
+        perInformacionComp: json["INS_INFORMACIONCOMPLEMENTARIA"],
+        perFacebbok: json["INS_CUENTACEBOOK"],
+        perTwitter: json["INS_CUENTATWITTER"],
+        perPaginaWeb: json["INS_PAGINAWEB"],
+        perYouTube: json["INS_CUENTAYOUTUBE"],
+        perCorreoElectronico: json["INS_CORREOINSTITUCIONAL"],
+        usuario: json["USUARIO"],
+        desInsitucion: json["DES_INSTITUCION"],
+        desUbicacion: json["DES_UBICACION"],
+      );
 
   Map<String, dynamic> toJson() => {
         "IDCOV_INSTITUCION": idInstitucion,
@@ -179,7 +185,7 @@ class Evento extends Entity {
 
   Evento(
       {this.idcovEvento = 0,
-      this.idcovInstitucion ,
+      this.idcovInstitucion,
       this.idcovPersonal,
       this.eveTitulo,
       this.eveObjetivo,
@@ -206,11 +212,10 @@ class Evento extends Entity {
         usuario: json["USUARIO"],
       );
 
-
   Map<String, dynamic> toJson() => {
         "IDCOV_EVENTO": idcovEvento,
-        "IDCOV_INSTITUCION":idcovInstitucion,
-        "IDCOV_PERSONAL":idcovPersonal,
+        "IDCOV_INSTITUCION": idcovInstitucion,
+        "IDCOV_PERSONAL": idcovPersonal,
         "EVE_TITULO": eveTitulo,
         "EVE_OBJETIVO": eveObjetivo,
         "EVE_DIRIGIDOA": eveDirigidoA,
@@ -293,9 +298,9 @@ class Voluntary extends Entity {
   String perTwitter;
   String perPaginaWeb;
   String desInstitucion;
-String desEspecialidad;
+  String desEspecialidad;
   String desExpedido;
-String usuario;
+  String usuario;
 
   Voluntary(
       {this.idcovPersonal = 0,
@@ -314,12 +319,12 @@ String usuario;
       this.perInformacionComplementaria,
       this.perFacebbok,
       this.perTwitter,
-    //  this.perYouTube,
-    
+      //  this.perYouTube,
+
       this.perPaginaWeb,
       this.desInstitucion,
- this.desEspecialidad,
-   this.desExpedido,
+      this.desEspecialidad,
+      this.desExpedido,
       this.usuario});
 
   fromJson(Map<String, dynamic> json) => new Voluntary(
@@ -343,7 +348,7 @@ String usuario;
       desInstitucion: json["DES_INSTITUCION"],
       desEspecialidad: json["DES_ESPECIALIDAD"],
       desExpedido: json["DES_EXPEDIDO"],
-         usuario: json["USUARIO"]);
+      usuario: json["USUARIO"]);
 
   Map<String, dynamic> toJson() => {
         "IDCOV_PERSONAL": idcovPersonal,
@@ -367,7 +372,7 @@ String usuario;
         "DES_INSTITUCION": desInstitucion,
         "DES_ESPECIALIDAD": desEspecialidad,
         "DES_EXPEDIDO": desExpedido,
-          "USUARIO": usuario
+        "USUARIO": usuario
       };
 }
 
@@ -531,7 +536,6 @@ class GetClasificador extends Entity {
       };
 }
 
-
 class LoginSigIn extends Entity {
   int idUsuario;
   int idInstitucion;
@@ -545,38 +549,47 @@ class LoginSigIn extends Entity {
   String tokenDispositivo;
   int primeraVez;
 
-  LoginSigIn({this.idUsuario, this.idInstitucion, this.nombrePersona, this.nombreInstitucion, this.correo, this.usuario, this.password, this.avatar,
-              this.imei, this.tokenDispositivo, this.primeraVez});
+  LoginSigIn(
+      {this.idUsuario,
+      this.idInstitucion,
+      this.nombrePersona,
+      this.nombreInstitucion,
+      this.correo,
+      this.usuario,
+      this.password,
+      this.avatar,
+      this.imei,
+      this.tokenDispositivo,
+      this.primeraVez});
 
   fromJson(Map<String, dynamic> json) => new LoginSigIn(
-    idUsuario: json["ID_USUARIO"],
-    idInstitucion : json["ID_INSTITUCION"],
-    nombrePersona : json["NOMBRE_PERSONA"],
-    nombreInstitucion : json["NOMBRE_INSTITUCION"],
-    correo : json["CORREO"],
-    usuario : json["USUARIO"],
-    password : json["PASSWORD"],
-    avatar : json["AVATAR"],
-    imei : json["IMEI"],
-    tokenDispositivo : json["TOKEN"],
-    primeraVez : json["PRIMERA_VEZ"],
-    );
+        idUsuario: json["ID_USUARIO"],
+        idInstitucion: json["ID_INSTITUCION"],
+        nombrePersona: json["NOMBRE_PERSONA"],
+        nombreInstitucion: json["NOMBRE_INSTITUCION"],
+        correo: json["CORREO"],
+        usuario: json["USUARIO"],
+        password: json["PASSWORD"],
+        avatar: json["AVATAR"],
+        imei: json["IMEI"],
+        tokenDispositivo: json["TOKEN"],
+        primeraVez: json["PRIMERA_VEZ"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "ID_USUARIO": idUsuario,
-    "ID_INSTITUCION": idInstitucion,
-    "NOMBRE_PERSONA": nombrePersona,
-    "NOMBRE_INSTITUCION": nombreInstitucion,
-    "CORREO": correo,
-    "USUARIO": usuario,
-    "PASSWORD": password,
-    "AVATAR": avatar,
-    "IMEI": imei,
-    "TOKEN": tokenDispositivo,
-    "PRIMERA_VEZ": primeraVez,
-   };
+        "ID_USUARIO": idUsuario,
+        "ID_INSTITUCION": idInstitucion,
+        "NOMBRE_PERSONA": nombrePersona,
+        "NOMBRE_INSTITUCION": nombreInstitucion,
+        "CORREO": correo,
+        "USUARIO": usuario,
+        "PASSWORD": password,
+        "AVATAR": avatar,
+        "IMEI": imei,
+        "TOKEN": tokenDispositivo,
+        "PRIMERA_VEZ": primeraVez,
+      };
 }
-
 
 // ---------------------------------------------------------
 
@@ -1174,6 +1187,10 @@ class SolicitudAyuda extends Entity {
   String nombreSolicitud;
   int telefono;
 
+  String fechaAtencion;
+  String nombrePersonalAtendio;
+  String nombreInstitucionAtencion;
+
   SolicitudAyuda(
       {this.idaCatalogo,
       this.idaBotonPanico,
@@ -1184,6 +1201,9 @@ class SolicitudAyuda extends Entity {
       this.nombreCatalogo,
       this.detalle,
       this.nombrePrioridad,
+      this.fechaAtencion,
+      this.nombrePersonalAtendio,
+      this.nombreInstitucionAtencion,
       this.fecha,
       this.telefono,
       this.nombreSolicitud});
@@ -1197,6 +1217,9 @@ class SolicitudAyuda extends Entity {
       idaBotonPanico: json["IDCOV_BOTONPANICO"],
       nombreCatalogo: json["NOMBRE_CATALOGO"],
       detalle: json["BOT_DETALLE"],
+      fechaAtencion: json["FECHA_ATENCION"],
+      nombrePersonalAtendio: json["PER_NOMBREPERSONAL"],
+      nombreInstitucionAtencion: json["INS_NOMBREINSTITUCION"],
       nombrePrioridad: json["NOMBRE_PRIORIDAD"],
       telefono: json["BOT_TELEFONO"],
       fecha: json["FECHA"],
@@ -1209,6 +1232,9 @@ class SolicitudAyuda extends Entity {
         "IDA_ESTADOSOLICITUD": idaEstadoSolicitud,
         "IDCOV_BOTONPANICO": idaBotonPanico,
         "BOT_CORDENADALON": longitud,
+        "FECHA_ATENCION": fechaAtencion,
+        "PER_NOMBREPERSONAL": nombrePersonalAtendio,
+        "INS_NOMBREINSTITUCION": nombreInstitucionAtencion,
         "NOMBRE_CATALOGO": nombreCatalogo,
         "BOT_TELEFONO": telefono,
         "BOT_DETALLE": detalle,

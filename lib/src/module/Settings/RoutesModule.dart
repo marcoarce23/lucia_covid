@@ -88,10 +88,19 @@ String urlGetListaSolicitudesAyudas =
     'http://covid19.ruta88.net/COVID/BotonPanico/srvBotonPanico.svc/ListaSolicitudes';
 
 
+    final String primaryKeyHistorialListaSolicitudesAyudas =
+    '_DevuelveHistorialListaSolicitudesResult';
+String urlGetHistorialListaSolicitudesAyudas =
+    'http://covid19.ruta88.net/COVID/BotonPanico/srvBotonPanico.svc/HistorialListaSolicitudes';
+
+
 // METODO POST
 final String urlAddBotonPanico =
     'http://covid19.ruta88.net/COVID/BotonPanico/srvBotonPanico.svc/BotonAyuda';
     final String urlAddSolicitudAyud =
     'http://covid19.ruta88.net/COVID/Atencion/srvAtencion.svc/SolicitudAyuda';
+
+
+    
 
 // METODO DELETE
