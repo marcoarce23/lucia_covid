@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 
 class ListEntityModule extends StatefulWidget {
+  static final String routeName = 'listaEntidad';
   ListEntityModule({Key key}) : super(key: key);
 
   @override
@@ -15,8 +17,15 @@ class ListEntityModule extends StatefulWidget {
 
 class _ListEntityModuleState extends State<ListEntityModule> {
  final generic = new Generic();
+ final prefs = new PreferensUser();
   int _currentIndex = 0;
   var result;
+
+ @override
+  void initState() {
+    prefs.ultimaPagina = ListEntityModule.routeName;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

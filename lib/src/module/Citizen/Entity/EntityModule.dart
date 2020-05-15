@@ -17,6 +17,7 @@ import 'package:lucia_covid/src/module/Map/MapAdressModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class EntityModule extends StatefulWidget {
+   static final String routeName = 'entidad';
   EntityModule({Key key}) : super(key: key);
 
   @override
@@ -51,12 +52,13 @@ class _EntityModuleState extends State<EntityModule> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
-   final prefs = new PreferensUser();
+  final prefs = new PreferensUser();
   Institucion entity = new Institucion();
 
   @override
   void initState() {
   _currentIndex = 0;
+  prefs.ultimaPagina = EntityModule.routeName;
   super.initState();
   }
 

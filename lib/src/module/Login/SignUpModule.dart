@@ -289,12 +289,13 @@ class _SignUpModuleState extends State<SignUpModule> {
 
     await dataMap.then((x) => result = x["TIPO_RESPUESTA"]);
     //   // generic.add(citizen);
-    if (result == '0') {
+    if (result != '-1') {
       prefs.imei = int.parse(_platformImei);
       prefs.nombreUsuario = currentUser.displayName;
       prefs.correoElectronico = currentUser.email;
       prefs.avatarImagen = currentUser.photoUrl;
-
+      prefs.userId = result;
+      
       Navigator.push(
           context,
           PageTransition(

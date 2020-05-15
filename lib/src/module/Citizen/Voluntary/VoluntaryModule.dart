@@ -15,6 +15,7 @@ import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class VoluntaryModule extends StatefulWidget {
+  static final String routeName = 'voluntary';
   const VoluntaryModule({Key key}) : super(key: key);
 
   @override
@@ -51,6 +52,7 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
   @override
   void initState() {
     super.initState();
+    prefs.ultimaPagina = VoluntaryModule.routeName;
   }
 
   Widget _bottomNavigationBar(BuildContext context) {

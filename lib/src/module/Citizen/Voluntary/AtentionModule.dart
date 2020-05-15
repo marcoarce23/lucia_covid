@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
@@ -11,6 +12,7 @@ import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class AtentionModule extends StatefulWidget {
+    static final String routeName = 'atentionVoluntary';
   @override
   _AtentionModuleState createState() => _AtentionModuleState();
 }
@@ -47,11 +49,13 @@ class _AtentionModuleState extends State<AtentionModule> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
+    final prefs = new PreferensUser();
   VoluntarioAtencion entity = new VoluntarioAtencion();
 
   @override
   void initState() {
     _currentIndex = 0;
+     prefs.ultimaPagina = AtentionModule.routeName;
     super.initState();
   }
 

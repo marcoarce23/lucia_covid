@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
+import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 // class _HeaderWaveGradientPainter extends CustomPainter {
@@ -89,6 +91,7 @@ import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 // }
 class CitizenHelpModule extends StatefulWidget {
+    static final String routeName = 'helpCitizen';
   @override
   _CitizenHelpModuleState createState() => _CitizenHelpModuleState();
 }
@@ -106,28 +109,23 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
   var list;
 
   List<String> _tipoPrioridad = [
-    '<Seleccionar_Prioridad>',
     'Muy Alta',
     'Alta',
     'Media'
   ];
 
-  List<String> _tipoAyuda = [
-    '<Seleccionar_Ayuda>',
-    'Salud - Covid',
-    'Salud',
-    'Económica',
-    'Alimentación'
-  ];
+ 
 
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
+   final prefs = new PreferensUser();
   RegistroAmigo registroAmigo = new RegistroAmigo();
 
   @override
   void initState() {
-    _opcionSeleccionadaPrioridad = '<Seleccionar_Prioridad>';
+    _opcionSeleccionadaPrioridad = 'Muy Alta';
+    prefs.ultimaPagina = CitizenHelpModule.routeName;
     super.initState();
   }
 
@@ -158,8 +156,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
 
   @override
   Widget build(BuildContext context) {
-    final RegistroAmigo registroAmigoData =
-        ModalRoute.of(context).settings.arguments;
+    final RegistroAmigo registroAmigoData = ModalRoute.of(context).settings.arguments;
 
     if (registroAmigoData != null) registroAmigo = registroAmigoData;
 
@@ -168,10 +165,11 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
         appBar: _appBar(),
         body: Stack(
           children: <Widget>[
-            _crearForm(context),
+            _crearForm(),
           ],
         ),
-        bottomNavigationBar: _bottomNavigationBar(context));
+        bottomNavigationBar: _bottomNavigationBar(context)
+        );
   }
 
   AppBar _appBar() {
@@ -307,7 +305,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
     );
   }
 
-  Widget _crearForm(BuildContext context) {
+  Widget _crearForm() {
     final size = MediaQuery.of(context).size;
 
     return SingleChildScrollView(
@@ -325,7 +323,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
               width: size.width * 0.90,
               margin: EdgeInsets.symmetric(vertical: 0.0),
               decoration: _crearContenedorCampos(),
-              child: _crearCampos(),
+              child: _crearCampos(context),
             ),
             crearLucia(),
           ],
@@ -334,7 +332,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
     );
   }
 
-  Widget _crearCampos() {
+  Widget _crearCampos(BuildContext context) {
     nombre = InputTextField(
         FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
         'Persona a poyar',
@@ -373,30 +371,6 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
     );
   }
 
-  List<DropdownMenuItem<String>> getOpcionesTipoApoyo() {
-    List<DropdownMenuItem<String>> lista = new List();
-
-    _tipoAyuda.forEach((tipoAyuda) {
-      lista.add(DropdownMenuItem(
-        child: Text(tipoAyuda),
-        value: tipoAyuda,
-      ));
-    });
-    return lista;
-  }
-
-  List<DropdownMenuItem<String>> getOpcionesTipoAyuda() {
-    List<DropdownMenuItem<String>> lista = new List();
-
-    _tipoAyuda.forEach((tipoAyuda) {
-      lista.add(DropdownMenuItem(
-        child: Text(tipoAyuda),
-        value: tipoAyuda,
-      ));
-    });
-    return lista;
-  }
-
   Widget _crearTipoPrioridad() {
     return Row(
       children: <Widget>[
@@ -431,6 +405,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
   }
 
   Widget _crearBoton(String text) {
+  
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 100.0),
       width: MediaQuery.of(context).size.width,
@@ -441,45 +416,48 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
         textColor: Colors.white,
         label: Text(text),
         icon: Icon(Icons.save),
-        onPressed: (_save) ? null : _submit,
+        onPressed: (_save) ? null : _submit, 
+
       ),
     );
   }
 
+
   _submit() async {
+   
     if (!formKey.currentState.validate()) return;
 
     formKey.currentState.save();
     setState(() {
       _save = true;
-    });
+});
 
-    registroAmigo.idcovRegistroAmigo = 0;
+ registroAmigo.idcovRegistroAmigo = 0;
     registroAmigo.regPersona = nombre.objectValue;
     registroAmigo.regTelefono = telefono.objectValue;
     registroAmigo.regUbicacion = ubicacion.objectValue;
     registroAmigo.regPrioridad = _opcionSeleccionadaPrioridad;
     registroAmigo.regTipoAPoyo = int.parse(tipoAyuda.objectValue);
-    registroAmigo.usuario = 'marcoarce23@gmail.com';
-
-    // if (registroAmigo.idcovRegistroAmigo == null) {
-
-    print("valores: ${registroAmigo.regPersona}");
-    print("valores: ${registroAmigo.regTelefono}");
-    print("valores: ${registroAmigo.regPrioridad}");
-    print("valores: ${registroAmigo.regUbicacion}");
-    print("valores: ${registroAmigo.regTipoAPoyo.toString()}");
-    print("valores: ${registroAmigo.usuario}");
+    registroAmigo.usuario = prefs.correoElectronico;
 
     final dataMap = generic.add(registroAmigo, urlAddVoluntary);
 
     await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
     print('resultado:$result');
 
+    if (result == "0") {
+           scaffoldKey.currentState.showSnackBar(messageOk("Se inserto correctaente"));
+    }
+      else
+     
+          scaffoldKey.currentState.showSnackBar(messageOk("Error, vuelta a intentarlo"));
+    
     setState(() {
       _save = false;
     });
 
     //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
   }
+
+  
 }

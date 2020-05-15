@@ -18,6 +18,7 @@ import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 
 class MultimediaModule extends StatefulWidget {
+  static final String routeName = 'multimedia';
   MultimediaModule({Key key}) : super(key: key);
 
   @override
@@ -53,6 +54,7 @@ class _MultimediaModuleState extends State<MultimediaModule>
   @override
   void initState() {
     _currentIndex = 0;
+    prefs.ultimaPagina = MultimediaModule.routeName;
     super.initState();
   }
 

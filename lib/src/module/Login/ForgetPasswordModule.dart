@@ -16,15 +16,16 @@ import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class ForgetPassword extends StatefulWidget {
   static final String routeName = 'forget';
+
   @override
   _ForgetPasswordState createState() => _ForgetPasswordState();
 }
 
 class _ForgetPasswordState extends State<ForgetPassword> {
   bool _save = false;
-  String imagen =
-      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
+  String imagen = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
   File foto;
+  
   final formKey = GlobalKey<FormState>();
   final generic = new Generic();
   final prefs = new PreferensUser();
@@ -33,6 +34,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   InputEmailField correo;
   InputTextPassword contrasenia;
   InputTextPassword contrasenia2;
+
   LoginSigIn entity = new LoginSigIn();
 
   @override

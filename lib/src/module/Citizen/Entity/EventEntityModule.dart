@@ -15,6 +15,7 @@ import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class EventEntityModule extends StatefulWidget {
+  static final String routeName = 'eventEntity';
   EventEntityModule({Key key}) : super(key: key);
 
   @override
@@ -22,6 +23,7 @@ class EventEntityModule extends StatefulWidget {
 }
 
 class _EventEntityModuleState extends State<EventEntityModule> {
+
   bool _save = false;
   String _fecha = '';
   TimeOfDay _time;
@@ -54,6 +56,8 @@ class _EventEntityModuleState extends State<EventEntityModule> {
     _currentIndex = 0;
     _time = new TimeOfDay.now();
     _fecha = new DateTime.now().toString().substring(0, 10);
+  prefs.ultimaPagina = EventEntityModule.routeName;
+
     super.initState();
   }
 

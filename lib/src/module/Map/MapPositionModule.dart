@@ -33,6 +33,7 @@ class _MapPositionModuleState extends State<MapPositionModule> {
   Widget build(BuildContext context) {
     createMarker(context);
     return Scaffold(
+<<<<<<< Updated upstream
        body: Stack(
          children: <Widget>[
 
@@ -126,4 +127,8 @@ class _MapPositionModuleState extends State<MapPositionModule> {
       ),
     );
   }*/
+=======
+       );
+  }
+>>>>>>> Stashed changes
 }

@@ -20,11 +20,11 @@ import 'package:lucia_covid/src/module/Citizen/Voluntary/FoundVoluntaryModule.da
 import 'package:lucia_covid/src/module/Citizen/Voluntary/VoluntaryModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
 import 'package:lucia_covid/src/module/Map/MapAdressModule.dart';
-import 'package:lucia_covid/src/module/Map/MapModule.dart';
 import 'package:lucia_covid/src/module/Settings/ConfigurationModule.dart';
 
 class HomePageModule extends StatefulWidget {
   static final String routeName = 'home';
+  
   HomePageModule({Key key}) : super(key: key);
 
   @override

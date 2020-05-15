@@ -3,8 +3,10 @@ import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
@@ -17,6 +19,7 @@ import 'package:flutter/services.dart';
 
 
 class ListVoluntaryModule extends StatefulWidget {
+  static final String routeName = 'lisVoluntary';
   const ListVoluntaryModule({
     Key key,
   }) : super(key: key);
@@ -27,6 +30,7 @@ class ListVoluntaryModule extends StatefulWidget {
 
 class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
 final generic = new Generic();
+final prefs = new PreferensUser();
   int _currentIndex = 0;
   var result;
   String _platformVersion = 'Unknown';
@@ -35,6 +39,7 @@ final generic = new Generic();
   void initState() {
     super.initState();
     initPlatformState();
+    prefs.ultimaPagina = ListVoluntaryModule.routeName;
   }
 
 Future<void> initPlatformState() async {
@@ -58,7 +63,7 @@ Future<void> initPlatformState() async {
   }
   
 
-    void whatsAppOpen() async {
+  //   void whatsAppOpen() async {
   //     print("000");
   //  // bool whatsapp = await FlutterLaunch.hasApp(name: "whatsapp");
 
@@ -70,7 +75,7 @@ Future<void> initPlatformState() async {
   //     print("333");
   //     print("Whatsapp não instalado");
   //   }
-  }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -188,13 +193,13 @@ Future<void> initPlatformState() async {
               trailing:  FaIcon(FontAwesomeIcons.phoneVolume, color: Colors.black, size: 35,),
                onTap: () { 
 
-                 whatsAppOpen();
-
+                // whatsAppOpen();
+FlutterOpenWhatsapp.sendSingleMessage("59176427275", "bruto oooo");
                }
                //{ FlutterOpenWhatsapp.sendSingleMessage("59176427275", "bruto oooo");
               //  print('Running on: $_platformVersion');}
               
-              //callWhatsApp(59176427275),
+            //  callWhatsApp(59176427275),
             ),
             
           );

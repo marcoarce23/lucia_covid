@@ -16,6 +16,7 @@ import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class EventModule extends StatefulWidget {
+   static final String routeName = 'eventVoluntary';
   @override
   _EventModuleState createState() => _EventModuleState();
 }
@@ -50,6 +51,7 @@ class _EventModuleState extends State<EventModule> {
 
   @override
   void initState() {
+    prefs.ultimaPagina = EventModule.routeName;
     _currentIndex = 0;
     _time = new TimeOfDay.now();
     _fecha = new DateTime.now().toString().substring(0, 10);

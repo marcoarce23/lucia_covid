@@ -2,10 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 
 class MapAdressModule extends StatefulWidget {
+  static final String routeName = 'mapAtencion';
   MapAdressModule({Key key}) : super(key: key);
 
   @override
@@ -13,6 +15,8 @@ class MapAdressModule extends StatefulWidget {
 }
 
 class _MapAdressModuleState extends State<MapAdressModule> {
+   final prefs = new PreferensUser();
+   
    GoogleMapController mapController;
 
   String buscarDireccion;
@@ -24,6 +28,7 @@ class _MapAdressModuleState extends State<MapAdressModule> {
   @override
   void initState() {
     super.initState();
+    prefs.ultimaPagina = MapAdressModule.routeName;
   //  _crearMark();
     markers = Set.from([]);
   }
@@ -52,7 +57,7 @@ class _MapAdressModuleState extends State<MapAdressModule> {
           width: MediaQuery.of(context).size.width,
           child: GoogleMap(
             initialCameraPosition:
-                CameraPosition(target: LatLng(-16.5132967736163, -68.12992248684166), zoom: 12.0),
+                CameraPosition(target: LatLng(-16.5132967736163, -68.12992248684166), zoom: 25.0),
           markers: markers,
             mapType: MapType.hybrid,
               onTap: (pos) {
@@ -71,7 +76,7 @@ class _MapAdressModuleState extends State<MapAdressModule> {
                   print('valor mmm: $m');
                   markers.add(m);
                 
-                    Navigator.of(context).pop();
+                 //   Navigator.of(context).pop();
                    
                 });
               },

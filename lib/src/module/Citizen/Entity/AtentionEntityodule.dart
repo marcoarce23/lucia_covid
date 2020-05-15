@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
@@ -11,6 +12,7 @@ import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class AtentionEntityModule extends StatefulWidget {
+  static final String routeName = 'AtentionEntity';
   AtentionEntityModule({Key key}) : super(key: key);
 
   @override
@@ -59,11 +61,13 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
+  final prefs = new PreferensUser();
   InstitucionAtencion entity = new InstitucionAtencion();
 
   @override
   void initState() {
     _currentIndex = 0;
+      prefs.ultimaPagina = AtentionEntityModule.routeName;
     super.initState();
   }
 

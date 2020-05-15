@@ -87,7 +87,7 @@ class PreferensUser
     }
 
     get avatarImagen {
-      return _prefs.getString('avatarImagen') ?? 'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14046.jpg';
+      return _prefs.getString('avatarImagen') ?? 'https://definicionyque.es/wp-content/uploads/2017/11/Medicina_Preventiva.jpg';
     }
 
     set avatarImagen( String value ) {

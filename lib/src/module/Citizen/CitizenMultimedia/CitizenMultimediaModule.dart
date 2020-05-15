@@ -310,7 +310,7 @@ class _PageVideoState extends State<PageVideo> {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (BuildContext context) => PageViewModule(
                     title: multimediaVideo.mulTitulo,
-                    selectedUrl:  multimediaVideo.mulEnlace,
+                    selectedUrl: multimediaVideo.mulEnlace,
                   )));
         });
   }

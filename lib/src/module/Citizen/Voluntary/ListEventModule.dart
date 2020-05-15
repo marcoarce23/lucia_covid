@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class ListEventModule extends StatefulWidget {
+  static final String routeName = 'ListEventVoluntary';
   ListEventModule({Key key}) : super(key: key);
 
   @override
@@ -14,9 +16,16 @@ class ListEventModule extends StatefulWidget {
 
 class _ListEventModuleState extends State<ListEventModule> {
 final generic = new Generic();
+ final prefs = new PreferensUser();
   int _currentIndex = 0;
   var result;
 
+@override
+  void initState() {
+    super.initState();
+    prefs.ultimaPagina = ListEventModule.routeName;
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

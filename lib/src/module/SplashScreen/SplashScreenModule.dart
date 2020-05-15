@@ -14,7 +14,7 @@ class SplashScreenModuleState extends State<SplashScreenModule> {
       seconds: 5,
       navigateAfterSeconds: new SignUpModule(),
       title: new Text(
-        'Prevencion COVID-19',
+        'LUCIA TE CUIDA',
         style: TextStyle(fontSize: 25, color: Colors.white),
       ),
       image: Image(
