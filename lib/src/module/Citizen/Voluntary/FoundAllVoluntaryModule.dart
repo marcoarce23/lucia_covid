@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class FoundAllVoluntaryModule extends StatefulWidget {
   final ProfesionalesAgrupados profesional;
+  static final String routeName ='EncontrarTodosLosVoluntarios';
 
   const FoundAllVoluntaryModule({Key key, @required this.profesional})
       : super(key: key);
@@ -19,6 +21,14 @@ class FoundAllVoluntaryModule extends StatefulWidget {
 
 class _FoundAllVoluntaryModuleState extends State<FoundAllVoluntaryModule> {
   final generic = new Generic();
+  final prefs = new PreferensUser();
+
+  @override
+  void initState() { 
+    
+    prefs.ultimaPagina = FoundAllVoluntaryModule.routeName;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

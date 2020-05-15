@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/UtilModule/PageViewModule.dart';
@@ -11,6 +12,7 @@ import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 
 class CitizenMultimediaModule extends StatefulWidget {
+  static final String routeName ='CiudadanoMultimedia';
   const CitizenMultimediaModule({Key key}) : super(key: key);
 
 
@@ -20,6 +22,7 @@ class CitizenMultimediaModule extends StatefulWidget {
 }
 
 class _CitizenMultimediaModuleState extends State<CitizenMultimediaModule> {
+  final prefs = new PreferensUser();
   final generic = new Generic();
   int page = 0;
   GlobalKey _bottomNavigationKey = GlobalKey();
@@ -28,6 +31,7 @@ class _CitizenMultimediaModuleState extends State<CitizenMultimediaModule> {
  
   @override
   void initState() {
+    prefs.ultimaPagina = CitizenMultimediaModule.routeName;
     page = 0;
     super.initState();
   }
@@ -306,7 +310,7 @@ class _PageVideoState extends State<PageVideo> {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (BuildContext context) => PageViewModule(
                     title: multimediaVideo.mulTitulo,
-                    selectedUrl: multimediaVideo.mulEnlace,
+                    selectedUrl:  multimediaVideo.mulEnlace,
                   )));
         });
   }

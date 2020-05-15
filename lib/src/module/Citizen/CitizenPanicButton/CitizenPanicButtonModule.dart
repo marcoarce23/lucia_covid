@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenEmergency/CitizenAlertEmergency.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class CitizenPanicButtonModule extends StatefulWidget {
+
+static final String routeName ='CiudadanoBotonPanico';
+
   const CitizenPanicButtonModule({Key key}) : super(key: key);
 
   @override
@@ -16,8 +20,11 @@ class CitizenPanicButtonModule extends StatefulWidget {
 }
 
 class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
+final prefs = new PreferensUser();
+
   @override
   void initState() {
+    prefs.ultimaPagina = CitizenPanicButtonModule.routeName;
     super.initState();
   }
 

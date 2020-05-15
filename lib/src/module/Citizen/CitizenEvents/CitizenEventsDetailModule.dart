@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 
 class CitizenEventsDetailModule extends StatefulWidget {
   final EventosItem eventosItem;
 
+  static final String routeName = 'CiudadanoEventosDetalle';
   const CitizenEventsDetailModule({Key key, @required this.eventosItem})
       : super(key: key);
 
@@ -14,6 +16,14 @@ class CitizenEventsDetailModule extends StatefulWidget {
 }
 
 class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
+  final prefs = new PreferensUser();
+
+  @override
+  void initState() {
+    prefs.ultimaPagina = CitizenEventsDetailModule.routeName;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +69,10 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                   ),
                   Text(
                     widget.eventosItem.fecha + ' ' + widget.eventosItem.hora,
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14, color: AppTheme.themeColorNaranja),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: AppTheme.themeColorNaranja),
                   ),
                 ],
               ),
@@ -77,7 +90,10 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                   ),
                   Text(
                     widget.eventosItem.titulo,
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14, color: AppTheme.themeColorNaranja),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: AppTheme.themeColorNaranja),
                   ),
                 ],
               ),
@@ -95,7 +111,10 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                   ),
                   Text(
                     widget.eventosItem.expositor,
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14, color: AppTheme.themeColorNaranja),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: AppTheme.themeColorNaranja),
                   ),
                 ],
               ),
@@ -113,7 +132,10 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                   ),
                   Text(
                     widget.eventosItem.objetivo,
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14, color: AppTheme.themeColorNaranja),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: AppTheme.themeColorNaranja),
                   ),
                 ],
               ),
@@ -131,7 +153,10 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                   ),
                   Text(
                     widget.eventosItem.dirigidoA,
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14, color: AppTheme.themeColorNaranja),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: AppTheme.themeColorNaranja),
                   ),
                 ],
               ),
@@ -149,7 +174,10 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                   ),
                   Text(
                     widget.eventosItem.ubicacion,
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14, color: AppTheme.themeColorNaranja),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: AppTheme.themeColorNaranja),
                   ),
                 ],
               ),

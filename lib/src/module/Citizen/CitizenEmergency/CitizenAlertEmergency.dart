@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
@@ -12,6 +13,7 @@ import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 class CitizenAlertEmergency extends StatefulWidget {
   String personal;
   String voluntario;
+  static final String routeName ='CiudadanoAlertaEmergencia';
 
   CitizenAlertEmergency(@required this.personal, @required this.voluntario);
 
@@ -20,7 +22,15 @@ class CitizenAlertEmergency extends StatefulWidget {
 }
 
 class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
+  final prefs = new PreferensUser();
   RegistrarAyuda registrarAyuda = new RegistrarAyuda();
+
+@override
+  void initState() {
+    prefs.ultimaPagina = CitizenAlertEmergency.routeName;
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -53,6 +53,7 @@ class _MapPositionModuleState extends State<MapPositionModule> {
           //                     zoom: 15.0)
           //                 ),
           //               ),
+          /*
                         Positioned(
                           top: 30.0,
                           right: 15.0,
@@ -84,7 +85,7 @@ class _MapPositionModuleState extends State<MapPositionModule> {
                               }
                             ),
                           ),
-                        )
+                        )*/
                       ],
                     ),
                  );
@@ -104,10 +105,10 @@ class _MapPositionModuleState extends State<MapPositionModule> {
              
                void onMapCreated(controller) {
                  setState(() {
-                  mapController = controller; 
+               //   mapController = controller; 
                  });
   }
-
+/*
    _crearMark() {
     allMarkers.add(
       Marker(
@@ -124,5 +125,5 @@ class _MapPositionModuleState extends State<MapPositionModule> {
             CameraPosition(target: LatLng(36.98, -121.99), zoom: 18),
       ),
     );
-  }
+  }*/
 }

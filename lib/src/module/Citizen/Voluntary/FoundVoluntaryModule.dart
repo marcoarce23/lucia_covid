@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
@@ -8,7 +9,24 @@ import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 import 'FoundAllVoluntaryModule.dart';
 
-class FoundVoluntaryModule extends StatelessWidget {
+class FoundVoluntaryModule extends StatefulWidget {
+
+  
+static final String routeName ='EncuentraVoluntario';
+  @override
+  _FoundVoluntaryModuleState createState() => _FoundVoluntaryModuleState();
+}
+
+class _FoundVoluntaryModuleState extends State<FoundVoluntaryModule> {
+final prefs = new PreferensUser();
+
+@override
+void initState() { 
+  prefs.ultimaPagina = FoundVoluntaryModule.routeName;
+  super.initState();
+  
+}
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

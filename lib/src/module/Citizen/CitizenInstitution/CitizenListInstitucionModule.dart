@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'CitizenInstitutionModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class CitizenListInstitucionModule extends StatefulWidget {
+  static final String routeName = 'ListaInstituciones';
   @override
   _CitizenListInstitucionModuleState createState() =>
       _CitizenListInstitucionModuleState();
@@ -15,6 +17,13 @@ class CitizenListInstitucionModule extends StatefulWidget {
 class _CitizenListInstitucionModuleState
     extends State<CitizenListInstitucionModule> {
   final generic = new Generic();
+  final prefs = new PreferensUser();
+
+  @override
+  void initState() {
+    prefs.ultimaPagina = CitizenListInstitucionModule.routeName;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,7 +174,7 @@ class _CitizenListInstitucionModuleState
     if (institutionItem.idaAyudaCovid == 0) {
       respuesta = "";
     } else {
-           respuesta = "Ayuda COVID-19 desde ${institutionItem.fechaConCovid}";
+      respuesta = "Ayuda COVID-19 desde ${institutionItem.fechaConCovid}";
     }
 
     return Text(

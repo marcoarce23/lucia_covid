@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
@@ -13,13 +14,16 @@ import 'CitizenEventsDetailModule.dart';
 String selectedCategorie = "Recomendaciones";
 
 class CitizenEventsModule extends StatefulWidget {
+  static final String routeName ='CiudadanoEventos';
   @override
   _CitizenEventsModuleState createState() => _CitizenEventsModuleState();
 }
 
 class _CitizenEventsModuleState extends State<CitizenEventsModule> {
+  final prefs = new PreferensUser();
   @override
   void initState() {
+    prefs.ultimaPagina = CitizenEventsModule.routeName;
     super.initState();
   }
 

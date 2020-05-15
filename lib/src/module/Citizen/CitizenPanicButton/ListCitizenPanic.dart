@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 
 import 'package:lucia_covid/src/module/Citizen/CitizenInstitution/CitizenInstitutionModule.dart';
 
@@ -8,14 +9,24 @@ import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class ListCitizenPanic extends StatefulWidget {
-
+static final String routeName ='ListaCiudadanoPanico';
 
   @override
   _ListCitizenPanicState createState() => _ListCitizenPanicState();
 }
 
 class _ListCitizenPanicState extends State<ListCitizenPanic> {
+
+  final prefs = new PreferensUser();
 final generic = new Generic();
+
+@override
+void initState() { 
+  prefs.ultimaPagina = ListCitizenPanic.routeName;
+  super.initState();
+  
+}
+
 
   @override
   Widget build(BuildContext context) {

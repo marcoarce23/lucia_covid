@@ -2,6 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Provider/PushNotificationProvider.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenEmergency/CitizenAlertEmergency.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenEmergency/CitizenEmergencyModule.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenEvents/CitizenEventsDetailModule.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenEvents/CitizenEventsModule.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenHelp/ListCitizenHelpModule.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenInstitution/CitizenInstitutionModule.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenInstitution/CitizenListInstitucionModule.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenMultimedia/CitizenImageDetailModule.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenMultimedia/CitizenMultimediaModule.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenPanicButton/CitizenPanicButtonModule.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenPanicButton/ListCitizenPanic.dart';
+import 'package:lucia_covid/src/module/Citizen/Voluntary/FoundAllVoluntaryGroupModule.dart';
+import 'package:lucia_covid/src/module/Citizen/Voluntary/FoundAllVoluntaryModule.dart';
+import 'package:lucia_covid/src/module/Citizen/Voluntary/FoundVoluntaryModule.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
@@ -25,33 +39,31 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
-final prefs = new PreferensUser();
- 
+  final GlobalKey<NavigatorState> navigatorKey =
+      new GlobalKey<NavigatorState>();
+  final prefs = new PreferensUser();
+
   @override
   void initState() {
     super.initState();
 
-     final pushProvider = new PushNotificationProvider();
-     pushProvider.initNotifications();
+    final pushProvider = new PushNotificationProvider();
+    pushProvider.initNotifications();
 
-     pushProvider.mensajes.listen( (data) {
+    pushProvider.mensajes.listen((data) {
+      //   // Navigator.pushNamed(context, 'mensaje');
+      //   print('Argumento del Push');
+      //   print(data);
 
-    //   // Navigator.pushNamed(context, 'mensaje');
-    //   print('Argumento del Push');
-    //   print(data);
-
-    //   navigatorKey.currentState.pushNamed('mensaje', arguments: data );
-        prefs.token = data;
-     });
-
+      //   navigatorKey.currentState.pushNamed('mensaje', arguments: data );
+      prefs.token = data;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-     SystemChrome.setSystemUIOverlayStyle( SystemUiOverlayStyle.light.copyWith(
-      statusBarColor: Colors.transparent
-    ));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light
+        .copyWith(statusBarColor: Colors.transparent));
 
     return MaterialApp(
       title: 'resource.titleApp',
@@ -61,7 +73,7 @@ final prefs = new PreferensUser();
         scaffoldBackgroundColor: Colors.white,
         primaryColor: Colors.white,
       ),
-       // MULTILENGUAGE
+      // MULTILENGUAGE
       // localizationsDelegates: [
       //   GlobalMaterialLocalizations.delegate,
       //   GlobalWidgetsLocalizations.delegate,
@@ -71,59 +83,47 @@ final prefs = new PreferensUser();
       //   const Locale('es', 'ES'), // Hebrew
       // ],
 
+      // initialRoute: prefs.ultimaPagina,
+      home: new IntroScreenModule(), //MapAdressModule(),
 
-     // initialRoute: prefs.ultimaPagina,
-      home: new IntroScreenModule(),//MapAdressModule(),
-
-        routes: <String, WidgetBuilder>{
+      routes: <String, WidgetBuilder>{
         'login': (BuildContext context) => new SignUpModule(),
         'forget': (BuildContext context) => new ForgetPassword(),
         'introScreen': (BuildContext context) => new IntroScreenModule(),
         'home': (BuildContext context) => new HomePageModule(),
 
+        //"CiudadanoAlertaEmergencia":(BuildContext context)=> new  CitizenAlertEmergency(),
+        "CiudadanoEmergencia": (BuildContext context) =>
+            new CitizenEmergencyModule(),
+        "CiudadanoEventos": (BuildContext context) => new CitizenEventsModule(),
+        //"CiudadanoEventosDetalle":(BuildContext context)=> new CitizenEventsDetailModule(),
+        "ListaCiudadanoAyuda": (BuildContext context) =>
+            new ListCitizenHelpModule(),
+        //"CiudadanoInstitucion":(BuildContext context)=> new CitizenInstitutionModule(),
+        "ListaInstituciones": (BuildContext context) =>
+            new CitizenListInstitucionModule(),
+        //"ImagenDetalle":(BuildContext context)=> new CitizenImageDetailModule(),
+        "CiudadanoMultimedia": (BuildContext context) =>
+            new CitizenMultimediaModule(),
+        "CiudadanoBotonPanico": (BuildContext context) =>
+            new CitizenPanicButtonModule(),
+        "ListaCiudadanoPanico": (BuildContext context) =>
+            new ListCitizenPanic(),
+        //"EncontrarTodosLosVoluntariosPorGrupo":(BuildContext context)=> new FoundAllVoluntaryGroupModule(),
+        //"EncontrarTodosLosVoluntarios":(BuildContext context)=> new FoundAllVoluntaryModule(),
+        "EncuentraVoluntario": (BuildContext context) =>
+            new FoundVoluntaryModule(),
       },
     );
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      // routes: <String, WidgetBuilder>{
-      //   'Splash': (BuildContext context) => new SplashScreenModule(),
-      //   'citizen': (BuildContext context) => new CitizenModule(),
-      //   'login': (BuildContext context) => new SignUpModule(),
-      //   'forgetPassword': (BuildContext context) => new ForgetPassword(),
-      //   'registerLogin': (BuildContext context) => new AgreeLoginModule(),
-      //   'sliderShowModule': (BuildContext context) => new SliderShowModule(),
-      //   'mensaje': (BuildContext context) => new MensajePage(),
-      // },
+// routes: <String, WidgetBuilder>{
+//   'Splash': (BuildContext context) => new SplashScreenModule(),
+//   'citizen': (BuildContext context) => new CitizenModule(),
+//   'login': (BuildContext context) => new SignUpModule(),
+//   'forgetPassword': (BuildContext context) => new ForgetPassword(),
+//   'registerLogin': (BuildContext context) => new AgreeLoginModule(),
+//   'sliderShowModule': (BuildContext context) => new SliderShowModule(),
+//   'mensaje': (BuildContext context) => new MensajePage(),
+// },

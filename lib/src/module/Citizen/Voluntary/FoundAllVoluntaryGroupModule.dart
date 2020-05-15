@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class FoundAllVoluntaryGroupModule extends StatefulWidget {
   final ProfesionalesAgrupados profesional;
+  static final String routeName = 'EncontrarTodosLosVoluntariosPorGrupo';
 
   const FoundAllVoluntaryGroupModule({Key key, @required this.profesional})
       : super(key: key);
@@ -16,8 +18,16 @@ class FoundAllVoluntaryGroupModule extends StatefulWidget {
       _FoundAllVoluntaryGroupModuleeState();
 }
 
-class _FoundAllVoluntaryGroupModuleeState extends State<FoundAllVoluntaryGroupModule> {
+class _FoundAllVoluntaryGroupModuleeState
+    extends State<FoundAllVoluntaryGroupModule> {
   final generic = new Generic();
+  final prefs = new PreferensUser();
+
+  @override
+  void initState() {
+    prefs.ultimaPagina = FoundAllVoluntaryGroupModule.routeName;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,17 +149,15 @@ class _FoundAllVoluntaryGroupModuleeState extends State<FoundAllVoluntaryGroupMo
             size: 18,
             color: AppTheme.themeColorAzul,
           ),
-        ),      
+        ),
       ],
     );
   }
 
   Widget futureCuerpoProfesionales(BuildContext context) {
     return FutureBuilder(
-        future: generic.getAll(
-            new ProfesionalesDeInstitucion(),
-            urlGetTodosGruposProfesionales,
-            primaryKeyTodosGruposProfesionales),
+        future: generic.getAll(new ProfesionalesDeInstitucion(),
+            urlGetTodosGruposProfesionales, primaryKeyTodosGruposProfesionales),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:

@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class ListCitizenHelpModule extends StatefulWidget {
+  static final String routeName = 'ListaCiudadanoAyuda';
   @override
   _ListCitizenHelpModuleState createState() => _ListCitizenHelpModuleState();
 }
 
 class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
   final generic = new Generic();
+  final prefs = new PreferensUser();
   int _currentIndex = 0;
   var result;
+
+  @override
+  void initState() {
+    prefs.ultimaPagina = ListCitizenHelpModule.routeName;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +31,7 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
           title: Text("Ayuda a un amig@"),
         ),
         body: Column(
-        // MediaQuery.of(context).size,
+          // MediaQuery.of(context).size,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Card(
@@ -71,7 +80,6 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
               title: Text('Ayudalo')),
           BottomNavigationBarItem(
               icon: Icon(Icons.person, size: 25.0), title: Text('Solicitudes')),
-          
         ],
       ),
     );
@@ -94,7 +102,6 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
   }
 
   Widget listItemsEntity(BuildContext context, AsyncSnapshot snapshot) {
-
     //final  _screenSize = MediaQuery.of(context).size;
 
     return Expanded(
@@ -115,7 +122,6 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
                   ));
             },
             child: Card(
-              
                 elevation: 2,
                 //margin:                      const EdgeInsets.only(left: 10, right: 10),
                 child: Center(
@@ -154,7 +160,6 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
     final item = entityItem.idcovRegistroAmigo;
 
     return Dismissible(
-      
       key: Key(item.toString()), //UniqueKey(),
       background: Container(
         color: Colors.red,
@@ -167,13 +172,14 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
       onDismissed: (value) {
         setState(() {
           //   items.
-      //    print('El registro:$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
-          generic.add(new RegistroAmigo(),'$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
-          final dataMap = generic.add(entityItem, '$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
+          //    print('El registro:$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
+          generic.add(new RegistroAmigo(),
+              '$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
+          final dataMap = generic.add(
+              entityItem, '$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
 
-     dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
-    print('resultado:$result');
-
+          dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+          print('resultado:$result');
         });
 
         Scaffold.of(context).showSnackBar(
@@ -207,7 +213,6 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
                 'Telefono de contacto: ${entityItem.regTelefono}',
                 style: TextStyle(color: Colors.black45, fontSize: 14),
               )),
-
               Row(
                 children: <Widget>[
                   Icon(
@@ -220,7 +225,6 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
                   )
                 ],
               ),
-
             ],
           ),
         ],
@@ -228,7 +232,7 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
     );
   }
 
-   Container iconEntity(RegistroAmigo entityItem) {
+  Container iconEntity(RegistroAmigo entityItem) {
     return Container(
         child: Column(
       children: <Widget>[

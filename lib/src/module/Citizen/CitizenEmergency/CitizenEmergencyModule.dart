@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
@@ -12,11 +13,17 @@ import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class CitizenEmergencyModule extends StatefulWidget {
+
+
+static final String routeName ='CiudadanoEmergencia';
+
   @override
   _CitizenEmergencyModuleState createState() => _CitizenEmergencyModuleState();
 }
 
 class _CitizenEmergencyModuleState extends State<CitizenEmergencyModule> {
+  
+  final prefs = new PreferensUser();
   int page = 0;
   final List<Widget> optionPage = [
     PageMedicina(),
@@ -29,6 +36,14 @@ class _CitizenEmergencyModuleState extends State<CitizenEmergencyModule> {
     setState(() {
       page = index;
     });
+  }
+
+
+@override
+  void initState() {
+    prefs.ultimaPagina = CitizenEmergencyModule.routeName;
+    // TODO: implement initState
+    super.initState();
   }
 
   @override

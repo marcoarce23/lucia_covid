@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenMultimedia/CitizenImageDetailModule.dart';
@@ -11,6 +12,7 @@ import 'package:lucia_covid/src/module/UtilModule/PageViewModule.dart';
 
 class CitizenInstitutionModule extends StatefulWidget {
   final InstitucionesItems institutionItem;
+  static final String routeName ='CiudadanoInstitucion';
 
   const CitizenInstitutionModule({Key key, @required this.institutionItem})
       : super(key: key);
@@ -22,9 +24,11 @@ class CitizenInstitutionModule extends StatefulWidget {
 
 class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
   final generic = new Generic();
-
+  final prefs = new PreferensUser();
+  
   @override
   void initState() {
+    prefs.ultimaPagina = CitizenInstitutionModule.routeName;
     super.initState();
   }
 
