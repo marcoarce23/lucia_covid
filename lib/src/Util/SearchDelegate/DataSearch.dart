@@ -166,6 +166,7 @@ class DataSearchMultimedia extends SearchDelegate {
                           return InkWell(
                             child: ListTile(
                               title: Text(listaMultimedia.mulTitulo),
+                              subtitle: Text(listaMultimedia.categoria),
                             ),
                             onTap: () {
                               if (listaMultimedia.idaCategoria == 74) {
