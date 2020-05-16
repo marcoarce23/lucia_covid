@@ -143,7 +143,9 @@ class PagePicture extends StatelessWidget {
               break;
             default:
               //mostramos los datos
-              return buildImage(context, snapshot);
+              if (snapshot.hasData)
+                return buildImage(context, snapshot);
+                else Container();
           }
         });
   }

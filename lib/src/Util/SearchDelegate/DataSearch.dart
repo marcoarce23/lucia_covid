@@ -145,7 +145,7 @@ class DataSearchMultimedia extends SearchDelegate {
     } else {
       return FutureBuilder(
           future: Generic().getAll(new ListaMultimedia(),
-              urlGetListaMultimedia + '/-1', primaryKeyListaMultimedia),
+              urlGetListaMultimedia + '/74', primaryKeyListaMultimedia),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
