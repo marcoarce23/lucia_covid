@@ -4,6 +4,7 @@ import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/UtilModule/PageViewModule.dart';
 import 'CitizenImageDetailModule.dart';
@@ -49,7 +50,14 @@ class _CitizenMultimediaModuleState extends State<CitizenMultimediaModule> {
               fontSize: 17,
               fontWeight: FontWeight.w400),
         ),
-        //backgroundColor: AppTheme.themeColorNaranja,
+          actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: DataSearchMultimedia()  );
+            },
+          )
+        ],
       ),
       drawer: DrawerCitizen(),
       bottomNavigationBar: CurvedNavigationBar(
@@ -94,7 +102,7 @@ class PagePicture extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              campoBuscarPorInstitucionCategoria(),
+             // campoBuscarPorInstitucionCategoria(),
               Text(
                 "Galería de imagenes de institución",
                 style: AppTheme.themeTitulo,
@@ -229,7 +237,7 @@ class _PageVideoState extends State<PageVideo> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              campoBuscarPorInstitucionCategoria(),
+              //campoBuscarPorInstitucionCategoria(),
               Text(
                 "Galería de videos de institución",
                 style: AppTheme.themeTitulo,
@@ -328,7 +336,7 @@ class PageDocuments extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              campoBuscarPorInstitucionCategoria(),
+              //campoBuscarPorInstitucionCategoria(),
               Text(
                 "Galería de imagenes de institución",
                 style: AppTheme.themeTitulo,

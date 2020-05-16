@@ -4,6 +4,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
+<<<<<<< refs/remotes/origin/developer
+=======
+import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+>>>>>>> 15/05/2020 22:45 busquedas
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/DrawerWidget/DrawerWiguet.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenEmergency/CitizenEmergencyModule.dart';
@@ -22,6 +26,7 @@ import 'package:lucia_covid/src/module/Citizen/Voluntary/VoluntaryModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
 import 'package:lucia_covid/src/module/Map/MapAdressModule.dart';
 import 'package:lucia_covid/src/module/Settings/ConfigurationModule.dart';
+import 'package:lucia_covid/src/module/UtilModule/PageViewModule.dart';
 
 class HomePageModule extends StatefulWidget {
   static final String routeName = 'home';
@@ -192,7 +197,15 @@ class _HomePageModuleState extends State<HomePageModule> {
                 radius: 35.0,
                 child: Icon(icono, color: Colors.white, size: 30.0),
               ),
-              Text(texto, style: TextStyle(color: color)),
+              
+              InkWell(
+                            splashColor: AppTheme
+                                .backGroundInstitutionPrimary, // inkwell color
+                            child: Text(texto, style: TextStyle(color: color)),
+                            onTap: () {                          
+                            openWeb("http://mapacovid19.ruta88.net/");
+                            }
+              ),
               // SizedBox( height: 5.0 )
             ],
           ),

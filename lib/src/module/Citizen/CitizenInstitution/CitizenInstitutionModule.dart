@@ -12,7 +12,7 @@ import 'package:lucia_covid/src/module/UtilModule/PageViewModule.dart';
 
 class CitizenInstitutionModule extends StatefulWidget {
   final InstitucionesItems institutionItem;
-  static final String routeName ='CiudadanoInstitucion';
+  static final String routeName = 'CiudadanoInstitucion';
 
   const CitizenInstitutionModule({Key key, @required this.institutionItem})
       : super(key: key);
@@ -25,7 +25,7 @@ class CitizenInstitutionModule extends StatefulWidget {
 class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
   final generic = new Generic();
   final prefs = new PreferensUser();
-  
+
   @override
   void initState() {
     prefs.ultimaPagina = CitizenInstitutionModule.routeName;
@@ -393,12 +393,13 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
 
   Widget futureMultimedia(BuildContext context) {
     return FutureBuilder(
-        future: 
-         Generic().getAll(
+        future: Generic().getAll(
             new ListaMultimedia(),
-            urlGetListaMultimediaPorInstitucion + '/'+ widget.institutionItem.idInstitucion.toString()+
+            urlGetListaMultimediaPorInstitucion +
+                '/' +
+                widget.institutionItem.idInstitucion.toString() +
                 '/74',
-            primaryKeyListaMultimediaPorInstitucion),         
+            primaryKeyListaMultimediaPorInstitucion),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -447,12 +448,12 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
+                      children: <Widget>[                     
                         SizedBox(
-                          height: 140,
+                          height: 130,
                         ),
                         Container(
-                            width: 165,
+                            width: 160,
                             color: Colors.white70,
                             padding: EdgeInsets.only(left: 18),
                             child: Text(
@@ -462,7 +463,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                                   fontSize: 12, fontWeight: FontWeight.w500),
                             )),
                         Container(
-                            width: 165,
+                            width: 160,
                             color: Colors.white70,
                             padding: EdgeInsets.only(left: 18),
                             child: Text(
@@ -471,8 +472,9 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                               style: TextStyle(
                                   fontSize: 10, fontWeight: FontWeight.w500),
                             )),
+                             
                       ],
-                    ),
+                    ),                  
                   ],
                 ),
               );

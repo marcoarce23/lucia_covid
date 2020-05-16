@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenEmergency/CitizenAlertEmergency.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class CitizenPanicButtonModule extends StatefulWidget {
-
-static final String routeName ='CiudadanoBotonPanico';
+  static final String routeName = 'CiudadanoBotonPanico';
 
   const CitizenPanicButtonModule({Key key}) : super(key: key);
 
@@ -20,7 +21,7 @@ static final String routeName ='CiudadanoBotonPanico';
 }
 
 class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
-final prefs = new PreferensUser();
+  final prefs = new PreferensUser();
 
   @override
   void initState() {
@@ -75,10 +76,18 @@ final prefs = new PreferensUser();
                           },
                           child: Text("Mis solicitudes"),
                         ))),
-                ButtonPanic(titulo: "Boton ayuda ", tipoBoton: "64"),
-                ButtonPanic(titulo: "Boton emergencia medica", tipoBoton: "65"),
                 ButtonPanic(
-                    titulo: "Boton por abastecimiento", tipoBoton: "66"),
+                    titulo: "Boton ayuda COVID", tipoBoton: "65", prefs: prefs),
+                ButtonPanic(
+                    titulo: "Boton ayuda Medica",
+                    tipoBoton: "64",
+                    prefs: prefs),
+                ButtonPanic(
+                    titulo: "Boton para medicamentos",
+                    tipoBoton: "66",
+                    prefs: prefs),
+                ButtonPanic(
+                    titulo: "Boton para bonos", tipoBoton: "77", prefs: prefs),
               ],
             ),
           )),
@@ -89,8 +98,10 @@ final prefs = new PreferensUser();
 class ButtonPanic extends StatefulWidget {
   final String titulo;
   final String tipoBoton;
+  final PreferensUser prefs;
 
-  const ButtonPanic({Key key, this.titulo, this.tipoBoton}) : super(key: key);
+  const ButtonPanic({Key key, this.titulo, this.tipoBoton, this.prefs})
+      : super(key: key);
 
   @override
   _ButtonPanic createState() => _ButtonPanic();
@@ -120,12 +131,13 @@ class _ButtonPanic extends State<ButtonPanic> {
   Widget buttonPanic() {
     botonPanico.idaCatalogo = int.parse(widget.tipoBoton);
     //botonPanico.botFecha=DateTime.now();
+
+    String fechaNotificacion = "-/-/- --:--";
+
     botonPanico.botFecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
 
-    botonPanico.botCordenadalat = -17.371913;
-    botonPanico.botCordenadalon = -66.179140;
-    botonPanico.usuario = "Coav";
+    botonPanico.usuario = widget.prefs.correoElectronico;
 
     ///72 Solicitud enviada
     botonPanico.idaEstadoSolicitud = 72;
@@ -262,9 +274,7 @@ class _ButtonPanic extends State<ButtonPanic> {
                             Text("Fecha de envio: ",
                                 style: TextStyle(
                                     fontSize: 14, fontWeight: FontWeight.w700)),
-                            Text(
-                                DateFormat('dd/MM/yyyy HH:mm')
-                                    .format(DateTime.now()),
+                            Text(fechaNotificacion,
                                 style: TextStyle(
                                     fontSize: 14, fontWeight: FontWeight.w700)),
                           ],
@@ -285,6 +295,11 @@ class _ButtonPanic extends State<ButtonPanic> {
                             splashColor: Colors.greenAccent,
                             onPressed: () {
                               _submit();
+                              setState(() {
+                                fechaNotificacion =
+                                    DateFormat("dd/MM/yyyy HH:mm")
+                                        .format(DateTime.now());
+                              });
                             },
                             child: Icon(Icons.pan_tool),
                           ),
@@ -299,7 +314,10 @@ class _ButtonPanic extends State<ButtonPanic> {
 
   _submit() async {
     print(botonPanico);
-
+    LatLng latLng;
+    latLng = await getLocation().then((onvalue) => latLng = onvalue);
+    botonPanico.botCordenadalat = latLng.latitude;
+    botonPanico.botCordenadalon = latLng.longitude;
     final dataMap = generic.add(botonPanico, urlAddBotonPanico);
     var result;
     await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);

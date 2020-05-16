@@ -33,6 +33,7 @@ class _MapPositionModuleState extends State<MapPositionModule> {
   Widget build(BuildContext context) {
     createMarker(context);
     return Scaffold(
+<<<<<<< refs/remotes/origin/developer
 
        body: Stack(
          children: <Widget>[
@@ -130,3 +131,8 @@ class _MapPositionModuleState extends State<MapPositionModule> {
 
 
   }
+=======
+       );
+  }
+}
+>>>>>>> 15/05/2020 22:45 busquedas

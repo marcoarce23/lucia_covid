@@ -3,6 +3,7 @@ import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'CitizenInstitutionModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
@@ -38,7 +39,14 @@ class _CitizenListInstitucionModuleState
               fontSize: 17,
               fontWeight: FontWeight.w400),
         ),
-        //backgroundColor: AppTheme.themeColorNaranja,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: DataSearchInstituciones()  );
+            },
+          )
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -51,22 +59,6 @@ class _CitizenListInstitucionModuleState
                     "Lista de instituciones registradas.",
                     style: AppTheme.themeTitulo,
                   )),
-            ),
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
-              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    prefixIcon: Icon(Icons.search),
-                    hintText: "Buscar",
-                  ),
-                ),
-              ),
             ),
             // colcoamos las cajas de instituciones
             Container(
