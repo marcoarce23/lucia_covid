@@ -12,6 +12,7 @@ import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
+import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
@@ -52,6 +53,7 @@ class _EventModuleState extends State<EventModule> {
   @override
   void initState() {
     prefs.ultimaPagina = EventModule.routeName;
+    prefs.idInsitucion = '1008';
     _currentIndex = 0;
     _time = new TimeOfDay.now();
     _fecha = new DateTime.now().toString().substring(0, 10);
@@ -432,6 +434,8 @@ class _EventModuleState extends State<EventModule> {
   }
 
   _submit() async {
+      entity.eveFoto = imagen;
+
     if (!formKey.currentState.validate()) return;
 
     formKey.currentState.save();
@@ -449,7 +453,6 @@ class _EventModuleState extends State<EventModule> {
     entity.eveUbicacion = ubicacion.objectValue;
     entity.eveFecha = _inputFieldDateController.text;
     entity.eveHora = _inputFieldTimeController.text;
-    entity.eveFoto = imagen;
     entity.usuario = prefs.nombreUsuario;
 
     final dataMap = generic.add(entity, urlAddEvento);
@@ -457,6 +460,13 @@ class _EventModuleState extends State<EventModule> {
     await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
     print('resultado:$result');
 
+  if (result == "0") {
+   
+           scaffoldKey.currentState.showSnackBar(messageOk("Se inserto correctamente"));
+    }
+    else
+           scaffoldKey.currentState.showSnackBar(messageNOk("Error, vuelta a intentarlo"));
+           
     setState(() {
       _save = false;
     });

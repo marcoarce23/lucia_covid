@@ -8,6 +8,7 @@ import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
+import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
@@ -62,7 +63,7 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
   final prefs = new PreferensUser();
-  InstitucionAtencion entity = new InstitucionAtencion();
+  Atencion entity = new Atencion();
 
   @override
   void initState() {
@@ -73,7 +74,7 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
 
   @override
   Widget build(BuildContext context) {
-    final InstitucionAtencion entityData = ModalRoute.of(context).settings.arguments;
+    final Atencion entityData = ModalRoute.of(context).settings.arguments;
 
     if (entityData != null) entity = entityData;
 
@@ -459,8 +460,9 @@ if (viernes.objectValue == true)  {  intViernes =1;selectViernes = true;}
 if (sabado.objectValue == true)  {  intSabado =1;selectSabado = true;}
 if (domingo.objectValue == true)  {  intDomingo =1;selectDomingo = true;}
 
-    entity.idInstitucionPersonal = 123456;
-    entity.idInstitucion = 0;
+
+   entity.idInstitucion = int.parse(prefs.idInsitucion);
+    entity.idInstitucionPersonal = -1;
     entity.perLunes= intLunes;
     entity.perMartes = intMartes;
     entity.perMiercoles = intMiercoles;
@@ -475,12 +477,20 @@ if (domingo.objectValue == true)  {  intDomingo =1;selectDomingo = true;}
     entity.perViernesH = viernesH.objectValue;
     entity.perSabadoH = sabadoH.objectValue;
     entity.perDomingoH = domingoH.objectValue;
-     entity.usuario = 'marcoarce23@gmail.com';
+     entity.usuario = prefs.correoElectronico;
 
-final dataMap = generic.add(entity, urlAddInstitucion);
+ final dataMap = generic.add(entity, urlAddAtencionInstitucion);
 
     await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
     print('resultado:$result');
+
+    if (result == "0") {
+   
+           scaffoldKey.currentState.showSnackBar(messageOk("Se insertó correctamente"));
+    }
+    
+    else
+           scaffoldKey.currentState.showSnackBar(messageNOk("Error, vuelta a intentarlo"));
 
 
     setState(() {

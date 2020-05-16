@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenHelp/CitizenHelpModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenHelp/ListCitizenHelpModule.dart';
 import 'package:lucia_covid/src/module/Citizen/Entity/AtentionEntityodule.dart';
@@ -61,8 +62,7 @@ callPageEventVoluntary(int currentIdex, BuildContext context) {
       Navigator.of(context).push(CupertinoPageRoute(
           builder: (BuildContext context) => MapAdressModule()));
     if (currentIdex == 1)
-      Navigator.of(context).push(
-          CupertinoPageRoute(builder: (BuildContext context) => AtentionEntityModule()));
+     openWeb('http://mapacovid19.ruta88.net/');
    
   }
 

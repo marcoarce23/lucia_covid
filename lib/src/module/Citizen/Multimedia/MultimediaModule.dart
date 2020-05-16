@@ -13,9 +13,9 @@ import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
+import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
-
 
 class MultimediaModule extends StatefulWidget {
   static final String routeName = 'multimedia';
@@ -25,8 +25,7 @@ class MultimediaModule extends StatefulWidget {
   _MultimediaModuleState createState() => _MultimediaModuleState();
 }
 
-class _MultimediaModuleState extends State<MultimediaModule> 
-{
+class _MultimediaModuleState extends State<MultimediaModule> {
   InputTextField titulo;
   InputTextField resumen;
   InputTextField detalle;
@@ -38,7 +37,8 @@ class _MultimediaModuleState extends State<MultimediaModule>
   int _currentIndex;
   File foto;
   var result;
-  String imagen = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
+  String imagen =
+      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
   TextEditingController _inputFieldDateInicioController =
       new TextEditingController();
   TextEditingController _inputFieldDateFinController =
@@ -55,6 +55,7 @@ class _MultimediaModuleState extends State<MultimediaModule>
   void initState() {
     _currentIndex = 0;
     prefs.ultimaPagina = MultimediaModule.routeName;
+    prefs.idInsitucion = '1008';
     super.initState();
   }
 
@@ -82,7 +83,11 @@ class _MultimediaModuleState extends State<MultimediaModule>
     return AppBar(
       title: Text('Multimedia'),
       backgroundColor: Colors.orange,
-      actions: <Widget>[_crearIconAppImagenes(), _crearIconAppCamara(),  _crearIconAppVideo()],
+      actions: <Widget>[
+        _crearIconAppImagenes(),
+        _crearIconAppCamara(),
+        _crearIconAppVideo()
+      ],
     );
   }
 
@@ -278,18 +283,18 @@ class _MultimediaModuleState extends State<MultimediaModule>
         'Resumen del material',
         entity.mulResumen,
         'Registre un numero telefónico de referencia');
-  
+
     especialidad = InputDropDown(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
         'Especialidad:',
         '11',
         urlGetClasificador + '10');
 
-        tipoMaterial = InputDropDown(
+    tipoMaterial = InputDropDown(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
         'Tipo Material:',
-        '11',
-        urlGetClasificador + '10');
+        '74',
+        urlGetClasificador + '73');
 
     return Column(
       children: <Widget>[
@@ -297,7 +302,7 @@ class _MultimediaModuleState extends State<MultimediaModule>
           'REGISTRO DEL MATERIAL',
           style: TextStyle(fontSize: 20, color: Colors.black),
         ),
-       tipoMaterial,
+        tipoMaterial,
         especialidad,
         titulo,
         resumen,
@@ -419,6 +424,8 @@ class _MultimediaModuleState extends State<MultimediaModule>
   }
 
   _submit() async {
+    entity.mulEnlace = imagen;
+
     if (!formKey.currentState.validate()) return;
 
     formKey.currentState.save();
@@ -428,8 +435,8 @@ class _MultimediaModuleState extends State<MultimediaModule>
 
     entity.idcovMultimedia = 0;
     entity.idaCovInstitucion = int.parse(prefs.idInsitucion);
-    entity.idaTIpoMaterial = int.parse(tipoMaterial.objectValue);
-    entity.idaCategoria = int.parse(especialidad.objectValue);
+    entity.idaTIpoMaterial = int.parse(especialidad.objectValue);
+    entity.idaCategoria = int.parse(tipoMaterial.objectValue);
     entity.mulTitulo = titulo.objectValue;
     entity.mulResumen = resumen.objectValue;
     entity.detFechaFin = _inputFieldDateFinController.text;
@@ -441,6 +448,13 @@ class _MultimediaModuleState extends State<MultimediaModule>
     await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
     print('resultado:$result');
 
+    if (result == "0") {
+   
+           scaffoldKey.currentState.showSnackBar(messageOk("Se insertó correctamente"));
+    }
+    else
+           scaffoldKey.currentState.showSnackBar(messageNOk("Error, vuelta a intentarlo"));
+           
     setState(() {
       _save = false;
     });
@@ -448,7 +462,7 @@ class _MultimediaModuleState extends State<MultimediaModule>
     //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
   }
 
- // _seleccionarVideo() async => _procesarVideo(VideoSource.gallery);
+  // _seleccionarVideo() async => _procesarVideo(VideoSource.gallery);
   _seleccionarFoto() async => _procesarImagen(ImageSource.gallery);
   _tomarFoto() async => _procesarImagen(ImageSource.camera);
   _tomarVideo() async => _procesarVideo(ImageSource.gallery);
@@ -458,20 +472,21 @@ class _MultimediaModuleState extends State<MultimediaModule>
 
     if (foto != null) {
       imagen = await generic.subirImagen(foto);
-      
-    } 
-    setState(() {entity.mulEnlace = imagen;
-      print('cargadod e iagen ${entity.mulEnlace}');});
+    }
+    setState(() {
+      entity.mulEnlace = imagen;
+      print('cargadod e iagen ${entity.mulEnlace}');
+    });
   }
 
   _procesarVideo(ImageSource origen) async {
     foto = await ImagePicker.pickVideo(source: origen);
 
     if (foto != null) {
-     // imagen = await generic.subirVideo(foto);
+      // imagen = await generic.subirVideo(foto);
     }
     setState(() {
-        entity.mulEnlace = imagen;
+      entity.mulEnlace = imagen;
       print('cargadod e iagen ${entity.mulEnlace}');
     });
   }

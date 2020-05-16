@@ -12,6 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
+import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Map/MapAdressModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
@@ -43,9 +44,9 @@ class _EntityModuleState extends State<EntityModule> {
   int _currentIndex;
   double latitud=0.0;
   double longitud = 0.0;
-  LatLng latLng;
+ LatLng latLng = LatLng(0,0);
 
-  String imagen = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
+  String imagen = 'https://definicionyque.es/wp-content/uploads/2017/11/Medicina_Preventiva.jpg';
   var result;
   
  
@@ -53,11 +54,13 @@ class _EntityModuleState extends State<EntityModule> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
   final prefs = new PreferensUser();
-  Institucion entity = new Institucion();
+  Institucion entity = new Institucion();   
+ 
 
   @override
   void initState() {
   _currentIndex = 0;
+  
   prefs.ultimaPagina = EntityModule.routeName;
   super.initState();
   }
@@ -65,6 +68,7 @@ class _EntityModuleState extends State<EntityModule> {
  
   @override
   Widget build(BuildContext context) {
+    
     final Institucion entityData = ModalRoute.of(context).settings.arguments;
 
     if (entityData != null) entity = entityData;
@@ -123,6 +127,7 @@ class _EntityModuleState extends State<EntityModule> {
   }
 
   Widget _crearForm(BuildContext context) {
+    
     final size = MediaQuery.of(context).size;
 
     return SingleChildScrollView(
@@ -244,22 +249,17 @@ class _EntityModuleState extends State<EntityModule> {
     );
   }
 
-
-
-
-     
-
-
-  _submit() async {
+  _submit() async 
+  {
+    latLng = await getLocation().then((onvalue)=>latLng= onvalue);
+    entity.foto = imagen;
+    
     if (!formKey.currentState.validate()) return;
 
     formKey.currentState.save();
     setState(() {
       _save = true;
     });
-
-
-     latLng = await getLocation().then((onvalue)=>latLng= onvalue  );
 
     entity.idInstitucion = 0;
      entity.insLat= latLng.latitude;
@@ -281,7 +281,19 @@ class _EntityModuleState extends State<EntityModule> {
   final dataMap = generic.add(entity, urlAddInstitucion);
     await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
     print('resultado:$result');
- //}
+
+    if (result == "0") {
+   
+           scaffoldKey.currentState.showSnackBar(messageOk("Se insertó correctamente"));
+    }
+    if (result == "-1") {
+   
+           scaffoldKey.currentState.showSnackBar(messageNOk('Error, vuelta a intentarlo'));
+    }
+    if (result == "-2") {
+           scaffoldKey.currentState.showSnackBar(messageNOk("Error, El TOKEN esta siendo utilizado"));
+    }
+ 
     setState(() {
       _save = false;
     });
@@ -298,7 +310,6 @@ class _EntityModuleState extends State<EntityModule> {
        entity.foto = imagen;
       print('cargadod e iagen ${entity.foto}');
     }
-    setState(() {});
   }
 }
 

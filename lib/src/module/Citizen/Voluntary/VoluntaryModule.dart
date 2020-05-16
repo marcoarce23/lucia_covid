@@ -11,6 +11,7 @@ import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
+import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
@@ -23,7 +24,7 @@ class VoluntaryModule extends StatefulWidget {
 }
 
 class _VoluntaryModuleState extends State<VoluntaryModule> {
-  InputDropDown tipoEntidad;
+  //InputDropDown tipoEntidad;
   InputDropDown tipoEspecialidad;
   InputTextField nombre;
   InputEmailField email;
@@ -35,6 +36,7 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
   InputUrlField paginaWeb;
   InputDropDown expedido;
   InputSexo sexo;
+     InputTextField  token;
 
   bool _save = false;
   bool esCovid = false;
@@ -154,11 +156,11 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
   }
 
   Widget _crearCampos() {
-    tipoEntidad = InputDropDown(
-        FaIcon(FontAwesomeIcons.building, color: Colors.orange),
-        'Institución:',
-        '7',
-        urlGetClasificador + '2');
+    // tipoEntidad = InputDropDown(
+    //     FaIcon(FontAwesomeIcons.building, color: Colors.orange),
+    //     'Institución:', '7', urlGetClasificador + '2');
+ token = InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'INgrese el token:', entity.idcovInstitucion.toString(), 'Ej:546AMDEr');
+   
     tipoEspecialidad = InputDropDown(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
         'Especialidad:',
@@ -231,7 +233,8 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
             ],
           ),
           SizedBox(height: 10),
-          tipoEntidad,
+         // tipoEntidad,
+          token,
           tipoEspecialidad,
           _crearEsCovid('Ayuda Covid'),
           nombre,
@@ -322,6 +325,7 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
 
   _submit() async 
   {
+      entity.foto = imagen;
 
    if (!formKey.currentState.validate()) return;
 
@@ -331,10 +335,13 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
     });
 
 
-    
+    var now = DateTime.now().weekday;
+
+prefs.userId = '4';
+
       entity.idcovPersonal = 0;
-      entity.idcovInstitucion = int.parse(tipoEntidad.objectValue);
-      entity.idcovLogin = 0;
+      entity.idcovInstitucion = int.parse(token.objectValue);
+      entity.idcovLogin = int.parse(prefs.userId);
       entity.idaTipopersonal = int.parse(tipoEspecialidad.objectValue);
      entity.perNombrepersonal = nombre.objectValue;
      entity.perApellido = '.';
@@ -354,8 +361,16 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
       final dataMap = generic.add(entity, urlAddPersonal);
 
       await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
-      print('resultado:$result');
+      print('resultado:$result mas el dia de la semana $now');
  
+    if (result == "0") {
+   
+           scaffoldKey.currentState.showSnackBar(messageOk("Se inserto correctamente"));
+    }
+    if (result == "-1") 
+           scaffoldKey.currentState.showSnackBar(messageNOk("Error, vuelta a intentarlo"));
+    if (result == "-2") 
+           scaffoldKey.currentState.showSnackBar(messageNOk("Error, TOKEN INVALIDO"));
 
     setState(() {
       _save = false;

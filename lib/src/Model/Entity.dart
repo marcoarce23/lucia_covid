@@ -90,7 +90,7 @@ class Institucion extends Entity {
       };
 }
 
-class InstitucionAtencion extends Entity {
+class Atencion extends Entity {
   int idInstitucion;
   int idInstitucionPersonal;
   int perLunes;
@@ -109,8 +109,8 @@ class InstitucionAtencion extends Entity {
   String perDomingoH;
   String usuario;
 
-  InstitucionAtencion({
-    this.idInstitucion = 0,
+  Atencion({
+    this.idInstitucion,
     this.idInstitucionPersonal,
     this.perLunes,
     this.perMartes,
@@ -129,7 +129,7 @@ class InstitucionAtencion extends Entity {
     this.usuario,
   });
 
-  fromJson(Map<String, dynamic> json) => new InstitucionAtencion(
+  fromJson(Map<String, dynamic> json) => new Atencion(
       idInstitucion: json["IDCOV_INSTITUCION"],
       idInstitucionPersonal: json["IDCOV_ENTITY_PERSONAL"],
       perLunes: json["INS_LUNES"],
@@ -152,14 +152,14 @@ class InstitucionAtencion extends Entity {
         "IDCOV_INSTITUCION": idInstitucion,
         "IDCOV_ENTITY_PERSONAL": idInstitucionPersonal,
         "INS_LUNES": perLunes,
-        "INS__MARTES": perMartes,
+        "INS_MARTES": perMartes,
         "INS_MIERCOLES": perMiercoles,
         "INS_JUEVES": perJueves,
         "INS_VIERNES": perViernes,
         "INS_SABADO": perSabado,
         "INS_DOMINGO": perDomingo,
         "INS_LUNES_HORARIO": perLunesH,
-        "INS__MARTES_HORARIO": perMartesH,
+        "INS_MARTES_HORARIO": perMartesH,
         "INS_MIERCOLES_HORARIO": perMiercolesH,
         "INS_JUEVES_HORARIO": perJuevesH,
         "INS_VIERNES_HORARIO": perViernesH,

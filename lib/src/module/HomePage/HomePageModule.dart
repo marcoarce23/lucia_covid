@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
+import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/DrawerWidget/DrawerWiguet.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenEmergency/CitizenEmergencyModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenEvents/CitizenEventsModule.dart';
@@ -221,11 +222,10 @@ class DrawerCitizen extends StatelessWidget {
                   elevation: 10.0,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
-                      prefs.avatarImagen,
-                      width: 70,
-                      height: 70,
-                    ),
+                    child: ImageOvalNetwork(
+                          imageNetworkUrl:
+                              prefs.avatarImagen,
+                          sizeImage: Size.fromWidth(70)),
                   )),
               Padding(
                 padding: const EdgeInsets.all(4.0),
