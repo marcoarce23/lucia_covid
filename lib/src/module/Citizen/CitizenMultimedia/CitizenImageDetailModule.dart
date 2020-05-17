@@ -39,20 +39,7 @@ void initState() {
       body: Center(
         child: Column(
           children: <Widget>[
-                Container(
-                          width: MediaQuery.of(context).size.width,
-                          alignment: Alignment.topRight,
-                          child: InkWell(
-                              splashColor: AppTheme
-                                  .backGroundInstitutionPrimary, // inkwell color
-                              child: FaIcon(
-                                FontAwesomeIcons.shareAlt,
-                                color: Colors.white,
-                                size: 55,
-                              ),
-                              onTap: () => sharedImage(widget.multimediaImagen.mulEnlace, "ss",
-                                  ".jpg", ".jpg", "ss")),
-                        ),
+           
             Container(
                 child: FadeInImage.assetNetwork(
               placeholder: "assets/loading/loadingImage.gif",

@@ -269,23 +269,6 @@ class _ButtonPanic extends State<ButtonPanic> {
                             botonPanico.botTelefono = value;
                           },
                         ),
-                        Row(
-                          children: <Widget>[
-                            Text("Fecha de envio: ",
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w700)),
-                            Text(fechaNotificacion,
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w700)),
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Text("Estado: Solicitud de ayuda enviada ",
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w700)),
-                          ],
-                        ),
                         Center(
                           child: FlatButton(
                             color: Colors.green,
@@ -322,7 +305,8 @@ class _ButtonPanic extends State<ButtonPanic> {
     var result;
     await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
     if (result == "0") {
-      Scaffold.of(context).showSnackBar(messageOk("Se registro correctamente"));
+      Scaffold.of(context).showSnackBar(messageOk(
+          "Se registro correctamente, a las ${DateFormat("HH:mm").format(DateTime.now())} del ${DateFormat("dd/MM/yyyy").format(DateTime.now())}"));
     } else {
       Scaffold.of(context)
           .showSnackBar(messageNOk("Ocurrio un error inseperado"));

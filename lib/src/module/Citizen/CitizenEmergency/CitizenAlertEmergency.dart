@@ -12,7 +12,7 @@ import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 class CitizenAlertEmergency extends StatefulWidget {
   String personal;
   String voluntario;
-  static final String routeName ='CiudadanoAlertaEmergencia';
+  static final String routeName = 'CiudadanoAlertaEmergencia';
 
   CitizenAlertEmergency(@required this.personal, @required this.voluntario);
 
@@ -24,7 +24,7 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
   final prefs = new PreferensUser();
   RegistrarAyuda registrarAyuda = new RegistrarAyuda();
 
-@override
+  @override
   void initState() {
     prefs.ultimaPagina = CitizenAlertEmergency.routeName;
     // TODO: implement initState
@@ -51,8 +51,8 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
             drawer: DrawerCitizen(),
             // backgroundColor: Colors.red,
             body: Column(
-              children: <Widget>[              
-                cuerpoSolicitudes(),
+              children: <Widget>[
+                SingleChildScrollView(child: cuerpoSolicitudes()),
               ],
             )));
   }
@@ -68,7 +68,7 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
               Text(
                 "Listado de solicitudes para ayuda con MEDICINA",
                 style: AppTheme.themeTitulo,
-              ),   
+              ),
               futureSolicitudes(context),
             ],
           ),
@@ -138,209 +138,199 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
       DateTime tempDate,
       SolicitudAyuda solicitudAyuda,
       BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(1.0),
-      child: Column(
-        children: <Widget>[
-          Container(
-            decoration: new BoxDecoration(boxShadow: [
-              new BoxShadow(
-                color: Colors.black12,
-                blurRadius: 30.0,
-              ),
-            ]),
-            child: Card(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  ListTile(
-                    leading: Column(
-                      children: <Widget>[
-                        FaIcon(
-                          FontAwesomeIcons.eye,
-                          color: colorCuadro,
-                          size: 30,
-                        ),
-                        Text(
-                          detallePrioridad,
-                          style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w800),
-                        ),
-                      ],
-                    ),
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                         Text(
-                          "Fecha solicitud:",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(1.0),
+        child: Column(
+          children: <Widget>[
+            Container(
+              decoration: new BoxDecoration(boxShadow: [
+                new BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 30.0,
+                ),
+              ]),
+              child: Card(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    ListTile(
+                      leading: Column(
+                        children: <Widget>[
+                          FaIcon(
+                            FontAwesomeIcons.eye,
+                            color: colorCuadro,
+                            size: 30,
                           ),
-                        ),
-                        
-                        Row(
-                          children: <Widget>[
-                        SizedBox(width: 15,),   
-                            Text(
-                              new DateFormat("dd/MM/yyyy").format(tempDate),
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              new DateFormat("HH:mm").format(tempDate),
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Detalle:",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                          ),
-                        ),
-                        Row(
-                          children: <Widget>[
-                            SizedBox(width: 15,),
-                            RichText(
-                              overflow: TextOverflow.clip,
-                              text: TextSpan(
-                                text: solicitudAyuda.detalle,
-                                style: TextStyle(fontSize: 14, color: Colors.black),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          "Atendido por:",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                          ),
-                        ),
-                        Row(
-                          children: <Widget>[
-                            SizedBox(width: 15,),
-                            Text(
-                              solicitudAyuda.nombrePersonalAtendio,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                         Text(
-                          "Institución:",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                          ),
-                        ),
-                        Row(
-                          children: <Widget>[
-                            SizedBox(width: 15,),
-                            Text(
-                              solicitudAyuda.nombreInstitucionAtencion,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
                           Text(
-                          "Fecha atención:",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
+                            detallePrioridad,
+                            style: TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.w800),
                           ),
-                        ),
-                        Row(
-                          children: <Widget>[
-                            SizedBox(width: 15,),
-                            Text(
-                              solicitudAyuda.fechaAtencion,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                        /*
-                        Row(
-                          children: <Widget>[
-                            InkWell(
-                              child: FaIcon(
-                                FontAwesomeIcons.phoneVolume,
-                                size: 20,
-                              ),
-                              onTap: () {
-                                callNumber(solicitudAyuda.telefono);
-                              },
-                            ),
-                            SizedBox(
-                              width: 25,
-                            ),
-                            InkWell(
-                              child: FaIcon(
-                                FontAwesomeIcons.comment,
-                                size: 20,
-                              ),
-                              onTap: () {
-                                sendSMS(solicitudAyuda.telefono);
-                              },
-                            ),
-                          ],
-                        )*/
-                      ],
-                    ),
-                    trailing: Opacity(
-                      opacity: (widget.voluntario == '-1') ? 0 : 1,
-                      child: InkWell(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            FaIcon(
-                              FontAwesomeIcons.checkCircle,
+                        ],
+                      ),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Fecha solicitud:",
+                            style: TextStyle(
                               color: Colors.black,
-                              size: 20,
+                              fontSize: 14,
                             ),
-                            Text(
-                              "Atender",
-                            )
-                          ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                new DateFormat("dd/MM/yyyy").format(tempDate),
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                new DateFormat("HH:mm").format(tempDate),
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Detalle:",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Expanded(
+                                child: RichText(
+                                  overflow: TextOverflow.clip,
+                                  text: TextSpan(
+                                    text: solicitudAyuda.detalle,
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            "Atendido por:",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                solicitudAyuda.nombrePersonalAtendio,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            "Institución:",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                solicitudAyuda.nombreInstitucionAtencion,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            "Fecha atención:",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                solicitudAyuda.fechaAtencion,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        
+                        ],
+                      ),
+                      trailing: Opacity(
+                        opacity:
+                            (solicitudAyuda.idaEstadoSolicitud == 79) ? 0 : 1,
+                        child: InkWell(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              FaIcon(
+                                FontAwesomeIcons.checkCircle,
+                                color: Colors.black,
+                                size: 20,
+                              ),
+                              Text(
+                                "Concluir",
+                              )
+                            ],
+                          ),
+                          onTap: () {
+                            _submitConcluirAtencionr(context, solicitudAyuda);
+                          },
                         ),
-                        onTap: () {
-                          _submitConcluirAtencionr(context, solicitudAyuda);
-                        },
                       ),
                     ),
-                  ),
-                  ButtonBar(
-                    alignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[],
-                  ),
-                ],
+                    ButtonBar(
+                      alignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          //contenidoCabecera(context, tempDate, solicitudAyuda),
-          //contenidoFinal(context, solicitudAyuda),
-        ],
+            //contenidoCabecera(context, tempDate, solicitudAyuda),
+            //contenidoFinal(context, solicitudAyuda),
+          ],
+        ),
       ),
     );
   }
@@ -348,7 +338,7 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
   _submitConcluirAtencionr(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = 1006;
+    registrarAyuda.idaPersonal = 1009;
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 79; // en cursoF
@@ -360,12 +350,14 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
     if (result == "0") {
       setState(() {
         Scaffold.of(context)
-            .showSnackBar(messageOk("Se puso en atención su solicitud"));
+            .showSnackBar(messageOk("Se concluyo la atención"));
       });
     } else {
       Scaffold.of(context)
           .showSnackBar(messageNOk("Ocurrio un error inseperado"));
     }
+
+    setState(() {});
 
     print('resultado:$result');
   }

@@ -8,6 +8,7 @@ import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 import 'FoundAllVoluntaryModule.dart';
+import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
 
 class FoundVoluntaryModule extends StatefulWidget {
 
@@ -42,7 +43,14 @@ void initState() {
                   fontSize: 17,
                   fontWeight: FontWeight.w400),
             ),
-            //backgroundColor: AppTheme.themeColorNaranja,
+            actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: DataSearchEncuentraUnAmigo()  );
+            },
+          )
+        ],
           ),
           drawer: DrawerCitizen(),
           body: SingleChildScrollView(
@@ -50,19 +58,7 @@ void initState() {
             padding: const EdgeInsets.only(left: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: AppTheme.themeColorNaranja,
-                    ),
-                    hintText: "Buscar por categoria al voluntario",
-                    hintStyle: TextStyle(
-                        fontSize: 12, color: AppTheme.themeColorNaranja),
-                  ),
-                ),
+              children: <Widget>[                
                 Text(
                   "Listado de categorias de los voluntarios",
                   style: AppTheme.themeTitulo,

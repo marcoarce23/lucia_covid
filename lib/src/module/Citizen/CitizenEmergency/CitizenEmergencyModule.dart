@@ -13,16 +13,13 @@ import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class CitizenEmergencyModule extends StatefulWidget {
-
-
-static final String routeName ='CiudadanoEmergencia';
+  static final String routeName = 'CiudadanoEmergencia';
 
   @override
   _CitizenEmergencyModuleState createState() => _CitizenEmergencyModuleState();
 }
 
 class _CitizenEmergencyModuleState extends State<CitizenEmergencyModule> {
-  
   final prefs = new PreferensUser();
   int page = 0;
   final List<Widget> optionPage = [
@@ -38,8 +35,7 @@ class _CitizenEmergencyModuleState extends State<CitizenEmergencyModule> {
     });
   }
 
-
-@override
+  @override
   void initState() {
     prefs.ultimaPagina = CitizenEmergencyModule.routeName;
     // TODO: implement initState
@@ -69,20 +65,27 @@ class _CitizenEmergencyModuleState extends State<CitizenEmergencyModule> {
             bottomNavigationBar: BottomNavigationBar(
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  title: Text('Medicina'),
+                  icon: Icon(
+                    Icons.local_hospital,
+                    size: 24,
+                  ),
+                  title: Text(
+                    'Medicina',
+                    style: TextStyle(fontSize: 12),
+                  ),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.business),
-                  title: Text('Covid'),
+                  icon: Icon(Icons.report, size: 24),
+                  title: Text('Covid', style: TextStyle(fontSize: 12)),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.school),
-                  title: Text('Medicamentos'),
+                  icon: Icon(Icons.add_shopping_cart, size: 24),
+                  title: Text('Medicamentos y abastecimientos',
+                      style: TextStyle(fontSize: 12)),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.accessible_forward),
-                  title: Text('bonos'),
+                  icon: Icon(Icons.transfer_within_a_station, size: 24),
+                  title: Text('bonos', style: TextStyle(fontSize: 12)),
                 ),
               ],
               currentIndex: page,
@@ -116,26 +119,26 @@ class _PageMedicinaState extends State<PageMedicina> {
                 "Listado de solicitudes para ayuda con MEDICINA",
                 style: AppTheme.themeTitulo,
               ),
-               Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                        padding: EdgeInsets.only(right: 20),
-                        child: FlatButton(
-                          color: AppTheme.themeColorNaranja,
-                          textColor: Colors.white,
-                          disabledColor: Colors.grey,
-                          disabledTextColor: Colors.black,
-                          splashColor: Colors.greenAccent,
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      CitizenAlertEmergency("-1", "1006")),
-                            );
-                          },
-                          child: Text("Mis atenciones"),
-                        ))),
+              Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                      padding: EdgeInsets.only(right: 20),
+                      child: FlatButton(
+                        color: AppTheme.themeColorNaranja,
+                        textColor: Colors.white,
+                        disabledColor: Colors.grey,
+                        disabledTextColor: Colors.black,
+                        splashColor: Colors.greenAccent,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    CitizenAlertEmergency("-1", "1009")),
+                          );
+                        },
+                        child: Text("Mis atenciones"),
+                      ))),
               futureMedicamentoss(context),
             ],
           ),
@@ -339,7 +342,7 @@ class _PageMedicinaState extends State<PageMedicina> {
   _submitMedicamentosAtender(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = 1006;
+    registrarAyuda.idaPersonal = 1009;
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 78; // en cursoF
@@ -384,26 +387,26 @@ class _PageCovidState extends State<PageCovid> {
                 "Listado de solicitudes para ayuda con COVID",
                 style: AppTheme.themeTitulo,
               ),
-                   Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                        padding: EdgeInsets.only(right: 20),
-                        child: FlatButton(
-                          color: AppTheme.themeColorNaranja,
-                          textColor: Colors.white,
-                          disabledColor: Colors.grey,
-                          disabledTextColor: Colors.black,
-                          splashColor: Colors.greenAccent,
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      CitizenAlertEmergency("-1", "1006")),
-                            );
-                          },
-                          child: Text("Mis atenciones"),
-                        ))),
+              Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                      padding: EdgeInsets.only(right: 20),
+                      child: FlatButton(
+                        color: AppTheme.themeColorNaranja,
+                        textColor: Colors.white,
+                        disabledColor: Colors.grey,
+                        disabledTextColor: Colors.black,
+                        splashColor: Colors.greenAccent,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    CitizenAlertEmergency("-1", "1009")),
+                          );
+                        },
+                        child: Text("Mis atenciones"),
+                      ))),
               futureCovid(context),
             ],
           ),
@@ -467,7 +470,7 @@ class _PageCovidState extends State<PageCovid> {
   _submitCovidConcluido(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = 1006;
+    registrarAyuda.idaPersonal = 1009;
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 79; // en concluido
@@ -492,7 +495,7 @@ class _PageCovidState extends State<PageCovid> {
   _submitCovidAtender(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = 1006;
+    registrarAyuda.idaPersonal = 1009;
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 78; // en cursoF
@@ -673,29 +676,29 @@ class _PageMedicmanetosState extends State<PageMedicmanetos> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "Listado de solicitudes para ayuda con MEDICAMENTOS",
+                "Listado de solicitudes para ayuda con MEDICAMENTOS y ABASTECIMIENTO",
                 style: AppTheme.themeTitulo,
               ),
-                   Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                        padding: EdgeInsets.only(right: 20),
-                        child: FlatButton(
-                          color: AppTheme.themeColorNaranja,
-                          textColor: Colors.white,
-                          disabledColor: Colors.grey,
-                          disabledTextColor: Colors.black,
-                          splashColor: Colors.greenAccent,
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      CitizenAlertEmergency("-1", "1006")),
-                            );
-                          },
-                          child: Text("Mis atenciones"),
-                        ))),
+              Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                      padding: EdgeInsets.only(right: 20),
+                      child: FlatButton(
+                        color: AppTheme.themeColorNaranja,
+                        textColor: Colors.white,
+                        disabledColor: Colors.grey,
+                        disabledTextColor: Colors.black,
+                        splashColor: Colors.greenAccent,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    CitizenAlertEmergency("-1", "1009")),
+                          );
+                        },
+                        child: Text("Mis atenciones"),
+                      ))),
               future(context),
             ],
           ),
@@ -758,7 +761,7 @@ class _PageMedicmanetosState extends State<PageMedicmanetos> {
 
   _submitConcluido(BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = 1006;
+    registrarAyuda.idaPersonal = 1009;
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 79; // en concluido
@@ -782,7 +785,7 @@ class _PageMedicmanetosState extends State<PageMedicmanetos> {
 
   _submitAtender(BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = 1006;
+    registrarAyuda.idaPersonal = 1009;
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 78; // en cursoF
@@ -966,26 +969,26 @@ class _PageBonosState extends State<PageBonos> {
                 "Listado de solicitudes para ayuda con Bonos",
                 style: AppTheme.themeTitulo,
               ),
-                   Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                        padding: EdgeInsets.only(right: 20),
-                        child: FlatButton(
-                          color: AppTheme.themeColorNaranja,
-                          textColor: Colors.white,
-                          disabledColor: Colors.grey,
-                          disabledTextColor: Colors.black,
-                          splashColor: Colors.greenAccent,
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      CitizenAlertEmergency("-1", "1006")),
-                            );
-                          },
-                          child: Text("Mis atenciones"),
-                        ))),
+              Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                      padding: EdgeInsets.only(right: 20),
+                      child: FlatButton(
+                        color: AppTheme.themeColorNaranja,
+                        textColor: Colors.white,
+                        disabledColor: Colors.grey,
+                        disabledTextColor: Colors.black,
+                        splashColor: Colors.greenAccent,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    CitizenAlertEmergency("-1", "1009")),
+                          );
+                        },
+                        child: Text("Mis atenciones"),
+                      ))),
               futureBonos(context),
             ],
           ),
@@ -1049,7 +1052,7 @@ class _PageBonosState extends State<PageBonos> {
   _submitMedicamentosConcluido(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = 1006;
+    registrarAyuda.idaPersonal = 1009;
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 79; // en concluido
@@ -1074,7 +1077,7 @@ class _PageBonosState extends State<PageBonos> {
   _submitMedicamentosAtender(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = 1006;
+    registrarAyuda.idaPersonal = 1009;
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 78; // en cursoF

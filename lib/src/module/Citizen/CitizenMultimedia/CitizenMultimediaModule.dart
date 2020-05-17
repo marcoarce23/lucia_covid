@@ -30,6 +30,12 @@ class _CitizenMultimediaModuleState extends State<CitizenMultimediaModule> {
   final List<Widget> optionPage = [PagePicture(), PageVideo(), PageDocuments()];
  
  
+  void _onItemTapped(int index) {
+    setState(() {
+      page = index;
+    });
+  }
+
   @override
   void initState() {
     prefs.ultimaPagina = CitizenMultimediaModule.routeName;
@@ -60,32 +66,30 @@ class _CitizenMultimediaModuleState extends State<CitizenMultimediaModule> {
         ],
       ),
       drawer: DrawerCitizen(),
-      bottomNavigationBar: CurvedNavigationBar(
-        key: _bottomNavigationKey,
-        index: 0,
-        height: 50.0,
-        items: <Widget>[
-          Icon(
-            Icons.photo,
-            size: 30,
-            color: AppTheme.themeColorAzul,
-          ),
-          Icon(Icons.video_library, size: 30, color: AppTheme.themeColorAzul),
-          Icon(Icons.description, size: 30, color: AppTheme.themeColorAzul),
-        ],
-        color: AppTheme.themeColorNaranja,
-        buttonBackgroundColor: Colors.white,
-        backgroundColor: Colors.white70,
-        animationCurve: Curves.easeInOut,
-        animationDuration: Duration(milliseconds: 600),
-        onTap: (index) {
-          setState(() {
-            page = index;
-            print(page);
-          });
-        },
-      ),
-      body: optionPage[page],
+       bottomNavigationBar: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.image),
+                  title: Text('Imagenes'),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.videocam),
+                  title: Text('Videos'),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.picture_as_pdf),
+                  title: Text('Documentos'),
+                ),
+              
+              ],
+              currentIndex: page,
+              unselectedItemColor: Colors.black,
+              selectedItemColor: Colors.amber[800],
+              onTap: _onItemTapped,)
+            ,
+     
+          body: optionPage[page],  
+           
     );
   }
 }
@@ -104,7 +108,7 @@ class PagePicture extends StatelessWidget {
             children: <Widget>[
              // campoBuscarPorInstitucionCategoria(),
               Text(
-                "Galería de imagenes de institución",
+                "Galería de imagenes",
                 style: AppTheme.themeTitulo,
               ),
               futureImagenes(context),
@@ -241,7 +245,7 @@ class _PageVideoState extends State<PageVideo> {
             children: <Widget>[
               //campoBuscarPorInstitucionCategoria(),
               Text(
-                "Galería de videos de institución",
+                "Galería de videos",
                 style: AppTheme.themeTitulo,
               ),
               futureVideo(context),
@@ -340,7 +344,7 @@ class PageDocuments extends StatelessWidget {
             children: <Widget>[
               //campoBuscarPorInstitucionCategoria(),
               Text(
-                "Galería de imagenes de institución",
+                "Galería de documentos",
                 style: AppTheme.themeTitulo,
               ),
               futureDocumentos(context),
