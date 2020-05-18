@@ -100,6 +100,8 @@ Future<void> initPlatformState() async {
               .copyWith(caption: TextStyle(color: Colors.blueGrey))),
       child: BottomNavigationBar(
         currentIndex: _currentIndex,
+         unselectedItemColor: Colors.black,
+              selectedItemColor: Colors.amber[800],
         onTap: (value) {
           setState(() {
             _currentIndex = value;

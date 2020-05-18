@@ -96,7 +96,7 @@ class _SignUpModuleState extends State<SignUpModule> {
       entity.imei = _platformImei;
       entity.primeraVez = '-1';
 
- final dataMap = generic.add(entity, urlAddSignIn);
+      final dataMap = generic.add(entity, urlAddSignIn);
 
       await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
       print('resultado:$result ');
@@ -268,6 +268,7 @@ class _SignUpModuleState extends State<SignUpModule> {
     await dataMap.then((x) => result = x["TIPO_RESPUESTA"]);
   
     if (result != '-1') {
+      print('valro de result de login es: $result');
       prefs.imei = int.parse(_platformImei);
       prefs.nombreUsuario = currentUser.displayName;
       prefs.correoElectronico = currentUser.email;

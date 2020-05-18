@@ -41,6 +41,7 @@ callPageEventVoluntary(int currentIdex, BuildContext context) {
     if (currentIdex == 2)
       Navigator.of(context).push(CupertinoPageRoute(
           builder: (BuildContext context) => ListVoluntaryModule()));
+          
   }
 
  callPageInstitucion(int currentIdex, BuildContext context) {

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
+import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenEmergency/CitizenAlertEmergency.dart';
+import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class CitizenPanicButtonModule extends StatefulWidget {
@@ -22,13 +25,44 @@ class CitizenPanicButtonModule extends StatefulWidget {
 
 class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
   final prefs = new PreferensUser();
-
+   int _currentIndex =0;
   @override
   void initState() {
     prefs.ultimaPagina = CitizenPanicButtonModule.routeName;
     super.initState();
   }
 
+Widget _bottomNavigationBar(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(
+          canvasColor: Colors.white,
+          primaryColor: Colors.blue,
+          textTheme: Theme.of(context)
+              .textTheme
+              .copyWith(caption: TextStyle(color: Colors.blueGrey))),
+      child: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (value) {
+          setState(() {
+            _currentIndex = value;
+            callPage(_currentIndex, context);
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.userCircle, size: 25,),
+              title: Text('Voluntario')),
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.calendarCheck,size: 25, ),
+              title: Text('Atención')),
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.users, size: 25, ),
+              title: Text('Integrantes')),
+        ],
+      ),
+    );
+  }
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -45,7 +79,12 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
                   fontWeight: FontWeight.w400),
             ),
             //backgroundColor: AppTheme.themeColorNaranja,
+           
           ),
+
+// drawer: DrawerCitizen(), 
+//         bottomNavigationBar: _bottomNavigationBar(context)),
+
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
@@ -71,26 +110,29 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      CitizenAlertEmergency("4", "-1")),
+                                      CitizenAlertEmergency(prefs.userId, "-1")),
                             );
                           },
                           child: Text("Mis solicitudes"),
                         ))),
                 ButtonPanic(
-                    titulo: "Boton ayuda COVID", tipoBoton: "65", prefs: prefs),
+                    titulo: "Boton ayuda COVID", tipoBoton: "65", ),
                 ButtonPanic(
                     titulo: "Boton ayuda Medica",
                     tipoBoton: "64",
-                    prefs: prefs),
+                    ),
                 ButtonPanic(
                     titulo: "Boton para medicamentos",
                     tipoBoton: "66",
-                    prefs: prefs),
+                   ),
                 ButtonPanic(
-                    titulo: "Boton para bonos", tipoBoton: "77", prefs: prefs),
+                    titulo: "Boton para bonos", tipoBoton: "77",), 
+
               ],
             ),
-          )),
+          )
+        
+          ),
     );
   }
 }
@@ -98,9 +140,8 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
 class ButtonPanic extends StatefulWidget {
   final String titulo;
   final String tipoBoton;
-  final PreferensUser prefs;
 
-  const ButtonPanic({Key key, this.titulo, this.tipoBoton, this.prefs})
+  const ButtonPanic({Key key, this.titulo, this.tipoBoton,})
       : super(key: key);
 
   @override
@@ -114,6 +155,8 @@ class _ButtonPanic extends State<ButtonPanic> {
   bool checkMuyAlto = false;
   bool checkAlto = false;
   bool checkMedio = false;
+
+  final prefs = new PreferensUser();
 
   @override
   void initState() {
@@ -137,7 +180,7 @@ class _ButtonPanic extends State<ButtonPanic> {
     botonPanico.botFecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
 
-    botonPanico.usuario = widget.prefs.correoElectronico;
+    botonPanico.usuario = prefs.correoElectronico;
 
     ///72 Solicitud enviada
     botonPanico.idaEstadoSolicitud = 72;
@@ -299,6 +342,10 @@ class _ButtonPanic extends State<ButtonPanic> {
     print(botonPanico);
     LatLng latLng;
     latLng = await getLocation().then((onvalue) => latLng = onvalue);
+
+
+print(' el valorrr.... ${prefs.userId}');
+    botonPanico.idLogin= int.parse(prefs.userId);
     botonPanico.botCordenadalat = latLng.latitude;
     botonPanico.botCordenadalon = latLng.longitude;
     final dataMap = generic.add(botonPanico, urlAddBotonPanico);

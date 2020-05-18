@@ -477,10 +477,14 @@ class BotonPanico extends Entity {
   int idaEstadoSolicitud;
   String botTelefono;
   String usuario;
+int  idLogin;
+
+
 
   BotonPanico(
       {this.idcovBotonpanico = 0,
       this.idaCatalogo,
+      this.idLogin,
       this.botDetalle,
       this.idaPrioridad = 70,
       this.botCordenadalat,
@@ -493,6 +497,12 @@ class BotonPanico extends Entity {
   fromJson(Map<String, dynamic> json) => new BotonPanico(
       idcovBotonpanico: json["IDCOV_BOTONPANICO"],
       idaCatalogo: json["IDA_CATALOGO"],
+
+
+      
+      idLogin: json["IDCOV_LOGIN"],
+
+
       botDetalle: json["BOT_DETALLE"],
       idaPrioridad: json["IDA_PRIORIDAD"],
       botCordenadalat: json["BOT_CORDENADALAT"],
@@ -507,7 +517,8 @@ class BotonPanico extends Entity {
         "IDA_CATALOGO": idaCatalogo,
         "BOT_DETALLE": botDetalle,
         "IDA_PRIORIDAD": idaPrioridad,
-        "BOT_CORDENADALAT": botCordenadalat,
+        "IDCOV_LOGIN": idLogin,
+                "BOT_CORDENADALAT": botCordenadalat,
         "BOT_CORDENADALON": botCordenadalon,
         "BOT_FECHA": botFecha,
         "IDA_ESTADOSOLICITUD": idaEstadoSolicitud,
