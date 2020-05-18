@@ -77,6 +77,14 @@ class PreferensUser
       _prefs.setString('userId', value);
     }
 
+ get idPersonal {
+      return _prefs.getString('idPersonal') ?? '-1';
+    }
+
+    set idPersonal( String value ) {
+      _prefs.setString('idPersonal', value);
+    }
+
     // GET y SET de la última página
     get ultimaPagina {
       return _prefs.getString('ultimaPagina') ?? 'login';

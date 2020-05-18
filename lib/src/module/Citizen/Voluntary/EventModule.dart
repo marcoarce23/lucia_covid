@@ -53,7 +53,6 @@ class _EventModuleState extends State<EventModule> {
   @override
   void initState() {
     prefs.ultimaPagina = EventModule.routeName;
-    prefs.idInsitucion = '1008';
     _currentIndex = 0;
     _time = new TimeOfDay.now();
     _fecha = new DateTime.now().toString().substring(0, 10);
@@ -445,7 +444,7 @@ class _EventModuleState extends State<EventModule> {
 
     entity.idcovEvento = 0;
     entity.idcovInstitucion = int.parse(prefs.idInsitucion);
-    entity.idcovPersonal = int.parse(prefs.userId);
+    entity.idcovPersonal = int.parse(prefs.idPersonal);
     entity.eveTitulo = titulo.objectValue;
     entity.eveObjetivo = objetivo.objectValue;
     entity.eveDirigidoA = dirigidoA.objectValue;
@@ -453,7 +452,7 @@ class _EventModuleState extends State<EventModule> {
     entity.eveUbicacion = ubicacion.objectValue;
     entity.eveFecha = _inputFieldDateController.text;
     entity.eveHora = _inputFieldTimeController.text;
-    entity.usuario = prefs.nombreUsuario;
+    entity.usuario = prefs.userId;
 
     final dataMap = generic.add(entity, urlAddEvento);
 

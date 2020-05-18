@@ -459,7 +459,7 @@ class _MultimediaModuleState extends State<MultimediaModule> {
     entity.mulResumen = resumen.objectValue;
     entity.detFechaFin = _inputFieldDateFinController.text;
     entity.detFechaInicio = _inputFieldDateInicioController.text;
-    entity.usuario = prefs.nombreUsuario;
+    entity.usuario = prefs.userId;
 
     final dataMap = generic.add(entity, urlAddMultimedia);
 

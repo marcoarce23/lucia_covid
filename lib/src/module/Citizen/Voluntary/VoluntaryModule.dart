@@ -337,8 +337,6 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
 
     var now = DateTime.now().weekday;
 
-prefs.userId = '4';
-
       entity.idcovPersonal = 0;
       entity.idcovInstitucion = int.parse(token.objectValue);
       entity.idcovLogin = int.parse(prefs.userId);
@@ -356,15 +354,18 @@ prefs.userId = '4';
      entity.perFacebbok = facebook.objectValue;
      entity.perTwitter = twitter.objectValue;
      entity.perPaginaWeb = paginaWeb.objectValue;
-      entity.usuario = prefs.nombreUsuario;
+      entity.usuario = prefs.userId;
 
       final dataMap = generic.add(entity, urlAddPersonal);
 
       await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
       print('resultado:$result mas el dia de la semana $now');
  
-    if (result == "0") {
-   
+    if (result != "-1") {
+       final   list =  result.split('|');
+          prefs.idInsitucion = list[0];
+          prefs.idPersonal = list[1];
+          print('institucion:${prefs.idInsitucion} idPErsonal ${prefs.idPersonal}');
            scaffoldKey.currentState.showSnackBar(messageOk("Se inserto correctamente"));
     }
     if (result == "-1") 

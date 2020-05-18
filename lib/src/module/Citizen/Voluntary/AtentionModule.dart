@@ -436,7 +436,7 @@ Atencion entity = new Atencion();
     }
 
     entity.idInstitucion = int.parse(prefs.idInsitucion);
-    entity.idInstitucionPersonal = int.parse(prefs.userId);
+    entity.idInstitucionPersonal = int.parse(prefs.idPersonal);
     entity.perLunes = intLunes;
     entity.perMartes = intMartes;
     entity.perMiercoles = intMiercoles;
@@ -451,12 +451,12 @@ Atencion entity = new Atencion();
     entity.perViernesH = '-1';
     entity.perSabadoH = '-1';
     entity.perDomingoH = '-1';
-    entity.usuario = prefs.correoElectronico;
+    entity.usuario = prefs.userId;
 
     final dataMap = generic.add(entity, urlAddAtencion);
 
     await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
-    print('resultado:$result');
+    print('resultado:$result  y el idinstitucion');
 
     if (result == "0") {
    
