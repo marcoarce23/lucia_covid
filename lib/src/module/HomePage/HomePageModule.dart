@@ -352,7 +352,7 @@ class DrawerCitizen extends StatelessWidget {
             'Registo voluntario',
             () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => VoluntaryModule()),
+                  MaterialPageRoute(builder: (context) => VoluntaryAllModule()),
                 )),
         CustomListTile(
             Icons.person_add,

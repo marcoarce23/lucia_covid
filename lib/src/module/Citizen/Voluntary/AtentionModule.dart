@@ -43,7 +43,6 @@ class _AtentionModuleState extends State<AtentionModule> {
   int intaSabado = 0;
   int intDomingo = 0;
 
-  int _currentIndex;
   bool _save = false;
   var result;
 
@@ -55,8 +54,7 @@ Atencion entity = new Atencion();
 
   @override
   void initState() {
-    _currentIndex = 0;
-     prefs.ultimaPagina = AtentionModule.routeName;
+      prefs.ultimaPagina = AtentionModule.routeName;
     super.initState();
   }
 
@@ -69,67 +67,18 @@ Atencion entity = new Atencion();
 
     return Scaffold(
         key: scaffoldKey,
-        appBar: _appBar(),
+       
         drawer: DrawerCitizen(),
         body: Stack(
           children: <Widget>[
             _crearForm(context),
           ],
         ),
-        bottomNavigationBar: _bottomNavigationBar(context));
+     );
   }
 
-  AppBar _appBar() {
-    return AppBar(
-      title: Text('DIAS DE ATENCIÓN'),
-      backgroundColor: Colors.orange,
-    );
-  }
-
-  Widget _bottomNavigationBar(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-          canvasColor: Colors.white,
-          primaryColor: Colors.blue,
-          textTheme: Theme.of(context)
-              .textTheme
-              .copyWith(caption: TextStyle(color: Colors.blueGrey))),
-      child: BottomNavigationBar(
-        currentIndex: _currentIndex,
-         unselectedItemColor: Colors.black,
-              selectedItemColor: Colors.amber[800],
-        onTap: (value) {
-          setState(() {
-            _currentIndex = value;
-            
-            callPage(_currentIndex, context);
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: FaIcon(
-                FontAwesomeIcons.userCircle,
-                size: 25,
-              ),
-              title: Text('Voluntario')),
-          BottomNavigationBarItem(
-              icon: FaIcon(
-                FontAwesomeIcons.calendarCheck,
-                size: 25,
-              ),
-              title: Text('Atención')),
-          BottomNavigationBarItem(
-              icon: FaIcon(
-                FontAwesomeIcons.users,
-                size: 25,
-              ),
-              title: Text('Integrantes')),
-        ],
-      ),
-    );
-  }
-
-  Widget informacionProfesional(BuildContext context) {
+ 
+   Widget informacionProfesional(BuildContext context) {
     return Center(
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 4),
@@ -240,7 +189,7 @@ Atencion entity = new Atencion();
         key: formKey,
         child: Column(
           children: <Widget>[
-       //     informacionProfesional(context),
+            informacionProfesional(context),
             SafeArea(
               child: Container(
                 height: 10.0,

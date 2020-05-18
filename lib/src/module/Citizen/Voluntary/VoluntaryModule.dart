@@ -9,11 +9,92 @@ import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
+import 'package:lucia_covid/src/module/Citizen/Voluntary/AtentionModule.dart';
+import 'package:lucia_covid/src/module/Citizen/Voluntary/ListVoluntary.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
+
+
+
+class VoluntaryAllModule extends StatefulWidget {
+  static final String routeName ='voluntario';
+  const VoluntaryAllModule({Key key}) : super(key: key);
+
+
+  @override
+  _VoluntaryAllModuleState createState() =>
+      _VoluntaryAllModuleState();
+}
+
+class _VoluntaryAllModuleState extends State<VoluntaryAllModule> {
+  final prefs = new PreferensUser();
+  final generic = new Generic();
+  int page = 0;
+  final List<Widget> optionPage = [VoluntaryModule(), AtentionModule(), ListVoluntaryModule()];
+ 
+ 
+  void _onItemTapped(int index) {
+    setState(() {
+      page = index;
+    });
+  }
+
+  @override
+  void initState() {
+    prefs.ultimaPagina = VoluntaryAllModule.routeName;
+    page = 0;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+        elevation: 0,
+        title: Text(
+          "VOLUNTARIOS",
+          style: TextStyle(
+              color: AppTheme.themeColorNaranja,
+              fontSize: 17,
+              fontWeight: FontWeight.w400),
+        ),
+          actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: DataSearchVoluntary()  );
+            },
+          )
+        ],
+      ),
+      drawer: DrawerCitizen(),
+       bottomNavigationBar: BottomNavigationBar(
+              items: [
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.userCircle, size: 25,),
+              title: Text('Voluntario')),
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.calendarCheck,size: 25, ),
+              title: Text('Atención')),
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.users, size: 25, ),
+              title: Text('Integrantes')),
+        ],
+              currentIndex: page,
+              unselectedItemColor: Colors.black,
+              selectedItemColor: Colors.amber[800],
+              onTap: _onItemTapped,)
+            ,
+          body: optionPage[page],  
+    );
+  }
+}
 
 class VoluntaryModule extends StatefulWidget {
   static final String routeName = 'voluntary';
@@ -40,7 +121,6 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
 
   bool _save = false;
   bool esCovid = false;
-  int _currentIndex = 0;
   File foto ;
   String imagen = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
 
@@ -57,40 +137,7 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
     prefs.ultimaPagina = VoluntaryModule.routeName;
   }
 
-  Widget _bottomNavigationBar(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-          canvasColor: Colors.white,
-          primaryColor: Colors.blue,
-          textTheme: Theme.of(context)
-              .textTheme
-              .copyWith(caption: TextStyle(color: Colors.blueGrey))),
-      child: BottomNavigationBar(
-        currentIndex: _currentIndex,
-         unselectedItemColor: Colors.black,
-              selectedItemColor: Colors.amber[800],
-        onTap: (value) {
-          setState(() {
-            _currentIndex = value;
-            
-            callPage(_currentIndex, context);
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.userCircle, size: 25,),
-              title: Text('Voluntario')),
-          BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.calendarCheck,size: 25, ),
-              title: Text('Atención')),
-          BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.users, size: 25, ),
-              title: Text('Integrantes')),
-        ],
-      ),
-    );
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     final Voluntary entityData = ModalRoute.of(context).settings.arguments;
@@ -99,24 +146,15 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
 
     return Scaffold(
         key: scaffoldKey,
-        appBar: _appBar(),
         body: Stack(
           children: <Widget>[
             crearFondoForm(context, imagen),
             _crearForm(context),
           ],
         ),
-        drawer: DrawerCitizen(),
-        bottomNavigationBar: _bottomNavigationBar(context));
-  }
-
-  AppBar _appBar() {
-    return AppBar(
-      title: Text('REGISTRO VOLUNTARIO'),
-      backgroundColor: Colors.orange,
-      actions: <Widget>[_crearIconAppImagenes(), _crearIconAppCamara()],
     );
   }
+
 
   _crearIconAppImagenes() {
     return IconButton(
@@ -140,11 +178,13 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
         key: formKey,
         child: Column(
           children: <Widget>[
+            
             SafeArea(
               child: Container(
                 height: 160.0,
               ),
             ),
+            _crearIconAppImagenes(), _crearIconAppCamara(),
             Container(
               width: size.width * 0.92,
               margin: EdgeInsets.symmetric(vertical: 0.0),

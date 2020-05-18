@@ -32,7 +32,6 @@ class ListVoluntaryModule extends StatefulWidget {
 class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
 final generic = new Generic();
 final prefs = new PreferensUser();
-  int _currentIndex = 0;
   var result;
   String _platformVersion = 'Unknown';
 
@@ -67,18 +66,6 @@ Future<void> initPlatformState() async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("VOLUNTARIOS"),
-          backgroundColor: Color.fromRGBO(22, 23, 22 , 0.4),
-          actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {  
-               showSearch(context: context, delegate: DataSearchVoluntary()  );
-            },
-          )
-        ],
-        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -87,48 +74,17 @@ Future<void> initPlatformState() async {
             futureItemsEntity(context)
           ],
         ),
-        bottomNavigationBar: _bottomNavigationBar(context));
-  }
-
-  Widget _bottomNavigationBar(BuildContext context) {
-   return Theme(
-      data: Theme.of(context).copyWith(
-          canvasColor: Colors.white,
-          primaryColor: Colors.blue,
-          textTheme: Theme.of(context)
-              .textTheme
-              .copyWith(caption: TextStyle(color: Colors.blueGrey))),
-      child: BottomNavigationBar(
-        currentIndex: _currentIndex,
-         unselectedItemColor: Colors.black,
-              selectedItemColor: Colors.amber[800],
-        onTap: (value) {
-          setState(() {
-            _currentIndex = value;
-            callPage(_currentIndex, context);
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.userCircle, size: 25,),
-              title: Text('Voluntario')),
-          BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.calendarCheck,size: 25, ),
-              title: Text('Atención')),
-          BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.users, size: 25, ),
-              title: Text('Integrantes')),
-        ],
-      ),
     );
   }
+
+ 
 
   Widget futureItemsEntity(BuildContext context) {
     
 
     return FutureBuilder(
         future: generic.getAll(
-            new Evento(), urlGetEvento, primaryKeyGetEvento),
+            new Voluntary(), urlGetVoluntario, primaryKeyGetVoluntario),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -238,14 +194,14 @@ Future<void> initPlatformState() async {
                     size: 15,
                   ),
                   Text(
-                    'Resumen: ${entityItem.idcovInstitucion}',
+                    'Telefono: ${entityItem.perTelefono}',
                     style: TextStyle(color: Colors.red, fontSize: 14)
                   )
                 ],
               ),
               Container(
                   child: Text(
-                'Tipo: ${entityItem.idaTipopersonal}',
+                'Tipo: ${entityItem.perAyudacovid}',
                 style: TextStyle(color: Colors.yellow, fontSize: 14),
               )),
               Row(
@@ -256,7 +212,7 @@ Future<void> initPlatformState() async {
                     size: 15,
                   ),
                   Text(
-                    'Fecha publicación: ${entityItem.perCorreo}',
+                    'Correo: ${entityItem.perCorreo}',
                     style: TextStyle(color: Colors.yellow, fontSize: 14),
                   )
                 ],
@@ -278,7 +234,7 @@ Future<void> initPlatformState() async {
           color: Colors.yellow,
         ),
         Text(
-          '${entityItem.perCI}',
+          '${entityItem.desEspecialidad}',
           style: TextStyle(
               fontSize: 11,
               color: Colors.yellow,
