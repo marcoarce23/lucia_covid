@@ -54,7 +54,7 @@ class PreferensUser
       }
 
        get token {
-      return _prefs.getString('token') ?? '';
+      return _prefs.getString('token') ?? '0';
     }
 
     set token( String value ) {

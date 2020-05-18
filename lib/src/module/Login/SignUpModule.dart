@@ -6,10 +6,10 @@ import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
-
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
+import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
@@ -30,6 +30,7 @@ class _SignUpModuleState extends State<SignUpModule> {
 
   bool _save = false;
   final formKey = GlobalKey<FormState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
   final prefs = new PreferensUser();
   LoginSigIn entity = new LoginSigIn();
@@ -80,45 +81,35 @@ class _SignUpModuleState extends State<SignUpModule> {
   Future<void> handleSignIn() async {
     try {
       await _googleSignIn.signIn();
+    } catch (error) {
+      print('rrrr: $error   y el valor token ${prefs.token}');
+    }
+      entity.idUsuario = currentUser.id;
+      entity.idInstitucion = '-1';
+      entity.nombrePersona = currentUser.displayName;
+      entity.nombreInstitucion = '-1';
+      entity.usuario = currentUser.email;
+      entity.correo = currentUser.email;
+      entity.avatar =  (currentUser.photoUrl == null) ? 'https://definicionyque.es/wp-content/uploads/2017/11/Medicina_Preventiva.jpg': currentUser.photoUrl;
+      entity.password = '-1';
+      entity.tokenDispositivo = prefs.token;
+      entity.imei = _platformImei;
+      entity.primeraVez = '-1';
 
-//       entity.idUsuario = int.parse(currentUser.id);
-//       entity.idInstitucion = -1;
-//       entity.nombrePersona = currentUser.displayName;
-//       entity.nombreInstitucion = '-1';
-//       entity.usuario = currentUser.email;
-//       entity.avatar =  'currentUser.photoUrl';
-//       entity.password = contrasenia.objectValue;
-//       entity.tokenDispositivo = prefs.token;
-//       entity.imei = _platformImei;
+ final dataMap = generic.add(entity, urlAddSignIn);
 
-//       prefs.imei = int.parse(_platformImei);
-// prefs.nombreUsuario= currentUser.displayName;
-// prefs.correoElectronico = currentUser.email;
-// prefs.avatarImagen =  currentUser.photoUrl;
-// prefs..userId =  result;
+      await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+      print('resultado:$result ');
 
-      //  final dataMap = generic.add(entity, urlAddSignIn);
+        if (result != "-1") {
 
-      // await dataMap.then((x) => result = x["TIPO_RESPUESTA"]);
-      // print('DDDDD:$result');
+          prefs.imei = int.parse(_platformImei);
+          prefs.nombreUsuario= currentUser.displayName;
+          prefs.correoElectronico = currentUser.email;
+          prefs.avatarImagen =  currentUser.photoUrl;
+          prefs.userId =result;
 
-      // if (result == '0')
-      //   Navigator.push(
-      //       context,
-      //       PageTransition(
-      //         curve: Curves.bounceOut,
-      //         type: PageTransitionType.rotate,
-      //         alignment: Alignment.topCenter,
-      //         child: IntroScreenModule(),
-      //       ));
-      // else
-
-      // if (result == "0") {
-      //   setState(() {
-      //     Scaffold.of(context).showSnackBar(messageOk("Registro exitoso."));
-      //   });
-
-        Navigator.push(
+            Navigator.push(
             context,
             PageTransition(
               curve: Curves.bounceOut,
@@ -126,25 +117,11 @@ class _SignUpModuleState extends State<SignUpModule> {
               alignment: Alignment.topCenter,
               child: IntroScreenModule(),
             ));
-      // } else {
-      //   Scaffold.of(context).showSnackBar(
-      //       messageNOk("Ocurrio un error inesperado, vuelta a intentarlo."));
-
-      //   Navigator.push(
-      //       context,
-      //       PageTransition(
-      //         curve: Curves.bounceOut,
-      //         type: PageTransitionType.rotate,
-      //         alignment: Alignment.topCenter,
-      //         child: SignUpModule(),
-      //       ));
-      // }
-    } catch (error) {
-      print('rrrr: $error');
+    
     }
-
-    // Navigator.of(context).push(PageRouteTheme(CitizenLayoutMenuModule()));
-  }
+    else
+     scaffoldKey.currentState.showSnackBar(messageNOk("Se produjo un error, vuelta a intentarlo"));
+ }
 
   Future<void> handleSignOut() async {
     _googleSignIn.disconnect();
@@ -152,6 +129,7 @@ class _SignUpModuleState extends State<SignUpModule> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
         body: Stack(
       children: <Widget>[
         crearFondo(context),
@@ -275,8 +253,8 @@ class _SignUpModuleState extends State<SignUpModule> {
       _save = true;
     });
 
-    entity.idUsuario = 0;
-    entity.idInstitucion = 0;
+    entity.idUsuario = '0';
+    entity.idInstitucion = '-1';
     entity.nombrePersona = '0';
     entity.nombreInstitucion = '0';
     entity.usuario = correo.objectValue;
@@ -288,7 +266,7 @@ class _SignUpModuleState extends State<SignUpModule> {
     final dataMap = generic.add(entity, urlAddSignIn);
 
     await dataMap.then((x) => result = x["TIPO_RESPUESTA"]);
-    //   // generic.add(citizen);
+  
     if (result != '-1') {
       prefs.imei = int.parse(_platformImei);
       prefs.nombreUsuario = currentUser.displayName;

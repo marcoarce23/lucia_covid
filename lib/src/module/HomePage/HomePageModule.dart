@@ -4,10 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
-<<<<<<< refs/remotes/origin/developer
-=======
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
->>>>>>> 15/05/2020 22:45 busquedas
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/DrawerWidget/DrawerWiguet.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenEmergency/CitizenEmergencyModule.dart';

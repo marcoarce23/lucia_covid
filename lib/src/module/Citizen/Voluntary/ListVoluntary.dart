@@ -6,6 +6,7 @@ import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
@@ -63,58 +64,34 @@ Future<void> initPlatformState() async {
   }
   
 
-  //   void whatsAppOpen() async {
-  //     print("000");
-  //  // bool whatsapp = await FlutterLaunch.hasApp(name: "whatsapp");
-
-  //   if (whatsapp) {
-  //     print("111");
-  //    // await FlutterLaunch.launchWathsApp(phone: "+59176427275", message: "bola gilll");
-  //     print("222");
-  //   } else {
-  //     print("333");
-  //     print("Whatsapp não instalado");
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("LISTA DE VOLUNTARIOS"),
-          backgroundColor: Colors.orange,
-     
+          title: Text("VOLUNTARIOS"),
+          backgroundColor: Color.fromRGBO(22, 23, 22 , 0.4),
+          actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {  
+               showSearch(context: context, delegate: DataSearchVoluntary()  );
+            },
+          )
+        ],
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
-              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    prefixIcon: Icon(Icons.search),
-                    hintText: "Busca a un voluntario",
-                  ),
-                ),
-              ),
-            ),
-            // colcoamos las cajas de instituciones
-            Divider(color: Colors.orange, thickness: 1.0),
+           SizedBox(height: 10.0),
+
             futureItemsEntity(context)
           ],
         ),
-        drawer: DrawerCitizen(),
         bottomNavigationBar: _bottomNavigationBar(context));
   }
 
   Widget _bottomNavigationBar(BuildContext context) {
-    return Theme(
+   return Theme(
       data: Theme.of(context).copyWith(
           canvasColor: Colors.white,
           primaryColor: Colors.blue,
@@ -145,9 +122,11 @@ Future<void> initPlatformState() async {
   }
 
   Widget futureItemsEntity(BuildContext context) {
+    
+
     return FutureBuilder(
         future: generic.getAll(
-            new Voluntary(), urlGetVoluntario, primaryKeyGetVoluntario),
+            new Evento(), urlGetEvento, primaryKeyGetEvento),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -172,38 +151,25 @@ Future<void> initPlatformState() async {
 
           return Container(
             decoration: BoxDecoration(
-         //     border: BoxBorder.,
-        //  borderRadius: BorderRadius.circular(18),
+        color:  Color.fromRGBO(22, 23, 22 , 0.9),
+        borderRadius: BorderRadius.circular(20.0),
         boxShadow: <BoxShadow>[
           BoxShadow(
-              color: Colors.black26,
-              blurRadius: 7.0,
-              offset: Offset(0.0, 5.0),
-              spreadRadius: 7.0)
-        ],
-          gradient: LinearGradient(colors: <Color>[
-        Color.fromRGBO(254, 253, 252, 1.0),
-        Color.fromRGBO(255, 205, 90, 3.0),
-        Color.fromRGBO(243, 174, 61, 1.0),
-      //  Color.fromRGBO(243, 223, 18, 1.0)
-      ])),
-            child: ListTile(
-              leading: iconEntity(entityItem),
-              title: listEntity(context, entityItem),
-              trailing:  FaIcon(FontAwesomeIcons.phoneVolume, color: Colors.black, size: 35,),
-               onTap: () { 
-
-                // whatsAppOpen();
-FlutterOpenWhatsapp.sendSingleMessage("59176427275", "bruto oooo");
-               }
-               //{ FlutterOpenWhatsapp.sendSingleMessage("59176427275", "bruto oooo");
-              //  print('Running on: $_platformVersion');}
-              
-            //  callWhatsApp(59176427275),
+              color: Colors.yellow,
+              blurRadius: 3.0,
+              offset: Offset(5.0, 5.0),
+              spreadRadius: 1.0)
+        ]),
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  leading: iconEntity(entityItem),
+                  title: listEntity(context, entityItem),
+                  trailing: Icon(Icons.arrow_right),
+                ),
+              ],
             ),
-            
           );
-          
         },
       ),
     );
@@ -236,9 +202,11 @@ FlutterOpenWhatsapp.sendSingleMessage("59176427275", "bruto oooo");
         });
 
         if (result != null || result != '-1')
-           Scaffold.of(context).showSnackBar(messageOk("Registro eliminado."));
+          Scaffold.of(context).showSnackBar(
+              new SnackBar(content: new Text('Registro eliminado')));
         else
-          Scaffold.of(context).showSnackBar(messageNOk("Se produjo un error, vuelva a intentarlo."));
+          Scaffold.of(context).showSnackBar(new SnackBar(
+              content: new Text('Problemas al eliminar el registro!!!')));
       },
 
       child: Row(
@@ -249,34 +217,45 @@ FlutterOpenWhatsapp.sendSingleMessage("59176427275", "bruto oooo");
             children: <Widget>[
               Container(
                   width: MediaQuery.of(context).size.width - 160,
-                  child: Text('${entityItem.perNombrepersonal} ',
-                      style: TextStyle(color: Colors.black45, fontSize: 14))),
+                  child: Row(
+                    children: <Widget>[
+                      Icon(
+                    Icons.gamepad,
+                    color: Colors.green,
+                    size: 15,
+                  ),
+                      Text('Material: ${entityItem.perNombrepersonal} ',
+                          style: TextStyle(color: Colors.red, fontSize: 14)),
+                    ],
+                  )),
               Row(
                 children: <Widget>[
                   Icon(
                     Icons.place,
-                    color: Colors.black54,
+                    color: Colors.green,
                     size: 15,
                   ),
                   Text(
-                    'Grupo: ${entityItem.idcovInstitucion}',
+                    'Resumen: ${entityItem.idcovInstitucion}',
+                    style: TextStyle(color: Colors.red, fontSize: 14)
                   )
                 ],
               ),
               Container(
                   child: Text(
-                'Especialidad: ${entityItem.idaTipopersonal}',
-                style: TextStyle(color: Colors.black45, fontSize: 14),
+                'Tipo: ${entityItem.idaTipopersonal}',
+                style: TextStyle(color: Colors.yellow, fontSize: 14),
               )),
               Row(
                 children: <Widget>[
                   Icon(
                     Icons.store_mall_directory,
-                    color: Colors.black54,
+                    color: Colors.green,
                     size: 15,
                   ),
                   Text(
-                    'Correo: ${entityItem.perCorreo}',
+                    'Fecha publicación: ${entityItem.perCorreo}',
+                    style: TextStyle(color: Colors.yellow, fontSize: 14),
                   )
                 ],
               ),
@@ -291,16 +270,16 @@ FlutterOpenWhatsapp.sendSingleMessage("59176427275", "bruto oooo");
     return Container(
         child: Column(
       children: <Widget>[
-       
-           FaIcon(FontAwesomeIcons.userTie, color: Colors.black, size: 35,),
-          
- 
-
+        Icon(
+          Icons.person_pin,
+          size: 35,
+          color: Colors.yellow,
+        ),
         Text(
           '${entityItem.perCI}',
           style: TextStyle(
               fontSize: 11,
-              color: Colors.black,
+              color: Colors.yellow,
               fontWeight: FontWeight.w400),
         ),
       ],

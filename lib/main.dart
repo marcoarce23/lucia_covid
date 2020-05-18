@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
+import 'package:lucia_covid/src/Provider/Mensaje.dart';
 import 'package:lucia_covid/src/Provider/PushNotificationProvider.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenEmergency/CitizenEmergencyModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenEvents/CitizenEventsModule.dart';
@@ -43,23 +45,21 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
-final prefs = new PreferensUser();
- 
+  final prefs = new PreferensUser();
+  String token;
+
   @override
   void initState() {
     super.initState();
-
     final pushProvider = new PushNotificationProvider();
     pushProvider.initNotifications();
-
     pushProvider.mensajes.listen((data) {
-      //   // Navigator.pushNamed(context, 'mensaje');
-      //   print('Argumento del Push');
-      //   print(data);
-
-      //   navigatorKey.currentState.pushNamed('mensaje', arguments: data );
-      prefs.token = data;
-    });
+        // Navigator.pushNamed(context, 'mensaje');
+        // print('Argumento del Push');
+        // print(data);
+        // navigatorKey.currentState.pushNamed('mensaje', arguments: data );
+      }
+    );
   }
 
   @override
@@ -87,7 +87,8 @@ final prefs = new PreferensUser();
 
 
      // initialRoute: prefs.ultimaPagina,
-      home: new HomePageModule(),//MapAdressModule(),
+    //  home: new FilePickerDemo(),//MapAdressModule(),
+home: new SignUpModule(),
 
         routes: <String, WidgetBuilder>{
         'login': (BuildContext context) => new SignUpModule(),

@@ -537,8 +537,8 @@ class GetClasificador extends Entity {
 }
 
 class LoginSigIn extends Entity {
-  int idUsuario;
-  int idInstitucion;
+  String idUsuario;
+  String idInstitucion;
   String nombrePersona;
   String correo;
   String nombreInstitucion;
@@ -547,7 +547,7 @@ class LoginSigIn extends Entity {
   String password;
   String imei;
   String tokenDispositivo;
-  int primeraVez;
+  String primeraVez;
 
   LoginSigIn(
       {this.idUsuario,

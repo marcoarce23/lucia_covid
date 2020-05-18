@@ -237,7 +237,7 @@ Atencion entity = new Atencion();
         key: formKey,
         child: Column(
           children: <Widget>[
-            informacionProfesional(context),
+       //     informacionProfesional(context),
             SafeArea(
               child: Container(
                 height: 10.0,

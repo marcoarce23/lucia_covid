@@ -4,29 +4,27 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'dart:io';
 import 'dart:async';
 
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
+
 class PushNotificationProvider {
 
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-
   final _mensajesStreamController = StreamController<String>.broadcast();
   Stream<String> get mensajes => _mensajesStreamController.stream;
+  final prefs = new PreferensUser();
 
-
-  initNotifications() {
-
+  initNotifications() 
+  {
     _firebaseMessaging.requestNotificationPermissions();
-
     _firebaseMessaging.getToken().then( (token) {
+     print('===== FCM Token =====');
+     prefs.token = token;
+     print('tokennnn: ${prefs.token}');
+   }
+  );
 
 
-      print('===== FCM Token =====');
-      print( token );
-
-    });
-
-
-    _firebaseMessaging.configure(
-
+   _firebaseMessaging.configure(
       onMessage: ( info ) {
 
         print('======= On Message ========');
@@ -46,16 +44,11 @@ class PushNotificationProvider {
 
         print('======= On Launch ========');
         print( info );
-
-        
-
       },
 
       onResume: ( info ) {
-
         print('======= On Resume ========');
         print( info );
-
 
         String argumento = 'no-data';
 
@@ -64,8 +57,7 @@ class PushNotificationProvider {
         } else {
           argumento = info['comida'] ?? 'no-data-ios';
         }
-        
-        _mensajesStreamController.sink.add(argumento);
+       _mensajesStreamController.sink.add(argumento);
 
       }
 

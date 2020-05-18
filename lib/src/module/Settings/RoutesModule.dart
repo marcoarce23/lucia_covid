@@ -14,12 +14,15 @@ final String primaryKeyGetVoluntario = '_DevuelvePersonalResult';
 String urlGetVoluntario              =    'http://covid19.ruta88.net/COVID/Personal/srvPersonal.svc/DevuelvePersonal';
 
 String urlGetAtencion                =    'http://covid19.ruta88.net/COVID/Atencion/srvAtencion.svc/DevuelveAtencion/{pIdInstitucion}/{pIdPersonal} ';
+
 String urlGetMultimedia              =    'http://covid19.ruta88.net/COVID/Multimedia/srvMultimedia.svc/Multimedia';
+String primaryKeyGetMultimedia ='';
 String urlGetEvento                  =    'http://covid19.ruta88.net/COVID/Multimedia/srvMultimedia.svc/MultimediaXX';
+String primaryKeyGetEvento = '';
 
 // METODO POST
 final String urlAddVoluntary   =    'http://covid19.ruta88.net/COVID/AyudaAmigo/srvAyudaAmigo.svc/AyudaAmigo';
-final String urlAddSignIn      =    'http://covid19.ruta88.net/COVID/Login/srvLogin.svc/login_signin';
+final String urlAddSignIn      =    'http://covid19.ruta88.net/COVID/Login/srvLogin.svc/login_signin1';
 final String urlAddInstitucion =    'http://covid19.ruta88.net/COVID/Institucion/srvInstitucion.svc/Institucion';
 final String urlAddPersonal    =    'http://covid19.ruta88.net/COVID/Personal/srvPersonal.svc/Personal';
 final String urlAddMultimedia  =    'http://covid19.ruta88.net/COVID/Multimedia/srvMultimedia.svc/Multimedia';

@@ -4,6 +4,7 @@ import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class ListEventModule extends StatefulWidget {
@@ -30,29 +31,22 @@ final generic = new Generic();
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("IMAGENES-MULTIMEDIA"),
+          title: Text("IMAGENES MULTIMEDIA"),
+          backgroundColor: Color.fromRGBO(22, 23, 22 , 0.4),
+          actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {  
+               showSearch(context: context, delegate: DataSearchEvento()  );
+            },
+          )
+        ],
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
-              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    prefixIcon: Icon(Icons.search),
-                    hintText: "Busca tu material",
-                  ),
-                ),
-              ),
-            ),
-            // colcoamos las cajas de instituciones
-            Divider(color: Colors.orange, thickness: 1.0),
+           SizedBox(height: 10.0),
+
             futureItemsEntity(context)
           ],
         ),
@@ -72,24 +66,26 @@ final generic = new Generic();
         onTap: (value) {
           setState(() {
             _currentIndex = value;
-           callPageEventVoluntary(_currentIndex, context);
+            callPageEventVoluntary(_currentIndex, context);
           });
         },
         items: [
           BottomNavigationBarItem(
               icon: Icon(Icons.person, size: 25.0), title: Text('Eventos')),
-        
           BottomNavigationBarItem(
               icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Listado eventos')),
-         ],
+              title: Text('Historial Eventos')),
+        ],
       ),
     );
   }
 
   Widget futureItemsEntity(BuildContext context) {
+    
+
     return FutureBuilder(
-        future: generic.getAll(new Voluntary(), urlGetVoluntario, primaryKeyGetVoluntario),
+        future: generic.getAll(
+            new Evento(), urlGetEvento, primaryKeyGetEvento),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -112,43 +108,26 @@ final generic = new Generic();
         itemBuilder: (context, index) {
           Voluntary entityItem = snapshot.data[index];
 
-          return InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ListEventModule(),
-                  ));
-            },
-            child: Card(
-                elevation: 2,
-                //margin:                      const EdgeInsets.only(left: 10, right: 10),
-                child: Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(25.0),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                              color: Colors.black38,
-                              blurRadius: 7.0,
-                              offset: Offset(0.0, 5.0),
-                              spreadRadius: 7.0)
-                        ]),
-                    padding: EdgeInsets.all(10),
-                    width: MediaQuery.of(context).size.width - 30,
-                    height: 90,
-                    child: Row(
-                      //mainAxisAlignment: MainAxisAlignment.start,
-                      //crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        iconEntity(entityItem),
-                        dividerLine(),
-                        listEntity(context, entityItem),
-                      ],
-                    ),
-                  ),
-                )),
+          return Container(
+            decoration: BoxDecoration(
+        color:  Color.fromRGBO(22, 23, 22 , 0.9),
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+              color: Colors.yellow,
+              blurRadius: 3.0,
+              offset: Offset(5.0, 5.0),
+              spreadRadius: 1.0)
+        ]),
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  leading: iconEntity(entityItem),
+                  title: listEntity(context, entityItem),
+                  trailing: Icon(Icons.arrow_right),
+                ),
+              ],
+            ),
           );
         },
       ),
@@ -159,7 +138,6 @@ final generic = new Generic();
     final item = entityItem.idcovPersonal;
 
     return Dismissible(
-      
       key: Key(item.toString()), //UniqueKey(),
       background: Container(
         color: Colors.red,
@@ -172,21 +150,22 @@ final generic = new Generic();
       onDismissed: (value) {
         setState(() {
           //   items.
-      //    print('El registro:$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
-          generic.add(new RegistroAmigo(),'$urlDeleteVoluntario${item.toString()}/marcoarce23');
-          final dataMap = generic.add(entityItem, '$urlDeleteVoluntario${item.toString()}/marcoarce23');
-     
-     dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
-    print('resultado:$result');
+          //    print('El registro:$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
+          generic.add(new RegistroAmigo(),
+              '$urlDeleteVoluntario${item.toString()}/marcoarce23');
+          final dataMap = generic.add(
+              entityItem, '$urlDeleteVoluntario${item.toString()}/marcoarce23');
 
-
+          dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+          print('resultado:$result');
         });
 
-        if(result != null || result != '-1')
-            Scaffold.of(context).showSnackBar( new SnackBar(content: new Text('Registro eliminado')));
+        if (result != null || result != '-1')
+          Scaffold.of(context).showSnackBar(
+              new SnackBar(content: new Text('Registro eliminado')));
         else
-        Scaffold.of(context).showSnackBar( new SnackBar(content: new Text('Problemas al eliminar el registro!!!')));
-
+          Scaffold.of(context).showSnackBar(new SnackBar(
+              content: new Text('Problemas al eliminar el registro!!!')));
       },
 
       child: Row(
@@ -197,39 +176,48 @@ final generic = new Generic();
             children: <Widget>[
               Container(
                   width: MediaQuery.of(context).size.width - 160,
-                  child: Text('${entityItem.perNombrepersonal} ',
-                      style: TextStyle(color: Colors.black45, fontSize: 14))),
+                  child: Row(
+                    children: <Widget>[
+                      Icon(
+                    Icons.gamepad,
+                    color: Colors.green,
+                    size: 15,
+                  ),
+                      Text('Material: ${entityItem.perNombrepersonal} ',
+                          style: TextStyle(color: Colors.red, fontSize: 14)),
+                    ],
+                  )),
               Row(
                 children: <Widget>[
                   Icon(
                     Icons.place,
-                    color: Colors.black54,
+                    color: Colors.green,
                     size: 15,
                   ),
                   Text(
-                    'Grupo: ${entityItem.idcovInstitucion}',
+                    'Resumen: ${entityItem.idcovInstitucion}',
+                    style: TextStyle(color: Colors.red, fontSize: 14)
                   )
                 ],
               ),
               Container(
                   child: Text(
-                'Especialidad: ${entityItem.idaTipopersonal}',
-                style: TextStyle(color: Colors.black45, fontSize: 14),
+                'Tipo: ${entityItem.idaTipopersonal}',
+                style: TextStyle(color: Colors.yellow, fontSize: 14),
               )),
-
               Row(
                 children: <Widget>[
                   Icon(
                     Icons.store_mall_directory,
-                    color: Colors.black54,
+                    color: Colors.green,
                     size: 15,
                   ),
                   Text(
-                    'Correo: ${entityItem.perCorreo}',
+                    'Fecha publicación: ${entityItem.perCorreo}',
+                    style: TextStyle(color: Colors.yellow, fontSize: 14),
                   )
                 ],
               ),
-
             ],
           ),
         ],
@@ -237,20 +225,20 @@ final generic = new Generic();
     );
   }
 
-   Container iconEntity(Voluntary entityItem) {
+  Container iconEntity(Voluntary entityItem) {
     return Container(
         child: Column(
       children: <Widget>[
         Icon(
           Icons.person_pin,
           size: 35,
-          color: AppTheme.themeColorNaranja,
+          color: Colors.yellow,
         ),
         Text(
           '${entityItem.perCI}',
           style: TextStyle(
               fontSize: 11,
-              color: AppTheme.themeColorNaranja,
+              color: Colors.yellow,
               fontWeight: FontWeight.w400),
         ),
       ],

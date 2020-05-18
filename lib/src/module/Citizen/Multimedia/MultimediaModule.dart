@@ -16,6 +16,8 @@ import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
+import 'package:file_picker/file_picker.dart';
+
 
 class MultimediaModule extends StatefulWidget {
   static final String routeName = 'multimedia';
@@ -27,6 +29,22 @@ class MultimediaModule extends StatefulWidget {
 
 class _MultimediaModuleState extends State<MultimediaModule> {
   InputTextField titulo;
+
+
+
+
+  String _fileName;
+  String _path;
+  Map<String, String> _paths;
+  String _extension;
+  bool _loadingPath = false;
+  bool _multiPick = false;
+  bool _hasValidMime = false;
+  FileType _pickingType;
+  TextEditingController _controller = new TextEditingController();
+
+
+
   InputTextField resumen;
   InputTextField detalle;
   InputDropDown especialidad;
@@ -490,4 +508,6 @@ class _MultimediaModuleState extends State<MultimediaModule> {
       print('cargadod e iagen ${entity.mulEnlace}');
     });
   }
+
+
 }

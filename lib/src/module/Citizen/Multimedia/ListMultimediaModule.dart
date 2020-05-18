@@ -4,6 +4,7 @@ import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class ListMultimediaModule extends StatefulWidget {
@@ -32,29 +33,22 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("IMAGENES-MULTIMEDIA"),
+          title: Text("IMAGENES MULTIMEDIA"),
+          backgroundColor: Color.fromRGBO(22, 23, 22 , 0.4),
+          actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {  
+               showSearch(context: context, delegate: DataSearchMultimedia()  );
+            },
+          )
+        ],
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
-              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    prefixIcon: Icon(Icons.search),
-                    hintText: "Busca tu material",
-                  ),
-                ),
-              ),
-            ),
-            // colcoamos las cajas de instituciones
-            Divider(color: Colors.orange, thickness: 1.0),
+           SizedBox(height: 10.0),
+
             futureItemsEntity(context)
           ],
         ),
@@ -89,9 +83,11 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
   }
 
   Widget futureItemsEntity(BuildContext context) {
+    
+
     return FutureBuilder(
         future: generic.getAll(
-            new Voluntary(), urlGetVoluntario, primaryKeyGetVoluntario),
+            new Voluntary(), urlGetMultimedia, primaryKeyGetMultimedia),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -114,10 +110,26 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
         itemBuilder: (context, index) {
           Voluntary entityItem = snapshot.data[index];
 
-          return ListTile(
-            leading: iconEntity(entityItem),
-            title: listEntity(context, entityItem),
-            trailing: Icon(Icons.arrow_right),
+          return Container(
+            decoration: BoxDecoration(
+        color:  Color.fromRGBO(22, 23, 22 , 0.9),
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+              color: Colors.yellow,
+              blurRadius: 3.0,
+              offset: Offset(5.0, 5.0),
+              spreadRadius: 1.0)
+        ]),
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  leading: iconEntity(entityItem),
+                  title: listEntity(context, entityItem),
+                  trailing: Icon(Icons.arrow_right),
+                ),
+              ],
+            ),
           );
         },
       ),
@@ -166,34 +178,45 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
             children: <Widget>[
               Container(
                   width: MediaQuery.of(context).size.width - 160,
-                  child: Text('${entityItem.perNombrepersonal} ',
-                      style: TextStyle(color: Colors.black45, fontSize: 14))),
+                  child: Row(
+                    children: <Widget>[
+                      Icon(
+                    Icons.gamepad,
+                    color: Colors.green,
+                    size: 15,
+                  ),
+                      Text('Material: ${entityItem.perNombrepersonal} ',
+                          style: TextStyle(color: Colors.red, fontSize: 14)),
+                    ],
+                  )),
               Row(
                 children: <Widget>[
                   Icon(
                     Icons.place,
-                    color: Colors.black54,
+                    color: Colors.green,
                     size: 15,
                   ),
                   Text(
-                    'Grupo: ${entityItem.idcovInstitucion}',
+                    'Resumen: ${entityItem.idcovInstitucion}',
+                    style: TextStyle(color: Colors.red, fontSize: 14)
                   )
                 ],
               ),
               Container(
                   child: Text(
-                'Especialidad: ${entityItem.idaTipopersonal}',
-                style: TextStyle(color: Colors.black45, fontSize: 14),
+                'Tipo: ${entityItem.idaTipopersonal}',
+                style: TextStyle(color: Colors.yellow, fontSize: 14),
               )),
               Row(
                 children: <Widget>[
                   Icon(
                     Icons.store_mall_directory,
-                    color: Colors.black54,
+                    color: Colors.green,
                     size: 15,
                   ),
                   Text(
-                    'Correo: ${entityItem.perCorreo}',
+                    'Fecha publicación: ${entityItem.perCorreo}',
+                    style: TextStyle(color: Colors.yellow, fontSize: 14),
                   )
                 ],
               ),
@@ -211,13 +234,13 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
         Icon(
           Icons.person_pin,
           size: 35,
-          color: AppTheme.themeColorNaranja,
+          color: Colors.yellow,
         ),
         Text(
           '${entityItem.perCI}',
           style: TextStyle(
               fontSize: 11,
-              color: AppTheme.themeColorNaranja,
+              color: Colors.yellow,
               fontWeight: FontWeight.w400),
         ),
       ],
