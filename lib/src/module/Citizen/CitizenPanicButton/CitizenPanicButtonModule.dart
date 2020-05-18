@@ -278,7 +278,7 @@ class _ButtonPanic extends State<ButtonPanic> {
                             splashColor: Colors.greenAccent,
                             onPressed: () {
                               _submit();
-                              setState(() {
+                              setState(() {    
                                 fechaNotificacion =
                                     DateFormat("dd/MM/yyyy HH:mm")
                                         .format(DateTime.now());
