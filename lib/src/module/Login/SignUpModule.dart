@@ -6,10 +6,10 @@ import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
-import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
+import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
@@ -28,7 +28,7 @@ class _SignUpModuleState extends State<SignUpModule> {
   InputEmailField correo;
   InputTextPassword contrasenia;
 
-  bool _save = false;
+  //bool _save = false;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
@@ -37,9 +37,13 @@ class _SignUpModuleState extends State<SignUpModule> {
   String _platformImei = 'Unknown';
   String uniqueId = "Unknown";
   var result;
+    var result1;
+    String  result2;
 
   GoogleSignInAccount currentUser;
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['profile', 'email']);
+
+  get respuesta => null;
 
   @override
   void initState() {
@@ -78,50 +82,87 @@ class _SignUpModuleState extends State<SignUpModule> {
     });
   }
 
-  Future<void> handleSignIn() async {
-    try {
-      await _googleSignIn.signIn();
-    } catch (error) {
-      print('rrrr: $error   y el valor token ${prefs.token}');
-    }
-      entity.idUsuario = currentUser.id;
-      entity.idInstitucion = '-1';
-      entity.nombrePersona = currentUser.displayName;
-      entity.nombreInstitucion = '-1';
-      entity.usuario = currentUser.email;
-      entity.correo = currentUser.email;
-      entity.avatar =  (currentUser.photoUrl == null) ? 'https://definicionyque.es/wp-content/uploads/2017/11/Medicina_Preventiva.jpg': currentUser.photoUrl;
-      entity.password = '-1';
-      entity.tokenDispositivo = prefs.token;
-      entity.imei = _platformImei;
-      entity.primeraVez = '-1';
+  Future<void> handleSignIn() async
+  {
+        try 
+        {
+          await _googleSignIn.signIn();
+        } catch (error) {
+          print('rrrr: $error ');
+        }
 
-      final dataMap = generic.add(entity, urlAddSignIn);
+        final dataMap1 = generic.getAll(entity, getLogin+'${currentUser.email}', primaryKeyGetLogin);
 
-      await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
-      print('resultado:$result ');
+         dataMap1.then((value)
+         {
+           print('tamaño: ${value.length} ');
+            if(value.length > 0)
+            {
+                for(int i=0; i < value.length; i++) {
+                  entity = value[i];
+                }
+                  prefs.imei = entity.imei;
+                  prefs.nombreUsuario= entity.nombrePersona;
+                  prefs.correoElectronico = entity.correo;
+                  prefs.avatarImagen =  entity.avatar;
+                  
+                  prefs.nombreInstitucion = entity.nombreInstitucion;
+                  prefs.idInsitucion = entity.idInstitucion;
+                  prefs.idPersonal = entity.idPersonal;
+                  prefs.userId =entity.idUsuario;
 
-        if (result != "-1") {
 
-          prefs.imei = int.parse(_platformImei);
-          prefs.nombreUsuario= currentUser.displayName;
-          prefs.correoElectronico = currentUser.email;
-          prefs.avatarImagen =  currentUser.photoUrl;
-          prefs.userId =result;
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      curve: Curves.bounceOut,
+                      type: PageTransitionType.rotate,
+                      alignment: Alignment.topCenter,
+                      child: IntroScreenModule(),
+                    ));
+      
+            }
+            else
+            {
+                entity.idUsuario = currentUser.id;
+                entity.idInstitucion = '-1';
+                entity.nombrePersona = currentUser.displayName;
+                entity.nombreInstitucion = '-1';
+                entity.usuario = currentUser.email;
+                entity.correo = currentUser.email;
+                entity.avatar =  (currentUser.photoUrl == null) ? 'https://definicionyque.es/wp-content/uploads/2017/11/Medicina_Preventiva.jpg': currentUser.photoUrl;
+                entity.password = '-1';
+                entity.tokenDispositivo = prefs.token;
+                entity.imei = _platformImei;
+                entity.primeraVez = '-1';
 
-            Navigator.push(
-            context,
-            PageTransition(
-              curve: Curves.bounceOut,
-              type: PageTransitionType.rotate,
-              alignment: Alignment.topCenter,
-              child: IntroScreenModule(),
-            ));
-    
-    }
-    else
-     scaffoldKey.currentState.showSnackBar(messageNOk("Se produjo un error, vuelta a intentarlo"));
- }
+                final dataMap = generic.add(entity, urlAddSignIn);
+                dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+                print('resultado:$result ');
+
+                if (result != "-1") 
+                {
+                    prefs.imei = _platformImei;
+                    prefs.nombreUsuario= currentUser.displayName;
+                    prefs.correoElectronico = currentUser.email;
+                    prefs.avatarImagen =  currentUser.photoUrl;
+                    prefs.userId =result;
+
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        curve: Curves.bounceOut,
+                        type: PageTransitionType.rotate,
+                        alignment: Alignment.topCenter,
+                        child: IntroScreenModule(),
+                      ));
+                }
+                else{
+                    scaffoldKey.currentState.showSnackBar(messageNOk("Se produjo un error, vuelta a intentarlo"));
+                }
+            }
+         });
+  }
 
   Future<void> handleSignOut() async {
     _googleSignIn.disconnect();
@@ -132,7 +173,7 @@ class _SignUpModuleState extends State<SignUpModule> {
       key: scaffoldKey,
         body: Stack(
       children: <Widget>[
-        crearFondo(context),
+     //   crearFondo(context),
         _crearForm(context),
       ],
     ));
@@ -148,20 +189,31 @@ class _SignUpModuleState extends State<SignUpModule> {
           children: <Widget>[
             SafeArea(
               child: Container(
-                height: 170.0,
+              //  height: 170.0,
               ),
             ),
-            Container(
-              width: size.width * 0.85,
-              margin: EdgeInsets.symmetric(vertical: 10.0),
-              // padding: EdgeInsets.symmetric( vertical: 30.0 ),
-              decoration: _crearContenedorCampos(),
-              child: _crearCampos(),
-            ),
+        //     Container(
+        //       width: size.width * 0.85,
+        //       margin: EdgeInsets.symmetric(vertical: 10.0),
+        //       // padding: EdgeInsets.symmetric( vertical: 30.0 ),
+        //      // decoration: _crearContenedorCampos(),
+        //  //     child: _crearCampos(),
+        //     ),
+
+             Column(
+               children: <Widget>[
+                 Image(image: AssetImage("assets/buu.PNG"), height: 250.0),
+               ],
+             ),
+
             SizedBox(height: 20.0),
+            acuerdo(),
             _dividerOr(),
             _gmailButton(),
-            _registerCount(),
+            _gmailButtonCerrar(),
+         //   _crearBoton('Cerrar Sesión'),
+              _leerAcuerdo(),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: Divider(
@@ -204,7 +256,7 @@ class _SignUpModuleState extends State<SignUpModule> {
         ),
         correo,
         contrasenia,
-        _crearBoton(resource.signIn),
+       // _crearBoton('Cerrar Sesión'),
         _forgetPassword(),
       ],
     );
@@ -240,63 +292,63 @@ class _SignUpModuleState extends State<SignUpModule> {
           ),
         ),
         icon: Icon(Icons.check),
-        onPressed: (_save) ? null : _submit,
+        onPressed: handleSignOut,// (_save) ? null : _submit,
       ),
     );
   }
 
-  void _submit() async {
-    if (!formKey.currentState.validate()) return;
+  // void _submit() async {
+  //   if (!formKey.currentState.validate()) return;
 
-    formKey.currentState.save();
-    setState(() {
-      _save = true;
-    });
+  //   formKey.currentState.save();
+  //   setState(() {
+  //  //   _save = true;
+  //   });
 
-    entity.idUsuario = '0';
-    entity.idInstitucion = '-1';
-    entity.nombrePersona = '0';
-    entity.nombreInstitucion = '0';
-    entity.usuario = correo.objectValue;
-    entity.avatar = '';
-    entity.password = contrasenia.objectValue;
-    entity.tokenDispositivo = prefs.token;
-    entity.imei = _platformImei;
+  //   entity.idUsuario = '0';
+  //   entity.idInstitucion = '-1';
+  //   entity.nombrePersona = '0';
+  //   entity.nombreInstitucion = '0';
+  //   entity.usuario = correo.objectValue;
+  //   entity.avatar = '';
+  //   entity.password = contrasenia.objectValue;
+  //   entity.tokenDispositivo = prefs.token;
+  //   entity.imei = _platformImei;
 
-    final dataMap = generic.add(entity, urlAddSignIn);
+  //   final dataMap = generic.add(entity, urlAddSignIn);
 
-    await dataMap.then((x) => result = x["TIPO_RESPUESTA"]);
+  //   await dataMap.then((x) => result = x["TIPO_RESPUESTA"]);
   
-    if (result != '-1') {
-      print('valro de result de login es: $result');
-      prefs.imei = int.parse(_platformImei);
-      prefs.nombreUsuario = currentUser.displayName;
-      prefs.correoElectronico = currentUser.email;
-      prefs.avatarImagen = currentUser.photoUrl;
-      prefs.userId = result;
+  //   if (result != '-1') {
+  //     print('valro de result de login es: $result');
+  //     prefs.imei = int.parse(_platformImei);
+  //     prefs.nombreUsuario = currentUser.displayName;
+  //     prefs.correoElectronico = currentUser.email;
+  //     prefs.avatarImagen = currentUser.photoUrl;
+  //     prefs.userId = result;
       
-      Navigator.push(
-          context,
-          PageTransition(
-            curve: Curves.bounceOut,
-            type: PageTransitionType.rotate,
-            alignment: Alignment.topCenter,
-            child: IntroScreenModule(),
-          ));
-    } else {
-      Navigator.push(
-          context,
-          PageTransition(
-            curve: Curves.bounceOut,
-            type: PageTransitionType.rotate,
-            alignment: Alignment.topCenter,
-            child: SignUpModule(),
-          ));
-    }
-    setState(() {
-      _save = false;
-    });
-  }
+  //     Navigator.push(
+  //         context,
+  //         PageTransition(
+  //           curve: Curves.bounceOut,
+  //           type: PageTransitionType.rotate,
+  //           alignment: Alignment.topCenter,
+  //           child: IntroScreenModule(),
+  //         ));
+  //   } else {
+  //     Navigator.push(
+  //         context,
+  //         PageTransition(
+  //           curve: Curves.bounceOut,
+  //           type: PageTransitionType.rotate,
+  //           alignment: Alignment.topCenter,
+  //           child: SignUpModule(),
+  //         ));
+  //   }
+  //   setState(() {
+  //    // _save = false;
+  //   });
+  // }
 
   Widget _dividerOr() {
     return Container(
@@ -326,22 +378,36 @@ class _SignUpModuleState extends State<SignUpModule> {
     );
   }
 
-  Widget _forgetPassword() {
-    return FlatButton(
-        child: Text('Olvidaste tu contraseña ?'), onPressed: ()  => Navigator.push(
-          context,
-          PageTransition(
-            curve: Curves.bounceOut,
-            type: PageTransitionType.rotate,
-            alignment: Alignment.topCenter,
-            child: ForgetPassword(),
-          ))
-          );
+  Widget acuerdo() {
+    bool valor = false;
+    return CheckboxListTile(
+        title:  Text('Acepto los terminos'),
+        subtitle: Text('Lea los terminos y acuerdos'),
+        value: valor,
+        onChanged: (value) {
+          setState(() {
+            valor= value;
+          });
+        });
   }
 
-  _registerCount() {
+  Widget _forgetPassword() {
     return FlatButton(
-        child: Text('Crea una nueva cuenta. Aqui.'), onPressed: () => Navigator.push(
+         child: Text('Olvidaste tu contraseña ?'), onPressed: ()  =>  handleSignOut);
+         //Navigator.push(
+        //   context,
+        //   PageTransition(
+        //     curve: Curves.bounceOut,
+        //     type: PageTransitionType.rotate,
+        //     alignment: Alignment.topCenter,
+        //     child: ForgetPassword(),
+        //   ))
+        //   );
+  }
+
+  _leerAcuerdo() {
+    return FlatButton(
+        child: Text('Leer el acuerdo aca.. Aqui.'), onPressed: () => Navigator.push(
           context,
           PageTransition(
             curve: Curves.bounceOut,
@@ -372,6 +438,37 @@ class _SignUpModuleState extends State<SignUpModule> {
               padding: const EdgeInsets.only(left: 10),
               child: Text(
                 'Registrate con Google',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  Widget _gmailButtonCerrar() {
+    return OutlineButton(
+      splashColor: Colors.grey,
+      onPressed: handleSignIn,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+      highlightElevation: 0,
+      borderSide: BorderSide(color: Colors.grey),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image(image: AssetImage("assets/google_logo.png"), height: 20.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                'Cerrar Sesión',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey,

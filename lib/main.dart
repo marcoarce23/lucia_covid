@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
-import 'package:lucia_covid/src/Provider/Mensaje.dart';
 import 'package:lucia_covid/src/Provider/PushNotificationProvider.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenEmergency/CitizenEmergencyModule.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenEvents/CitizenEventsModule.dart';
@@ -88,7 +86,7 @@ class _MyAppState extends State<MyApp> {
 
      // initialRoute: prefs.ultimaPagina,
     //  home: new FilePickerDemo(),//MapAdressModule(),
-home: new SignUpModule(),
+home: new SignUpModule(), //SignInDemo(),
 
         routes: <String, WidgetBuilder>{
         'login': (BuildContext context) => new SignUpModule(),

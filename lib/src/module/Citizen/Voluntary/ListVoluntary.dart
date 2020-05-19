@@ -1,23 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
-import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
-import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
-import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
-import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
-
 
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-
-
 
 class ListVoluntaryModule extends StatefulWidget {
   static final String routeName = 'lisVoluntary';
@@ -30,19 +22,19 @@ class ListVoluntaryModule extends StatefulWidget {
 }
 
 class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
-final generic = new Generic();
-final prefs = new PreferensUser();
+  final generic = new Generic();
+  final prefs = new PreferensUser();
   var result;
   String _platformVersion = 'Unknown';
 
- @override
+  @override
   void initState() {
     super.initState();
     initPlatformState();
     prefs.ultimaPagina = ListVoluntaryModule.routeName;
   }
 
-Future<void> initPlatformState() async {
+  Future<void> initPlatformState() async {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
@@ -61,27 +53,18 @@ Future<void> initPlatformState() async {
       print('Running on: $_platformVersion');
     });
   }
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-           SizedBox(height: 10.0),
-
-            futureItemsEntity(context)
-          ],
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[SizedBox(height: 10.0), futureItemsEntity(context)],
+      ),
     );
   }
 
- 
-
   Widget futureItemsEntity(BuildContext context) {
-    
-
     return FutureBuilder(
         future: generic.getAll(
             new Voluntary(), urlGetVoluntario, primaryKeyGetVoluntario),
@@ -109,15 +92,15 @@ Future<void> initPlatformState() async {
 
           return Container(
             decoration: BoxDecoration(
-        color:  Color.fromRGBO(22, 23, 22 , 0.9),
-        borderRadius: BorderRadius.circular(20.0),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.yellow,
-              blurRadius: 3.0,
-              offset: Offset(5.0, 5.0),
-              spreadRadius: 1.0)
-        ]),
+                color: Color.fromRGBO(22, 23, 22, 0.9),
+                borderRadius: BorderRadius.circular(20.0),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                      color: Colors.yellow,
+                      blurRadius: 3.0,
+                      offset: Offset(5.0, 5.0),
+                      spreadRadius: 1.0)
+                ]),
             child: Column(
               children: <Widget>[
                 ListTile(
@@ -148,23 +131,21 @@ Future<void> initPlatformState() async {
       ),
       onDismissed: (value) {
         setState(() {
-          //   items.
+
           //    print('El registro:$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
-          generic.add(new RegistroAmigo(),
-              '$urlDeleteVoluntario${item.toString()}/marcoarce23');
-          final dataMap = generic.add(
-              entityItem, '$urlDeleteVoluntario${item.toString()}/marcoarce23');
+
+          final dataMap = generic.add(entityItem, '$urlDeleteVoluntario${item.toString()}/${prefs.idPersonal}');
 
           dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
           print('resultado:$result');
         });
 
-        if (result != null || result != '-1')
-          Scaffold.of(context).showSnackBar(
-              new SnackBar(content: new Text('Registro eliminado')));
+       if (result != null || result != '-1')
+          Scaffold.of(context)
+          .showSnackBar(messageOk("Se elimino el registro."));
         else
-          Scaffold.of(context).showSnackBar(new SnackBar(
-              content: new Text('Problemas al eliminar el registro!!!')));
+          Scaffold.of(context)
+          .showSnackBar(messageNOk("Se  produjo un error. Vuelva a intentarlo."));
       },
 
       child: Row(
@@ -178,10 +159,10 @@ Future<void> initPlatformState() async {
                   child: Row(
                     children: <Widget>[
                       Icon(
-                    Icons.gamepad,
-                    color: Colors.green,
-                    size: 15,
-                  ),
+                        Icons.gamepad,
+                        color: Colors.green,
+                        size: 15,
+                      ),
                       Text('Material: ${entityItem.perNombrepersonal} ',
                           style: TextStyle(color: Colors.red, fontSize: 14)),
                     ],
@@ -193,10 +174,8 @@ Future<void> initPlatformState() async {
                     color: Colors.green,
                     size: 15,
                   ),
-                  Text(
-                    'Telefono: ${entityItem.perTelefono}',
-                    style: TextStyle(color: Colors.red, fontSize: 14)
-                  )
+                  Text('Telefono: ${entityItem.perTelefono}',
+                      style: TextStyle(color: Colors.red, fontSize: 14))
                 ],
               ),
               Container(
@@ -236,9 +215,7 @@ Future<void> initPlatformState() async {
         Text(
           '${entityItem.desEspecialidad}',
           style: TextStyle(
-              fontSize: 11,
-              color: Colors.yellow,
-              fontWeight: FontWeight.w400),
+              fontSize: 11, color: Colors.yellow, fontWeight: FontWeight.w400),
         ),
       ],
     ));

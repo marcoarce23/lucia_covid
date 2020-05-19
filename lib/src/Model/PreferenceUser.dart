@@ -19,16 +19,16 @@ class PreferensUser
 
 
     get imei {
-        return _prefs.getInt('imei') ?? 1;
+        return _prefs.getInt('imei') ?? '-1';
       }
 
-      set imei( int value ) {
-        _prefs.setInt('imei', value);
+      set imei( String value ) {
+        _prefs.setString('imei', value);
       }
 
       // GET y SET del _colorSecundario
       get ci {
-        return _prefs.getString('ci') ?? 'unknow';
+        return _prefs.getString('ci') ?? '-1';
       }
 
       set ci( String value ) {
@@ -46,15 +46,23 @@ class PreferensUser
 
       // GET y SET del nombreUsuario
       get nombreUsuario {
-        return _prefs.getString('nombreUsuario') ?? 'unknow';
+        return _prefs.getString('nombreUsuario') ?? '-1';
       }
 
       set nombreUsuario( String value ) {
         _prefs.setString('nombreUsuario', value);
       }
 
+ get nombreInstitucion {
+        return _prefs.getString('nombreInstitucion') ?? '-1';
+      }
+
+      set nombreInstitucion( String value ) {
+        _prefs.setString('nombreInstitucion', value);
+      }
+
        get token {
-      return _prefs.getString('token') ?? '0';
+      return _prefs.getString('token') ?? '-1';
     }
 
     set token( String value ) {
@@ -62,7 +70,7 @@ class PreferensUser
     }
     
          get idInsitucion {
-      return _prefs.getString('idInsitucion') ?? '';
+      return _prefs.getString('idInsitucion') ?? '-1';
     }
 
     set idInsitucion( String value ) {
@@ -70,7 +78,7 @@ class PreferensUser
     }
 
      get userId {
-      return _prefs.getString('userId') ?? '';
+      return _prefs.getString('userId') ?? '-1';
     }
 
     set userId( String value ) {

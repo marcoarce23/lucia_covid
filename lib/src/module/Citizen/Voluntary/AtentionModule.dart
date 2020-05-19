@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
-import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
@@ -137,25 +137,9 @@ Atencion entity = new Atencion();
     );
   }
 
-  Image imagenProfesional() {
-    Image imagenAvatar;
-
-    //if (profesionalesDeInstitucion.sexo == "F") {
-    imagenAvatar = Image.asset(
-      "assets/image/circled_user_female.png",
-      width: 50,
-      height: 50,
-      fit: BoxFit.fill,
-    );
-    // } else {
-    //   imagenAvatar = Image.asset(
-    //     "assets/image/circled_user_male.png",
-    //     width: 50,
-    //     height: 50,
-    //     fit: BoxFit.fill,
-    //   );
-    // }
-    return imagenAvatar;
+  ImageOvalNetwork imagenProfesional() {
+    return ImageOvalNetwork(
+            imageNetworkUrl: prefs.avatarImagen, sizeImage: Size.fromWidth(40));
   }
 
   Column crearIconoProfesional(icon, title) {

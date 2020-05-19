@@ -9,20 +9,95 @@ import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
-import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
+import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
+import 'package:lucia_covid/src/module/Citizen/Multimedia/ListMultimediaModule.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 import 'package:file_picker/file_picker.dart';
 
 
+class MultimediaAllModule extends StatefulWidget {
+  static final String routeName ='voluntario';
+  const MultimediaAllModule({Key key}) : super(key: key);
+
+
+  @override
+  _MultimediaAllModuleState createState() =>
+      _MultimediaAllModuleState();
+}
+
+class _MultimediaAllModuleState extends State<MultimediaAllModule> {
+  final prefs = new PreferensUser();
+  final generic = new Generic();
+  int page = 0;
+  final List<Widget> optionPage = [MultimediaModule(),  ListMultimediaModule()];
+ 
+ 
+  void _onItemTapped(int index) {
+    setState(() {
+      page = index;
+    });
+  }
+
+  @override
+  void initState() {
+    prefs.ultimaPagina = MultimediaAllModule.routeName;
+    page = 0;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppTheme.themeColorAzul,
+        toolbarOpacity: 0.7,
+        iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+        elevation: 0,
+        title: Text(
+          "VOLUNTARIOS",
+          style: TextStyle(
+              color: AppTheme.themeColorNaranja,
+              fontSize: 17,
+              fontWeight: FontWeight.w400),
+        ),
+          actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: DataSearchVoluntary()  );
+            },
+          )
+        ],
+      ),
+      drawer: DrawerCitizen(),
+       bottomNavigationBar: BottomNavigationBar(
+              items: [
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.userCircle, size: 25,),
+              title: Text('Multimedia')),
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.calendarCheck,size: 25, ),
+              title: Text('Publicaciones')),
+        ],
+              currentIndex: page,
+              unselectedItemColor: Colors.black,
+              selectedItemColor: Colors.amber[800],
+              onTap: _onItemTapped,)
+            ,
+          body: optionPage[page],  
+    );
+  }
+}
 class MultimediaModule extends StatefulWidget {
   static final String routeName = 'multimedia';
   MultimediaModule({Key key}) : super(key: key);
-
+// 
   @override
   _MultimediaModuleState createState() => _MultimediaModuleState();
 }
@@ -30,18 +105,15 @@ class MultimediaModule extends StatefulWidget {
 class _MultimediaModuleState extends State<MultimediaModule> {
   InputTextField titulo;
 
-
-
-
-  String _fileName;
-  String _path;
-  Map<String, String> _paths;
-  String _extension;
-  bool _loadingPath = false;
-  bool _multiPick = false;
-  bool _hasValidMime = false;
-  FileType _pickingType;
-  TextEditingController _controller = new TextEditingController();
+  // String _fileName;
+  // String _path;
+  // Map<String, String> _paths;
+  // String _extension;
+  // bool _loadingPath = false;
+  // bool _multiPick = false;
+  // bool _hasValidMime = false;
+  // FileType _pickingType;
+  // TextEditingController _controller = new TextEditingController();
 
 
 
@@ -52,11 +124,9 @@ class _MultimediaModuleState extends State<MultimediaModule> {
 
   bool _save = false;
   String _fecha = '';
-  int _currentIndex;
   File foto;
   var result;
-  String imagen =
-      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
+  String imagen =   'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
   TextEditingController _inputFieldDateInicioController =
       new TextEditingController();
   TextEditingController _inputFieldDateFinController =
@@ -71,7 +141,6 @@ class _MultimediaModuleState extends State<MultimediaModule> {
 
   @override
   void initState() {
-    _currentIndex = 0;
     prefs.ultimaPagina = MultimediaModule.routeName;
     prefs.idInsitucion = '1008';
     super.initState();
@@ -86,28 +155,23 @@ class _MultimediaModuleState extends State<MultimediaModule> {
 
     return Scaffold(
         key: scaffoldKey,
-        appBar: _appBar(),
+
         body: Stack(
           children: <Widget>[
             crearFondoForm(context, imagen),
+               _crearIconAppImagenes(),
+        _crearIconAppCamara(),
+        _crearIconAppVideo(),
             _crearForm(context),
           ],
         ),
-        drawer: DrawerCitizen(),
-        bottomNavigationBar: _bottomNavigationBar(context));
-  }
-
-  AppBar _appBar() {
-    return AppBar(
-      title: Text('Multimedia'),
-      backgroundColor: Colors.orange,
-      actions: <Widget>[
-        _crearIconAppImagenes(),
-        _crearIconAppCamara(),
-        _crearIconAppVideo()
-      ],
     );
   }
+
+
+     
+      
+
 
   _crearIconAppImagenes() {
     return IconButton(
@@ -130,32 +194,7 @@ class _MultimediaModuleState extends State<MultimediaModule> {
     );
   }
 
-  Widget _bottomNavigationBar(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-          canvasColor: Colors.white,
-          primaryColor: Colors.blue,
-          textTheme: Theme.of(context)
-              .textTheme
-              .copyWith(caption: TextStyle(color: Colors.blueGrey))),
-      child: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (value) {
-          setState(() {
-            _currentIndex = value;
-            callMultimedia(_currentIndex, context);
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 25.0), title: Text('Multimedia')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Listado Multimedia')),
-        ],
-      ),
-    );
-  }
+  
 
   Widget informacionProfesional(BuildContext context) {
     return Center(

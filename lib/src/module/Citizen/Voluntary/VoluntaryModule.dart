@@ -7,7 +7,6 @@ import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
-import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
@@ -55,6 +54,8 @@ class _VoluntaryAllModuleState extends State<VoluntaryAllModule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppTheme.themeColorAzul,
+        toolbarOpacity: 0.7,
         iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
         elevation: 0,
         title: Text(

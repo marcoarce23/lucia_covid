@@ -5,11 +5,10 @@ import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
-import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
-import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class AtentionEntityModule extends StatefulWidget {
@@ -54,10 +53,9 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
   int intViernes=0;
   int intSabado=0;
   int intDomingo=0;
-
   var result;
   
-  int _currentIndex;
+ 
 
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -67,7 +65,6 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
 
   @override
   void initState() {
-    _currentIndex = 0;
       prefs.ultimaPagina = AtentionEntityModule.routeName;
     super.initState();
   }
@@ -80,72 +77,15 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
 
     return Scaffold(
         key: scaffoldKey,
-        appBar: _appBar(),
+       
         body: Stack(
           children: <Widget>[
             _crearForm(context),
           ],
         ),
-        drawer: DrawerCitizen(),
-        bottomNavigationBar: _bottomNavigationBar(context));
-  }
-
-  AppBar _appBar() {
-    return AppBar(
-      title: Text('DÍAS Y HORAS DE ATENCIÓN'),
-      backgroundColor: Colors.orange,
     );
-  }
 
-  Widget _bottomNavigationBar(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-          canvasColor: Colors.white,
-          primaryColor: Colors.blue,
-          textTheme: Theme.of(context)
-              .textTheme
-              .copyWith(caption: TextStyle(color: Colors.blueGrey))),
-      child: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (value) {
-          setState(() {
-            _currentIndex = value;
-            callPageInstitucion(_currentIndex, context);
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 25.0), title: Text('Institucion')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Horario Atención')),
-         
-        ],
-      ),
-    );
   }
-
-// Widget widget() {
-//   return new TimePickerSpinner(
-//     is24HourMode: false,
-//     normalTextStyle: TextStyle(
-//       fontSize: 24,
-//       color: Colors.deepOrange
-//     ),
-//     highlightedTextStyle: TextStyle(
-//       fontSize: 24,
-//       color: Colors.yellow
-//     ),
-//     spacing: 50,
-//     itemHeight: 80,
-//     isForce2Digits: true,
-//     onTimeChange: (time) {
-//       setState(() {
-//         _dateTime = time;
-//       });
-//     },
-//   );
-// }
 
   Widget informacionProfesional(BuildContext context) {
     return Center(
@@ -153,10 +93,14 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
         margin: EdgeInsets.symmetric(vertical: 4),
         padding: EdgeInsets.all(15.0),
         width: MediaQuery.of(context).size.width - 50,
-        decoration: BoxDecoration(
+         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18),
-          color: Colors.black12,
-        ),
+          gradient: LinearGradient(colors: <Color>[
+        Color.fromRGBO(243, 124, 18, 1.0),
+        Color.fromRGBO(255, 209, 18, 3.0),
+        Color.fromRGBO(243, 156, 18, 1.0),
+        Color.fromRGBO(243, 223, 18, 1.0)
+      ])),
         child: Column(
           children: <Widget>[
             Row(
@@ -209,25 +153,9 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
     );
   }
 
-  Image imagenProfesional() {
-    Image imagenAvatar;
-
-    //if (profesionalesDeInstitucion.sexo == "F") {
-    imagenAvatar = Image.asset(
-      "assets/image/circled_user_female.png",
-      width: 50,
-      height: 50,
-      fit: BoxFit.fill,
-    );
-    // } else {
-    //   imagenAvatar = Image.asset(
-    //     "assets/image/circled_user_male.png",
-    //     width: 50,
-    //     height: 50,
-    //     fit: BoxFit.fill,
-    //   );
-    // }
-    return imagenAvatar;
+  ImageOvalNetwork imagenProfesional() {
+    return ImageOvalNetwork(
+            imageNetworkUrl: prefs.avatarImagen, sizeImage: Size.fromWidth(40));
   }
 
   Column crearIconoProfesional(icon, title) {
@@ -435,7 +363,7 @@ domingo= InputCheckBox('Dom',selectDomingo);
       child: RaisedButton.icon(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: Colors.blue,
+        color: Colors.orange,
         textColor: Colors.white,
         label: Text(text),
         icon: Icon(Icons.save),

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
-import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
-import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
+import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class ListCitizenHelpModule extends StatefulWidget {
@@ -16,7 +16,6 @@ class ListCitizenHelpModule extends StatefulWidget {
 class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
   final generic = new Generic();
   final prefs = new PreferensUser();
-  int _currentIndex = 0;
   var result;
 
   @override
@@ -28,69 +27,23 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("AYUDA A UN AMIGO"),
-          backgroundColor: Color.fromRGBO(22, 23, 22 , 0.4),
-          actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {  
-               showSearch(context: context, delegate: DataSearchHelp()  );
-            },
-          )
-        ],
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-           SizedBox(height: 10.0),
-
-            futureItemsEntity(context)
-          ],
-        ),
-        bottomNavigationBar: _bottomNavigationBar(context));
-  }
-
-  Widget _bottomNavigationBar(BuildContext context) {
-       return Theme(
-      data: Theme.of(context).copyWith(
-          canvasColor: Colors.white,
-          primaryColor: Colors.blue,
-          textTheme: Theme.of(context)
-              .textTheme
-              .copyWith(caption: TextStyle(color: Colors.blueGrey))),
-      child: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (value) {
-          setState(() {
-            _currentIndex = value;
-            callHelp(_currentIndex, context);
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Ayudalo')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 25.0), title: Text('Solicitudes')),
-        ],
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[SizedBox(height: 10.0), futureItemsEntity(context)],
       ),
     );
   }
 
   Widget futureItemsEntity(BuildContext context) {
-    
-
     return FutureBuilder(
         future: generic.getAll(
-            new RegistroAmigo(), urlGetVoluntario, primaryKeyGetVoluntario),
+            new RegistroAmigo(), urlGetDevuelveAyuda, primaryKeyGetAyudaAmigo),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return Center(child: CircularProgressIndicator());
               break;
             default:
-              //mostramos los datos
               return listItemsEntity(context, snapshot);
           }
         });
@@ -104,19 +57,19 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
         physics: ClampingScrollPhysics(),
         itemCount: snapshot.data.length,
         itemBuilder: (context, index) {
-          Voluntary entityItem = snapshot.data[index];
+          RegistroAmigo entityItem = snapshot.data[index];
 
           return Container(
             decoration: BoxDecoration(
-        color:  Color.fromRGBO(22, 23, 22 , 0.9),
-        borderRadius: BorderRadius.circular(20.0),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.yellow,
-              blurRadius: 3.0,
-              offset: Offset(5.0, 5.0),
-              spreadRadius: 1.0)
-        ]),
+                color: Color.fromRGBO(22, 23, 22, 0.9),
+                borderRadius: BorderRadius.circular(20.0),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                      color: Colors.yellow,
+                      blurRadius: 3.0,
+                      offset: Offset(5.0, 5.0),
+                      spreadRadius: 1.0)
+                ]),
             child: Column(
               children: <Widget>[
                 ListTile(
@@ -132,8 +85,8 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
     );
   }
 
-  Widget listEntity(BuildContext context, Voluntary entityItem) {
-    final item = entityItem.idcovPersonal;
+  Widget listEntity(BuildContext context, RegistroAmigo entityItem) {
+    final item = entityItem.idcovRegistroAmigo;
 
     return Dismissible(
       key: Key(item.toString()), //UniqueKey(),
@@ -147,23 +100,19 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
       ),
       onDismissed: (value) {
         setState(() {
-          //   items.
-          //    print('El registro:$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
-          generic.add(new RegistroAmigo(),
-              '$urlDeleteVoluntario${item.toString()}/marcoarce23');
-          final dataMap = generic.add(
-              entityItem, '$urlDeleteVoluntario${item.toString()}/marcoarce23');
+           generic.add(new RegistroAmigo(), '$urlDeleteVoluntario${item.toString()}/${prefs.idPersonal}');
+          final dataMap = generic.add(new RegistroAmigo(), '$urlDeleteVoluntario${item.toString()}/${prefs.idPersonal}');
 
           dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
           print('resultado:$result');
         });
 
         if (result != null || result != '-1')
-          Scaffold.of(context).showSnackBar(
-              new SnackBar(content: new Text('Registro eliminado')));
+          Scaffold.of(context)
+          .showSnackBar(messageOk("Se elimino el registro."));
         else
-          Scaffold.of(context).showSnackBar(new SnackBar(
-              content: new Text('Problemas al eliminar el registro!!!')));
+          Scaffold.of(context)
+          .showSnackBar(messageNOk("Se  produjo un error. Vuelva a intentarlo."));
       },
 
       child: Row(
@@ -177,11 +126,11 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
                   child: Row(
                     children: <Widget>[
                       Icon(
-                    Icons.gamepad,
-                    color: Colors.green,
-                    size: 15,
-                  ),
-                      Text('Material: ${entityItem.perNombrepersonal} ',
+                        Icons.gamepad,
+                        color: Colors.green,
+                        size: 15,
+                      ),
+                      Text('Persona: ${entityItem.regPersona} ',
                           style: TextStyle(color: Colors.red, fontSize: 14)),
                     ],
                   )),
@@ -192,15 +141,13 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
                     color: Colors.green,
                     size: 15,
                   ),
-                  Text(
-                    'Resumen: ${entityItem.idcovInstitucion}',
-                    style: TextStyle(color: Colors.red, fontSize: 14)
-                  )
+                  Text('Prioridad: ${entityItem.regPrioridad}',
+                      style: TextStyle(color: Colors.red, fontSize: 14))
                 ],
               ),
               Container(
                   child: Text(
-                'Tipo: ${entityItem.idaTipopersonal}',
+                'Telefono: ${entityItem.regTelefono}',
                 style: TextStyle(color: Colors.yellow, fontSize: 14),
               )),
               Row(
@@ -211,7 +158,7 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
                     size: 15,
                   ),
                   Text(
-                    'Fecha publicación: ${entityItem.perCorreo}',
+                    'Ubicacion: ${entityItem.regUbicacion}',
                     style: TextStyle(color: Colors.yellow, fontSize: 14),
                   )
                 ],
@@ -223,21 +170,16 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
     );
   }
 
-  Container iconEntity(Voluntary entityItem) {
+  Container iconEntity(RegistroAmigo entityItem) {
     return Container(
         child: Column(
       children: <Widget>[
-        Icon(
-          Icons.person_pin,
-          size: 35,
-          color: Colors.yellow,
-        ),
+        ImageOvalNetwork(
+            imageNetworkUrl: prefs.avatarImagen, sizeImage: Size.fromWidth(40)),
         Text(
-          '${entityItem.perCI}',
+          '${entityItem.regPrioridad}',
           style: TextStyle(
-              fontSize: 11,
-              color: Colors.yellow,
-              fontWeight: FontWeight.w400),
+              fontSize: 11, color: Colors.yellow, fontWeight: FontWeight.w400),
         ),
       ],
     ));

@@ -11,7 +11,6 @@ class DataSearchInstituciones extends SearchDelegate {
   @override
   List<Widget> buildActions(BuildContext context) {
     //acctiones para limpiar el texto o cancelar la busqueda
-    // TODO: implement buildActions
     return [
       IconButton(
         icon: Icon(Icons.clear),
@@ -25,7 +24,6 @@ class DataSearchInstituciones extends SearchDelegate {
   @override
   Widget buildLeading(BuildContext context) {
     //icono a la izquierda de busqueda
-    // TODO: implement buildLeading
     return IconButton(
       icon: AnimatedIcon(
         icon: AnimatedIcons.menu_arrow,
@@ -40,15 +38,13 @@ class DataSearchInstituciones extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     //Builder que crea los resultados que vamos a mostrar
-    // TODO: implement buildResults
     return Container();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     //Son las sugerencias cuando la person escribe
-    // TODO: implement buildSuggestions
-    if (query.isEmpty) {
+     if (query.isEmpty) {
       return Container();
     } else {
       return FutureBuilder(
@@ -104,8 +100,7 @@ class DataSearchMultimedia extends SearchDelegate {
   @override
   List<Widget> buildActions(BuildContext context) {
     //acctiones para limpiar el texto o cancelar la busqueda
-    // TODO: implement buildActions
-    return [
+     return [
       IconButton(
         icon: Icon(Icons.clear),
         onPressed: () {
@@ -118,7 +113,6 @@ class DataSearchMultimedia extends SearchDelegate {
   @override
   Widget buildLeading(BuildContext context) {
     //icono a la izquierda de busqueda
-    // TODO: implement buildLeading
     return IconButton(
       icon: AnimatedIcon(
         icon: AnimatedIcons.menu_arrow,
@@ -133,15 +127,13 @@ class DataSearchMultimedia extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     //Builder que crea los resultados que vamos a mostrar
-    // TODO: implement buildResults
     return Container();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     //Son las sugerencias cuando la person escribe
-    // TODO: implement buildSuggestions
-    if (query.isEmpty) {
+     if (query.isEmpty) {
       return Container();
     } else {
       return FutureBuilder(
@@ -220,8 +212,7 @@ class DataSearchEncuentraUnAmigo extends SearchDelegate {
   @override
   List<Widget> buildActions(BuildContext context) {
     //acctiones para limpiar el texto o cancelar la busqueda
-    // TODO: implement buildActions
-    return [
+     return [
       IconButton(
         icon: Icon(Icons.clear),
         onPressed: () {
@@ -234,7 +225,6 @@ class DataSearchEncuentraUnAmigo extends SearchDelegate {
   @override
   Widget buildLeading(BuildContext context) {
     //icono a la izquierda de busqueda
-    // TODO: implement buildLeading
     return IconButton(
       icon: AnimatedIcon(
         icon: AnimatedIcons.menu_arrow,
@@ -249,14 +239,12 @@ class DataSearchEncuentraUnAmigo extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     //Builder que crea los resultados que vamos a mostrar
-    // TODO: implement buildResults
     return Container();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     //Son las sugerencias cuando la person escribe
-    // TODO: implement buildSuggestions
     if (query.isEmpty) {
       return Container();
     } else {
@@ -320,7 +308,6 @@ class DataSearchEvento extends SearchDelegate {
   @override
   List<Widget> buildActions(BuildContext context) {
     //acctiones para limpiar el texto o cancelar la busqueda
-    // TODO: implement buildActions
     return [
       IconButton(
         icon: Icon(Icons.clear),
@@ -334,7 +321,6 @@ class DataSearchEvento extends SearchDelegate {
   @override
   Widget buildLeading(BuildContext context) {
     //icono a la izquierda de busqueda
-    // TODO: implement buildLeading
     return IconButton(
       icon: AnimatedIcon(
         icon: AnimatedIcons.menu_arrow,
@@ -349,14 +335,12 @@ class DataSearchEvento extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     //Builder que crea los resultados que vamos a mostrar
-    // TODO: implement buildResults
-    return Container();
+     return Container();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     //Son las sugerencias cuando la person escribe
-    // TODO: implement buildSuggestions
     if (query.isEmpty) {
       return Container();
     } else {
@@ -436,7 +420,6 @@ class DataSearchVoluntary extends SearchDelegate {
   @override
   List<Widget> buildActions(BuildContext context) {
     //acctiones para limpiar el texto o cancelar la busqueda
-    // TODO: implement buildActions
     return [
       IconButton(
         icon: Icon(Icons.clear),
@@ -450,7 +433,6 @@ class DataSearchVoluntary extends SearchDelegate {
   @override
   Widget buildLeading(BuildContext context) {
     //icono a la izquierda de busqueda
-    // TODO: implement buildLeading
     return IconButton(
       icon: AnimatedIcon(
         icon: AnimatedIcons.menu_arrow,
@@ -465,14 +447,12 @@ class DataSearchVoluntary extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     //Builder que crea los resultados que vamos a mostrar
-    // TODO: implement buildResults
     return Container();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     //Son las sugerencias cuando la person escribe
-    // TODO: implement buildSuggestions
     if (query.isEmpty) {
       return Container();
     } else {
@@ -552,7 +532,6 @@ class DataSearchHelp extends SearchDelegate {
   @override
   List<Widget> buildActions(BuildContext context) {
     //acctiones para limpiar el texto o cancelar la busqueda
-    // TODO: implement buildActions
     return [
       IconButton(
         icon: Icon(Icons.clear),
@@ -566,7 +545,6 @@ class DataSearchHelp extends SearchDelegate {
   @override
   Widget buildLeading(BuildContext context) {
     //icono a la izquierda de busqueda
-    // TODO: implement buildLeading
     return IconButton(
       icon: AnimatedIcon(
         icon: AnimatedIcons.menu_arrow,
@@ -581,15 +559,13 @@ class DataSearchHelp extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     //Builder que crea los resultados que vamos a mostrar
-    // TODO: implement buildResults
-    return Container();
+     return Container();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     //Son las sugerencias cuando la person escribe
-    // TODO: implement buildSuggestions
-    if (query.isEmpty) {
+     if (query.isEmpty) {
       return Container();
     } else {
       return FutureBuilder(

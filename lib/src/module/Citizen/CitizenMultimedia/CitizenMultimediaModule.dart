@@ -1,4 +1,3 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
@@ -26,7 +25,6 @@ class _CitizenMultimediaModuleState extends State<CitizenMultimediaModule> {
   final prefs = new PreferensUser();
   final generic = new Generic();
   int page = 0;
-  GlobalKey _bottomNavigationKey = GlobalKey();
   final List<Widget> optionPage = [PagePicture(), PageVideo(), PageDocuments()];
  
  

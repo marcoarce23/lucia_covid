@@ -559,11 +559,15 @@ class LoginSigIn extends Entity {
   String imei;
   String tokenDispositivo;
   String primeraVez;
+  String idPersonal;
+
+
 
   LoginSigIn(
       {this.idUsuario,
       this.idInstitucion,
       this.nombrePersona,
+      this.idPersonal,
       this.nombreInstitucion,
       this.correo,
       this.usuario,
@@ -585,6 +589,7 @@ class LoginSigIn extends Entity {
         imei: json["IMEI"],
         tokenDispositivo: json["TOKEN"],
         primeraVez: json["PRIMERA_VEZ"],
+        idPersonal: json["IDCOV_PERSONAL"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -599,6 +604,7 @@ class LoginSigIn extends Entity {
         "IMEI": imei,
         "TOKEN": tokenDispositivo,
         "PRIMERA_VEZ": primeraVez,
+        "IDCOV_PERSONAL": idPersonal,
       };
 }
 

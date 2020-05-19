@@ -5,10 +5,14 @@ import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
-import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
+import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
+import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
+import 'package:lucia_covid/src/module/Citizen/CitizenHelp/ListCitizenHelpModule.dart';
+import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 // class _HeaderWaveGradientPainter extends CustomPainter {
@@ -90,8 +94,90 @@ import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 //   }
 
 // }
+
+class HelpFriendAllModule extends StatefulWidget {
+  static final String routeName = 'amigo';
+  const HelpFriendAllModule({Key key}) : super(key: key);
+
+  @override
+  _HelpFriendAllModuleState createState() => _HelpFriendAllModuleState();
+}
+
+class _HelpFriendAllModuleState extends State<HelpFriendAllModule> {
+  final prefs = new PreferensUser();
+  final generic = new Generic();
+  int page = 0;
+  final List<Widget> optionPage = [
+    CitizenHelpModule(),
+    ListCitizenHelpModule()
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      page = index;
+    });
+  }
+
+  @override
+  void initState() {
+    prefs.ultimaPagina = HelpFriendAllModule.routeName;
+    page = 0;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppTheme.themeColorAzul,
+        toolbarOpacity: 0.7,
+        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+        elevation: 0,
+        title: Text(
+          "VOLUNTARIOS",
+          style: TextStyle(
+              color: AppTheme.themeColorBlanco,
+              fontSize: 17,
+              fontWeight: FontWeight.w400),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: DataSearchVoluntary());
+            },
+          )
+        ],
+      ),
+      drawer: DrawerCitizen(),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.orange,
+        items: [
+          BottomNavigationBarItem(
+              icon: FaIcon(
+                FontAwesomeIcons.userCircle,
+                size: 25,
+              ),
+              title: Text('Ayudalo')),
+          BottomNavigationBarItem(
+              icon: FaIcon(
+                FontAwesomeIcons.calendarCheck,
+                size: 25,
+              ),
+              title: Text('Solicitudes')),
+        ],
+        currentIndex: page,
+        unselectedItemColor: AppTheme.themeColorAzul,
+        selectedItemColor: Colors.white,
+        onTap: _onItemTapped,
+      ),
+      body: optionPage[page],
+    );
+  }
+}
+
 class CitizenHelpModule extends StatefulWidget {
-    static final String routeName = 'helpCitizen';
+  static final String routeName = 'helpCitizen';
   @override
   _CitizenHelpModuleState createState() => _CitizenHelpModuleState();
 }
@@ -103,23 +189,16 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
   InputDropDown tipoAyuda;
 
   bool _save = false;
-  int _currentIndex = 0;
   String _opcionSeleccionadaPrioridad = '';
   var result;
   var list;
 
-  List<String> _tipoPrioridad = [
-    'Muy Alta',
-    'Alta',
-    'Media'
-  ];
-
- 
+  List<String> _tipoPrioridad = ['Muy Alta', 'Alta', 'Media'];
 
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
-   final prefs = new PreferensUser();
+  final prefs = new PreferensUser();
   RegistroAmigo registroAmigo = new RegistroAmigo();
 
   @override
@@ -156,51 +235,16 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
 
   @override
   Widget build(BuildContext context) {
-    final RegistroAmigo registroAmigoData = ModalRoute.of(context).settings.arguments;
+    final RegistroAmigo registroAmigoData =
+        ModalRoute.of(context).settings.arguments;
 
     if (registroAmigoData != null) registroAmigo = registroAmigoData;
 
     return Scaffold(
-        key: scaffoldKey,
-        appBar: _appBar(),
-        body: Stack(
-          children: <Widget>[
-            _crearForm(),
-          ],
-        ),
-        bottomNavigationBar: _bottomNavigationBar(context)
-        );
-  }
-
-  AppBar _appBar() {
-    return AppBar(
-      title: Text('AYUDA A UN AMIG@'),
-      backgroundColor: Colors.orange,
-    );
-  }
-
-  Widget _bottomNavigationBar(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-          canvasColor: Colors.white,
-          primaryColor: Colors.blue,
-          textTheme: Theme.of(context)
-              .textTheme
-              .copyWith(caption: TextStyle(color: Colors.blueGrey))),
-      child: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (value) {
-          setState(() {
-            _currentIndex = value;
-            callHelp(_currentIndex, context);
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Ayudalo')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 25.0), title: Text('Solicitudes')),
+      key: scaffoldKey,
+      body: Stack(
+        children: <Widget>[
+          _crearForm(),
         ],
       ),
     );
@@ -211,11 +255,20 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 4),
         padding: EdgeInsets.all(15.0),
-        width: MediaQuery.of(context).size.width - 50,
+        width: MediaQuery.of(context).size.width - 20,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          color: Colors.black12,
-        ),
+            borderRadius: BorderRadius.circular(18),
+            gradient: LinearGradient(colors: <Color>[
+              // Color.fromRGBO(243, 124, 18, 1.0),
+              // Color.fromRGBO(255, 209, 18, 3.0),
+              // Color.fromRGBO(243, 156, 18, 1.0),
+              // Color.fromRGBO(243, 223, 18, 1.0)
+
+              Color.fromRGBO(8, 76, 158, 1.0),
+              Color.fromRGBO(72, 128, 195, 3.0),
+              Color.fromRGBO(54, 129, 219, 1.0),
+              Color.fromRGBO(13, 84, 171, 1.0)
+            ])),
         child: Column(
           children: <Widget>[
             Row(
@@ -261,25 +314,11 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
     );
   }
 
-  Image imagenProfesional() {
-    Image imagenAvatar;
-
-    //if (profesionalesDeInstitucion.sexo == "F") {
-    imagenAvatar = Image.asset(
-      "assets/image/circled_user_female.png",
-      width: 50,
-      height: 50,
-      fit: BoxFit.fill,
-    );
-    // } else {
-    //   imagenAvatar = Image.asset(
-    //     "assets/image/circled_user_male.png",
-    //     width: 50,
-    //     height: 50,
-    //     fit: BoxFit.fill,
-    //   );
-    // }
-    return imagenAvatar;
+  ImageOvalNetwork imagenProfesional() {
+    return ImageOvalNetwork(
+                          imageNetworkUrl:
+                              prefs.avatarImagen,
+                          sizeImage: Size.fromWidth(65));
   }
 
   Column crearIconoProfesional(icon, title) {
@@ -405,40 +444,36 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
   }
 
   Widget _crearBoton(String text) {
-  
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 100.0),
       width: MediaQuery.of(context).size.width,
       child: RaisedButton.icon(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: Colors.blue,
+        color: Colors.orange,
         textColor: Colors.white,
         label: Text(text),
         icon: Icon(Icons.save),
-        onPressed: (_save) ? null : _submit, 
-
+        onPressed: (_save) ? null : _submit,
       ),
     );
   }
 
-
   _submit() async {
-   
     if (!formKey.currentState.validate()) return;
 
     formKey.currentState.save();
     setState(() {
       _save = true;
-});
+    });
 
- registroAmigo.idcovRegistroAmigo = 0;
+    registroAmigo.idcovRegistroAmigo = 0;
     registroAmigo.regPersona = nombre.objectValue;
     registroAmigo.regTelefono = telefono.objectValue;
     registroAmigo.regUbicacion = ubicacion.objectValue;
     registroAmigo.regPrioridad = _opcionSeleccionadaPrioridad;
     registroAmigo.regTipoAPoyo = int.parse(tipoAyuda.objectValue);
-    registroAmigo.usuario = prefs.correoElectronico;
+    registroAmigo.usuario = prefs.userId;
 
     final dataMap = generic.add(registroAmigo, urlAddVoluntary);
 
@@ -446,18 +481,15 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
     print('resultado:$result');
 
     if (result == "0") {
-           scaffoldKey.currentState.showSnackBar(messageOk("Se inserto correctaente"));
-    }
-      else
-     
-          scaffoldKey.currentState.showSnackBar(messageOk("Error, vuelta a intentarlo"));
-    
+      // scaffoldKey.currentState.showSnackBar(messageOk("Se inserto correctaente"));
+      Navigator.of(context).push(CupertinoPageRoute(
+          builder: (BuildContext context) => ListCitizenHelpModule()));
+    } else
+      scaffoldKey.currentState
+          .showSnackBar(messageOk("Error, vuelta a intentarlo"));
+
     setState(() {
       _save = false;
     });
-
-    //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
   }
-
-  
 }

@@ -23,11 +23,11 @@ import 'package:lucia_covid/src/module/Citizen/Voluntary/VoluntaryModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
 import 'package:lucia_covid/src/module/Map/MapAdressModule.dart';
 import 'package:lucia_covid/src/module/Settings/ConfigurationModule.dart';
-import 'package:lucia_covid/src/module/UtilModule/PageViewModule.dart';
+import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
 
 class HomePageModule extends StatefulWidget {
   static final String routeName = 'home';
-  
+
   HomePageModule({Key key}) : super(key: key);
 
   @override
@@ -82,10 +82,10 @@ class _HomePageModuleState extends State<HomePageModule> {
               begin: FractionalOffset(0.0, 0.6),
               end: FractionalOffset(0.0, 1.0),
               colors: [
-             Color.fromRGBO(243, 124, 18, 1.0),
-        Color.fromRGBO(255, 209, 18, 3.0),
-        Color.fromRGBO(243, 156, 18, 1.0),
-        Color.fromRGBO(243, 223, 18, 1.0)
+            Color.fromRGBO(243, 124, 18, 1.0),
+            Color.fromRGBO(255, 209, 18, 3.0),
+            Color.fromRGBO(243, 156, 18, 1.0),
+            Color.fromRGBO(243, 223, 18, 1.0)
           ])),
     );
 
@@ -119,7 +119,7 @@ class _HomePageModuleState extends State<HomePageModule> {
                     color: Colors.white,
                     fontSize: 25.0,
                     fontWeight: FontWeight.bold)),
-            //    SizedBox( height: 5.0 ),
+            SizedBox(height: 100.0),
             //   Text('Puedes hacer consultar y pedir ayuda de forma directa', style: TextStyle( color: Colors.white, fontSize: 18.0 )),
           ],
         ),
@@ -130,7 +130,7 @@ class _HomePageModuleState extends State<HomePageModule> {
   Widget _bottomNavigationBar(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
-          canvasColor: Colors.white,//Color.fromRGBO(55, 57, 84, 1.0),
+          canvasColor: Colors.white, //Color.fromRGBO(55, 57, 84, 1.0),
           primaryColor: Colors.orange,
           textTheme: Theme.of(context).textTheme.copyWith(
               caption: TextStyle(color: Color.fromRGBO(116, 117, 152, 1.0)))),
@@ -143,7 +143,7 @@ class _HomePageModuleState extends State<HomePageModule> {
               icon: Icon(Icons.bubble_chart, size: 20.0), title: Text('Mapa')),
           BottomNavigationBarItem(
               icon: Icon(Icons.supervised_user_circle, size: 20.0),
-              title: Text('Materiales')),
+              title: Text('Multimedia')),
         ],
       ),
     );
@@ -153,29 +153,29 @@ class _HomePageModuleState extends State<HomePageModule> {
     return Table(
       children: [
         TableRow(children: [
-          _crearBotonRedondeado(Colors.blue, Icons.border_all, 'Pedir ayuda'),
           _crearBotonRedondeado(
-              Colors.purpleAccent, Icons.directions_bus, 'Ayuda a un amigo'),
-        ]),
-        TableRow(children: [
-          _crearBotonRedondeado(Colors.pinkAccent, Icons.shop, 'Eventos'),
+              Colors.blue, Icons.border_all, 'Pedir ayuda', '1'),
           _crearBotonRedondeado(
-              Colors.orange, Icons.insert_drive_file, 'Material MUltimedia'),
+              Colors.purpleAccent, Icons.directions_bus, 'Urgencias', '2'),
         ]),
         TableRow(children: [
           _crearBotonRedondeado(
-              Colors.blueAccent, Icons.movie_filter, 'Voluntarios'),
-          _crearBotonRedondeado(Colors.green, Icons.cloud, 'Intituciones'),
+              Colors.pinkAccent, Icons.shop, 'Ayuda a un amig@', '3'),
+          _crearBotonRedondeado(
+              Colors.orange, Icons.insert_drive_file, 'Eventos', '4'),
         ]),
         TableRow(children: [
-          _crearBotonRedondeado(Colors.red, Icons.collections, 'Mapas'),
-          _crearBotonRedondeado(Colors.teal, Icons.help_outline, 'Pánico'),
-        ])
+          _crearBotonRedondeado(
+              Colors.blueAccent, Icons.movie_filter, 'Voluntarios', '5'),
+          _crearBotonRedondeado(
+              Colors.green, Icons.cloud, 'Instituciones', '6'),
+        ]),
       ],
     );
   }
 
-  Widget _crearBotonRedondeado(Color color, IconData icono, String texto) {
+  Widget _crearBotonRedondeado(
+      Color color, IconData icono, String texto, String valor) {
     return ClipRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
@@ -194,15 +194,17 @@ class _HomePageModuleState extends State<HomePageModule> {
                 radius: 35.0,
                 child: Icon(icono, color: Colors.white, size: 30.0),
               ),
-              
+
               InkWell(
-                            splashColor: AppTheme
-                                .backGroundInstitutionPrimary, // inkwell color
-                            child: Text(texto, style: TextStyle(color: color)),
-                            onTap: () {                          
-                            openWeb("http://mapacovid19.ruta88.net/");
-                            }
-              ),
+                  splashColor:
+                      AppTheme.backGroundInstitutionPrimary, // inkwell color
+                  child: Text(texto, style: TextStyle(color: color)),
+                  onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                CitizenListInstitucionModule()),
+                      )),
               // SizedBox( height: 5.0 )
             ],
           ),
@@ -233,9 +235,8 @@ class DrawerCitizen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ImageOvalNetwork(
-                          imageNetworkUrl:
-                              prefs.avatarImagen,
-                          sizeImage: Size.fromWidth(70)),
+                        imageNetworkUrl: prefs.avatarImagen,
+                        sizeImage: Size.fromWidth(70)),
                   )),
               Padding(
                 padding: const EdgeInsets.all(4.0),
@@ -273,104 +274,113 @@ class DrawerCitizen extends StatelessWidget {
                 )),
         CustomListTile(
             Icons.business,
-            'Visita las institucion',
+            'Conoce las instituciones',
             () => Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => CitizenListInstitucionModule()),
                 )),
         CustomListTile(
-            Icons.person,
-            'Encuentra a un voluntario',
+            Icons.perm_phone_msg,
+            'Solicita una consulta',
             () => Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => FoundVoluntaryModule()),
                 )),
         CustomListTile(
-            Icons.event_available,
-            'Eventos de las instituciones',
-            () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CitizenEventsModule()),
-                )),
-        CustomListTile(
-            Icons.photo_size_select_actual,
-            'Material Multimedia',
-            () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CitizenMultimediaModule()),
-                )),
-        CustomListTile(
             Icons.hotel,
-            'Solicita una ayuda',
+            'Pide ayuda urgente',
             () => Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => CitizenPanicButtonModule()),
                 )),
         CustomListTile(
-            Icons.hotel,
-            'Asistencia de ayuda',
+            Icons.accessible_forward,
+            'Ayuda a un amigo(a)',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HelpFriendAllModule()),
+                )),
+        CustomListTile(
+            Icons.event_available,
+            'Eventos vigentes',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CitizenEventsModule()),
+                )),
+        CustomListTile(
+            Icons.play_circle_outline,
+            'Ver Multimedia',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CitizenMultimediaModule()),
+                )),
+        CustomListTile(
+            Icons.bubble_chart,
+            'Acerca de Lucia Te Cuida',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => IntroScreenModule()),
+                )),
+        CustomListTile(
+            Icons.add_comment,
+            'Atiende las solicitudes',
             () => Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => CitizenEmergencyModule()),
                 )),
         CustomListTile(
-            Icons.accessibility,
-            'Ayuda a un amig@',
-            () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CitizenHelpModule()),
-                )),
-        CustomListTile(
             Icons.map,
-            'Solicitud de ayuda',
+            'Mapa de solicitudes',
             () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => MapAdressModule()),
                 )),
         CustomListTile(
             Icons.edit_location,
-            'Registro Entidades',
+            'Registro de Instituciones',
             () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EntityModule()),
+                  MaterialPageRoute(builder: (context) => EntityAllModule()),
                 )),
         CustomListTile(
-            Icons.edit_location,
-            'Eventos de Entidades',
-            () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => EventEntityModule()),
-                )),
-        CustomListTile(
-            Icons.edit_location,
-            'Registo voluntario',
+            Icons.person_add,
+            'Inscribete como voluntario',
             () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => VoluntaryAllModule()),
                 )),
         CustomListTile(
-            Icons.person_add,
-            'Eventos Voluntarios',
+            Icons.event_available,
+            'Crear Eventos-Entidades',
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EventEntityModule()),
+                )),
+        CustomListTile(
+            Icons.event_note,
+            'Crear Eventos-Voluntarios',
             () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => EventModule()),
                 )),
         CustomListTile(
-            Icons.add_photo_alternate,
-            'Imágenes Multimedia',
+            Icons.image,
+            'Cargar Multimedia',
             () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MultimediaModule()),
+                  MaterialPageRoute(
+                      builder: (context) => MultimediaAllModule()),
                 )),
         CustomListTile(
             Icons.airline_seat_individual_suite,
-            'Atención médica',
+            'Registrar Atención médica',
             () => Navigator.push(
                   context,
                   MaterialPageRoute(

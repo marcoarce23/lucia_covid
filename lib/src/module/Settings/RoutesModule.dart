@@ -1,6 +1,8 @@
 
 //////          MARCO           //////
 // METODOS GET
+final String getLogin                 = 'http://covid19.ruta88.net/COVID/Login/srvLogin.svc/DevuelveLogin/';
+final String primaryKeyGetLogin       = '_DevuelveLoginResult';
 final String primaryKeyGetClasifidor  = '_DevuelveClasificadorResult';
 String urlGetClasificador             =  'http://covid19.ruta88.net/COVID/Clasificador/srvClasificador.svc/Clasificador/';
 

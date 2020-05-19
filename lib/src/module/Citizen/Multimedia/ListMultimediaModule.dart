@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
-import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
@@ -20,7 +19,6 @@ class ListMultimediaModule extends StatefulWidget {
 class _ListMultimediaModuleState extends State<ListMultimediaModule> {
   final generic = new Generic();
   final prefs = new PreferensUser();
-  int _currentIndex = 0;
   var result;
 
 @override
@@ -52,42 +50,14 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
             futureItemsEntity(context)
           ],
         ),
-        bottomNavigationBar: _bottomNavigationBar(context));
-  }
-
-  Widget _bottomNavigationBar(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-          canvasColor: Colors.white,
-          primaryColor: Colors.blue,
-          textTheme: Theme.of(context)
-              .textTheme
-              .copyWith(caption: TextStyle(color: Colors.blueGrey))),
-      child: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (value) {
-          setState(() {
-            _currentIndex = value;
-            callMultimedia(_currentIndex, context);
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 25.0), title: Text('Multimedia')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Listado Multimedia')),
-        ],
-      ),
     );
   }
 
-  Widget futureItemsEntity(BuildContext context) {
-    
+ 
 
+  Widget futureItemsEntity(BuildContext context) {
     return FutureBuilder(
-        future: generic.getAll(
-            new Voluntary(), urlGetMultimedia, primaryKeyGetMultimedia),
+        future: generic.getAll( new Multimedia(), urlGetMultimedia, primaryKeyGetMultimedia),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -108,7 +78,7 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
         physics: ClampingScrollPhysics(),
         itemCount: snapshot.data.length,
         itemBuilder: (context, index) {
-          Voluntary entityItem = snapshot.data[index];
+          Multimedia entityItem = snapshot.data[index];
 
           return Container(
             decoration: BoxDecoration(
@@ -136,8 +106,8 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
     );
   }
 
-  Widget listEntity(BuildContext context, Voluntary entityItem) {
-    final item = entityItem.idcovPersonal;
+  Widget listEntity(BuildContext context, Multimedia entityItem) {
+    final item = entityItem.idcovMultimedia;
 
     return Dismissible(
       key: Key(item.toString()), //UniqueKey(),
@@ -153,7 +123,7 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
         setState(() {
           //   items.
           //    print('El registro:$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
-          generic.add(new RegistroAmigo(),
+          generic.add(new Multimedia(),
               '$urlDeleteVoluntario${item.toString()}/marcoarce23');
           final dataMap = generic.add(
               entityItem, '$urlDeleteVoluntario${item.toString()}/marcoarce23');
@@ -185,7 +155,7 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
                     color: Colors.green,
                     size: 15,
                   ),
-                      Text('Material: ${entityItem.perNombrepersonal} ',
+                      Text('Material: ${entityItem.mulTitulo} ',
                           style: TextStyle(color: Colors.red, fontSize: 14)),
                     ],
                   )),
@@ -197,14 +167,14 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
                     size: 15,
                   ),
                   Text(
-                    'Resumen: ${entityItem.idcovInstitucion}',
+                    'Resumen: ${entityItem.mulResumen}',
                     style: TextStyle(color: Colors.red, fontSize: 14)
                   )
                 ],
               ),
               Container(
                   child: Text(
-                'Tipo: ${entityItem.idaTipopersonal}',
+                'Categoria: ${entityItem.idaCategoria}',
                 style: TextStyle(color: Colors.yellow, fontSize: 14),
               )),
               Row(
@@ -215,7 +185,7 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
                     size: 15,
                   ),
                   Text(
-                    'Fecha publicación: ${entityItem.perCorreo}',
+                    'Tipo Material: ${entityItem.idaTIpoMaterial}',
                     style: TextStyle(color: Colors.yellow, fontSize: 14),
                   )
                 ],
@@ -227,7 +197,7 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
     );
   }
 
-  Container iconEntity(Voluntary entityItem) {
+  Container iconEntity(Multimedia entityItem) {
     return Container(
         child: Column(
       children: <Widget>[
@@ -237,7 +207,7 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
           color: Colors.yellow,
         ),
         Text(
-          '${entityItem.perCI}',
+          '${entityItem.idaTIpoMaterial}',
           style: TextStyle(
               fontSize: 11,
               color: Colors.yellow,

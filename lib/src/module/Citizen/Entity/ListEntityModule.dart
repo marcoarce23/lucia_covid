@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
-import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
-
 
 class ListEntityModule extends StatefulWidget {
   static final String routeName = 'listaEntidad';
@@ -16,12 +16,11 @@ class ListEntityModule extends StatefulWidget {
 }
 
 class _ListEntityModuleState extends State<ListEntityModule> {
- final generic = new Generic();
- final prefs = new PreferensUser();
-  int _currentIndex = 0;
+  final generic = new Generic();
+  final prefs = new PreferensUser();
   var result;
 
- @override
+  @override
   void initState() {
     prefs.ultimaPagina = ListEntityModule.routeName;
     super.initState();
@@ -30,76 +29,23 @@ class _ListEntityModuleState extends State<ListEntityModule> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("INSTITUCIONES"),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
-              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    prefixIcon: Icon(Icons.search),
-                    hintText: "Busca una institución",
-                  ),
-                ),
-              ),
-            ),
-            // colcoamos las cajas de instituciones
-            Divider(color: Colors.orange, thickness: 1.0),
-            futureItemsEntity(context)
-          ],
-        ),
-        bottomNavigationBar: _bottomNavigationBar(context));
-  }
-
-  Widget _bottomNavigationBar(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-          canvasColor: Colors.white,
-          primaryColor: Colors.blue,
-          textTheme: Theme.of(context)
-              .textTheme
-              .copyWith(caption: TextStyle(color: Colors.blueGrey))),
-      child: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (value) {
-          setState(() {
-            _currentIndex = value;
-              callPageInstitucion(_currentIndex, context);
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 25.0), title: Text('Institucion')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Atención')),
-           BottomNavigationBarItem(
-              icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Instituciones')),
-        ],
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[SizedBox(height: 10.0), futureItemsEntity(context)],
       ),
     );
   }
 
   Widget futureItemsEntity(BuildContext context) {
     return FutureBuilder(
-        future: generic.getAll(new Institucion(), urlGetInstitucion, primaryKeyGetInsitucion),
+        future: generic.getAll(
+            new Institucion(), urlGetInstitucion, primaryKeyGetInsitucion),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return Center(child: CircularProgressIndicator());
               break;
             default:
-              //mostramos los datos
               return listItemsEntity(context, snapshot);
           }
         });
@@ -115,43 +61,26 @@ class _ListEntityModuleState extends State<ListEntityModule> {
         itemBuilder: (context, index) {
           Institucion entityItem = snapshot.data[index];
 
-          return InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ListEntityModule(),
-                  ));
-            },
-            child: Card(
-                elevation: 2,
-                //margin:                      const EdgeInsets.only(left: 10, right: 10),
-                child: Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(25.0),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                              color: Colors.black38,
-                              blurRadius: 7.0,
-                              offset: Offset(0.0, 5.0),
-                              spreadRadius: 7.0)
-                        ]),
-                    padding: EdgeInsets.all(10),
-                    width: MediaQuery.of(context).size.width - 30,
-                    height: 90,
-                    child: Row(
-                      //mainAxisAlignment: MainAxisAlignment.start,
-                      //crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        iconEntity(entityItem),
-                        dividerLine(),
-                        listEntity(context, entityItem),
-                      ],
-                    ),
-                  ),
-                )),
+          return Container(
+            decoration: BoxDecoration(
+                color: Color.fromRGBO(22, 23, 22, 0.9),
+                borderRadius: BorderRadius.circular(20.0),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                      color: Colors.yellow,
+                      blurRadius: 3.0,
+                      offset: Offset(5.0, 5.0),
+                      spreadRadius: 1.0)
+                ]),
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  leading: iconEntity(entityItem),
+                  title: listEntity(context, entityItem),
+                  trailing: Icon(Icons.arrow_right),
+                ),
+              ],
+            ),
           );
         },
       ),
@@ -159,10 +88,9 @@ class _ListEntityModuleState extends State<ListEntityModule> {
   }
 
   Widget listEntity(BuildContext context, Institucion entityItem) {
-    final item = entityItem.direccion;
+    final item = entityItem.idInstitucion;
 
     return Dismissible(
-      
       key: Key(item.toString()), //UniqueKey(),
       background: Container(
         color: Colors.red,
@@ -174,22 +102,19 @@ class _ListEntityModuleState extends State<ListEntityModule> {
       ),
       onDismissed: (value) {
         setState(() {
-          //   items.
-      //    print('El registro:$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
-          generic.add(new RegistroAmigo(),'$urlDeleteVoluntario${item.toString()}/marcoarce23');
-          final dataMap = generic.add(entityItem, '$urlDeleteVoluntario${item.toString()}/marcoarce23');
-     
-     dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
-    print('resultado:$result');
+          final dataMap = generic.add(new RegistroAmigo(),
+              '$urlDeleteInstitucion${item.toString()}/${prefs.idPersonal}');
 
-
+          dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+          print('resultado:$result');
         });
 
-        if(result != null || result != '-1')
-            Scaffold.of(context).showSnackBar( new SnackBar(content: new Text('Registro eliminado')));
+        if (result != null || result != '-1')
+          Scaffold.of(context)
+              .showSnackBar(messageOk("Se elimino el registro."));
         else
-        Scaffold.of(context).showSnackBar( new SnackBar(content: new Text('Problemas al eliminar el registro!!!')));
-
+          Scaffold.of(context).showSnackBar(
+              messageNOk("Se  produjo un error. Vuelva a intentarlo."));
       },
 
       child: Row(
@@ -200,39 +125,46 @@ class _ListEntityModuleState extends State<ListEntityModule> {
             children: <Widget>[
               Container(
                   width: MediaQuery.of(context).size.width - 160,
-                  child: Text('${entityItem.nombreInstitucion} ',
-                      style: TextStyle(color: Colors.black45, fontSize: 14))),
+                  child: Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.gamepad,
+                        color: Colors.green,
+                        size: 15,
+                      ),
+                      Text('Nombre: ${entityItem.nombreInstitucion} ',
+                          style: TextStyle(color: Colors.red, fontSize: 14)),
+                    ],
+                  )),
               Row(
                 children: <Widget>[
                   Icon(
                     Icons.place,
-                    color: Colors.black54,
+                    color: Colors.green,
                     size: 15,
                   ),
-                  Text(
-                    'Telefono: ${entityItem.telefono}',
-                  )
+                  Text('Departamento: ${entityItem.desUbicacion}',
+                      style: TextStyle(color: Colors.red, fontSize: 14))
                 ],
               ),
               Container(
                   child: Text(
-                'Correo: ${entityItem.perCorreoElectronico}',
-                style: TextStyle(color: Colors.black45, fontSize: 14),
+                'Telefono: ${entityItem.telefono}',
+                style: TextStyle(color: Colors.yellow, fontSize: 14),
               )),
-
               Row(
                 children: <Widget>[
                   Icon(
                     Icons.store_mall_directory,
-                    color: Colors.black54,
+                    color: Colors.green,
                     size: 15,
                   ),
                   Text(
-                    'Ubicación: ${entityItem.desUbicacion}',
+                    'Ubicacion: ${entityItem.desUbicacion}',
+                    style: TextStyle(color: Colors.yellow, fontSize: 14),
                   )
                 ],
               ),
-
             ],
           ),
         ],
@@ -240,21 +172,16 @@ class _ListEntityModuleState extends State<ListEntityModule> {
     );
   }
 
-   Container iconEntity(Institucion entityItem) {
+  Container iconEntity(Institucion entityItem) {
     return Container(
         child: Column(
       children: <Widget>[
-        Icon(
-          Icons.person_pin,
-          size: 35,
-          color: AppTheme.themeColorNaranja,
-        ),
+        ImageOvalNetwork(
+            imageNetworkUrl: entityItem.foto, sizeImage: Size.fromWidth(40)),
         Text(
-          '${entityItem.desInsitucion}',
+          '${entityItem.telefono}',
           style: TextStyle(
-              fontSize: 11,
-              color: AppTheme.themeColorNaranja,
-              fontWeight: FontWeight.w400),
+              fontSize: 11, color: Colors.yellow, fontWeight: FontWeight.w400),
         ),
       ],
     ));
