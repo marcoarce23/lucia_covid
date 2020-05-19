@@ -38,6 +38,7 @@ class _CitizenEmergencyModuleState extends State<CitizenEmergencyModule> {
   @override
   void initState() {
     prefs.ultimaPagina = CitizenEmergencyModule.routeName;
+    // TODO: implement initState
     super.initState();
   }
 
@@ -102,6 +103,7 @@ class PageMedicina extends StatefulWidget {
 
 class _PageMedicinaState extends State<PageMedicina> {
   final generic = new Generic();
+  final prefs = new PreferensUser();
 
   RegistrarAyuda registrarAyuda = new RegistrarAyuda();
 
@@ -133,7 +135,7 @@ class _PageMedicinaState extends State<PageMedicina> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    CitizenAlertEmergency("-1", "1009")),
+                                    CitizenAlertEmergency("-1", prefs.idPersonal)),
                           );
                         },
                         child: Text("Mis atenciones"),
@@ -341,11 +343,11 @@ class _PageMedicinaState extends State<PageMedicina> {
   _submitMedicamentosAtender(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = 1009;
+    registrarAyuda.idaPersonal =  int.parse( prefs.idPersonal);
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 78; // en cursoF
-    registrarAyuda.usuario = "coavchristian@hotmail.com";
+    registrarAyuda.usuario = prefs.correoElectronico ;
 
     final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
     var result;
@@ -371,6 +373,7 @@ class PageCovid extends StatefulWidget {
 
 class _PageCovidState extends State<PageCovid> {
   final generic = new Generic();
+  final prefs = new PreferensUser();
   RegistrarAyuda registrarAyuda = new RegistrarAyuda();
 
   @override
@@ -401,7 +404,7 @@ class _PageCovidState extends State<PageCovid> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    CitizenAlertEmergency("-1", "1009")),
+                                    CitizenAlertEmergency("-1", prefs.idPersonal)),
                           );
                         },
                         child: Text("Mis atenciones"),
@@ -469,11 +472,11 @@ class _PageCovidState extends State<PageCovid> {
   _submitCovidConcluido(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = 1009;
+    registrarAyuda.idaPersonal = int.parse( prefs.idPersonal);
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 79; // en concluido
-    registrarAyuda.usuario = "coavchristian@hotmail.com";
+    registrarAyuda.usuario = prefs.correoElectronico ;
 
     final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
     var result;
@@ -494,11 +497,11 @@ class _PageCovidState extends State<PageCovid> {
   _submitCovidAtender(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = 1009;
+    registrarAyuda.idaPersonal = int.parse( prefs.idPersonal);
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 78; // en cursoF
-    registrarAyuda.usuario = "coavchristian@hotmail.com";
+    registrarAyuda.usuario =prefs.correoElectronico ;
 
     final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
     var result;
@@ -662,7 +665,7 @@ class PageMedicmanetos extends StatefulWidget {
 
 class _PageMedicmanetosState extends State<PageMedicmanetos> {
   final generic = new Generic();
-
+  final prefs = new PreferensUser();
   RegistrarAyuda registrarAyuda = new RegistrarAyuda();
 
   @override
@@ -693,7 +696,7 @@ class _PageMedicmanetosState extends State<PageMedicmanetos> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    CitizenAlertEmergency("-1", "1009")),
+                                    CitizenAlertEmergency("-1", prefs.idPersonal)),
                           );
                         },
                         child: Text("Mis atenciones"),
@@ -760,11 +763,11 @@ class _PageMedicmanetosState extends State<PageMedicmanetos> {
 
   _submitConcluido(BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = 1009;
+    registrarAyuda.idaPersonal = int.parse( prefs.idPersonal);
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 79; // en concluido
-    registrarAyuda.usuario = "coavchristian@hotmail.com";
+    registrarAyuda.usuario =prefs.correoElectronico ;
 
     final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
     var result;
@@ -784,11 +787,11 @@ class _PageMedicmanetosState extends State<PageMedicmanetos> {
 
   _submitAtender(BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = 1009;
+    registrarAyuda.idaPersonal = int.parse( prefs.idPersonal);
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 78; // en cursoF
-    registrarAyuda.usuario = "coavchristian@hotmail.com";
+    registrarAyuda.usuario = prefs.correoElectronico ;
 
     final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
     var result;
@@ -952,7 +955,7 @@ class PageBonos extends StatefulWidget {
 
 class _PageBonosState extends State<PageBonos> {
   final generic = new Generic();
-
+  final prefs = new PreferensUser();
   RegistrarAyuda registrarAyuda = new RegistrarAyuda();
 
   @override
@@ -983,7 +986,7 @@ class _PageBonosState extends State<PageBonos> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    CitizenAlertEmergency("-1", "1009")),
+                                    CitizenAlertEmergency("-1", prefs.idPersonal)),
                           );
                         },
                         child: Text("Mis atenciones"),
@@ -1051,11 +1054,11 @@ class _PageBonosState extends State<PageBonos> {
   _submitMedicamentosConcluido(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = 1009;
+    registrarAyuda.idaPersonal = int.parse( prefs.idPersonal);
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 79; // en concluido
-    registrarAyuda.usuario = "coavchristian@hotmail.com";
+    registrarAyuda.usuario = prefs.correoElectronico ;
 
     final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
     var result;
@@ -1076,11 +1079,11 @@ class _PageBonosState extends State<PageBonos> {
   _submitMedicamentosAtender(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = 1009;
+    registrarAyuda.idaPersonal = int.parse( prefs.idPersonal);
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 78; // en cursoF
-    registrarAyuda.usuario = "coavchristian@hotmail.com";
+    registrarAyuda.usuario = prefs.correoElectronico ;
 
     final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
     var result;

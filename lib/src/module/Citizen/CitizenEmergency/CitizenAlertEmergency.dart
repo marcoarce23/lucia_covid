@@ -27,6 +27,7 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
   @override
   void initState() {
     prefs.ultimaPagina = CitizenAlertEmergency.routeName;
+    // TODO: implement initState
     super.initState();
   }
 
@@ -242,7 +243,10 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
                                 width: 15,
                               ),
                               Text(
-                                solicitudAyuda.nombrePersonalAtendio,
+                                (solicitudAyuda.nombrePersonalAtendio.length <=
+                                        0)
+                                    ? "En curso de atención"
+                                    : solicitudAyuda.nombrePersonalAtendio,
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,
@@ -263,7 +267,11 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
                                 width: 15,
                               ),
                               Text(
-                                solicitudAyuda.nombreInstitucionAtencion,
+                                (solicitudAyuda
+                                            .nombreInstitucionAtencion.length <=
+                                        0)
+                                    ? "En curso de atención"
+                                    : solicitudAyuda.nombreInstitucionAtencion,
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,
@@ -284,7 +292,9 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
                                 width: 15,
                               ),
                               Text(
-                                solicitudAyuda.fechaAtencion,
+                                (solicitudAyuda.fechaAtencion.length <= 0)
+                                    ? "En curso de atención"
+                                    : solicitudAyuda.fechaAtencion,
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,
@@ -292,12 +302,11 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
                               ),
                             ],
                           ),
-                        
                         ],
                       ),
                       trailing: Opacity(
-                        opacity:
-                            (solicitudAyuda.idaEstadoSolicitud == 79) ? 0 : 1,
+                        opacity: controlVisibilidadConclusion(solicitudAyuda),
+                        //   ( widget.voluntario!= "-1" && (  solicitudAyuda.idaEstadoSolicitud == 79 || solicitudAyuda.idaEstadoSolicitud == 72)) ? 0 : 1,
                         child: InkWell(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -334,22 +343,33 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
     );
   }
 
+  double controlVisibilidadConclusion(SolicitudAyuda solicitudAyuda) {
+    if (widget.voluntario == "-1") {
+      return 0;
+    } else {
+      if (solicitudAyuda.idaEstadoSolicitud == 72) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  }
+
   _submitConcluirAtencionr(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = 1009;
+    registrarAyuda.idaPersonal = int.parse( prefs.idPersonal);
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 79; // en cursoF
-    registrarAyuda.usuario = "coavchristian@hotmail.com";
+    registrarAyuda.usuario = prefs.correoElectronico;
 
     final dataMap = Generic().add(registrarAyuda, urlAddSolicitudAyud);
     var result;
     await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
     if (result == "0") {
       setState(() {
-        Scaffold.of(context)
-            .showSnackBar(messageOk("Se concluyo la atención"));
+        Scaffold.of(context).showSnackBar(messageOk("Se concluyo la atención"));
       });
     } else {
       Scaffold.of(context)
