@@ -52,6 +52,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "944371536908-jeko6gvi5pesb85lq63upca61eu6t6k5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lucia_covid",
+            "certificate_hash": "77074b839fa411f10175949670c471498fa8908b"
+          }
+        },
+        {
           "client_id": "944371536908-h5aus5rv448m255rchritseu856q1a25.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

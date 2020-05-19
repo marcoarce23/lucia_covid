@@ -24,6 +24,7 @@ import 'package:lucia_covid/src/module/Citizen/Voluntary/VoluntaryModule.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Login/AgreeLoginModule.dart';
 import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
+import 'package:lucia_covid/src/module/Login/SiginDemo.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
 import 'package:lucia_covid/src/module/Map/MapAdressModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
@@ -86,7 +87,7 @@ class _MyAppState extends State<MyApp> {
 
      // initialRoute: prefs.ultimaPagina,
     //  home: new FilePickerDemo(),//MapAdressModule(),
-home: new SignUpModule(), //SignInDemo(),
+home: new SignInDemo(),
 
         routes: <String, WidgetBuilder>{
         'login': (BuildContext context) => new SignUpModule(),
