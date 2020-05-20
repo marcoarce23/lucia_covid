@@ -189,6 +189,19 @@ class _SignUpModuleState extends State<SignUpModule> {
           children: <Widget>[
             SafeArea(
               child: Container(
+                 decoration: BoxDecoration(
+                    gradient: RadialGradient(
+                    colors: [
+                      Color(0xFF3594DD),
+                      Color(0xFF4563DB),
+                      Color(0xFF5036D5),
+                      Color(0xFF5B16D0),
+                  ],
+      ),
+                 )
+                 
+                 
+               
               //  height: 170.0,
               ),
             ),
@@ -200,19 +213,26 @@ class _SignUpModuleState extends State<SignUpModule> {
         //  //     child: _crearCampos(),
         //     ),
 
-             Column(
-               children: <Widget>[
-                 Image(image: AssetImage("assets/buu.PNG"), height: 250.0),
-               ],
+
+             Container(
+             
+               child: Column(
+                 children: <Widget>[
+                   Text('Estamos contigo. Beinvenido'),
+                   Text('Lucia Te Cuida. La App de nuestro corazón'),
+                   Image(image: AssetImage("assets/buu.PNG"), height: 250.0),
+                 ],
+               ),
              ),
 
             SizedBox(height: 20.0),
             acuerdo(),
+               _leerAcuerdo(),
             _dividerOr(),
             _gmailButton(),
             _gmailButtonCerrar(),
          //   _crearBoton('Cerrar Sesión'),
-              _leerAcuerdo(),
+           
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
