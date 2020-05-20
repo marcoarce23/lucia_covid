@@ -87,7 +87,8 @@ class _MyAppState extends State<MyApp> {
 
      // initialRoute: prefs.ultimaPagina,
     //  home: new FilePickerDemo(),//MapAdressModule(),
-home: new HomePageModule(),
+//home: new SignInDemo(),
+home: new SignUpModule(),
 
         routes: <String, WidgetBuilder>{
         'login': (BuildContext context) => new SignUpModule(),
