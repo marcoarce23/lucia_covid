@@ -361,7 +361,7 @@ class DrawerCitizen extends StatelessWidget {
             'Crear Eventos-Entidades',
             () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EventEntityModule()),
+                  MaterialPageRoute(builder: (context) => EventAllModule()),
                 )),
         CustomListTile(
             Icons.event_note,

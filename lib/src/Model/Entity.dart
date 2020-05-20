@@ -212,6 +212,8 @@ class Evento extends Entity {
         usuario: json["USUARIO"],
       );
 
+
+
   Map<String, dynamic> toJson() => {
         "IDCOV_EVENTO": idcovEvento,
         "IDCOV_INSTITUCION": idcovInstitucion,

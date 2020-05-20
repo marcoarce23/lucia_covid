@@ -9,11 +9,91 @@ import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
+import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
+import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
+import 'package:lucia_covid/src/module/Citizen/Entity/ListEventEntity.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
+
+
+
+class EventAllModule extends StatefulWidget {
+  static final String routeName ='voluntario';
+  const EventAllModule({Key key}) : super(key: key);
+
+
+  @override
+  _EventAllModuleState createState() =>
+      _EventAllModuleState();
+}
+
+class _EventAllModuleState extends State<EventAllModule> {
+  final prefs = new PreferensUser();
+  final generic = new Generic();
+  int page = 0;
+  final List<Widget> optionPage = [EventEntityModule(),  ListEventEntity()];
+ 
+ 
+  void _onItemTapped(int index) {
+    setState(() {
+      page = index;
+    });
+  }
+
+  @override
+  void initState() {
+    prefs.ultimaPagina = EventAllModule.routeName;
+    page = 0;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppTheme.themeColorAzul,
+        toolbarOpacity: 0.7,
+        iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+        elevation: 0,
+        title: Text(
+          "EVENTOS INSITUCION",
+          style: TextStyle(
+              color: AppTheme.themeColorNaranja,
+              fontSize: 17,
+              fontWeight: FontWeight.w400),
+        ),
+          actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: DataSearchVoluntary()  );
+            },
+          )
+        ],
+      ),
+      drawer: DrawerCitizen(),
+       bottomNavigationBar: BottomNavigationBar(
+              items: [
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.userCircle, size: 25,),
+              title: Text('Eventos')),
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.calendarCheck,size: 25, ),
+              title: Text('Listado eventos')),
+        ],
+              currentIndex: page,
+              unselectedItemColor: Colors.black,
+              selectedItemColor: Colors.amber[800],
+              onTap: _onItemTapped,)
+            ,
+          body: optionPage[page],  
+    );
+  }
+}
 
 class EventEntityModule extends StatefulWidget {
   static final String routeName = 'eventEntity';
@@ -27,8 +107,7 @@ class _EventEntityModuleState extends State<EventEntityModule> {
   bool _save = false;
   String _fecha = '';
   TimeOfDay _time;
-  int _currentIndex;
-  var result;
+    var result;
   String imagen =
       'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
   File foto;
@@ -53,7 +132,6 @@ class _EventEntityModuleState extends State<EventEntityModule> {
 
   @override
   void initState() {
-    _currentIndex = 0;
     _time = new TimeOfDay.now();
     _fecha = new DateTime.now().toString().substring(0, 10);
     prefs.ultimaPagina = EventEntityModule.routeName;
@@ -69,24 +147,20 @@ class _EventEntityModuleState extends State<EventEntityModule> {
 
     return Scaffold(
         key: scaffoldKey,
-        appBar: _appBar(),
+
         body: Stack(
           children: <Widget>[
             crearFondoForm(context, imagen),
+            _crearIconAppImagenes(), 
+            _crearIconAppCamara(),
             _crearForm(context),
           ],
         ),
-        drawer: DrawerCitizen(),
-        bottomNavigationBar: _bottomNavigationBar(context));
+    );
+   
   }
 
-  AppBar _appBar() {
-    return AppBar(
-      title: Text('EVENTOS DEL GRUPO'),
-      backgroundColor: Colors.orange,
-      actions: <Widget>[_crearIconAppImagenes(), _crearIconAppCamara()],
-    );
-  }
+
 
   _crearIconAppImagenes() {
     return IconButton(
@@ -102,54 +176,7 @@ class _EventEntityModuleState extends State<EventEntityModule> {
     );
   }
 
-  Widget _bottomNavigationBar(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-          canvasColor: Colors.white,
-          primaryColor: Colors.blue,
-          textTheme: Theme.of(context)
-              .textTheme
-              .copyWith(caption: TextStyle(color: Colors.blueGrey))),
-      child: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (value) {
-          setState(() {
-            _currentIndex = value;
-            callPageEventVoluntary(_currentIndex, context);
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 25.0), title: Text('Eventos')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Historial Eventos')),
-        ],
-      ),
-    );
-  }
 
-// Widget widget() {
-//   return new TimePickerSpinner(
-//     is24HourMode: false,
-//     normalTextStyle: TextStyle(
-//       fontSize: 24,
-//       color: Colors.deepOrange
-//     ),
-//     highlightedTextStyle: TextStyle(
-//       fontSize: 24,
-//       color: Colors.yellow
-//     ),
-//     spacing: 50,
-//     itemHeight: 80,
-//     isForce2Digits: true,
-//     onTimeChange: (time) {
-//       setState(() {
-//         _dateTime = time;
-//       });
-//     },
-//   );
-// }
 
   Widget informacionProfesional(BuildContext context) {
     return Center(
@@ -205,25 +232,9 @@ class _EventEntityModuleState extends State<EventEntityModule> {
     );
   }
 
-  Image imagenProfesional() {
-    Image imagenAvatar;
-
-    //if (profesionalesDeInstitucion.sexo == "F") {
-    imagenAvatar = Image.asset(
-      "assets/image/circled_user_female.png",
-      width: 50,
-      height: 50,
-      fit: BoxFit.fill,
-    );
-    // } else {
-    //   imagenAvatar = Image.asset(
-    //     "assets/image/circled_user_male.png",
-    //     width: 50,
-    //     height: 50,
-    //     fit: BoxFit.fill,
-    //   );
-    // }
-    return imagenAvatar;
+ImageOvalNetwork imagenProfesional() {
+    return ImageOvalNetwork(
+            imageNetworkUrl: prefs.avatarImagen, sizeImage: Size.fromWidth(40));
   }
 
   Column crearIconoProfesional(icon, title) {
@@ -457,7 +468,7 @@ class _EventEntityModuleState extends State<EventEntityModule> {
     entity.eveUbicacion = ubicacion.objectValue;
     entity.eveFecha = _inputFieldDateController.text;
     entity.eveHora = _inputFieldTimeController.text;
-    entity.usuario = prefs.nombreUsuario;
+    entity.usuario = prefs.userId;
 
     final dataMap = generic.add(entity, urlAddEvento);
 
