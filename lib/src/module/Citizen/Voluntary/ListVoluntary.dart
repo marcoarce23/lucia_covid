@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
@@ -163,7 +165,7 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
                         color: Colors.green,
                         size: 15,
                       ),
-                      Text('Material: ${entityItem.perNombrepersonal} ',
+                      Text('Voluntario: ${entityItem.perNombrepersonal} ',
                           style: TextStyle(color: Colors.red, fontSize: 14)),
                     ],
                   )),
@@ -196,8 +198,65 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
                   )
                 ],
               ),
+
+
+               Wrap(
+        children: <Widget>[
+          InkWell(
+            child: FaIcon(
+              FontAwesomeIcons.phoneVolume,
+              color: Colors.blue,
+              size: 25,
+            ),
+            onTap: () {
+              callNumber(int.parse(entityItem.perTelefono));
+            },
+          ),
+         
+          InkWell(
+            child: FaIcon(
+              FontAwesomeIcons.comment,
+              color: Colors.blue,
+              size: 25,
+            ),
+            onTap: () {
+              sendSMS(int.parse(entityItem.perTelefono));
+            },
+          ),
+         
+          InkWell(
+            child: FaIcon(
+              FontAwesomeIcons.mailBulk,
+              color: Colors.blue,
+              size: 25,
+            ),
+            onTap: () {
+              sendEmailAdvanced(
+                  entityItem.perCorreo,
+                  "Colaboración ${entityItem.desEspecialidad}",
+                  "Estimad@:  ${entityItem.perNombrepersonal}, favor su colaboración en: ");
+            },
+          ),
+
+          InkWell(
+            child: FaIcon(
+              FontAwesomeIcons.whatsapp,
+              color: Colors.blue,
+              size: 25,
+            ),
+            onTap: () {
+              callWhatsApp(int.parse(entityItem.perTelefono));
+            },
+          )
+        ],
+      ),
+   
+
             ],
           ),
+
+         
+      
         ],
       ),
     );

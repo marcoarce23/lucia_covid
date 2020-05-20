@@ -17,8 +17,8 @@ String urlGetVoluntario              =    'http://covid19.ruta88.net/COVID/Perso
 
 String urlGetAtencion                =    'http://covid19.ruta88.net/COVID/Atencion/srvAtencion.svc/DevuelveAtencion/{pIdInstitucion}/{pIdPersonal} ';
 
-String urlGetMultimedia              =    'http://covid19.ruta88.net/COVID/Multimedia/srvMultimedia.svc/Multimedia';
-String primaryKeyGetMultimedia ='';
+String urlGetMultimedia              =    'http://covid19.ruta88.net/COVID/Multimedia/srvMultimedia.svc/ListaMultimedias/';
+String primaryKeyGetMultimedia       =    '_DevuelveListaMultimediaResult';
 
 String urlGetEvento                  =    'http://covid19.ruta88.net/COVID/Evento/srvEvento.svc/Eventos/';
 String primaryKeyGetEvento           = '_DevuelveEventosResult';

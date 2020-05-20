@@ -86,7 +86,7 @@ class _ListEventEntityState extends State<ListEventEntity> {
         physics: ClampingScrollPhysics(),
         itemCount: snapshot.data.length,
         itemBuilder: (context, index) {
-          Voluntary entityItem = snapshot.data[index];
+          Evento entityItem = snapshot.data[index];
 
           return Container(
             decoration: BoxDecoration(
@@ -114,7 +114,7 @@ class _ListEventEntityState extends State<ListEventEntity> {
     );
   }
 
-  Widget listEntity(BuildContext context, Voluntary entityItem) {
+  Widget listEntity(BuildContext context, Evento entityItem) {
     final item = entityItem.idcovPersonal;
 
     return Dismissible(
@@ -161,7 +161,7 @@ class _ListEventEntityState extends State<ListEventEntity> {
                         color: Colors.green,
                         size: 15,
                       ),
-                      Text('Material: ${entityItem.perNombrepersonal} ',
+                      Text('Material: ${entityItem.eveTitulo} ',
                           style: TextStyle(color: Colors.red, fontSize: 14)),
                     ],
                   )),
@@ -172,13 +172,13 @@ class _ListEventEntityState extends State<ListEventEntity> {
                     color: Colors.green,
                     size: 15,
                   ),
-                  Text('Telefono: ${entityItem.perTelefono}',
+                  Text('Telefono: ${entityItem.eveTitulo}',
                       style: TextStyle(color: Colors.red, fontSize: 14))
                 ],
               ),
               Container(
                   child: Text(
-                'Tipo: ${entityItem.perAyudacovid}',
+                'Tipo: ${entityItem.eveTitulo}',
                 style: TextStyle(color: Colors.yellow, fontSize: 14),
               )),
               Row(
@@ -189,7 +189,7 @@ class _ListEventEntityState extends State<ListEventEntity> {
                     size: 15,
                   ),
                   Text(
-                    'Correo: ${entityItem.perCorreo}',
+                    'Correo: ${entityItem.eveTitulo}',
                     style: TextStyle(color: Colors.yellow, fontSize: 14),
                   )
                 ],
@@ -201,7 +201,7 @@ class _ListEventEntityState extends State<ListEventEntity> {
     );
   }
 
-  Container iconEntity(Voluntary entityItem) {
+  Container iconEntity(Evento entityItem) {
     return Container(
         child: Column(
       children: <Widget>[
@@ -211,7 +211,7 @@ class _ListEventEntityState extends State<ListEventEntity> {
           color: Colors.yellow,
         ),
         Text(
-          '${entityItem.desEspecialidad}',
+          '${entityItem.eveTitulo}',
           style: TextStyle(
               fontSize: 11, color: Colors.yellow, fontWeight: FontWeight.w400),
         ),

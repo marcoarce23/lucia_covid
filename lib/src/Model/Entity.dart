@@ -241,6 +241,7 @@ class Multimedia extends Entity {
   String detFechaFin;
   String mulEnlace;
   String usuario;
+String tipoMaterial;
 
   Multimedia(
       {this.idcovMultimedia,
@@ -252,31 +253,35 @@ class Multimedia extends Entity {
       this.detFechaInicio,
       this.detFechaFin,
       this.mulEnlace,
+      this.tipoMaterial,
       this.usuario});
+
 
   fromJson(Map<String, dynamic> json) => new Multimedia(
         idcovMultimedia: json["IDCOV_MULTIMEDIA"],
         idaCategoria: json["IDA_CATEGORIA"],
-        idaTIpoMaterial: json["IDA_MATERIAL"],
+        idaTIpoMaterial: json["IDA_TIPOMATERIAL"],
         idaCovInstitucion: json["IDCOV_INSTITUCION"],
         mulTitulo: json["MUL_TITULO"],
         mulResumen: json["MUL_RESUMEN"],
         detFechaInicio: json["MUL_FECHAINICIO"],
         detFechaFin: json["MUL_FECHAFIN"],
         mulEnlace: json["MUL_ENLACE"],
+       tipoMaterial: json["TIPO_MATERIAL"],
         usuario: json["USUARIO"],
       );
 
   Map<String, dynamic> toJson() => {
         "IDCOV_MULTIMEDIA": idcovMultimedia,
         "IDA_CATEGORIA": idaCategoria,
-        "IDA_MATERIAL": idaTIpoMaterial,
+        "IDA_TIPOMATERIAL": idaTIpoMaterial,
         "IDCOV_INSTITUCION": idaCovInstitucion,
         "MUL_TITULO": mulTitulo,
         "MUL_RESUMEN": mulResumen,
         "MUL_FECHAINICIO": detFechaInicio,
         "MUL_FECHAFIN": detFechaFin,
         "MUL_ENLACE": mulEnlace,
+        "TIPO_MATERIAL": tipoMaterial,
         "USUARIO": usuario
       };
 }
