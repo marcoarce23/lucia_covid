@@ -14,7 +14,7 @@ import 'CitizenEventsDetailModule.dart';
 String selectedCategorie = "Recomendaciones";
 
 class CitizenEventsModule extends StatefulWidget {
-  static final String routeName ='CiudadanoEventos';
+  static final String routeName = 'CiudadanoEventos';
   @override
   _CitizenEventsModuleState createState() => _CitizenEventsModuleState();
 }
@@ -61,20 +61,8 @@ class _CitizenEventsModuleState extends State<CitizenEventsModule> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              TextField(
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: AppTheme.themeColorNaranja,
-                  ),
-                  hintText: "Buscar por institución / categoria",
-                  hintStyle: TextStyle(
-                      fontSize: 12, color: AppTheme.themeColorNaranja),
-                ),
-              ),
               Text(
-                "Listado de eventos",
+                "El listado de eventos esta ordenado ascendentemente",
                 style: AppTheme.themeTitulo,
               ),
               futureEvento(context),
@@ -176,7 +164,7 @@ class _CitizenEventsModuleState extends State<CitizenEventsModule> {
           children: <Widget>[
             ImageOpaqueNetworkCustomize(
                 eventoItem.url,
-                AppTheme.themeColorVerde,
+                AppTheme.themeColorNaranja,
                 Size(MediaQuery.of(context).size.width, 100),
                 0.5,
                 BoxFit.cover),
@@ -203,7 +191,7 @@ class _CitizenEventsModuleState extends State<CitizenEventsModule> {
                           fontWeight: FontWeight.w900),
                     ),
                     Text(
-                      eventoItem.hora,
+                      eventoItem.hora.substring(1, 5),
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ],
@@ -216,39 +204,50 @@ class _CitizenEventsModuleState extends State<CitizenEventsModule> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
-                          eventoItem.titulo,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w800),
+                        Expanded(
+                          child: RichText(
+                            overflow: TextOverflow.clip,
+                            text: TextSpan(
+                              text: eventoItem.titulo.toUpperCase(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w800),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: RichText(
+                            overflow: TextOverflow.clip,
+                            text: TextSpan(
+                              text: eventoItem.objetivo,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 14),
+                            ),
+                          ),
                         ),
                         SizedBox(
                           height: 8,
                         ),
-                        Text(
-                          eventoItem.objetivo,
-                          style: TextStyle(color: Colors.white, fontSize: 14),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              "Institucion: " + eventoItem.institucion,
+                        Expanded(
+                          child: RichText(
+                            overflow: TextOverflow.clip,
+                            text: TextSpan(
+                              text: "Institucion: " + eventoItem.institucion,
                               style:
                                   TextStyle(color: Colors.white, fontSize: 12),
                             ),
-                            eventoItem.voluntario.length > 0
-                                ? Text(
-                                    "Expositor: " + eventoItem.expositor,
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 12),
-                                  )
-                                : Text("")
-                          ],
+                          ),
+                        ),
+                        Expanded(
+                          child: RichText(
+                            overflow: TextOverflow.clip,
+                            text: TextSpan(
+                              text: "Expositor: " + eventoItem.expositor,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 12),
+                            ),
+                          ),
                         ),
                       ],
                     ),

@@ -25,15 +25,13 @@ class CitizenPanicButtonModule extends StatefulWidget {
 
 class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
   final prefs = new PreferensUser();
-   int _currentIndex =0;
+  int _currentIndex = 0;
   @override
   void initState() {
     prefs.ultimaPagina = CitizenPanicButtonModule.routeName;
     super.initState();
   }
 
-
-  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -50,10 +48,9 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
                   fontWeight: FontWeight.w400),
             ),
             //backgroundColor: AppTheme.themeColorNaranja,
-           
           ),
 
-// drawer: DrawerCitizen(), 
+// drawer: DrawerCitizen(),
 //         bottomNavigationBar: _bottomNavigationBar(context)),
 
           body: SingleChildScrollView(
@@ -80,30 +77,31 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      CitizenAlertEmergency(prefs.userId, "-1")),
+                                  builder: (context) => CitizenAlertEmergency(
+                                      prefs.userId, "-1")),
                             );
                           },
                           child: Text("Mis solicitudes"),
                         ))),
                 ButtonPanic(
-                    titulo: "Boton ayuda COVID", tipoBoton: "65", ),
+                  titulo: "Boton ayuda COVID",
+                  tipoBoton: "65",
+                ),
                 ButtonPanic(
-                    titulo: "Boton ayuda Medica",
-                    tipoBoton: "64",
-                    ),
+                  titulo: "Boton ayuda Medica",
+                  tipoBoton: "64",
+                ),
                 ButtonPanic(
-                    titulo: "Boton para medicamentos",
-                    tipoBoton: "66",
-                   ),
+                  titulo: "Boton para medicamentos",
+                  tipoBoton: "66",
+                ),
                 ButtonPanic(
-                    titulo: "Boton para bonos", tipoBoton: "77",), 
-
+                  titulo: "Boton para bonos",
+                  tipoBoton: "77",
+                ),
               ],
             ),
-          )
-        
-          ),
+          )),
     );
   }
 }
@@ -112,8 +110,11 @@ class ButtonPanic extends StatefulWidget {
   final String titulo;
   final String tipoBoton;
 
-  const ButtonPanic({Key key, this.titulo, this.tipoBoton,})
-      : super(key: key);
+  const ButtonPanic({
+    Key key,
+    this.titulo,
+    this.tipoBoton,
+  }) : super(key: key);
 
   @override
   _ButtonPanic createState() => _ButtonPanic();
@@ -292,7 +293,7 @@ class _ButtonPanic extends State<ButtonPanic> {
                             splashColor: Colors.greenAccent,
                             onPressed: () {
                               _submit();
-                              setState(() {    
+                              setState(() {
                                 fechaNotificacion =
                                     DateFormat("dd/MM/yyyy HH:mm")
                                         .format(DateTime.now());
@@ -314,9 +315,8 @@ class _ButtonPanic extends State<ButtonPanic> {
     LatLng latLng;
     latLng = await getLocation().then((onvalue) => latLng = onvalue);
 
-
-print(' el valorrr.... ${prefs.userId}');
-    botonPanico.idLogin= int.parse(prefs.userId);
+    print(' el valorrr.... ${prefs.userId}');
+    botonPanico.idLogin = int.parse(prefs.userId);
     botonPanico.botCordenadalat = latLng.latitude;
     botonPanico.botCordenadalon = latLng.longitude;
     final dataMap = generic.add(botonPanico, urlAddBotonPanico);

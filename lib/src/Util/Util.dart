@@ -47,7 +47,7 @@ Future<LatLng> getLocation() async {
 
  callWhatsApp(int number) async 
     {
-     await FlutterOpenWhatsapp.sendSingleMessage("59176427275", "Eres un bolas de liga mayor");
+     await FlutterOpenWhatsapp.sendSingleMessage("591"+number.toString(), "*Lucia te cuida* :Un saludo cordial, le pido su colaboración...");
     }
 
 sharedImage(String imagePath, String nameImage, String nameAttachExtension, String extensionImage, String detail) async 

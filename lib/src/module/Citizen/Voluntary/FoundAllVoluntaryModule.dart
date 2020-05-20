@@ -9,7 +9,7 @@ import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class FoundAllVoluntaryModule extends StatefulWidget {
   final ProfesionalesAgrupados profesional;
-  static final String routeName ='EncontrarTodosLosVoluntarios';
+  static final String routeName = 'EncontrarTodosLosVoluntarios';
 
   const FoundAllVoluntaryModule({Key key, @required this.profesional})
       : super(key: key);
@@ -24,8 +24,7 @@ class _FoundAllVoluntaryModuleState extends State<FoundAllVoluntaryModule> {
   final prefs = new PreferensUser();
 
   @override
-  void initState() { 
-    
+  void initState() {
     prefs.ultimaPagina = FoundAllVoluntaryModule.routeName;
     super.initState();
   }
@@ -78,7 +77,7 @@ class _FoundAllVoluntaryModuleState extends State<FoundAllVoluntaryModule> {
             child: Padding(
                 padding: EdgeInsets.all(10),
                 child: Text(
-                  "Lista de profesionales / voluntarios registradas",
+                  "Lista de profesionales / voluntarios registrados",
                   style: AppTheme.themeTitulo,
                 )),
           ),
@@ -92,7 +91,10 @@ class _FoundAllVoluntaryModuleState extends State<FoundAllVoluntaryModule> {
       ProfesionalesDeInstitucion profesionalesDeInstitucion) {
     String parametroCovid = profesionalesDeInstitucion.ayudaConCovid;
     return ListTile(
-      leading: imagenProfesional(profesionalesDeInstitucion),
+      leading: ImageOpaqueNetworkCustomize(profesionalesDeInstitucion.foto,
+          Colors.white, Size(50, 50), 1, BoxFit.cover),
+
+      //imagenProfesional(profesionalesDeInstitucion),
       title: Text(profesionalesDeInstitucion.tipoProfesion),
       subtitle: Column(
         //mainAxisAlignment: MainAxisAlignment.start,
@@ -162,32 +164,23 @@ class _FoundAllVoluntaryModuleState extends State<FoundAllVoluntaryModule> {
                   "Colaboración ${profesionalesDeInstitucion.tipoProfesion}",
                   "Estimad@:  ${profesionalesDeInstitucion.nombreProfesional}, favor su colaboración en: ");
             },
+          ),
+          SizedBox(
+            width: 15,
+          ),
+          InkWell(
+            child: FaIcon(
+              FontAwesomeIcons.whatsapp,
+              color: Colors.blue,
+              size: 25,
+            ),
+            onTap: () {
+              callWhatsApp(int.parse(profesionalesDeInstitucion.telefono));
+            },
           )
         ],
       ),
     );
-  }
-
-  Image imagenProfesional(
-      ProfesionalesDeInstitucion profesionalesDeInstitucion) {
-    Image imagenAvatar;
-
-    if (profesionalesDeInstitucion.sexo == "F") {
-      imagenAvatar = Image.asset(
-        "assets/image/circled_user_female.png",
-        width: 50,
-        height: 50,
-        fit: BoxFit.fill,
-      );
-    } else {
-      imagenAvatar = Image.asset(
-        "assets/image/circled_user_male.png",
-        width: 50,
-        height: 50,
-        fit: BoxFit.fill,
-      );
-    }
-    return imagenAvatar;
   }
 
   Column crearIconoProfesional(icon, title) {

@@ -477,9 +477,7 @@ class BotonPanico extends Entity {
   int idaEstadoSolicitud;
   String botTelefono;
   String usuario;
-int  idLogin;
-
-
+  int idLogin;
 
   BotonPanico(
       {this.idcovBotonpanico = 0,
@@ -497,12 +495,7 @@ int  idLogin;
   fromJson(Map<String, dynamic> json) => new BotonPanico(
       idcovBotonpanico: json["IDCOV_BOTONPANICO"],
       idaCatalogo: json["IDA_CATALOGO"],
-
-
-      
       idLogin: json["IDCOV_LOGIN"],
-
-
       botDetalle: json["BOT_DETALLE"],
       idaPrioridad: json["IDA_PRIORIDAD"],
       botCordenadalat: json["BOT_CORDENADALAT"],
@@ -518,7 +511,7 @@ int  idLogin;
         "BOT_DETALLE": botDetalle,
         "IDA_PRIORIDAD": idaPrioridad,
         "IDCOV_LOGIN": idLogin,
-                "BOT_CORDENADALAT": botCordenadalat,
+        "BOT_CORDENADALAT": botCordenadalat,
         "BOT_CORDENADALON": botCordenadalon,
         "BOT_FECHA": botFecha,
         "IDA_ESTADOSOLICITUD": idaEstadoSolicitud,
@@ -560,8 +553,6 @@ class LoginSigIn extends Entity {
   String tokenDispositivo;
   String primeraVez;
   String idPersonal;
-
-
 
   LoginSigIn(
       {this.idUsuario,
@@ -900,6 +891,7 @@ class ProfesionalesDeInstitucion extends Entity {
   String ayudaConCovid;
   String ci;
   String sexo;
+  String foto;
 
   ProfesionalesDeInstitucion(
       {this.idPersonal,
@@ -911,6 +903,7 @@ class ProfesionalesDeInstitucion extends Entity {
       this.telefono,
       this.ayudaConCovid,
       this.ci,
+      this.foto,
       this.sexo});
 
   fromJson(Map<String, dynamic> json) => new ProfesionalesDeInstitucion(
@@ -920,6 +913,7 @@ class ProfesionalesDeInstitucion extends Entity {
       nombreProfesional: json["PER_NOMBREPERSONAL"],
       ayudaConCovid: json["PER_AYUDACOVID"],
       ci: json["PER_CI"],
+      foto: json["PER_FOTO"],
       idInstitucion: json["IDCOV_INSTITUCION"],
       correo: json["PER_CORREO"],
       telefono: json["PER_TELEFONO"],
@@ -933,6 +927,7 @@ class ProfesionalesDeInstitucion extends Entity {
         "PER_AYUDACOVID": ayudaConCovid,
         "PER_CORREO": correo,
         "PER_TELEFONO": telefono,
+        "PER_FOTO": foto,
         "PER_CI": ci,
         "IDCOV_INSTITUCION": idInstitucion,
         "IDA_SEXO": sexo

@@ -129,16 +129,13 @@ void initState() {
               padding: const EdgeInsets.all(10),
               child: Stack(
                 children: <Widget>[
-                  GestureDetector(
-                    child: Hero(
-                      tag: profesional.imagenFondo,
-                      child: ImageOpaqueAssets(
-                          profesional.imagenFondo,
-                          Colors.white,
-                          Size(double.maxFinite, double.maxFinite),
-                          0.50),
-                    ),
-                  ),
+                  ImageOpaqueNetworkCustomize(
+                      profesional.imagenFondo,
+                      Colors.white,
+                      Size(150, 150),
+                      0.5,
+                      BoxFit.cover,
+                      ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,

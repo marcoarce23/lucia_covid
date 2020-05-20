@@ -50,28 +50,28 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
             ),
             drawer: DrawerCitizen(),
             // backgroundColor: Colors.red,
-            body: Column(
-              children: <Widget>[
-                SingleChildScrollView(child: cuerpoSolicitudes()),
-              ],
+            body: SingleChildScrollView(
+                          child: Column(
+                children: <Widget>[
+                  cuerpoSolicitudes(),
+                ],
+              ),
             )));
   }
 
   Widget cuerpoSolicitudes() {
-    return SingleChildScrollView(
-      child: Container(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "Listado de solicitudes para ayuda con MEDICINA",
-                style: AppTheme.themeTitulo,
-              ),
-              futureSolicitudes(context),
-            ],
-          ),
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "Listado de solicitudes para ayuda con MEDICINA",
+              style: AppTheme.themeTitulo,
+            ),
+            futureSolicitudes(context),
+          ],
         ),
       ),
     );
@@ -175,6 +175,7 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
                           Text(
                             "Fecha solicitud:",
                             style: TextStyle(
+                              fontWeight:  FontWeight.w800,
                               color: Colors.black,
                               fontSize: 14,
                             ),
@@ -192,13 +193,7 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
                               ),
                               SizedBox(
                                 width: 10,
-                              ),
-                              Text(
-                                new DateFormat("HH:mm").format(tempDate),
-                                style: TextStyle(
-                                  fontSize: 14,
-                                ),
-                              ),
+                              ),                            
                             ],
                           ),
                         ],
@@ -209,6 +204,7 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
                           Text(
                             "Detalle:",
                             style: TextStyle(
+                              fontWeight:  FontWeight.w800,
                               color: Colors.black,
                               fontSize: 14,
                             ),
@@ -231,8 +227,9 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
                             ],
                           ),
                           Text(
-                            "Atendido por:",
+                            "Voluntario asignado:",
                             style: TextStyle(
+                              fontWeight:  FontWeight.w800,
                               color: Colors.black,
                               fontSize: 14,
                             ),
@@ -246,7 +243,7 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
                                 (solicitudAyuda.nombrePersonalAtendio.length <=
                                         0)
                                     ? "En curso de atención"
-                                    : solicitudAyuda.nombrePersonalAtendio,
+                                    : solicitudAyuda.nombrePersonalAtendio   ,
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,
@@ -257,6 +254,7 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
                           Text(
                             "Institución:",
                             style: TextStyle(
+                              fontWeight:  FontWeight.w800,
                               color: Colors.black,
                               fontSize: 14,
                             ),
@@ -280,8 +278,9 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
                             ],
                           ),
                           Text(
-                            "Fecha atención:",
+                            "Fecha de asignación con voluntario:",
                             style: TextStyle(
+                              fontWeight:  FontWeight.w800,
                               color: Colors.black,
                               fontSize: 14,
                             ),
@@ -354,6 +353,12 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
       }
     }
   }
+
+
+  
+
+
+
 
   _submitConcluirAtencionr(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {

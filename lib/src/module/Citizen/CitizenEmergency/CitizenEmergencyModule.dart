@@ -134,8 +134,8 @@ class _PageMedicinaState extends State<PageMedicina> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    CitizenAlertEmergency("-1", prefs.idPersonal)),
+                                builder: (context) => CitizenAlertEmergency(
+                                    "-1", prefs.idPersonal)),
                           );
                         },
                         child: Text("Mis atenciones"),
@@ -302,6 +302,18 @@ class _PageMedicinaState extends State<PageMedicina> {
                                 sendSMS(solicitudAyuda.telefono);
                               },
                             ),
+                            SizedBox(
+                              width: 25,
+                            ),
+                            InkWell(
+                              child: FaIcon(
+                                FontAwesomeIcons.whatsapp,
+                                size: 20,
+                              ),
+                              onTap: () {
+                                callWhatsApp(solicitudAyuda.telefono);
+                              },
+                            ),
                           ],
                         )
                       ],
@@ -343,11 +355,11 @@ class _PageMedicinaState extends State<PageMedicina> {
   _submitMedicamentosAtender(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal =  int.parse( prefs.idPersonal);
+    registrarAyuda.idaPersonal = int.parse(prefs.idPersonal);
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 78; // en cursoF
-    registrarAyuda.usuario = prefs.correoElectronico ;
+    registrarAyuda.usuario = prefs.correoElectronico;
 
     final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
     var result;
@@ -403,8 +415,8 @@ class _PageCovidState extends State<PageCovid> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    CitizenAlertEmergency("-1", prefs.idPersonal)),
+                                builder: (context) => CitizenAlertEmergency(
+                                    "-1", prefs.idPersonal)),
                           );
                         },
                         child: Text("Mis atenciones"),
@@ -472,11 +484,11 @@ class _PageCovidState extends State<PageCovid> {
   _submitCovidConcluido(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = int.parse( prefs.idPersonal);
+    registrarAyuda.idaPersonal = int.parse(prefs.idPersonal);
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 79; // en concluido
-    registrarAyuda.usuario = prefs.correoElectronico ;
+    registrarAyuda.usuario = prefs.correoElectronico;
 
     final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
     var result;
@@ -497,11 +509,11 @@ class _PageCovidState extends State<PageCovid> {
   _submitCovidAtender(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = int.parse( prefs.idPersonal);
+    registrarAyuda.idaPersonal = int.parse(prefs.idPersonal);
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 78; // en cursoF
-    registrarAyuda.usuario =prefs.correoElectronico ;
+    registrarAyuda.usuario = prefs.correoElectronico;
 
     final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
     var result;
@@ -617,6 +629,18 @@ class _PageCovidState extends State<PageCovid> {
                               ),
                               onTap: () {
                                 sendSMS(solicitudAyuda.telefono);
+                              },
+                            ),
+                            SizedBox(
+                              width: 25,
+                            ),
+                            InkWell(
+                              child: FaIcon(
+                                FontAwesomeIcons.whatsapp,
+                                size: 20,
+                              ),
+                              onTap: () {
+                                callWhatsApp(solicitudAyuda.telefono);
                               },
                             ),
                           ],
@@ -695,8 +719,8 @@ class _PageMedicmanetosState extends State<PageMedicmanetos> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    CitizenAlertEmergency("-1", prefs.idPersonal)),
+                                builder: (context) => CitizenAlertEmergency(
+                                    "-1", prefs.idPersonal)),
                           );
                         },
                         child: Text("Mis atenciones"),
@@ -763,11 +787,11 @@ class _PageMedicmanetosState extends State<PageMedicmanetos> {
 
   _submitConcluido(BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = int.parse( prefs.idPersonal);
+    registrarAyuda.idaPersonal = int.parse(prefs.idPersonal);
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 79; // en concluido
-    registrarAyuda.usuario =prefs.correoElectronico ;
+    registrarAyuda.usuario = prefs.correoElectronico;
 
     final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
     var result;
@@ -787,11 +811,11 @@ class _PageMedicmanetosState extends State<PageMedicmanetos> {
 
   _submitAtender(BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = int.parse( prefs.idPersonal);
+    registrarAyuda.idaPersonal = int.parse(prefs.idPersonal);
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 78; // en cursoF
-    registrarAyuda.usuario = prefs.correoElectronico ;
+    registrarAyuda.usuario = prefs.correoElectronico;
 
     final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
     var result;
@@ -907,6 +931,18 @@ class _PageMedicmanetosState extends State<PageMedicmanetos> {
                               ),
                               onTap: () {
                                 sendSMS(solicitudAyuda.telefono);
+                              },
+                            ),
+                            SizedBox(
+                              width: 25,
+                            ),
+                            InkWell(
+                              child: FaIcon(
+                                FontAwesomeIcons.whatsapp,
+                                size: 20,
+                              ),
+                              onTap: () {
+                                callWhatsApp(solicitudAyuda.telefono);
                               },
                             ),
                           ],
@@ -985,8 +1021,8 @@ class _PageBonosState extends State<PageBonos> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    CitizenAlertEmergency("-1", prefs.idPersonal)),
+                                builder: (context) => CitizenAlertEmergency(
+                                    "-1", prefs.idPersonal)),
                           );
                         },
                         child: Text("Mis atenciones"),
@@ -1054,11 +1090,11 @@ class _PageBonosState extends State<PageBonos> {
   _submitMedicamentosConcluido(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = int.parse( prefs.idPersonal);
+    registrarAyuda.idaPersonal = int.parse(prefs.idPersonal);
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 79; // en concluido
-    registrarAyuda.usuario = prefs.correoElectronico ;
+    registrarAyuda.usuario = prefs.correoElectronico;
 
     final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
     var result;
@@ -1079,11 +1115,11 @@ class _PageBonosState extends State<PageBonos> {
   _submitMedicamentosAtender(
       BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
-    registrarAyuda.idaPersonal = int.parse( prefs.idPersonal);
+    registrarAyuda.idaPersonal = int.parse(prefs.idPersonal);
     registrarAyuda.fecha =
         DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
     registrarAyuda.idaEstado = 78; // en cursoF
-    registrarAyuda.usuario = prefs.correoElectronico ;
+    registrarAyuda.usuario = prefs.correoElectronico;
 
     final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
     var result;
@@ -1199,6 +1235,18 @@ class _PageBonosState extends State<PageBonos> {
                               ),
                               onTap: () {
                                 sendSMS(solicitudAyuda.telefono);
+                              },
+                            ),
+                            SizedBox(
+                              width: 25,
+                            ),
+                            InkWell(
+                              child: FaIcon(
+                                FontAwesomeIcons.whatsapp,
+                                size: 20,
+                              ),
+                              onTap: () {
+                                callWhatsApp(solicitudAyuda.telefono);
                               },
                             ),
                           ],
