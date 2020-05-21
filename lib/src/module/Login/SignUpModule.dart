@@ -1,15 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
-import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
-import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
@@ -87,9 +84,7 @@ class _SignUpModuleState extends State<SignUpModule> {
         try 
         {
           await _googleSignIn.signIn();
-        } catch (error) {
-          print('rrrr: $error ');
-        }
+        
 
         final dataMap1 = generic.getAll(entity, getLogin+'${currentUser.email}', primaryKeyGetLogin);
 
@@ -162,6 +157,9 @@ class _SignUpModuleState extends State<SignUpModule> {
                 }
             }
          });
+       } catch (error) {
+         print('rrrr: $error ');
+     }
   }
 
   Future<void> handleSignOut() async {
@@ -180,8 +178,6 @@ class _SignUpModuleState extends State<SignUpModule> {
   }
 
   Widget _crearForm(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return SingleChildScrollView(
       child: Form(
         key: formKey,
@@ -248,74 +244,74 @@ class _SignUpModuleState extends State<SignUpModule> {
     );
   }
 
-  Widget _crearCampos() {
-    correo = InputEmailField(
-        FaIcon(FontAwesomeIcons.user, color: Colors.orange),
-        'Correo electrónico',
-        '',
-        'Ingresar su correo electrónico',
-        'ej: cuenta@correo.com');
-    contrasenia = InputTextPassword(
-        FaIcon(FontAwesomeIcons.expeditedssl, color: Colors.orange),
-        'Contraseña:',
-        '',
-        'Ingrese su contraseña');
-    return Column(
-      children: <Widget>[
-        SizedBox(height: 15.0),
-        Text(
-          'LUCIA TE CUIDA',
-          style: TextStyle(fontSize: 18, color: Colors.black),
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(width: 5.0),
-        FaIcon(
-          FontAwesomeIcons.keybase,
-          color: Colors.blue,
-          size: 20,
-        ),
-        correo,
-        contrasenia,
-       // _crearBoton('Cerrar Sesión'),
-        _forgetPassword(),
-      ],
-    );
-  }
+  // Widget _crearCampos() {
+  //   correo = InputEmailField(
+  //       FaIcon(FontAwesomeIcons.user, color: Colors.orange),
+  //       'Correo electrónico',
+  //       '',
+  //       'Ingresar su correo electrónico',
+  //       'ej: cuenta@correo.com');
+  //   contrasenia = InputTextPassword(
+  //       FaIcon(FontAwesomeIcons.expeditedssl, color: Colors.orange),
+  //       'Contraseña:',
+  //       '',
+  //       'Ingrese su contraseña');
+  //   return Column(
+  //     children: <Widget>[
+  //       SizedBox(height: 15.0),
+  //       Text(
+  //         'LUCIA TE CUIDA',
+  //         style: TextStyle(fontSize: 18, color: Colors.black),
+  //         textAlign: TextAlign.center,
+  //       ),
+  //       SizedBox(width: 5.0),
+  //       FaIcon(
+  //         FontAwesomeIcons.keybase,
+  //         color: Colors.blue,
+  //         size: 20,
+  //       ),
+  //       correo,
+  //       contrasenia,
+  //      // _crearBoton('Cerrar Sesión'),
+  //       _forgetPassword(),
+  //     ],
+  //   );
+  // }
 
-  _crearContenedorCampos() {
-    return BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(5.0),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.black26,
-              blurRadius: 3.0,
-              offset: Offset(0.0, 5.0),
-              spreadRadius: 3.0)
-        ]);
-  }
+  // _crearContenedorCampos() {
+  //   return BoxDecoration(
+  //       color: Colors.white,
+  //       borderRadius: BorderRadius.circular(5.0),
+  //       boxShadow: <BoxShadow>[
+  //         BoxShadow(
+  //             color: Colors.black26,
+  //             blurRadius: 3.0,
+  //             offset: Offset(0.0, 5.0),
+  //             spreadRadius: 3.0)
+  //       ]);
+  // }
 
-  Widget _crearBoton(String text) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 65.0),
-      width: MediaQuery.of(context).size.width,
-      child: RaisedButton.icon(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
-        color: Colors.blue,
-        textColor: Colors.white,
-        label: Text(
-          text,
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.white,
-          ),
-        ),
-        icon: Icon(Icons.check),
-        onPressed: handleSignOut,// (_save) ? null : _submit,
-      ),
-    );
-  }
+  // Widget _crearBoton(String text) {
+  //   return Container(
+  //     padding: EdgeInsets.symmetric(horizontal: 65.0),
+  //     width: MediaQuery.of(context).size.width,
+  //     child: RaisedButton.icon(
+  //       shape:
+  //           RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+  //       color: Colors.blue,
+  //       textColor: Colors.white,
+  //       label: Text(
+  //         text,
+  //         style: TextStyle(
+  //           fontSize: 18,
+  //           color: Colors.white,
+  //         ),
+  //       ),
+  //       icon: Icon(Icons.check),
+  //       onPressed: handleSignOut,// (_save) ? null : _submit,
+  //     ),
+  //   );
+  // }
 
   // void _submit() async {
   //   if (!formKey.currentState.validate()) return;
@@ -411,21 +407,7 @@ class _SignUpModuleState extends State<SignUpModule> {
         });
   }
 
-  Widget _forgetPassword() {
-    return FlatButton(
-         child: Text('Olvidaste tu contraseña ?'), onPressed: ()  =>  handleSignOut);
-         //Navigator.push(
-        //   context,
-        //   PageTransition(
-        //     curve: Curves.bounceOut,
-        //     type: PageTransitionType.rotate,
-        //     alignment: Alignment.topCenter,
-        //     child: ForgetPassword(),
-        //   ))
-        //   );
-  }
-
-  _leerAcuerdo() {
+   _leerAcuerdo() {
     return FlatButton(
         child: Text('Leer el acuerdo aca.. Aqui.'), onPressed: () => Navigator.push(
           context,
@@ -488,7 +470,7 @@ class _SignUpModuleState extends State<SignUpModule> {
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
-                'Cerrar Sesión',
+                'Cerrar Sesión Google',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey,

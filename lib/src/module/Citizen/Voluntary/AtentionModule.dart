@@ -100,9 +100,10 @@ Atencion entity = new Atencion();
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 imagenProfesional(),
+                SizedBox(width:15.0),
                 RichText(
                   text: TextSpan(
-                    text: 'Voluntario(a) : Corina Balderrama.', // 'Dr Dan MlayahFX',
+                    text: 'Grupo: ${prefs.nombreInstitucion}', // 'Dr Dan MlayahFX',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
@@ -111,15 +112,7 @@ Atencion entity = new Atencion();
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                        text: '\n' + 'Especialidad: Psicologa',
-                        style: TextStyle(
-                          color: Colors.black,
-                        //  fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                      TextSpan(
-                        text: '\n' + 'Grupo: Dejame Ayudarte',
+                        text: '\n' + 'Voluntario(a): ${prefs.nombreUsuario}',
                         style: TextStyle(
                           color: Colors.black,
                          // fontWeight: FontWeight.w400,
@@ -222,11 +215,7 @@ Atencion entity = new Atencion();
             ),
           ],
         ),
-      //  SizedBox(width: 15,),
-         
-         SizedBox(height: 20.0),
-         Divider(thickness: 1.0, color: Colors.orange, endIndent: 60.0, indent: 60.0),
-            copyRigth(),
+      copyRigth(),
           ],
         ),
       ),
@@ -325,7 +314,7 @@ Atencion entity = new Atencion();
       child: RaisedButton.icon(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: Colors.blue,
+        color: Colors.orange,
         textColor: Colors.white,
         label: Text(text),
         icon: FaIcon(FontAwesomeIcons.edit, color: Colors.white, ),

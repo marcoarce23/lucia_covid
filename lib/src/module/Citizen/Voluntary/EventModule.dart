@@ -9,7 +9,6 @@ import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
-import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
@@ -26,7 +25,6 @@ class _EventModuleState extends State<EventModule> {
   bool _save = false;
   String _fecha = '';
   TimeOfDay _time;
-  int _currentIndex;
   var result;
   String imagen =
       'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
@@ -53,7 +51,6 @@ class _EventModuleState extends State<EventModule> {
   @override
   void initState() {
     prefs.ultimaPagina = EventModule.routeName;
-    _currentIndex = 0;
     _time = new TimeOfDay.now();
     _fecha = new DateTime.now().toString().substring(0, 10);
     super.initState();
@@ -75,7 +72,7 @@ class _EventModuleState extends State<EventModule> {
           ],
         ),
         drawer: DrawerCitizen(),
-        bottomNavigationBar: _bottomNavigationBar(context));
+    );
   }
 
   AppBar _appBar() {
@@ -100,32 +97,7 @@ class _EventModuleState extends State<EventModule> {
     );
   }
 
-  Widget _bottomNavigationBar(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-          canvasColor: Colors.white,
-          primaryColor: Colors.blue,
-          textTheme: Theme.of(context)
-              .textTheme
-              .copyWith(caption: TextStyle(color: Colors.blueGrey))),
-      child: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (value) {
-          setState(() {
-            _currentIndex = value;
-            callPageEventVoluntary(_currentIndex, context);
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 25.0), title: Text('Eventos')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Historial Eventos')),
-        ],
-      ),
-    );
-  }
+
 
 // Widget widget() {
 //   return new TimePickerSpinner(
@@ -277,29 +249,29 @@ class _EventModuleState extends State<EventModule> {
   Widget _crearCampos() {
     titulo = InputTextField(
         FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
-        'Titulo del evento:',
-        '',
-        '');
+        'Nombre del evento:',
+        entity.eveTitulo,
+        'Nombre del evento', true);
     objetivo = InputMultilineField(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
-        'Objetivo:',
-        '',
-        '');
+        'Objetivo del evento',
+        entity.eveObjetivo,
+        'Ingrese el Objetivo del evento', true);
     dirigidoA = InputMultilineField(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
         'Dirigido A:',
-        '',
-        '');
+        entity.eveDirigidoA,
+        'Ingrese a quien va a dirigido', true);
     expositor = InputTextField(
         FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
-        'Expositor:',
-        '',
-        '');
+        'Expositor/Disertante:',
+        entity.eveExpositor,
+        'Ingrese Expositor/Disertante', true);
     ubicacion = InputMultilineField(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
-        'Ubicacion:',
-        '',
-        '');
+        'Ubicacion/Dirección digital:',
+        entity.eveUbicacion,
+        'Ingrese Ubicación/Dirección digital', true);
 
     return Column(
       children: <Widget>[

@@ -100,8 +100,7 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
       ),
       onDismissed: (value) {
         setState(() {
-           generic.add(new RegistroAmigo(), '$urlDeleteVoluntario${item.toString()}/${prefs.idPersonal}');
-          final dataMap = generic.add(new RegistroAmigo(), '$urlDeleteVoluntario${item.toString()}/${prefs.idPersonal}');
+          final dataMap = generic.add(new RegistroAmigo(), '$urlDeleteAyudaAmigo${item.toString()}/${prefs.userId}');
 
           dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
           print('resultado:$result');

@@ -332,14 +332,14 @@ class _MultimediaModuleState extends State<MultimediaModule> {
   Widget _crearCampos() {
     titulo = InputTextField(
         FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
-        'Titulo del material',
+        'Nombre del material',
         entity.mulTitulo,
-        'INgrese el nombre de la persona');
+        'Ingrese el nombre del material', true);
     resumen = InputTextField(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
-        'Resumen del material',
+        'Resumen sobre material',
         entity.mulResumen,
-        'Registre un numero telefónico de referencia');
+        'Registre resumen sobre el matarial', true);
 
     especialidad = InputDropDown(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),

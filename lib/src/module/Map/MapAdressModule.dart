@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
-import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 
 class MapAdressModule extends StatefulWidget {
@@ -119,37 +118,11 @@ class _MapAdressModuleState extends State<MapAdressModule> {
                       ],
                     ),
                      drawer: DrawerCitizen(),
-      bottomNavigationBar: _bottomNavigationBar(context)
+  
                  );
                }
 
-               Widget _bottomNavigationBar(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-          canvasColor: Colors.white,
-          primaryColor: Colors.blue,
-          textTheme: Theme.of(context)
-              .textTheme
-              .copyWith(caption: TextStyle(color: Colors.blueGrey))),
-      child: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (value) {
-          setState(() {
-            _currentIndex = value;
-            callPageMap(_currentIndex, context);
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 25.0), title: Text('Mapas')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bubble_chart, size: 25.0),
-              title: Text('Web')),
-                   
-        ],
-      ),
-    );
-  }
+
           //Funcion que creamos para busqueda por direccion
           barraBusqueda() {
             Geolocator().placemarkFromAddress(buscarDireccion).then((result) {

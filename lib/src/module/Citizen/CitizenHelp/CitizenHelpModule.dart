@@ -4,11 +4,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
-import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenHelp/ListCitizenHelpModule.dart';
@@ -254,7 +254,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
     return Center(
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 4),
-        padding: EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(10.0),
         width: MediaQuery.of(context).size.width - 20,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
@@ -276,9 +276,10 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 imagenProfesional(),
+                SizedBox(width:15.0),
                 RichText(
                   text: TextSpan(
-                    text: 'Corina Balderrama.', // 'Dr Dan MlayahFX',
+                    text: 'Voluntario(a): ${prefs.nombreUsuario}', // 'Dr Dan MlayahFX',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
@@ -287,15 +288,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                        text: '\n' + 'Carnet: 4538412 CBB',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                      TextSpan(
-                        text: '\n' + 'CElular: 72038768',
+                        text: '\n' + 'Institución: ${prefs.nombreInstitucion}',
                         style: TextStyle(
                           color: Colors.black45,
                           fontWeight: FontWeight.w400,
@@ -318,7 +311,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
     return ImageOvalNetwork(
                           imageNetworkUrl:
                               prefs.avatarImagen,
-                          sizeImage: Size.fromWidth(65));
+                          sizeImage: Size.fromWidth(45));
   }
 
   Column crearIconoProfesional(icon, title) {
@@ -364,7 +357,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
               decoration: _crearContenedorCampos(),
               child: _crearCampos(context),
             ),
-            crearLucia(),
+            copyRigth(),
           ],
         ),
       ),
@@ -376,17 +369,17 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
         FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
         'Persona a poyar',
         registroAmigo.regPersona,
-        'INgrese el nombre de la persona');
+        'INgrese el nombre de la persona', true);
     telefono = InputPhoneField(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
         'Telefono de referencia',
         registroAmigo.regTelefono,
-        'Registre un numero telefónico de referencia');
+        'Registre un numero telefónico de referencia', true);
     ubicacion = InputMultilineField(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
         'Donde la encuentro',
         registroAmigo.regUbicacion,
-        'Lugar donde se encuentra la persona a ayudar');
+        'Lugar donde se encuentra la persona a ayudar', true);
 
     tipoAyuda = InputDropDown(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),

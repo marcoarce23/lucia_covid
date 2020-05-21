@@ -133,21 +133,19 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
       ),
       onDismissed: (value) {
         setState(() {
-
-          //    print('El registro:$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
-
-          final dataMap = generic.add(entityItem, '$urlDeleteVoluntario${item.toString()}/${prefs.idPersonal}');
+          final dataMap = generic.add(entityItem,
+              '$urlDeleteVoluntario${item.toString()}/${prefs.userId}');
 
           dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
           print('resultado:$result');
         });
 
-       if (result != null || result != '-1')
+        if (result != null || result != '-1')
           Scaffold.of(context)
-          .showSnackBar(messageOk("Se elimino el registro."));
+              .showSnackBar(messageOk("Se elimino el registro."));
         else
-          Scaffold.of(context)
-          .showSnackBar(messageNOk("Se  produjo un error. Vuelva a intentarlo."));
+          Scaffold.of(context).showSnackBar(
+              messageNOk("Se  produjo un error. Vuelva a intentarlo."));
       },
 
       child: Row(
@@ -169,6 +167,7 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
                           style: TextStyle(color: Colors.red, fontSize: 14)),
                     ],
                   )),
+                  SizedBox(height:7.0),
               Row(
                 children: <Widget>[
                   Icon(
@@ -180,11 +179,13 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
                       style: TextStyle(color: Colors.red, fontSize: 14))
                 ],
               ),
+              SizedBox(height:7.0),
               Container(
                   child: Text(
                 'Tipo: ${entityItem.perAyudacovid}',
                 style: TextStyle(color: Colors.yellow, fontSize: 14),
               )),
+              SizedBox(height:7.0),
               Row(
                 children: <Widget>[
                   Icon(
@@ -198,65 +199,59 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
                   )
                 ],
               ),
-
-
-               Wrap(
-        children: <Widget>[
-          InkWell(
-            child: FaIcon(
-              FontAwesomeIcons.phoneVolume,
-              color: Colors.blue,
-              size: 25,
-            ),
-            onTap: () {
-              callNumber(int.parse(entityItem.perTelefono));
-            },
-          ),
-         
-          InkWell(
-            child: FaIcon(
-              FontAwesomeIcons.comment,
-              color: Colors.blue,
-              size: 25,
-            ),
-            onTap: () {
-              sendSMS(int.parse(entityItem.perTelefono));
-            },
-          ),
-         
-          InkWell(
-            child: FaIcon(
-              FontAwesomeIcons.mailBulk,
-              color: Colors.blue,
-              size: 25,
-            ),
-            onTap: () {
-              sendEmailAdvanced(
-                  entityItem.perCorreo,
-                  "Colaboración ${entityItem.desEspecialidad}",
-                  "Estimad@:  ${entityItem.perNombrepersonal}, favor su colaboración en: ");
-            },
-          ),
-
-          InkWell(
-            child: FaIcon(
-              FontAwesomeIcons.whatsapp,
-              color: Colors.blue,
-              size: 25,
-            ),
-            onTap: () {
-              callWhatsApp(int.parse(entityItem.perTelefono));
-            },
-          )
-        ],
-      ),
-   
-
+              SizedBox(height:7.0),
+              Wrap(
+                children: <Widget>[
+                  InkWell(
+                    child: FaIcon(
+                      FontAwesomeIcons.phoneVolume,
+                      color: Colors.blue,
+                      size: 25,
+                    ),
+                    onTap: () {
+                      callNumber(int.parse(entityItem.perTelefono));
+                    },
+                  ),
+                  SizedBox(width: 20.0),
+                  InkWell(
+                    child: FaIcon(
+                      FontAwesomeIcons.comment,
+                      color: Colors.blue,
+                      size: 25,
+                    ),
+                    onTap: () {
+                      sendSMS(int.parse(entityItem.perTelefono));
+                    },
+                  ),
+                  SizedBox(width: 20.0),
+                  InkWell(
+                    child: FaIcon(
+                      FontAwesomeIcons.mailBulk,
+                      color: Colors.blue,
+                      size: 25,
+                    ),
+                    onTap: () {
+                      sendEmailAdvanced(
+                          entityItem.perCorreo,
+                          "Colaboración ${entityItem.desEspecialidad}",
+                          "Estimad@:  ${entityItem.perNombrepersonal}, favor su colaboración en: ");
+                    },
+                  ),
+                  SizedBox(width: 20.0),
+                  InkWell(
+                    child: FaIcon(
+                      FontAwesomeIcons.whatsapp,
+                      color: Colors.blue,
+                      size: 25,
+                    ),
+                    onTap: () {
+                      callWhatsApp(int.parse(entityItem.perTelefono));
+                    },
+                  )
+                ],
+              ),
             ],
           ),
-
-         
-      
         ],
       ),
     );
