@@ -92,3 +92,12 @@ final String urlAddBotonPanico =
     'http://covid19.ruta88.net/COVID/BotonPanico/srvBotonPanico.svc/BotonAyuda';
     final String urlAddSolicitudAyud =
     'http://covid19.ruta88.net/COVID/Atencion/srvAtencion.svc/SolicitudAyuda';
+
+
+    final String urlAddSolicitudAyudaAmigo =
+    'http://covid19.ruta88.net/COVID/Atencion/srvAtencion.svc/SolicitudAyudaAmigo';
+
+
+    
+
+// METODO DELETE

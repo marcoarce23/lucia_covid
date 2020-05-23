@@ -368,7 +368,7 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
     registrarAyuda.idaEstado = 79; // en cursoF
     registrarAyuda.usuario = prefs.correoElectronico;
 
-    final dataMap = Generic().add(registrarAyuda, urlAddSolicitudAyud);
+    final dataMap = Generic().add(registrarAyuda, urlAddSolicitudAyudaAmigo);
     var result;
     await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
     if (result == "0") {
