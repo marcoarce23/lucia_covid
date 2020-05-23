@@ -104,10 +104,11 @@ return BoxDecoration(
                   end: Alignment.bottomRight,
                   stops: [0.1, 0.4, 0.7, 0.9],
                   colors: [
-                 Color.fromRGBO(215, 78, 159, 1.0),
-                    Color.fromRGBO(245, 173, 53, 1.0),
-                    Color.fromRGBO(236, 220, 109, 1.0),
-                    Color.fromRGBO(70, 191, 167 , 1.0),
+                     Color.fromRGBO(142, 12, 3, 0.8),
+                 Color.fromRGBO(232, 78, 68 , 1.0),
+                   
+                    Color.fromRGBO(168, 18, 8, 0.6),
+                    Color.fromRGBO(196, 66, 58 , 1.0),
               ],)
               );
 }

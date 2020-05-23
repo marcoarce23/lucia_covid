@@ -16,7 +16,7 @@ class ListEventModule extends StatefulWidget {
 }
 
 class _ListEventModuleState extends State<ListEventModule> {
-final generic = new Generic();
+  final generic = new Generic();
   final prefs = new PreferensUser();
   var result;
 
@@ -38,8 +38,10 @@ final generic = new Generic();
 
   Widget futureItemsEntity(BuildContext context) {
     return FutureBuilder(
-        future: generic.getAll(new Evento(),
-            urlGetEvento + prefs.idInsitucion + '/${prefs.idPersonal}', primaryKeyGetEvento),
+        future: generic.getAll(
+            new Evento(),
+            urlGetEvento + prefs.idInsitucion + '/${prefs.idPersonal}',
+            primaryKeyGetEvento),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -53,6 +55,8 @@ final generic = new Generic();
   }
 
   Widget listItemsEntity(BuildContext context, AsyncSnapshot snapshot) {
+    final size = MediaQuery.of(context).size;
+
     return Expanded(
       child: ListView.builder(
         shrinkWrap: true,
@@ -62,26 +66,32 @@ final generic = new Generic();
         itemBuilder: (context, index) {
           Evento entityItem = snapshot.data[index];
 
-          return Container(
-            decoration: BoxDecoration(
-                color: Color.fromRGBO(22, 23, 22, 0.9),
-                borderRadius: BorderRadius.circular(20.0),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                      color: Colors.yellow,
-                      blurRadius: 3.0,
-                      offset: Offset(5.0, 5.0),
-                      spreadRadius: 1.0)
-                ]),
-            child: Column(
-              children: <Widget>[
-                ListTile(
-                  leading: iconEntity(entityItem),
-                  title: listEntity(context, entityItem),
-                  trailing: Icon(Icons.arrow_right),
+          return Column(
+            children: <Widget>[
+              Container(
+                width: size.width * 0.97,
+                margin: EdgeInsets.symmetric(vertical: 0.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 7.0,
+                          offset: Offset(2.0, 3.0),
+                          spreadRadius: 4.0)
+                    ]),
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      leading: iconEntity(entityItem),
+                      title: listEntity(context, entityItem),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              divider(),
+            ],
           );
         },
       ),
@@ -103,8 +113,6 @@ final generic = new Generic();
       ),
       onDismissed: (value) {
         setState(() {
-          //    print('El registro:$urlDeleteAyudaAmigo${item.toString()}/marcoarce23');
-
           final dataMap = generic.add(entityItem,
               '$urlDeleteVoluntario${item.toString()}/${prefs.idPersonal}');
 
@@ -132,39 +140,47 @@ final generic = new Generic();
                     children: <Widget>[
                       Icon(
                         Icons.gamepad,
-                        color: Colors.green,
+                        color: AppTheme.themeVino,
                         size: 15,
                       ),
                       Text('Evento: ${entityItem.eveTitulo} ',
-                          style: TextStyle(color: Colors.red, fontSize: 14)),
+                          style: kTitleCardStyle),
                     ],
                   )),
               Row(
                 children: <Widget>[
                   Icon(
                     Icons.place,
-                    color: Colors.green,
+                    color: AppTheme.themeVino,
                     size: 15,
                   ),
                   Text('Objetivo: ${entityItem.eveObjetivo}',
-                      style: TextStyle(color: Colors.red, fontSize: 14))
+                      style: kSubTitleCardStyle)
                 ],
               ),
-              Container(
-                  child: Text(
-                'Lugar: ${entityItem.eveUbicacion}',
-                style: TextStyle(color: Colors.yellow, fontSize: 14),
-              )),
+              Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.map,
+                    color: AppTheme.themeVino,
+                    size: 15,
+                  ),
+                  Text(
+                    'Lugar: ${entityItem.eveUbicacion}',
+                    style: kSubTitleCardStyle,
+                  ),
+                ],
+              ),
               Row(
                 children: <Widget>[
                   Icon(
                     Icons.store_mall_directory,
-                    color: Colors.green,
+                    color: AppTheme.themeVino,
                     size: 15,
                   ),
                   Text(
                     'Fecha: ${entityItem.eveFecha} - Hora: ${entityItem.eveHora}',
-                    style: TextStyle(color: Colors.yellow, fontSize: 14),
+                    style: kSubTitleCardStyle,
                   )
                 ],
               ),
@@ -179,18 +195,16 @@ final generic = new Generic();
     return Container(
         child: Column(
       children: <Widget>[
-        ImageOvalNetwork(imageNetworkUrl: entityItem.eveFoto, sizeImage: Size.fromWidth(40)),
+        ImageOvalNetwork(
+            imageNetworkUrl: entityItem.eveFoto, sizeImage: Size.fromWidth(40)),
         Text(
           '${entityItem.eveFecha}',
           style: TextStyle(
-              fontSize: 11, color: Colors.yellow, fontWeight: FontWeight.w400),
+              fontSize: 11,
+              color: AppTheme.themeVino,
+              fontWeight: FontWeight.w400),
         ),
       ],
     ));
-  }
-
-  Container dividerLine() {
-    return Container(
-        height: 20, child: VerticalDivider(color: AppTheme.themeColorNaranja));
   }
 }

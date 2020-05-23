@@ -81,6 +81,7 @@ class _SignUpModuleState extends State<SignUpModule> {
   Future<void> handleSignIn() async {
     try {
       await _googleSignIn.signIn();
+      
       final dataMap1 = generic.getAll(
           entity, getLogin + '${currentUser.email}', primaryKeyGetLogin);
 

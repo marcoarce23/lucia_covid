@@ -9,12 +9,86 @@ import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
+import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
+import 'package:lucia_covid/src/module/Citizen/Voluntary/ListEventModule.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
+
+
+
+class EventVoluntaryAllModule extends StatefulWidget {
+  static final String routeName ='voluntarioz';
+  const EventVoluntaryAllModule({Key key}) : super(key: key);
+
+
+  @override
+  _EventVoluntaryAllModuleState createState() =>
+      _EventVoluntaryAllModuleState();
+}
+
+class _EventVoluntaryAllModuleState extends State<EventVoluntaryAllModule> {
+  final prefs = new PreferensUser();
+  final generic = new Generic();
+  int page = 0;
+  final List<Widget> optionPage = [EventModule(),  ListEventModule()];
+ 
+ 
+  void _onItemTapped(int index) {
+    setState(() {
+      page = index;
+    });
+  }
+
+  @override
+  void initState() {
+    prefs.ultimaPagina = EventVoluntaryAllModule.routeName;
+    page = 0;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+   return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppTheme.themeVino,
+        toolbarOpacity: 0.7,
+        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+        elevation: 0,
+        title: Text( "EVENTOS VOLUNTARIOS",  style: kTitleAppBar),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: DataSearchVoluntary());
+            },
+          )
+        ],
+      ),
+      drawer: DrawerCitizen(),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color.fromRGBO(165, 5, 5, 0.7),
+        items: [
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.userCircle, size: 25,),
+              title: Text('Eventos')),
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.calendarCheck,size: 25, ),
+              title: Text('Listado eventos')),
+        ],
+            currentIndex: page,
+        unselectedItemColor: Colors.black87,
+        selectedItemColor: Colors.white70,
+        onTap: _onItemTapped,
+      ),
+      body: optionPage[page],
+    );
+  }
+}
 
 class EventModule extends StatefulWidget {
    static final String routeName = 'eventVoluntary';

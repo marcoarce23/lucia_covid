@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
-import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
+import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Util/Validator.dart' as validator;
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
@@ -84,34 +86,24 @@ class _CitizenAtentionRegisterModuleState
 
     if (hospitalData != null) hospital = hospitalData;
 
-    return Scaffold(
+ return Scaffold(
       key: scaffoldKey,
-      appBar: _appBar(),
       body: Stack(
         children: <Widget>[
-          _crearForm(context),
+          _crearForm(),
         ],
       ),
     );
   }
 
-  AppBar _appBar() {
-    return AppBar(
-      title: Text('REGISTRO PACIENTE'),
-      backgroundColor: Colors.orange,
-    );
-  }
 
-  Widget informacionProfesional(BuildContext context) {
+ Widget informacionProfesional(BuildContext context) {
     return Center(
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 4),
         padding: EdgeInsets.all(15.0),
-        width: MediaQuery.of(context).size.width - 50,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          color: Colors.black12,
-        ),
+        width: MediaQuery.of(context).size.width - 20,
+        decoration: contenedorCabecera(),
         child: Column(
           children: <Widget>[
             Row(
@@ -119,44 +111,8 @@ class _CitizenAtentionRegisterModuleState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 imagenProfesional(),
-                RichText(
-                  text: TextSpan(
-                    text: 'Corina Balderrama.', // 'Dr Dan MlayahFX',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      height: 1.5,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: '\n' + 'Carnet: 4538412 CBB',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                      TextSpan(
-                        text: '\n' + 'CElular: 72038768',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                crearIconoProfesional(Icons.mail, 'Correo'),
-                crearIconoProfesional(Icons.phone, 'Correo'),
-                crearIconoProfesional(Icons.bug_report, 'Ayuda con covid'),
+                SizedBox(width: 15.0),
+                cabeceraInformativa(),
               ],
             ),
           ],
@@ -165,25 +121,9 @@ class _CitizenAtentionRegisterModuleState
     );
   }
 
-  Image imagenProfesional() {
-    Image imagenAvatar;
-
-    //if (profesionalesDeInstitucion.sexo == "F") {
-    imagenAvatar = Image.asset(
-      "assets/image/circled_user_female.png",
-      width: 50,
-      height: 50,
-      fit: BoxFit.fill,
-    );
-    // } else {
-    //   imagenAvatar = Image.asset(
-    //     "assets/image/circled_user_male.png",
-    //     width: 50,
-    //     height: 50,
-    //     fit: BoxFit.fill,
-    //   );
-    // }
-    return imagenAvatar;
+  ImageOvalNetwork imagenProfesional() {
+    return ImageOvalNetwork(
+        imageNetworkUrl: prefs.avatarImagen, sizeImage: Size.fromWidth(40));
   }
 
   Column crearIconoProfesional(icon, title) {
@@ -209,8 +149,8 @@ class _CitizenAtentionRegisterModuleState
     );
   }
 
-  Widget _crearForm(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+  Widget _crearForm() {
+   final size = MediaQuery.of(context).size;
 
     return SingleChildScrollView(
       child: Form(
@@ -218,25 +158,27 @@ class _CitizenAtentionRegisterModuleState
         child: Column(
           children: <Widget>[
             informacionProfesional(context),
-            SafeArea(
-              child: Container(
-                height: 10.0,
-              ),
+            contenedorTitulo(
+              context,
+              40.0,
+              'REGISTRO DE DATOS',
+              FaIcon(FontAwesomeIcons.userMd, color: Colors.white60),
             ),
+            SizedBox(height: 5.0),
             Container(
-              width: size.width * 0.90,
+              width: size.width * 0.93,
               margin: EdgeInsets.symmetric(vertical: 0.0),
-              decoration: _crearContenedorCampos(),
-              child: _crearCampos(),
+              decoration: contenedorCampos(),
+              child: _crearCampos(context),
             ),
-             copyRigth(),
+            copyRigth(),
           ],
         ),
       ),
     );
   }
 
-  Widget _crearCampos() {
+  Widget  _crearCampos(BuildContext context) {
     return Column(
       children: <Widget>[
         Text(
@@ -411,30 +353,22 @@ class _CitizenAtentionRegisterModuleState
     );
   }
 
-  _crearContenedorCampos() {
-    return BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(35.0),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.black26,
-              blurRadius: 7.0,
-              offset: Offset(0.0, 5.0),
-              spreadRadius: 7.0)
-        ]);
-  }
+
 
   Widget _crearBoton(String text) {
-    return Container(
+   return Container(
       padding: EdgeInsets.symmetric(horizontal: 100.0),
       width: MediaQuery.of(context).size.width,
       child: RaisedButton.icon(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: Colors.blue,
+        color: Color.fromRGBO(165, 5, 5, 0.7),
         textColor: Colors.white,
-        label: Text(text),
-        icon: Icon(Icons.save),
+        label: Text(
+          text,
+          style: kSubtitleStyle,
+        ),
+        icon: FaIcon(FontAwesomeIcons.save, color: Colors.white),
         onPressed: (_save) ? null : _submit,
       ),
     );

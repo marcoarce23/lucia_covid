@@ -197,9 +197,6 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
   }
 
   Widget _crearCampos() {
-    // tipoEntidad = InputDropDown(
-    //     FaIcon(FontAwesomeIcons.building, color: Colors.orange),
-    //     'Institución:', '7', urlGetClasificador + '2');
  token = InputNumberField(
         FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 
         'Ingrese el token entregado:', 

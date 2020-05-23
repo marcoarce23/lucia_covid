@@ -54,6 +54,8 @@ class _ListEventEntityState extends State<ListEventEntity> {
   }
 
   Widget listItemsEntity(BuildContext context, AsyncSnapshot snapshot) {
+     final size = MediaQuery.of(context).size;
+
     return Expanded(
       child: ListView.builder(
         shrinkWrap: true,
@@ -63,31 +65,39 @@ class _ListEventEntityState extends State<ListEventEntity> {
         itemBuilder: (context, index) {
           Evento entityItem = snapshot.data[index];
 
-          return Container(
-            decoration: BoxDecoration(
-                color: Color.fromRGBO(22, 23, 22, 0.9),
-                borderRadius: BorderRadius.circular(20.0),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                      color: Colors.yellow,
-                      blurRadius: 3.0,
-                      offset: Offset(5.0, 5.0),
-                      spreadRadius: 1.0)
-                ]),
-            child: Column(
-              children: <Widget>[
-                ListTile(
-                  leading: iconEntity(entityItem),
-                  title: listEntity(context, entityItem),
-                  trailing: Icon(Icons.arrow_right),
+    return Column(
+            children: <Widget>[
+              Container(
+                width: size.width * 0.98,
+                margin: EdgeInsets.symmetric(vertical: 0.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 7.0,
+                          offset: Offset(2.0, 3.0),
+                          spreadRadius: 4.0)
+                    ]),
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      leading: iconEntity(entityItem),
+                      title: listEntity(context, entityItem),
+       
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              divider(),
+            ],
           );
         },
       ),
     );
   }
+
 
   Widget listEntity(BuildContext context, Evento entityItem) {
     final item = entityItem.idcovPersonal;
@@ -127,45 +137,55 @@ class _ListEventEntityState extends State<ListEventEntity> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
-                  width: MediaQuery.of(context).size.width - 160,
-                  child: Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.gamepad,
-                        color: Colors.green,
-                        size: 15,
-                      ),
-                      Text('Evento: ${entityItem.eveTitulo} ',
-                          style: TextStyle(color: Colors.red, fontSize: 14)),
-                    ],
-                  )),
+             Container(
+                    width: MediaQuery.of(context).size.width - 100,
+                    child: Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.gamepad,
+                          color: AppTheme.themeVino,
+                          size: 15,
+                        ),
+                        Text('Evento: ${entityItem.eveTitulo} ',
+                            style: kTitleCardStyle),
+                      ],
+                    )),
+      
               Row(
                 children: <Widget>[
                   Icon(
                     Icons.place,
-                    color: Colors.green,
+                    color: AppTheme.themeVino,
                     size: 15,
                   ),
                   Text('Objetivo: ${entityItem.eveObjetivo}',
-                      style: TextStyle(color: Colors.red, fontSize: 14))
+                      style: kSubTitleCardStyle)
                 ],
               ),
-              Container(
-                  child: Text(
+              Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.map,
+                    color: AppTheme.themeVino,
+                    size: 15,
+                  ),
+                 Text(
                 'Lugar: ${entityItem.eveUbicacion}',
-                style: TextStyle(color: Colors.yellow, fontSize: 14),
-              )),
+                style: kSubTitleCardStyle,
+              ),
+              
+                ],
+                ),
               Row(
                 children: <Widget>[
                   Icon(
                     Icons.store_mall_directory,
-                    color: Colors.green,
+                    color: AppTheme.themeVino,
                     size: 15,
                   ),
                   Text(
                     'Fecha: ${entityItem.eveFecha} - Hora: ${entityItem.eveHora}',
-                    style: TextStyle(color: Colors.yellow, fontSize: 14),
+                    style: kSubTitleCardStyle,
                   )
                 ],
               ),
@@ -185,14 +205,9 @@ class _ListEventEntityState extends State<ListEventEntity> {
         Text(
           '${entityItem.eveFecha}',
           style: TextStyle(
-              fontSize: 11, color: Colors.yellow, fontWeight: FontWeight.w400),
+              fontSize: 11, color: AppTheme.themeVino, fontWeight: FontWeight.w400),
         ),
       ],
     ));
-  }
-
-  Container dividerLine() {
-    return Container(
-        height: 20, child: VerticalDivider(color: AppTheme.themeColorNaranja));
   }
 }

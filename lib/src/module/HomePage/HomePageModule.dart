@@ -173,7 +173,7 @@ class _HomePageModuleState extends State<HomePageModule> {
           height: 100.0,
           margin: EdgeInsets.all(10.0),
           decoration: BoxDecoration(
-              color: Colors.white54, //Color.fromRGBO(62, 66, 107, 0.7),
+              color: Colors.white24, //Color.fromRGBO(62, 66, 107, 0.7),
               borderRadius: BorderRadius.circular(20.0)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -364,7 +364,7 @@ class DrawerCitizen extends StatelessWidget {
             'Crear Eventos-Voluntarios',
             () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EventModule()),
+                  MaterialPageRoute(builder: (context) => EventVoluntaryAllModule()),
                 )),
         CustomListTile(
             Icons.image,
