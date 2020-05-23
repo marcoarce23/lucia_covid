@@ -28,7 +28,6 @@ class _CitizenEmergencyModuleState extends State<CitizenEmergencyModule> {
     PageMedicmanetos(),
     PageBonos(),
     PageAyudaAmigo()
-
   ];
 
   void _onItemTapped(int index) {
@@ -49,22 +48,20 @@ class _CitizenEmergencyModuleState extends State<CitizenEmergencyModule> {
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
+              backgroundColor: AppTheme.themeVino,
+              toolbarOpacity: 0.7,
               iconTheme:
-                  IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+                  IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
               elevation: 0,
-              title: Text(
-                "Solicitudes de ayuda",
-                style: TextStyle(
-                    color: AppTheme.themeColorNaranja,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w400),
-              ),
+              title: Text("Solicitudes de ayuda", style: kTitleAppBar),
+
               //backgroundColor: colorCuadro,
             ),
             drawer: DrawerCitizen(),
             // backgroundColor: Colors.red,
             body: optionPage[page],
             bottomNavigationBar: BottomNavigationBar(
+              backgroundColor: Color.fromRGBO(165, 5, 5, 0.7),
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: Icon(
@@ -95,8 +92,8 @@ class _CitizenEmergencyModuleState extends State<CitizenEmergencyModule> {
                 ),
               ],
               currentIndex: page,
-              unselectedItemColor: Colors.black,
-              selectedItemColor: Colors.amber[800],
+              unselectedItemColor: Colors.black87,
+              selectedItemColor: AppTheme.themeVino,
               onTap: _onItemTapped,
             )));
   }
@@ -131,7 +128,7 @@ class _PageMedicinaState extends State<PageMedicina> {
                   child: Padding(
                       padding: EdgeInsets.only(right: 20),
                       child: FlatButton(
-                        color: AppTheme.themeColorNaranja,
+                        color: AppTheme.themeVino,
                         textColor: Colors.white,
                         disabledColor: Colors.grey,
                         disabledTextColor: Colors.black,
@@ -197,7 +194,7 @@ class _PageMedicinaState extends State<PageMedicina> {
       colorCuadro = AppTheme.themeColorRojo;
       detallePrioridad = "Muy alta";
     } else if (solicitudAyuda.idaPrioridad == 69) {
-      colorCuadro = AppTheme.themeColorNaranja;
+      colorCuadro = AppTheme.themeVino;
       detallePrioridad = "Alta";
     } else {
       colorCuadro = AppTheme.themeColorVerde;
@@ -412,7 +409,7 @@ class _PageCovidState extends State<PageCovid> {
                   child: Padding(
                       padding: EdgeInsets.only(right: 20),
                       child: FlatButton(
-                        color: AppTheme.themeColorNaranja,
+                        color: AppTheme.themeVino,
                         textColor: Colors.white,
                         disabledColor: Colors.grey,
                         disabledTextColor: Colors.black,
@@ -477,7 +474,7 @@ class _PageCovidState extends State<PageCovid> {
       colorCuadro = AppTheme.themeColorRojo;
       detallePrioridad = "Muy alta";
     } else if (solicitudAyuda.idaPrioridad == 69) {
-      colorCuadro = AppTheme.themeColorNaranja;
+      colorCuadro = AppTheme.themeVino;
       detallePrioridad = "Alta";
     } else {
       colorCuadro = AppTheme.themeColorVerde;
@@ -716,7 +713,7 @@ class _PageMedicmanetosState extends State<PageMedicmanetos> {
                   child: Padding(
                       padding: EdgeInsets.only(right: 20),
                       child: FlatButton(
-                        color: AppTheme.themeColorNaranja,
+                        color: AppTheme.themeVino,
                         textColor: Colors.white,
                         disabledColor: Colors.grey,
                         disabledTextColor: Colors.black,
@@ -781,7 +778,7 @@ class _PageMedicmanetosState extends State<PageMedicmanetos> {
       colorCuadro = AppTheme.themeColorRojo;
       detallePrioridad = "Muy alta";
     } else if (solicitudAyuda.idaPrioridad == 69) {
-      colorCuadro = AppTheme.themeColorNaranja;
+      colorCuadro = AppTheme.themeVino;
       detallePrioridad = "Alta";
     } else {
       colorCuadro = AppTheme.themeColorVerde;
@@ -1018,7 +1015,7 @@ class _PageBonosState extends State<PageBonos> {
                   child: Padding(
                       padding: EdgeInsets.only(right: 20),
                       child: FlatButton(
-                        color: AppTheme.themeColorNaranja,
+                        color: AppTheme.themeVino,
                         textColor: Colors.white,
                         disabledColor: Colors.grey,
                         disabledTextColor: Colors.black,
@@ -1083,7 +1080,7 @@ class _PageBonosState extends State<PageBonos> {
       colorCuadro = AppTheme.themeColorRojo;
       detallePrioridad = "Muy alta";
     } else if (solicitudAyuda.idaPrioridad == 69) {
-      colorCuadro = AppTheme.themeColorNaranja;
+      colorCuadro = AppTheme.themeVino;
       detallePrioridad = "Alta";
     } else {
       colorCuadro = AppTheme.themeColorVerde;
@@ -1302,7 +1299,7 @@ class PageAyudaAmigo extends StatefulWidget {
 }
 
 class _PageAyudaAmigoState extends State<PageAyudaAmigo> {
-   final generic = new Generic();
+  final generic = new Generic();
   final prefs = new PreferensUser();
   RegistrarAyuda registrarAyuda = new RegistrarAyuda();
 
@@ -1324,7 +1321,7 @@ class _PageAyudaAmigoState extends State<PageAyudaAmigo> {
                   child: Padding(
                       padding: EdgeInsets.only(right: 20),
                       child: FlatButton(
-                        color: AppTheme.themeColorNaranja,
+                        color: AppTheme.themeVino,
                         textColor: Colors.white,
                         disabledColor: Colors.grey,
                         disabledTextColor: Colors.black,
@@ -1388,7 +1385,7 @@ class _PageAyudaAmigoState extends State<PageAyudaAmigo> {
       colorCuadro = AppTheme.themeColorRojo;
       detallePrioridad = "Muy alta";
     } else if (solicitudAyuda.idaPrioridad == "Alta") {
-      colorCuadro = AppTheme.themeColorNaranja;
+      colorCuadro = AppTheme.themeVino;
       detallePrioridad = "Alta";
     } else {
       colorCuadro = AppTheme.themeColorVerde;
@@ -1423,8 +1420,7 @@ class _PageAyudaAmigoState extends State<PageAyudaAmigo> {
     print('resultado:$result');
   }
 
-  _submitAyudaAmigo(
-      BuildContext context, SolicitudAyuda solicitudAyuda) async {
+  _submitAyudaAmigo(BuildContext context, SolicitudAyuda solicitudAyuda) async {
     registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
     registrarAyuda.idaPersonal = int.parse(prefs.idPersonal);
     registrarAyuda.fecha =
@@ -1597,5 +1593,4 @@ class _PageAyudaAmigoState extends State<PageAyudaAmigo> {
       ),
     );
   }
-
 }

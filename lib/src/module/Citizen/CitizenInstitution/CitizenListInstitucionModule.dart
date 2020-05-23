@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
+import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'CitizenInstitutionModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
@@ -30,20 +33,16 @@ class _CitizenListInstitucionModuleState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+        backgroundColor: AppTheme.themeVino,
+        toolbarOpacity: 0.7,
+        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
         elevation: 0,
-        title: Text(
-          "Instituciones",
-          style: TextStyle(
-              color: AppTheme.themeColorNaranja,
-              fontSize: 17,
-              fontWeight: FontWeight.w400),
-        ),
+        title: Text("Instituciones", style: kTitleAppBar),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              showSearch(context: context, delegate: DataSearchInstituciones()  );
+              showSearch(context: context, delegate: DataSearchInstituciones());
             },
           )
         ],
@@ -52,23 +51,20 @@ class _CitizenListInstitucionModuleState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
-              child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    "Lista de instituciones registradas.",
-                    style: AppTheme.themeTitulo,
-                  )),
+            SizedBox(
+              height: 15,
             ),
-            // colcoamos las cajas de instituciones
-            Container(
-              child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text("Resultados",
-                      style: TextStyle(
-                          fontSize: 11, fontWeight: FontWeight.w400))),
-            ),
-            futureItemsInstitution(context)
+            Center(
+              child: contenedorTitulo(
+                context,
+                40.0,
+                "Lista de instituciones".toUpperCase(),
+                FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.white60),
+              ),
+            ), // colcoamos las cajas de instituciones
+            divider(),
+            futureItemsInstitution(context),
+            copyRigth(),
           ],
         ),
       ),
@@ -135,25 +131,96 @@ class _CitizenListInstitucionModuleState
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
-                width: MediaQuery.of(context).size.width - 260,
-                child: Text(institutionItem.nombreInstitucion)),
             Row(
               children: <Widget>[
                 Icon(
-                  Icons.place,
-                  color: Colors.black54,
+                  Icons.gamepad,
+                  color: AppTheme.themeVino,
                   size: 15,
                 ),
-                Text(institutionItem.ubicacion),
+                Text("Nombre: ", style: kSubTitleCardStyle),
+                Text(
+                  institutionItem.nombreInstitucion,
+                  style: kSubTitleCardStyle,
+                ),
               ],
             ),
-            Container(
-                child: Text(
-              "cuenta con ${institutionItem.miembros} miembros",
-              style: TextStyle(color: Colors.black87, fontSize: 12),
-            )),
+            Row(
+              children: <Widget>[
+                Icon(
+                  Icons.store_mall_directory,
+                  color: AppTheme.themeVino,
+                  size: 15,
+                ),
+                Text(institutionItem.ubicacion, style: kSubTitleCardStyle),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Icon(
+                  Icons.people,
+                  color: AppTheme.themeVino,
+                  size: 15,
+                ),
+                Text("cuenta con ${institutionItem.miembros} miembros",
+                    style: kSubTitleCardStyle),
+              ],
+            ),
             tieneCovid(institutionItem),
+            Wrap(
+              children: <Widget>[
+                InkWell(
+                  child: FaIcon(
+                    FontAwesomeIcons.phoneVolume,
+                    color: AppTheme.themeVino,
+                    size: 15,
+                  ),
+                  onTap: () {
+                    callNumber(int.parse(institutionItem.telefono));
+                  },
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                InkWell(
+                  child: FaIcon(
+                    FontAwesomeIcons.comment,
+                    color: AppTheme.themeVino,
+                    size: 15,
+                  ),
+                  onTap: () {
+                    sendSMS(int.parse(institutionItem.telefono));
+                  },
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                InkWell(
+                  child: FaIcon(
+                    FontAwesomeIcons.mailBulk,
+                    color: AppTheme.themeVino,
+                    size: 15,
+                  ),
+                  onTap: () {
+                    sendEmailAdvanced(institutionItem.correo, "",
+                        "Estimad@:  ${institutionItem.nombreInstitucion}, favor su colaboración en: ");
+                  },
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                InkWell(
+                  child: FaIcon(
+                    FontAwesomeIcons.whatsapp,
+                    color: AppTheme.themeVino,
+                    size: 15,
+                  ),
+                  onTap: () {
+                    callWhatsApp(int.parse(institutionItem.telefono));
+                  },
+                )
+              ],
+            ),
           ],
         ),
       ],
@@ -179,16 +246,14 @@ class _CitizenListInstitucionModuleState
     return Container(
         child: Column(
       children: <Widget>[
-        Icon(
-          Icons.business,
-          size: 30,
-          color: AppTheme.themeColorNaranja,
-        ),
+        ImageOvalNetwork(
+            imageNetworkUrl: institutionItem.url,
+            sizeImage: Size.fromWidth(40)),
         Text(
           institutionItem.tipoInstitucion,
           style: TextStyle(
               fontSize: 11,
-              color: AppTheme.themeColorNaranja,
+              color: AppTheme.themeVino,
               fontWeight: FontWeight.w400),
         ),
       ],

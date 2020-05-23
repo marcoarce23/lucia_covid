@@ -23,6 +23,8 @@ import 'package:lucia_covid/src/module/Citizen/Voluntary/VoluntaryModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
 import 'package:lucia_covid/src/module/Map/MapAdressModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
+import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+
 
 class HomePageModule extends StatefulWidget {
   static final String routeName = 'home';
@@ -46,24 +48,35 @@ class _HomePageModuleState extends State<HomePageModule> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Row(
+
+  backgroundColor: AppTheme.themeVino,
+        toolbarOpacity: 0.7,
+        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+        elevation: 0,
+        title: 
+        Row(
             children: <Widget>[
-              Text("LUCIA TE CUIDA."),
+        Text( "Accesos rápidos",  style: kTitleAppBar),
               SizedBox(width: 10.0),
               FaIcon(
                 FontAwesomeIcons.keybase,
-                color: Colors.black,
+                color: Colors.white,
                 size: 18,
               ),
             ],
-          ),
+          )          
         ),
         body: Stack(
           children: <Widget>[
             _fondoApp(),
             SingleChildScrollView(
-              child: Column(
-                children: <Widget>[_titulos(), _botonesRedondeados()],
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    //_titulos(),
+                    SizedBox(height: 25,),
+                     _botonesRedondeados()],
+                ),
               ),
             )
           ],
@@ -101,21 +114,16 @@ class _HomePageModuleState extends State<HomePageModule> {
 
   Widget _titulos() {
     return SafeArea(
-      child: Container(
-        padding: EdgeInsets.all(15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text('Estamos contigo para ayudarte',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25.0,
-                    fontWeight: FontWeight.bold)),
-            SizedBox(height: 100.0),
-            //   Text('Puedes hacer consultar y pedir ayuda de forma directa', style: TextStyle( color: Colors.white, fontSize: 18.0 )),
-          ],
-        ),
-      ),
+      child:     
+      Container(
+            width: MediaQuery.of(context).size.width ,
+            margin: EdgeInsets.symmetric(vertical: 0.0),
+            child: contenedorTitulo(
+              context,
+              40.0,
+             'Estamos contigo para ayudarte',
+              FaIcon(FontAwesomeIcons.photoVideo, color: Colors.white60),
+            )),
     );
   }
 
@@ -142,26 +150,19 @@ class _HomePageModuleState extends State<HomePageModule> {
   }
 
   Widget _botonesRedondeados() {
-    return 
-    
-    Wrap(
+    return Wrap(
       children: <Widget>[
-           _crearBotonRedondeado(
-                  Colors.blue, Icons.border_all, 'Pedir ayuda', '1'),
-              _crearBotonRedondeado(
-                  Colors.purpleAccent, Icons.directions_bus, 'Urgencias', '2'),
-        
-         _crearBotonRedondeado(
-                  Colors.pinkAccent, Icons.shop, 'Ayuda a un amig@', '3'),
-              _crearBotonRedondeado(
-                  Colors.orange, Icons.insert_drive_file, 'Eventos', '4'),
-        
-          _crearBotonRedondeado(
-                  Colors.blueAccent, Icons.movie_filter, 'Voluntarios', '5'),
-              _crearBotonRedondeado(
-                  Colors.green, Icons.cloud, 'Instituciones', '6'),
-        
-       
+        _crearBotonRedondeado(
+            Colors.blue, Icons.border_all, 'Pedir ayuda', '1'),
+        _crearBotonRedondeado(
+            Colors.purpleAccent, Icons.directions_bus, 'Urgencias', '2'),
+        _crearBotonRedondeado(
+            Colors.pinkAccent, Icons.shop, 'Ayuda a un amig@', '3'),
+        _crearBotonRedondeado(
+            Colors.orange, Icons.insert_drive_file, 'Eventos', '4'),
+        _crearBotonRedondeado(
+            Colors.blueAccent, Icons.movie_filter, 'Voluntarios', '5'),
+        _crearBotonRedondeado(Colors.green, Icons.cloud, 'Instituciones', '6'),
       ],
     );
   }
@@ -236,7 +237,7 @@ class DrawerCitizen extends StatelessWidget {
                     ),
                     Text(
                       prefs.correoElectronico,
-                      style: TextStyle(color: Colors.black87, fontSize: 18.0),
+                      style: TextStyle(color: Colors.black87, fontSize: 13.0),
                     ),
                   ],
                 ),

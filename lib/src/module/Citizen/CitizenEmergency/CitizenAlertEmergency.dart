@@ -5,6 +5,7 @@ import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
@@ -35,16 +36,13 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
-              iconTheme:
-                  IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
-              elevation: 0,
-              title: Text(
-                "Historial de solicitudes",
-                style: TextStyle(
-                    color: AppTheme.themeColorNaranja,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w400),
-              ),
+
+ backgroundColor: AppTheme.themeVino,
+        toolbarOpacity: 0.7,
+        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+        elevation: 0,
+        title:
+            Text("Historial de solicitudes", style: kTitleAppBar),           
               //backgroundColor: colorCuadro,
             ),
             drawer: DrawerCitizen(),
@@ -53,6 +51,7 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
                           child: Column(
                 children: <Widget>[
                   cuerpoSolicitudes(),
+                  copyRigth(),
                 ],
               ),
             )));
@@ -65,10 +64,7 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              "Listado de solicitudes para ayuda con MEDICINA",
-              style: AppTheme.themeTitulo,
-            ),
+            
             futureSolicitudes(context),
           ],
         ),

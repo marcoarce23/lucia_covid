@@ -5,6 +5,7 @@ import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenMultimedia/CitizenImageDetailModule.dart';
 import 'package:lucia_covid/src/module/Citizen/Voluntary/FoundAllVoluntaryModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
@@ -40,15 +41,12 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+        backgroundColor: AppTheme.themeVino,
+        toolbarOpacity: 0.7,
+        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
         elevation: 0,
-        title: Text(
-          widget.institutionItem.nombreInstitucion,
-          style: TextStyle(
-              color: AppTheme.themeColorNaranja,
-              fontSize: 17,
-              fontWeight: FontWeight.w400),
-        ),
+        title:
+            Text(widget.institutionItem.nombreInstitucion, style: kTitleAppBar),
         //backgroundColor: AppTheme.themeColorNaranja,
       ),
       body: SingleChildScrollView(
@@ -58,11 +56,14 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
             alignment: Alignment.topLeft,
             child: Container(
               child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    "Grupo de voluntarios",
-                    style: AppTheme.themeTitulo,
-                  )),
+                padding: EdgeInsets.all(10),
+                child: contenedorTitulo(
+                  context,
+                  40.0,
+                  "Grupo de voluntarios".toUpperCase(),
+                  FaIcon(FontAwesomeIcons.peopleCarry, color: Colors.white60),
+                ),
+              ),
             ),
           ),
           futureCuerpoProfesionales(context),
@@ -70,14 +71,18 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
             alignment: Alignment.topLeft,
             child: Container(
               child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    "Galeria de fotos",
-                    style: AppTheme.themeTitulo,
-                  )),
+                padding: EdgeInsets.all(10),
+                child: contenedorTitulo(
+                  context,
+                  40.0,
+                  "Galeria de fotos".toUpperCase(),
+                  FaIcon(FontAwesomeIcons.photoVideo, color: Colors.white60),
+                ),
+              ),
             ),
           ),
           futureMultimedia(context),
+          copyRigth(),
           //cuerpoProfesionales()
         ]),
       ),
@@ -103,72 +108,75 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
 
   Widget cabeceraInstitucion(double screenHeigh, double screenwidth) {
     return Container(
-      height: 240,
+      height: 210,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          FadeInImage.assetNetwork(
-            placeholder: "assets/loading/loadingImage.gif",
-            placeholderScale: 0.2,
-            image: widget.institutionItem.url,
-            width: 150,
-            height: 230,
-            fit: BoxFit.cover,
-          ),
+          ImageOvalNetwork(
+              imageNetworkUrl: widget.institutionItem.url,
+              sizeImage: Size.fromWidth(140)),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(
                 height: 20,
               ),
-              Text(
-                "Institución / Grupo voluntarios",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+              Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.business,
+                    color: AppTheme.themeVino,
+                    size: 15,
+                  ),
+                  Text(
+                    "Institución / Grupo voluntarios",
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                  ),
+                ],
               ),
               Text(widget.institutionItem.nombreInstitucion),
-              Text(
-                "Tipo de institución",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+              Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.category,
+                    color: AppTheme.themeVino,
+                    size: 15,
+                  ),
+                  Text(
+                    "Tipo de institución",
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                  ),
+                ],
               ),
               Text(widget.institutionItem.tipoInstitucion),
-              Text(
-                "Ubicación",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
-              ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  FaIcon(
-                    FontAwesomeIcons.streetView,
-                    color: Colors.black,
-                    size: 14,
+                  Icon(
+                    Icons.place,
+                    color: AppTheme.themeVino,
+                    size: 15,
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(widget.institutionItem.ubicacion),
-                  SizedBox(
-                    width: 5,
+                  Text(
+                    "Ubicación",
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
                   ),
                 ],
               ),
-              Text(
-                "Correo ",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
-              ),
+              Text(widget.institutionItem.ubicacion),
               Row(
                 children: <Widget>[
-                  FaIcon(
-                    FontAwesomeIcons.mailBulk,
-                    color: Colors.black,
-                    size: 14,
+                  Icon(
+                    Icons.mail,
+                    color: AppTheme.themeVino,
+                    size: 15,
                   ),
-                  Text(widget.institutionItem.correo),
+                  Text(
+                    "Correo ",
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                  ),
                 ],
               ),
-              SizedBox(
-                height: 15,
-              ),
+              Text(widget.institutionItem.correo),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -448,7 +456,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[                     
+                      children: <Widget>[
                         SizedBox(
                           height: 130,
                         ),
@@ -472,9 +480,8 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                               style: TextStyle(
                                   fontSize: 10, fontWeight: FontWeight.w500),
                             )),
-                             
                       ],
-                    ),                  
+                    ),
                   ],
                 ),
               );

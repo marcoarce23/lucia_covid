@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
+import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 
 class CitizenImageDetailModule extends StatefulWidget {
   final ListaMultimedia multimediaImagen;
@@ -30,9 +31,17 @@ void initState() {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detalle"),
+
+ backgroundColor: AppTheme.themeVino,
+        toolbarOpacity: 0.7,
+        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+        elevation: 0,
+        title:
+            Text("Detalle", style: kTitleAppBar),
+
+        
       ),
-      backgroundColor: Colors.black,
+      
       body: Center(
         child: Column(
           children: <Widget>[
