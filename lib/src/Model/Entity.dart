@@ -441,6 +441,8 @@ class RegistroAmigo extends Entity {
   int regTipoAPoyo;
   String regPrioridad;
   String usuario;
+  double latitud;
+  double longitud;
 
   RegistroAmigo(
       {this.idcovRegistroAmigo = 0,
@@ -449,6 +451,8 @@ class RegistroAmigo extends Entity {
       this.regUbicacion,
       this.regTipoAPoyo,
       this.regPrioridad,
+      this.latitud,
+      this.longitud,
       this.usuario});
 
   fromJson(Map<String, dynamic> json) => new RegistroAmigo(
@@ -458,6 +462,8 @@ class RegistroAmigo extends Entity {
         regUbicacion: json["REG_UBICACION"],
         regTipoAPoyo: json["IDA_TIPOAPOYO"],
         regPrioridad: json["REG_PRIORIDAD"],
+        latitud: json["LATITUD"],
+        longitud: json["LONGITUD"],
         usuario: json["USUARIO"],
       );
 
@@ -468,6 +474,8 @@ class RegistroAmigo extends Entity {
         "REG_UBICACION": regUbicacion,
         "IDA_TIPOAPOYO": regTipoAPoyo,
         "REG_PRIORIDAD": regPrioridad,
+        "LATITUD": latitud,
+        "LONGITUD": longitud,
         "USUARIO": usuario,
       };
 }

@@ -59,10 +59,14 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
               end: Alignment.bottomCenter,
               stops: [0.1, 0.4, 0.7, 0.9],
               colors: [
-                Color(0xFF3594DD),
-                Color(0xFF4563DB),
-                Color(0xFF5036D5),
-                Color(0xFF5B16D0),
+                 Color.fromRGBO(215, 78, 159, 1.0),
+                    Color.fromRGBO(245, 173, 53, 1.0),
+                    Color.fromRGBO(236, 220, 109, 1.0),
+                    Color.fromRGBO(70, 191, 167 , 1.0),
+                // Color(0xFF3594DD),
+                // Color(0xFF4563DB),
+                // Color(0xFF5036D5),
+                // Color(0xFF5B16D0),
               ],
             ),
           ),
@@ -139,7 +143,8 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                           ],
                         ),
                       ),
-                      Padding(
+
+                       Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,7 +152,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                             Center(
                               child: Image(
                                 image: AssetImage(
-                                  'assets/image/onboarding1.png',
+                                  'assets/image/onboarding2.png',
                                 ),
                                 height: 200.0,
                                 width: 200.0,
@@ -155,7 +160,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                             ),
                             SizedBox(height: 10.0),
                             Text(
-                              'Estamos contigo para ayudarte.',
+                              'RECOMENDACIONES.',
                               style: kTitleStyle,
                             ),
                             SizedBox(height: 15.0),
@@ -176,6 +181,8 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                           ],
                         ),
                       ),
+
+
                       Padding(
                         padding: EdgeInsets.all(5.0),
                         child: Column(
@@ -209,14 +216,6 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                                   ),
                                   Text(
                                     'Recomendacion 2.\n',
-                                    style: kSubtitleStyle,
-                                  ),
-                                  Text(
-                                    'Recomendacion 3.\n',
-                                    style: kSubtitleStyle,
-                                  ),
-                                  Text(
-                                    'Recomendacion 4.',
                                     style: kSubtitleStyle,
                                   ),
                                 ],
@@ -314,4 +313,5 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
           : Text(''),
     );
   }
+
 }

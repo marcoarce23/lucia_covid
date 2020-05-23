@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -20,24 +21,20 @@ import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 import 'package:file_picker/file_picker.dart';
 
-
 class MultimediaAllModule extends StatefulWidget {
-  static final String routeName ='voluntario';
+  static final String routeName = 'voluntario';
   const MultimediaAllModule({Key key}) : super(key: key);
 
-
   @override
-  _MultimediaAllModuleState createState() =>
-      _MultimediaAllModuleState();
+  _MultimediaAllModuleState createState() => _MultimediaAllModuleState();
 }
 
 class _MultimediaAllModuleState extends State<MultimediaAllModule> {
   final prefs = new PreferensUser();
   final generic = new Generic();
   int page = 0;
-  final List<Widget> optionPage = [MultimediaModule(),  ListMultimediaModule()];
- 
- 
+  final List<Widget> optionPage = [MultimediaModule(), ListMultimediaModule()];
+
   void _onItemTapped(int index) {
     setState(() {
       page = index;
@@ -66,57 +63,51 @@ class _MultimediaAllModuleState extends State<MultimediaAllModule> {
               fontSize: 17,
               fontWeight: FontWeight.w400),
         ),
-          actions: <Widget>[
+        actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              showSearch(context: context, delegate: DataSearchVoluntary()  );
+              showSearch(context: context, delegate: DataSearchVoluntary());
             },
           )
         ],
       ),
       drawer: DrawerCitizen(),
-       bottomNavigationBar: BottomNavigationBar(
-              items: [
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
           BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.userCircle, size: 25,),
+              icon: FaIcon(
+                FontAwesomeIcons.userCircle,
+                size: 25,
+              ),
               title: Text('Multimedia')),
           BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.calendarCheck,size: 25, ),
+              icon: FaIcon(
+                FontAwesomeIcons.calendarCheck,
+                size: 25,
+              ),
               title: Text('Publicaciones')),
         ],
-              currentIndex: page,
-              unselectedItemColor: Colors.black,
-              selectedItemColor: Colors.amber[800],
-              onTap: _onItemTapped,)
-            ,
-          body: optionPage[page],  
+        currentIndex: page,
+        unselectedItemColor: Colors.black,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
+      ),
+      body: optionPage[page],
     );
   }
 }
+
 class MultimediaModule extends StatefulWidget {
   static final String routeName = 'multimedia';
   MultimediaModule({Key key}) : super(key: key);
-// 
+//
   @override
   _MultimediaModuleState createState() => _MultimediaModuleState();
 }
 
 class _MultimediaModuleState extends State<MultimediaModule> {
   InputTextField titulo;
-
-  // String _fileName;
-  // String _path;
-  // Map<String, String> _paths;
-  // String _extension;
-  // bool _loadingPath = false;
-  // bool _multiPick = false;
-  // bool _hasValidMime = false;
-  // FileType _pickingType;
-  // TextEditingController _controller = new TextEditingController();
-
-
-
   InputTextField resumen;
   InputTextField detalle;
   InputDropDown especialidad;
@@ -126,7 +117,10 @@ class _MultimediaModuleState extends State<MultimediaModule> {
   String _fecha = '';
   File foto;
   var result;
-  String imagen =   'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
+  String imagen =
+      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
+  String imagenDefault =
+      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
   TextEditingController _inputFieldDateInicioController =
       new TextEditingController();
   TextEditingController _inputFieldDateFinController =
@@ -138,6 +132,8 @@ class _MultimediaModuleState extends State<MultimediaModule> {
   final prefs = new PreferensUser();
 
   Multimedia entity = new Multimedia();
+
+  String _pdfPath = '';
 
   @override
   void initState() {
@@ -154,28 +150,19 @@ class _MultimediaModuleState extends State<MultimediaModule> {
     if (entityData != null) entity = entityData;
 
     return Scaffold(
-        key: scaffoldKey,
-
-        body: Stack(
-          children: <Widget>[
-            crearFondoForm(context, imagen),
-               _crearIconAppImagenes(),
-        _crearIconAppCamara(),
-        _crearIconAppVideo(),
-            _crearForm(context),
-          ],
-        ),
+      key: scaffoldKey,
+      body: Stack(
+        children: <Widget>[
+          crearFondoForm(context, imagen),
+          _crearForm(context),
+        ],
+      ),
     );
   }
 
-
-     
-      
-
-
   _crearIconAppImagenes() {
     return IconButton(
-      icon: FaIcon(FontAwesomeIcons.image, color: Colors.black87),
+      icon: FaIcon(FontAwesomeIcons.images, color: Colors.black87),
       onPressed: _seleccionarFoto,
     );
   }
@@ -189,12 +176,16 @@ class _MultimediaModuleState extends State<MultimediaModule> {
 
   _crearIconAppVideo() {
     return IconButton(
-      icon: FaIcon(FontAwesomeIcons.youtube, color: Colors.black87),
-      onPressed: _tomarVideo,
+      icon: FaIcon(FontAwesomeIcons.videoSlash, color: Colors.black87, size: 25.0),
+      onPressed: _pickVideo,
     );
   }
-
-  
+  _crearIconAppPDF() {
+    return IconButton(
+      icon: FaIcon(FontAwesomeIcons.solidFilePdf, color: Colors.orange),
+      onPressed: _pickPDF,
+    );
+  }
 
   Widget informacionProfesional(BuildContext context) {
     return Center(
@@ -258,50 +249,6 @@ class _MultimediaModuleState extends State<MultimediaModule> {
     );
   }
 
-  // Image imagenProfesional() {
-  //   Image imagenAvatar;
-
-  //   //if (profesionalesDeInstitucion.sexo == "F") {
-  //   imagenAvatar = Image.asset(
-  //     "assets/image/circled_user_female.png",
-  //     width: 50,
-  //     height: 50,
-  //     fit: BoxFit.fill,
-  //   );
-  //   // } else {
-  //   //   imagenAvatar = Image.asset(
-  //   //     "assets/image/circled_user_male.png",
-  //   //     width: 50,
-  //   //     height: 50,
-  //   //     fit: BoxFit.fill,
-  //   //   );
-  //   // }
-  //   return imagenAvatar;
-  // }
-
-  // Column crearIconoProfesional(icon, title) {
-  //   return Column(
-  //     children: <Widget>[
-  //       Icon(
-  //         icon,
-  //         size: 28,
-  //         color: Colors.black,
-  //       ),
-  //       SizedBox(
-  //         height: 8.0,
-  //       ),
-  //       Text(
-  //         title,
-  //         style: TextStyle(
-  //           fontSize: 13,
-  //           fontWeight: FontWeight.w300,
-  //           color: Colors.black,
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
   Widget _crearForm(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
@@ -316,6 +263,7 @@ class _MultimediaModuleState extends State<MultimediaModule> {
                 height: 160.0,
               ),
             ),
+            
             Container(
               width: size.width * 0.92,
               margin: EdgeInsets.symmetric(vertical: 0.0),
@@ -334,12 +282,14 @@ class _MultimediaModuleState extends State<MultimediaModule> {
         FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
         'Nombre del material',
         entity.mulTitulo,
-        'Ingrese el nombre del material', true);
+        'Ingrese el nombre del material',
+        true);
     resumen = InputTextField(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
         'Resumen sobre material',
         entity.mulResumen,
-        'Registre resumen sobre el matarial', true);
+        'Registre resumen sobre el matarial',
+        true);
 
     especialidad = InputDropDown(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
@@ -359,6 +309,16 @@ class _MultimediaModuleState extends State<MultimediaModule> {
           'REGISTRO DEL MATERIAL',
           style: TextStyle(fontSize: 20, color: Colors.black),
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Text('Cargar archivos:'),
+        _crearIconAppImagenes(),
+            _crearIconAppCamara(),
+            _crearIconAppVideo(),
+            _crearIconAppPDF(),
+          ]
+        ),
         tipoMaterial,
         especialidad,
         titulo,
@@ -377,7 +337,7 @@ class _MultimediaModuleState extends State<MultimediaModule> {
       initialDate: new DateTime.now(),
       firstDate: new DateTime(2020, 4),
       lastDate: new DateTime(2025, 12),
-      //     locale: Locale('es', 'ES')
+           locale: Locale('es', 'ES')
     );
 
     if (picked != null) {
@@ -395,7 +355,7 @@ class _MultimediaModuleState extends State<MultimediaModule> {
       initialDate: new DateTime.now(),
       firstDate: new DateTime(2020, 4),
       lastDate: new DateTime(2025, 12),
-      //    locale: Locale('es', 'ES')
+          locale: Locale('es', 'ES')
     );
 
     if (picked != null) {
@@ -506,12 +466,12 @@ class _MultimediaModuleState extends State<MultimediaModule> {
     print('resultado:$result');
 
     if (result == "0") {
-   
-           scaffoldKey.currentState.showSnackBar(messageOk("Se insertó correctamente"));
-    }
-    else
-           scaffoldKey.currentState.showSnackBar(messageNOk("Error, vuelta a intentarlo"));
-           
+      scaffoldKey.currentState
+          .showSnackBar(messageOk("Se insertó correctamente"));
+    } else
+      scaffoldKey.currentState
+          .showSnackBar(messageNOk("Error, vuelta a intentarlo"));
+
     setState(() {
       _save = false;
     });
@@ -526,9 +486,32 @@ class _MultimediaModuleState extends State<MultimediaModule> {
 
   _procesarImagen(ImageSource origen) async {
     foto = await ImagePicker.pickImage(source: origen);
-
     if (foto != null) {
       imagen = await generic.subirImagen(foto);
+    }
+    setState(() {
+      entity.mulEnlace = imagen;
+      print('cargadod e iagen ${entity.mulEnlace}');
+    });
+  }
+
+  _procesarFile(String file) async {
+    print('FOTOSSSSS FILE: $file');
+
+    if (file != null) {
+      imagen = await generic.subirImagenFile(file);
+    }
+    setState(() {
+      entity.mulEnlace = imagen;
+      print('cargadod e iagen ${entity.mulEnlace}');
+    });
+  }
+
+  _procesarVideo2(String file) async {
+    print('FOTOSSSSS FILE: $file');
+
+    if (file != null) {
+      imagen = await generic.subirVideo(file);
     }
     setState(() {
       entity.mulEnlace = imagen;
@@ -548,5 +531,46 @@ class _MultimediaModuleState extends State<MultimediaModule> {
     });
   }
 
+  void _pickPDF() async {
+    try {
+      var _extension = 'PDF';
+      _pdfPath = await FilePicker.getFilePath(
+          type: FileType.custom,
+          allowedExtensions: (_extension?.isNotEmpty ?? false)
+              ? _extension?.replaceAll(' ', '')?.split(',')
+              : null);
 
+      setState(() {});
+      if (_pdfPath == '') {
+        return;
+      }
+      print("File path11: " + _pdfPath);
+      _procesarFile(_pdfPath);
+    } on PlatformException catch (e) {
+      print("Error while picking the file: " + e.toString());
+    }
+  }
+
+  void _pickVideo() async {
+    try {
+      var _extension = 'MP4';
+      _pdfPath = await FilePicker.getFilePath(
+          type: FileType.custom,
+          allowedExtensions: (_extension?.isNotEmpty ?? false)
+              ? _extension?.replaceAll(' ', '')?.split(',')
+              : null);
+
+      setState(() {});
+      if (_pdfPath == '') {
+        return;
+      }
+      print("File path11: " + _pdfPath);
+      _procesarVideo2(_pdfPath);
+      // setState(() {
+      //   _isLoading = true;
+      // });
+    } on PlatformException catch (e) {
+      print("Error while picking the file: " + e.toString());
+    }
+  }
 }

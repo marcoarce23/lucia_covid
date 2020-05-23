@@ -434,6 +434,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  pdf_previewer:
+    dependency: "direct main"
+    description:
+      name: pdf_previewer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.3+3"
   pedantic:
     dependency: transitive
     description:

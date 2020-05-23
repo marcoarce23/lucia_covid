@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
@@ -129,14 +130,14 @@ class _HelpFriendAllModuleState extends State<HelpFriendAllModule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppTheme.themeColorAzul,
+        backgroundColor: AppTheme.themeVino,
         toolbarOpacity: 0.7,
         iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
         elevation: 0,
         title: Text(
-          "VOLUNTARIOS",
+          "AYUDA A UN AMIGO(A)",
           style: TextStyle(
-              color: AppTheme.themeColorBlanco,
+              color: Colors.white,
               fontSize: 17,
               fontWeight: FontWeight.w400),
         ),
@@ -151,7 +152,7 @@ class _HelpFriendAllModuleState extends State<HelpFriendAllModule> {
       ),
       drawer: DrawerCitizen(),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: Color.fromRGBO(165, 5, 5 , 0.7),
         items: [
           BottomNavigationBarItem(
               icon: FaIcon(
@@ -167,8 +168,8 @@ class _HelpFriendAllModuleState extends State<HelpFriendAllModule> {
               title: Text('Solicitudes')),
         ],
         currentIndex: page,
-        unselectedItemColor: AppTheme.themeColorAzul,
-        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white,
+        selectedItemColor: AppTheme.themeAmarillo,
         onTap: _onItemTapped,
       ),
       body: optionPage[page],
@@ -244,6 +245,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
       key: scaffoldKey,
       body: Stack(
         children: <Widget>[
+         // fondoApp1(),
           _crearForm(),
         ],
       ),
@@ -254,21 +256,23 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
     return Center(
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 4),
-        padding: EdgeInsets.all(10.0),
-        width: MediaQuery.of(context).size.width - 20,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
-            gradient: LinearGradient(colors: <Color>[
-              // Color.fromRGBO(243, 124, 18, 1.0),
-              // Color.fromRGBO(255, 209, 18, 3.0),
-              // Color.fromRGBO(243, 156, 18, 1.0),
-              // Color.fromRGBO(243, 223, 18, 1.0)
+        padding: EdgeInsets.all(5.0),
+        width: MediaQuery.of(context).size.width - 30,
+         decoration: contenedorCabecera(),
+         
+        //  BoxDecoration(
+        //     borderRadius: BorderRadius.circular(18),
+        //     gradient: LinearGradient(colors: <Color>[
+        //       // Color.fromRGBO(243, 124, 18, 1.0),
+        //       // Color.fromRGBO(255, 209, 18, 3.0),
+        //       // Color.fromRGBO(243, 156, 18, 1.0),
+        //       // Color.fromRGBO(243, 223, 18, 1.0)
 
-              Color.fromRGBO(8, 76, 158, 1.0),
-              Color.fromRGBO(72, 128, 195, 3.0),
-              Color.fromRGBO(54, 129, 219, 1.0),
-              Color.fromRGBO(13, 84, 171, 1.0)
-            ])),
+        //       Color.fromRGBO(252, 252, 250 , 1.0),
+        //       Color.fromRGBO(248, 247, 233 , 3.0),
+        //       Color.fromRGBO(249, 245, 211 , 1.0),
+        //       Color.fromRGBO(247, 224, 155 , 1.0)
+        //     ])),
         child: Column(
           children: <Widget>[
             Row(
@@ -290,7 +294,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
                       TextSpan(
                         text: '\n' + 'Institución: ${prefs.nombreInstitucion}',
                         style: TextStyle(
-                          color: Colors.black45,
+                          color: Colors.black87,
                           fontWeight: FontWeight.w400,
                           fontSize: 15,
                         ),
@@ -300,7 +304,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
                 )
               ],
             ),
-            Divider(),
+            divider(),
           ],
         ),
       ),
@@ -308,10 +312,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
   }
 
   ImageOvalNetwork imagenProfesional() {
-    return ImageOvalNetwork(
-                          imageNetworkUrl:
-                              prefs.avatarImagen,
-                          sizeImage: Size.fromWidth(45));
+    return ImageOvalNetwork(imageNetworkUrl:prefs.avatarImagen, sizeImage: Size.fromWidth(45));
   }
 
   Column crearIconoProfesional(icon, title) {
@@ -346,15 +347,13 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
         child: Column(
           children: <Widget>[
             informacionProfesional(context),
-            SafeArea(
-              child: Container(
-                height: 10.0,
-              ),
-            ),
+          //  SizedBox(height:3.0 ),
+            contenedorTitulo(context, 45.0, 'REGISTRO DE DATOS',  FaIcon(FontAwesomeIcons.userMd, color: Colors.white60),) ,
+                SizedBox(height: 5.0),
             Container(
               width: size.width * 0.90,
               margin: EdgeInsets.symmetric(vertical: 0.0),
-              decoration: _crearContenedorCampos(),
+              decoration: contenedorCampos(),
               child: _crearCampos(context),
             ),
             copyRigth(),
@@ -366,38 +365,36 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
 
   Widget _crearCampos(BuildContext context) {
     nombre = InputTextField(
-        FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
-        'Persona a poyar',
+        FaIcon(FontAwesomeIcons.accessibleIcon, color: Color.fromRGBO(165, 5, 5 , 0.7)),
+        'Persona a ayudar',
         registroAmigo.regPersona,
-        'INgrese el nombre de la persona', true);
+        'Ingrese el nombre de la persona', true);
     telefono = InputPhoneField(
-        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        FaIcon(FontAwesomeIcons.phoneVolume, color: Color.fromRGBO(165, 5, 5 , 0.7)),
         'Telefono de referencia',
         registroAmigo.regTelefono,
         'Registre un numero telefónico de referencia', true);
     ubicacion = InputMultilineField(
-        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        FaIcon(FontAwesomeIcons.home, color: Color.fromRGBO(165, 5, 5 , 0.7)),
         'Donde la encuentro',
         registroAmigo.regUbicacion,
         'Lugar donde se encuentra la persona a ayudar', true);
 
     tipoAyuda = InputDropDown(
-        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        FaIcon(FontAwesomeIcons.plusCircle, color: Color.fromRGBO(165, 5, 5 , 0.7)),
         'Tipo de ayuda',
         '49',
         urlGetClasificador + '/47');
 
     return Column(
       children: <Widget>[
-        Text(
-          'AYUDA A UN AMIG@',
-          style: TextStyle(fontSize: 18, color: Colors.black),
-        ),
+      
         nombre,
         telefono,
         ubicacion,
         tipoAyuda,
         _crearTipoPrioridad(),
+        divider(),
         _crearBoton(resource.save),
       ],
     );
@@ -411,7 +408,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
         SizedBox(width: 15.0),
         DropdownButton(
           value: _opcionSeleccionadaPrioridad,
-          icon: Icon(Icons.person_pin, color: Colors.orange),
+          icon: FaIcon(FontAwesomeIcons.longArrowAltDown, color: Color.fromRGBO(165, 5, 5 , 0.7)),
           items: getOpcionesPrioridad(),
           onChanged: (opt) {
             setState(() {
@@ -423,19 +420,6 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
     );
   }
 
-  _crearContenedorCampos() {
-    return BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(35.0),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.black26,
-              blurRadius: 7.0,
-              offset: Offset(0.0, 5.0),
-              spreadRadius: 7.0)
-        ]);
-  }
-
   Widget _crearBoton(String text) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 100.0),
@@ -443,16 +427,20 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
       child: RaisedButton.icon(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: Colors.orange,
+        color: Color.fromRGBO(165, 5, 5 , 0.7),// Colors.red,
         textColor: Colors.white,
-        label: Text(text),
-        icon: Icon(Icons.save),
+        label: Text(text, style: kSubtitleStyle,),
+        icon:  FaIcon(FontAwesomeIcons.save, color: Colors.white),
         onPressed: (_save) ? null : _submit,
       ),
     );
   }
 
   _submit() async {
+
+    LatLng latLng;
+    latLng = await getLocation().then((onvalue) => latLng = onvalue);
+
     if (!formKey.currentState.validate()) return;
 
     formKey.currentState.save();
@@ -466,6 +454,8 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
     registroAmigo.regUbicacion = ubicacion.objectValue;
     registroAmigo.regPrioridad = _opcionSeleccionadaPrioridad;
     registroAmigo.regTipoAPoyo = int.parse(tipoAyuda.objectValue);
+    registroAmigo.latitud = latLng.latitude;
+    registroAmigo.longitud = latLng.longitude;
     registroAmigo.usuario = prefs.userId;
 
     final dataMap = generic.add(registroAmigo, urlAddVoluntary);
@@ -478,8 +468,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
       Navigator.of(context).push(CupertinoPageRoute(
           builder: (BuildContext context) => ListCitizenHelpModule()));
     } else
-      scaffoldKey.currentState
-          .showSnackBar(messageOk("Error, vuelta a intentarlo"));
+      scaffoldKey.currentState.showSnackBar(messageNOk("Error, vuelta a intentarlo"));
 
     setState(() {
       _save = false;

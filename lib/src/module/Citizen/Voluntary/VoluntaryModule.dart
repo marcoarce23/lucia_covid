@@ -48,6 +48,7 @@ class _VoluntaryAllModuleState extends State<VoluntaryAllModule> {
     prefs.ultimaPagina = VoluntaryAllModule.routeName;
     page = 0;
     super.initState();
+
   }
 
   @override
@@ -431,8 +432,7 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
   _tomarFoto() async => _procesarImagen(ImageSource.camera);
   _procesarImagen(ImageSource origen) async {
     entity.foto = imagen;
-   foto = await ImagePicker.pickImage(source: origen);
-
+   
     if (foto != null) {
       imagen = await generic.subirImagen(foto);
        entity.foto = imagen;

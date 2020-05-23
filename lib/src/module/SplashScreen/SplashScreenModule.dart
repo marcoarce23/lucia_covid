@@ -24,12 +24,12 @@ class SplashScreenModuleState extends State<SplashScreenModule> {
       ),
       backgroundColor: Colors.black,
       photoSize: 100.0,
-      gradientBackground: RadialGradient(
+      gradientBackground: LinearGradient(
         colors: [
-          Color(0xFF3594DD),
-          Color(0xFF4563DB),
-          Color(0xFF5036D5),
-          Color(0xFF5B16D0),
+          Color.fromRGBO(215, 78, 159, 1.0),
+                    Color.fromRGBO(245, 173, 53, 1.0),
+                    Color.fromRGBO(236, 220, 109, 1.0),
+                    Color.fromRGBO(70, 191, 167 , 1.0),
         ],
       ),
     );

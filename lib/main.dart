@@ -2,6 +2,8 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lucia_covid/blankModule.dart';
+import 'package:lucia_covid/src/Log.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Provider/PushNotificationProvider.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenEmergency/CitizenEmergencyModule.dart';
@@ -26,10 +28,12 @@ import 'package:lucia_covid/src/module/Citizen/Voluntary/VoluntaryModule.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Login/AgreeLoginModule.dart';
 import 'package:lucia_covid/src/module/Login/ForgetPasswordModule.dart';
+import 'package:lucia_covid/src/module/Login/SiginDemo.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
 import 'package:lucia_covid/src/module/Map/MapAdressModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:lucia_covid/src/module/SplashScreen/SplashScreenModule.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -95,7 +99,7 @@ class _MyAppState extends State<MyApp> {
      // initialRoute: prefs.ultimaPagina,
     //  home: new FilePickerDemo(),//MapAdressModule(),
 //home: new SignInDemo(),
-home: new HomePageModule(),
+home: new SignUpModule(),//FilePickerDemo(),
 
         routes: <String, WidgetBuilder>{
         'login': (BuildContext context) => new SignUpModule(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 final kTitleStyle = TextStyle(
   color: Colors.white,
@@ -8,12 +9,168 @@ final kTitleStyle = TextStyle(
 );
 
 final kSubtitleStyle = TextStyle(
-  color: Colors.white,
+  color: Colors.white60,
   fontSize: 18.0,
   height: 1.2,
 );
 
+final kTitleCursiveStyle = TextStyle(
+  color: Colors.black,
+  fontFamily: 'Dancing',
+  fontSize: 22.0,
+  height: 1.5,
+);
 
+final kTitleCursive1Style = TextStyle(
+  color: Colors.black,
+  fontFamily: 'Dancing2',
+  fontSize: 22.0,
+  height: 1.5,
+);
+final kTitleCursive2Style = TextStyle(
+  color: Colors.black,
+  fontFamily: 'Dancing3',
+  fontSize: 22.0,
+  height: 1.5,
+);
+final kTitleCursive3Style = TextStyle(
+  color: Colors.black,
+  fontFamily: 'Dancing4',
+  fontSize: 22.0,
+  height: 1.5,
+);
+
+final kTitleCursive4Style = TextStyle(
+  color: Colors.black,
+  fontFamily: 'Dancing',
+  fontSize: 14.0,
+  height: 1.5,
+);
+
+boxDecoration()
+{
+return BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                  end: Alignment.bottomRight,
+                  stops: [0.1, 0.4, 0.7, 0.9],
+                  colors: [
+                 Color.fromRGBO(215, 78, 159, 1.0),
+                    Color.fromRGBO(245, 173, 53, 1.0),
+                    Color.fromRGBO(236, 220, 109, 1.0),
+                    Color.fromRGBO(70, 191, 167 , 1.0),
+                // Color(0xFF3594DD),
+                // Color(0xFF4563DB),
+                // Color(0xFF5036D5),
+                // Color(0xFF5B16D0),
+              ],)
+              );
+}
+
+ BoxDecoration  contenedorCabecera() {
+    return BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+              color: Colors.black26,
+              blurRadius: 7.0,
+              offset: Offset(2.0, 2.0),
+              spreadRadius: 4.0)
+        ]);
+  }
+
+ BoxDecoration  contenedorCampos() {
+    return BoxDecoration(
+        color: Colors.white,
+           borderRadius: BorderRadius.circular(20.0),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+              color: Colors.black26,
+              blurRadius: 7.0,
+              offset: Offset(2.0, 3.0),
+              spreadRadius: 4.0)
+        ]);
+  }
+
+ Container  contenedorTitulo(BuildContext context, double height, String text, FaIcon icon) {
+   final size = MediaQuery.of(context).size;
+    return Container(
+      width: size.width * 0.90,
+      height: height,
+      decoration:BoxDecoration(
+        color: Color.fromRGBO(165, 5, 5 , 0.8),
+        borderRadius: BorderRadius.circular(8.0),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+              color: Colors.black26,
+              blurRadius: 7.0,
+              offset: Offset(2.0, 3.0),
+              spreadRadius: 4.0)
+        ]
+    ),
+    child: Row(
+      children: <Widget>[
+
+        SizedBox(width:10.0),
+        icon ,
+        SizedBox(width: 15.0),
+        Text(text, style: TextStyle(
+            color: Colors.white70,
+            fontSize: 18.0,
+            height: 1.5,
+)
+),
+
+ 
+      ],
+     
+    ),
+
+    );
+  }
+
+ Widget fondoApp1() {
+     return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: FractionalOffset(0.0, 0.6),
+              end: FractionalOffset(0.0, 1.0),
+              colors: [
+                Color.fromRGBO(70, 191, 167 , 1.0),
+                Color.fromRGBO(236, 220, 109, 1.0),
+                Color.fromRGBO(245, 173, 53, 1.0),
+                         Color.fromRGBO(215, 78, 159, 1.0),
+                    
+                    
+                    
+          ])),
+    );
+  }
+
+  Widget fondoApp() {
+     return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: FractionalOffset(0.0, 0.6),
+              end: FractionalOffset(0.0, 1.0),
+              colors: [
+                         Color.fromRGBO(215, 78, 159, 1.0),
+                    Color.fromRGBO(245, 173, 53, 1.0),
+                    Color.fromRGBO(236, 220, 109, 1.0),
+                    Color.fromRGBO(70, 191, 167 , 1.0),
+          ])),
+    );
+  }
+
+ Divider divider()
+ {
+     return Divider(thickness: 1.5, color: Color.fromRGBO(165, 5, 5 , 1.0), endIndent: 20.0, indent: 20.0,);
+ }
 class AppTheme {
   AppTheme._();
 
@@ -42,6 +199,8 @@ class AppTheme {
   static const Color themeColorVerde =
       Color.fromRGBO(100, 179, 116, 1); //64B374
   static const Color themeColorBlanco = Colors.white;
+static const Color themeVino =   Color.fromRGBO(165, 5, 5 , 0.7);
+static const Color themeAmarillo =   Color.fromRGBO(9, 65, 108 , 1.0);
 
   static const TextStyle themeTitulo = TextStyle(
       fontSize: 15,

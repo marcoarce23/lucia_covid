@@ -16,10 +16,14 @@ Widget crearFondoForm(BuildContext context, String imagen) {
       width: double.infinity,
       decoration: BoxDecoration(
           gradient: LinearGradient(colors: <Color>[
-        Color.fromRGBO(243, 124, 18, 1.0),
-        Color.fromRGBO(255, 209, 18, 3.0),
-        Color.fromRGBO(243, 156, 18, 1.0),
-        Color.fromRGBO(243, 223, 18, 1.0)
+             Color.fromRGBO(215, 78, 159, 1.0),
+                    Color.fromRGBO(245, 173, 53, 1.0),
+                    Color.fromRGBO(236, 220, 109, 1.0),
+                    Color.fromRGBO(70, 191, 167 , 1.0),
+        // Color.fromRGBO(243, 124, 18, 1.0),
+        // Color.fromRGBO(255, 209, 18, 3.0),
+        // Color.fromRGBO(243, 156, 18, 1.0),
+        // Color.fromRGBO(243, 223, 18, 1.0)
 
         // Color.fromRGBO(15, 94, 241, 1.0),
         // Color.fromRGBO(18, 202, 243, 2.0),
