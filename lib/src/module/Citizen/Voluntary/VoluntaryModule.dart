@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Citizen/Voluntary/AtentionModule.dart';
@@ -55,29 +56,24 @@ class _VoluntaryAllModuleState extends State<VoluntaryAllModule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppTheme.themeColorAzul,
+        backgroundColor: AppTheme.themeVino,
         toolbarOpacity: 0.7,
-        iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
         elevation: 0,
-        title: Text(
-          "VOLUNTARIOS",
-          style: TextStyle(
-              color: AppTheme.themeColorNaranja,
-              fontSize: 17,
-              fontWeight: FontWeight.w400),
-        ),
-          actions: <Widget>[
+        title: Text( "VOLUNTARIO",  style: kTitleAppBar),
+        actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              showSearch(context: context, delegate: DataSearchVoluntary()  );
+              showSearch(context: context, delegate: DataSearchVoluntary());
             },
           )
         ],
       ),
       drawer: DrawerCitizen(),
-       bottomNavigationBar: BottomNavigationBar(
-              items: [
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color.fromRGBO(165, 5, 5, 0.7),
+        items: [
           BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.userCircle, size: 25,),
               title: Text('Voluntario')),
@@ -88,12 +84,12 @@ class _VoluntaryAllModuleState extends State<VoluntaryAllModule> {
               icon: FaIcon(FontAwesomeIcons.users, size: 25, ),
               title: Text('Integrantes')),
         ],
-              currentIndex: page,
-              unselectedItemColor: Colors.black,
-              selectedItemColor: Colors.amber[800],
-              onTap: _onItemTapped,)
-            ,
-          body: optionPage[page],  
+               currentIndex: page,
+        unselectedItemColor: Colors.black87,
+        selectedItemColor: Colors.white70,
+        onTap: _onItemTapped,
+      ),
+      body: optionPage[page],
     );
   }
 }
@@ -150,7 +146,7 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
         key: scaffoldKey,
         body: Stack(
           children: <Widget>[
-            crearFondoForm(context, imagen),
+           // crearFondoForm(context, imagen),
             _crearForm(context),
           ],
         ),
@@ -193,7 +189,7 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
               decoration: _crearContenedorCampos(),
               child: _crearCampos(),
             ),
-            crearLucia(),
+             copyRigth(),
           ],
         ),
       ),

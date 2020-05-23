@@ -6,6 +6,7 @@ import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
@@ -58,10 +59,26 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[SizedBox(height: 10.0), futureItemsEntity(context)],
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(height: 10.0),
+          Container(
+            width: size.width * 0.96,
+            margin: EdgeInsets.symmetric(vertical: 0.0),
+            child: contenedorTitulo(
+              context,
+              40.0,
+              'LISTADO VOLUNTARIOS',
+              FaIcon(FontAwesomeIcons.handHoldingMedical, color: Colors.white60),
+            ),
+          ),
+          divider(),
+          futureItemsEntity(context),
+          copyRigth(),
+        ],
       ),
     );
   }
@@ -76,13 +93,14 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
               return Center(child: CircularProgressIndicator());
               break;
             default:
-              //mostramos los datos
               return listItemsEntity(context, snapshot);
           }
         });
   }
 
   Widget listItemsEntity(BuildContext context, AsyncSnapshot snapshot) {
+      final size = MediaQuery.of(context).size;
+
     return Expanded(
       child: ListView.builder(
         shrinkWrap: true,
@@ -92,26 +110,32 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
         itemBuilder: (context, index) {
           Voluntary entityItem = snapshot.data[index];
 
-          return Container(
-            decoration: BoxDecoration(
-                color: Color.fromRGBO(22, 23, 22, 0.9),
-                borderRadius: BorderRadius.circular(20.0),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                      color: Colors.yellow,
-                      blurRadius: 3.0,
-                      offset: Offset(5.0, 5.0),
-                      spreadRadius: 1.0)
-                ]),
-            child: Column(
-              children: <Widget>[
-                ListTile(
-                  leading: iconEntity(entityItem),
-                  title: listEntity(context, entityItem),
-                  trailing: Icon(Icons.arrow_right),
+          return Column(
+            children: <Widget>[
+              Container(
+                width: size.width * 0.97,
+                margin: EdgeInsets.symmetric(vertical: 0.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 7.0,
+                          offset: Offset(2.0, 3.0),
+                          spreadRadius: 4.0)
+                    ]),
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      leading: iconEntity(entityItem),
+                      title: listEntity(context, entityItem),
+                     ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              divider(),
+            ],
           );
         },
       ),
@@ -160,42 +184,49 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
                     children: <Widget>[
                       Icon(
                         Icons.gamepad,
-                        color: Colors.green,
+                        color: AppTheme.themeVino,
                         size: 15,
                       ),
                       Text('Voluntario: ${entityItem.perNombrepersonal} ',
-                          style: TextStyle(color: Colors.red, fontSize: 14)),
+                          style: kTitleCardStyle,),
                     ],
                   )),
                   SizedBox(height:7.0),
+
+                Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.bubble_chart,
+                    color: AppTheme.themeVino,
+                    size: 15,
+                  ),
+                  Text('Institución: ${entityItem.desInstitucion}',
+                      style: kSubTitleCardStyle,),]
+              ),
+              SizedBox(height:7.0),
+
               Row(
                 children: <Widget>[
                   Icon(
                     Icons.place,
-                    color: Colors.green,
+                    color: AppTheme.themeVino,
                     size: 15,
                   ),
                   Text('Telefono: ${entityItem.perTelefono}',
-                      style: TextStyle(color: Colors.red, fontSize: 14))
-                ],
+                      style: kSubTitleCardStyle,),]
               ),
               SizedBox(height:7.0),
-              Container(
-                  child: Text(
-                'Tipo: ${entityItem.perAyudacovid}',
-                style: TextStyle(color: Colors.yellow, fontSize: 14),
-              )),
-              SizedBox(height:7.0),
+              
               Row(
                 children: <Widget>[
                   Icon(
                     Icons.store_mall_directory,
-                    color: Colors.green,
+                    color: AppTheme.themeVino,
                     size: 15,
                   ),
                   Text(
                     'Correo: ${entityItem.perCorreo}',
-                    style: TextStyle(color: Colors.yellow, fontSize: 14),
+                    style: kSubTitleCardStyle,
                   )
                 ],
               ),
@@ -205,7 +236,7 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
                   InkWell(
                     child: FaIcon(
                       FontAwesomeIcons.phoneVolume,
-                      color: Colors.blue,
+                      color: AppTheme.themeVino,
                       size: 25,
                     ),
                     onTap: () {
@@ -216,7 +247,7 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
                   InkWell(
                     child: FaIcon(
                       FontAwesomeIcons.comment,
-                      color: Colors.blue,
+                      color: AppTheme.themeVino,
                       size: 25,
                     ),
                     onTap: () {
@@ -227,7 +258,7 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
                   InkWell(
                     child: FaIcon(
                       FontAwesomeIcons.mailBulk,
-                      color: Colors.blue,
+                      color: AppTheme.themeVino,
                       size: 25,
                     ),
                     onTap: () {
@@ -241,7 +272,7 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
                   InkWell(
                     child: FaIcon(
                       FontAwesomeIcons.whatsapp,
-                      color: Colors.blue,
+                      color: AppTheme.themeVino,
                       size: 25,
                     ),
                     onTap: () {
@@ -261,22 +292,19 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
     return Container(
         child: Column(
       children: <Widget>[
+       // ImageOvalNetwork( imageNetworkUrl: entityItem.foto, sizeImage: Size.fromWidth(35)),
         Icon(
           Icons.person_pin,
           size: 35,
-          color: Colors.yellow,
+          color: Colors.black87,
         ),
         Text(
           '${entityItem.desEspecialidad}',
           style: TextStyle(
-              fontSize: 11, color: Colors.yellow, fontWeight: FontWeight.w400),
+              fontSize: 12, color: AppTheme.themeVino, fontWeight: FontWeight.w400),
         ),
       ],
     ));
   }
 
-  Container dividerLine() {
-    return Container(
-        height: 20, child: VerticalDivider(color: AppTheme.themeColorNaranja));
-  }
 }

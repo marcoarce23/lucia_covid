@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
-import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class ListMultimediaModule extends StatefulWidget {
@@ -30,11 +31,27 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
-     
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[SizedBox(height: 10.0), futureItemsEntity(context)],
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(height: 10.0),
+          Container(
+            width: size.width * 0.96,
+            margin: EdgeInsets.symmetric(vertical: 0.0),
+            child: contenedorTitulo(
+              context,
+              40.0,
+              'LISTADO MATERIAL MULTIMEDIA',
+              FaIcon(FontAwesomeIcons.photoVideo, color: Colors.white60),
+            ),
+          ),
+          divider(),
+          futureItemsEntity(context),
+          copyRigth(),
+        ],
       ),
     );
   }
@@ -56,6 +73,8 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
   }
 
   Widget listItemsEntity(BuildContext context, AsyncSnapshot snapshot) {
+    final size = MediaQuery.of(context).size;
+
     return Expanded(
       child: ListView.builder(
         shrinkWrap: true,
@@ -65,31 +84,38 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
         itemBuilder: (context, index) {
           Multimedia entityItem = snapshot.data[index];
 
-          return Container(
-            decoration: BoxDecoration(
-                color: Color.fromRGBO(22, 23, 22, 0.9),
-                borderRadius: BorderRadius.circular(20.0),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                      color: Colors.yellow,
-                      blurRadius: 3.0,
-                      offset: Offset(5.0, 5.0),
-                      spreadRadius: 1.0)
-                ]),
-            child: Column(
-              children: <Widget>[
-                ListTile(
-                  leading: iconEntity(entityItem),
-                  title: listEntity(context, entityItem),
-                 ),
-              ],
-            ),
+          return Column(
+            children: <Widget>[
+              Container(
+                width: size.width * 0.97,
+                margin: EdgeInsets.symmetric(vertical: 0.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 7.0,
+                          offset: Offset(2.0, 3.0),
+                          spreadRadius: 4.0)
+                    ]),
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      leading: iconEntity(entityItem),
+                      title: listEntity(context, entityItem),
+     
+                    ),
+                  ],
+                ),
+              ),
+              divider(),
+            ],
           );
         },
       ),
     );
   }
-
   Widget listEntity(BuildContext context, Multimedia entityItem) {
     final item = entityItem.idcovMultimedia;
 
@@ -136,11 +162,11 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
                     children: <Widget>[
                       Icon(
                         Icons.gamepad,
-                        color: Colors.green,
+                        color: AppTheme.themeVino,
                         size: 15,
                       ),
                       Text('Material: ${entityItem.mulTitulo} ',
-                          style: TextStyle(color: Colors.red, fontSize: 14)),
+                          style: kSubTitleCardStyle),
                     ],
                   )),
                   SizedBox(height:5.0),
@@ -148,18 +174,18 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
                 children: <Widget>[
                   Icon(
                     Icons.place,
-                    color: Colors.green,
+                    color: AppTheme.themeVino,
                     size: 15,
                   ),
                   Text('Resumen: ${entityItem.mulResumen}',
-                      style: TextStyle(color: Colors.red, fontSize: 14))
+                      style:kSubTitleCardStyle)
                 ],
               ),
               SizedBox(height:5.0),
               Container(
                   child: Text(
                 'inicio: ${entityItem.detFechaInicio} - Conclusión: ${entityItem.detFechaFin}',
-                style: TextStyle(color: Colors.yellow, fontSize: 14),
+                style: kSubTitleCardStyle,
               )),
             ],
           ),
@@ -181,14 +207,11 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
         Text(
           '${entityItem.tipoMaterial}',
           style: TextStyle(
-              fontSize: 11, color: Colors.yellow, fontWeight: FontWeight.w400),
+              fontSize: 11, color: Colors.black87, fontWeight: FontWeight.w400),
         ),
       ],
     ));
   }
 
-  Container dividerLine() {
-    return Container(
-        height: 20, child: VerticalDivider(color: AppTheme.themeColorNaranja));
-  }
+
 }

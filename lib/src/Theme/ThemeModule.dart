@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 
+final prefs = new PreferensUser();
 
 final kTitleAppBar =  TextStyle(
             color: Colors.white,
@@ -17,7 +19,7 @@ final kTitleCardStyle = TextStyle(
 final kSubTitleCardStyle = TextStyle(
                       color: Colors.black87,
                       fontSize: 14,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w400,
                      height: 1.0,
                     );
 
@@ -73,6 +75,26 @@ final kTitleCursive4Style = TextStyle(
   fontSize: 14.0,
   height: 1.5,
 );
+
+cabeceraInformativa()
+{
+return RichText(
+                  text: TextSpan(
+                    text: 'Voluntario(a): ${prefs.nombreUsuario}',
+                    style: kTitleCardStyle,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: '\n' + 'Institución: ${prefs.nombreInstitucion}',
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+}
 
 boxDecoration()
 {

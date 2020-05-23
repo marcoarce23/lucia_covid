@@ -50,19 +50,13 @@ class _MultimediaAllModuleState extends State<MultimediaAllModule> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+   return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppTheme.themeColorAzul,
+        backgroundColor: AppTheme.themeVino,
         toolbarOpacity: 0.7,
-        iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
         elevation: 0,
-        title: Text(
-          "VOLUNTARIOS",
-          style: TextStyle(
-              color: AppTheme.themeColorNaranja,
-              fontSize: 17,
-              fontWeight: FontWeight.w400),
-        ),
+        title: Text( "MULTIMEDIA",  style: kTitleAppBar),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
@@ -74,6 +68,7 @@ class _MultimediaAllModuleState extends State<MultimediaAllModule> {
       ),
       drawer: DrawerCitizen(),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color.fromRGBO(165, 5, 5, 0.7),
         items: [
           BottomNavigationBarItem(
               icon: FaIcon(
@@ -89,15 +84,14 @@ class _MultimediaAllModuleState extends State<MultimediaAllModule> {
               title: Text('Publicaciones')),
         ],
         currentIndex: page,
-        unselectedItemColor: Colors.black,
-        selectedItemColor: Colors.amber[800],
+        unselectedItemColor: Colors.black87,
+        selectedItemColor: Colors.white70,
         onTap: _onItemTapped,
       ),
       body: optionPage[page],
     );
   }
 }
-
 class MultimediaModule extends StatefulWidget {
   static final String routeName = 'multimedia';
   MultimediaModule({Key key}) : super(key: key);

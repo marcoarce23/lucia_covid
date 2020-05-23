@@ -20,7 +20,6 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
   final prefs = new PreferensUser();
   var result;
 
-
   @override
   void initState() {
     prefs.ultimaPagina = ListCitizenHelpModule.routeName;
@@ -35,22 +34,21 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          SizedBox(height: 10.0), 
+          SizedBox(height: 10.0),
           Container(
-              width: size.width * 0.96,
-              margin: EdgeInsets.symmetric(vertical: 0.0),
-          child: contenedorTitulo(
+            width: size.width * 0.96,
+            margin: EdgeInsets.symmetric(vertical: 0.0),
+            child: contenedorTitulo(
               context,
               40.0,
               'LISTADO DE AYUDA A UN AMIGO',
-              FaIcon(FontAwesomeIcons.userMd, color: Colors.white60),
+              FaIcon(FontAwesomeIcons.handHoldingHeart, color: Colors.white60),
             ),
           ),
           divider(),
           futureItemsEntity(context),
           copyRigth(),
-          
-          ],
+        ],
       ),
     );
   }
@@ -79,48 +77,37 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
         scrollDirection: Axis.vertical,
         physics: ClampingScrollPhysics(),
         itemCount: snapshot.data.length,
-        itemBuilder: (context, index) 
-        {
+        itemBuilder: (context, index) {
           RegistroAmigo entityItem = snapshot.data[index];
 
           return Column(
             children: <Widget>[
               Container(
                 width: size.width * 0.97,
-                  margin: EdgeInsets.symmetric(vertical: 0.0),
+                margin: EdgeInsets.symmetric(vertical: 0.0),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10.0),
                     boxShadow: <BoxShadow>[
-                       BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 7.0,
-                  offset: Offset(2.0, 3.0),
-                  spreadRadius: 4.0)
-                    ]
-                    ),
-                     
+                      BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 7.0,
+                          offset: Offset(2.0, 3.0),
+                          spreadRadius: 4.0)
+                    ]),
                 child: Column(
                   children: <Widget>[
                     ListTile(
                       leading: iconEntity(entityItem),
                       title: listEntity(context, entityItem),
-                      trailing: Icon(Icons.arrow_right),
                     ),
                   ],
                 ),
-               
-
               ),
               divider(),
             ],
-           
-          ); 
-
-          
-           
+          );
         },
-       
       ),
     );
   }
@@ -140,7 +127,8 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
       ),
       onDismissed: (value) {
         setState(() {
-          final dataMap = generic.add(new RegistroAmigo(), '$urlDeleteAyudaAmigo${item.toString()}/${prefs.userId}');
+          final dataMap = generic.add(new RegistroAmigo(),
+              '$urlDeleteAyudaAmigo${item.toString()}/${prefs.userId}');
 
           dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
           print('resultado:$result');
@@ -148,10 +136,10 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
 
         if (result != null || result != '-1')
           Scaffold.of(context)
-          .showSnackBar(messageOk("Se elimino el registro."));
+              .showSnackBar(messageOk("Se elimino el registro."));
         else
-          Scaffold.of(context)
-          .showSnackBar(messageNOk("Se  produjo un error. Vuelva a intentarlo."));
+          Scaffold.of(context).showSnackBar(
+              messageNOk("Se  produjo un error. Vuelva a intentarlo."));
       },
 
       child: Row(
@@ -161,7 +149,7 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                  width: MediaQuery.of(context).size.width -160,
+                  width: MediaQuery.of(context).size.width - 160,
                   child: Row(
                     children: <Widget>[
                       Icon(
@@ -186,20 +174,20 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
               ),
               Container(
                   child: Row(
-                    children: <Widget>[
-                      Icon(
-                      Icons.phone_android,
-                      color: AppTheme.themeVino,
-                      size: 15,
-                    ),
-                      Text(
-                'Telefono: ${entityItem.regTelefono}',
-                style: kSubTitleCardStyle,
-              ),
-                    ],
-                  )),
+                children: <Widget>[
+                  Icon(
+                    Icons.phone_android,
+                    color: AppTheme.themeVino,
+                    size: 15,
+                  ),
+                  Text(
+                    'Telefono: ${entityItem.regTelefono}',
+                    style: kSubTitleCardStyle,
+                  ),
+                ],
+              )),
               Container(
-                width: MediaQuery.of(context).size.width ,
+                width: MediaQuery.of(context).size.width,
                 child: Row(
                   children: <Widget>[
                     Icon(
@@ -227,7 +215,9 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
       children: <Widget>[
         ImageOvalNetwork(
             imageNetworkUrl: prefs.avatarImagen, sizeImage: Size.fromWidth(40)),
-            SizedBox(height: 1.5,),
+        SizedBox(
+          height: 1.5,
+        ),
         Text(
           '${entityItem.regPrioridad}',
           style: TextStyle(
@@ -236,5 +226,4 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
       ],
     ));
   }
-
 }

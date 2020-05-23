@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
-import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
+import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
@@ -21,9 +21,9 @@ class AtentionEntityModule extends StatefulWidget {
 }
 
 class _AtentionEntityModuleState extends State<AtentionEntityModule> {
- bool _save = false;
-  
-   InputCheckBox lunes;
+  bool _save = false;
+
+  InputCheckBox lunes;
   InputCheckBox martes;
   InputCheckBox miercoles;
   InputCheckBox jueves;
@@ -31,7 +31,7 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
   InputCheckBox sabado;
   InputCheckBox domingo;
 
-     InputTextField lunesH;
+  InputTextField lunesH;
   InputTextField martesH;
   InputTextField miercolesH;
   InputTextField juevesH;
@@ -39,24 +39,22 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
   InputTextField sabadoH;
   InputTextField domingoH;
 
-   bool selectLunes =false;
-  bool selectMartes=false;
-  bool selectMiercoles=false;
-  bool selectJueves=false;
-  bool selectViernes=false;
-  bool selectSabado=false;
-  bool selectDomingo=false;
+  bool selectLunes = false;
+  bool selectMartes = false;
+  bool selectMiercoles = false;
+  bool selectJueves = false;
+  bool selectViernes = false;
+  bool selectSabado = false;
+  bool selectDomingo = false;
 
-  int intLunes =0;
-  int intMartes=0;
-  int intMiercoles=0;
-  int intJueves=0;
-  int intViernes=0;
-  int intSabado=0;
-  int intDomingo=0;
+  int intLunes = 0;
+  int intMartes = 0;
+  int intMiercoles = 0;
+  int intJueves = 0;
+  int intViernes = 0;
+  int intSabado = 0;
+  int intDomingo = 0;
   var result;
-  
- 
 
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -66,26 +64,20 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
 
   @override
   void initState() {
-      prefs.ultimaPagina = AtentionEntityModule.routeName;
+    prefs.ultimaPagina = AtentionEntityModule.routeName;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Atencion entityData = ModalRoute.of(context).settings.arguments;
-
-    if (entityData != null) entity = entityData;
-
     return Scaffold(
-        key: scaffoldKey,
-       
-        body: Stack(
-          children: <Widget>[
-            _crearForm(context),
-          ],
-        ),
+      key: scaffoldKey,
+      body: Stack(
+        children: <Widget>[
+          _crearForm(context),
+        ],
+      ),
     );
-
   }
 
   Widget informacionProfesional(BuildContext context) {
@@ -93,15 +85,8 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 4),
         padding: EdgeInsets.all(15.0),
-        width: MediaQuery.of(context).size.width - 50,
-         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          gradient: LinearGradient(colors: <Color>[
-        Color.fromRGBO(243, 124, 18, 1.0),
-        Color.fromRGBO(255, 209, 18, 3.0),
-        Color.fromRGBO(243, 156, 18, 1.0),
-        Color.fromRGBO(243, 223, 18, 1.0)
-      ])),
+        width: MediaQuery.of(context).size.width - 20,
+        decoration: contenedorCabecera(),
         child: Column(
           children: <Widget>[
             Row(
@@ -109,43 +94,8 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 imagenProfesional(),
-                 RichText(
-                  text: TextSpan(
-                    text: 'Institución: Dejame Apoyarte.', // 'Dr Dan MlayahFX',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      height: 1.5,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: '\n' + 'Grupo: Dejame de voluntarios',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                      TextSpan(
-                        text: '\n' + 'Objetivo: Apoyo a la gente',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                      TextSpan(
-                        text: '\n' + 'Correo: dejame_apoyarte@gmail.com',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
+                SizedBox(width: 15.0),
+                cabeceraInformativa(),
               ],
             ),
           ],
@@ -156,7 +106,7 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
 
   ImageOvalNetwork imagenProfesional() {
     return ImageOvalNetwork(
-            imageNetworkUrl: prefs.avatarImagen, sizeImage: Size.fromWidth(40));
+        imageNetworkUrl: prefs.avatarImagen, sizeImage: Size.fromWidth(40));
   }
 
   Column crearIconoProfesional(icon, title) {
@@ -190,173 +140,221 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
         key: formKey,
         child: Column(
           children: <Widget>[
-         //   informacionProfesional(context),
-            SafeArea(
-              child: Container(
-                height: 10.0,
-              ),
+            informacionProfesional(context),
+            SizedBox(height: 5.0),
+            contenedorTitulo(
+              context,
+              40.0,
+              'REGISTRO DE ATENCIÓN',
+              FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.white60),
             ),
+            SizedBox(height: 5.0),
             Container(
-              width: size.width * 0.92,
+              width: size.width * 0.95,
               margin: EdgeInsets.symmetric(vertical: 0.0),
-              decoration: _crearContenedorCampos(),
+              decoration: contenedorCampos(),
               child: _crearCampos(),
             ),
-           copyRigth(),
+            divider(),
+            Text(
+              'IMPORTANTE:',
+              style: kTitleCardStyle,
+              textAlign: TextAlign.left,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  width: 20,
+                ),
+                Text(
+                  '- Seleccionar los días de atención',
+                  style: kSubTitleCardStyle,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(width: 15.0),
+                FaIcon(
+                  FontAwesomeIcons.calendarCheck,
+                  color: AppTheme.themeVino,
+                  size: 15,
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  width: 25,
+                ),
+                Text(
+                  '- Definir si la atención se realizará el fin de semana.',
+                  style: kSubTitleCardStyle,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(width: 15.0),
+                FaIcon(
+                  FontAwesomeIcons.calendarCheck,
+                  color: AppTheme.themeVino,
+                  size: 15,
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  width: 25,
+                ),
+                Text(
+                  '- Se recomienda que los días asignados sean \n cumplidos  por el voluntario.',
+                  style: kSubTitleCardStyle,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(width: 15.0),
+                FaIcon(
+                  FontAwesomeIcons.calendarCheck,
+                  color: AppTheme.themeVino,
+                  size: 15,
+                ),
+              ],
+            ),
+            copyRigth(),
           ],
         ),
       ),
     );
   }
 
-
   Widget _crearCampos() {
-        lunes= InputCheckBox('Lun', selectLunes);
-martes= InputCheckBox('Mar',selectMartes);
-miercoles= InputCheckBox('Mie',selectMiercoles);
-jueves= InputCheckBox('Jue',selectJueves);
-viernes= InputCheckBox('Vie',selectViernes);
-sabado= InputCheckBox('Sab',selectSabado);
-domingo= InputCheckBox('Dom',selectDomingo);
+    lunes = InputCheckBox('Lunes', selectLunes);
+    martes = InputCheckBox('Martes', selectMartes);
+    miercoles = InputCheckBox('Miércoles', selectMiercoles);
+    jueves = InputCheckBox('Jueves', selectJueves);
+    viernes = InputCheckBox('Viernes', selectViernes);
+    sabado = InputCheckBox('Sábado', selectSabado);
+    domingo = InputCheckBox('Domingo', selectDomingo);
 
-  lunesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30', false);
-  martesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30', false);
-  miercolesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30', false);
-  juevesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30', false);
-  viernesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30', false);
-  sabadoH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30', false);
-  domingoH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30', false);
+    lunesH = InputTextField(
+        FaIcon(FontAwesomeIcons.clock, color: AppTheme.themeVino,),
+        'Atención',
+        '',
+        'Ej: 08:00  a 13:30',
+        false);
+    martesH = InputTextField(
+        FaIcon(FontAwesomeIcons.clock, color: AppTheme.themeVino,),
+        'Atención',
+        '',
+        'Ej: 08:00  a 13:30',
+        false);
+    miercolesH = InputTextField(
+        FaIcon(FontAwesomeIcons.clock, color: AppTheme.themeVino,),
+        'Atención',
+        '',
+        'Ej: 08:00  a 13:30',
+        false);
+    juevesH = InputTextField(
+        FaIcon(FontAwesomeIcons.clock, color: AppTheme.themeVino,),
+        'Atención',
+        '',
+        'Ej: 08:00  a 13:30',
+        false);
+    viernesH = InputTextField(
+        FaIcon(FontAwesomeIcons.clock, color: AppTheme.themeVino,),
+        'Atención',
+        '',
+        'Ej: 08:00  a 13:30',
+        false);
+    sabadoH = InputTextField(
+        FaIcon(FontAwesomeIcons.clock, color: AppTheme.themeVino,),
+        'Atención',
+        '',
+        'Ej: 08:00  a 13:30',
+        false);
+    domingoH = InputTextField(
+        FaIcon(FontAwesomeIcons.clock, color: AppTheme.themeVino,),
+        'Atención',
+        '',
+        'Ej: 08:00  a 13:30',
+        false);
 
     return Column(
       children: <Widget>[
-        Text(
-          'DIAS Y HORARIOS DE ATENCIÓN',
-          style: TextStyle(fontSize: 18, color: Colors.black),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: lunesH,
+            ),
+            Expanded(
+              child: lunes,
+            ),
+          ],
         ),
         Row(
           children: <Widget>[
             Expanded(
-              child: lunes,
-              
+              child: martesH,
             ),
-
-             Expanded(
-              child: lunesH,
-              
-            ),
-         
-          //  _crearTime(),
-          ],
-        ),
-
-         Row(
-          children: <Widget>[
             Expanded(
               child: martes,
             ),
-             Expanded(
-              child: martesH,
-              
-            ),
-            
           ],
         ),
-
-         Row(
+        Row(
           children: <Widget>[
+            Expanded(
+              child: miercolesH,
+            ),
             Expanded(
               child: miercoles,
             ),
-             Expanded(
-              child: miercolesH,
-              
-            ),
-            
           ],
         ),
-         Row(
+        Row(
           children: <Widget>[
+            Expanded(
+              child: juevesH,
+            ),
             Expanded(
               child: jueves,
             ),
-             Expanded(
-              child: juevesH,
-              
-            ),
-            
           ],
         ),
-         Row(
+        Row(
           children: <Widget>[
+            Expanded(
+              child: viernesH,
+            ),
             Expanded(
               child: viernes,
             ),
-             Expanded(
-              child: viernesH,
-              
-            ),
-            
           ],
         ),
-         Row(
+        Row(
           children: <Widget>[
+            Expanded(
+              child: sabadoH,
+            ),
             Expanded(
               child: sabado,
             ),
-             Expanded(
-              child: sabadoH,
-              
-            ),
-            
           ],
         ),
-         Row(
+        Row(
           children: <Widget>[
+            Expanded(
+              child: domingoH,
+            ),
             Expanded(
               child: domingo,
             ),
-             Expanded(
-              child: domingoH,
-              
-            ),
-            
           ],
         ),
-        
+        divider(),
         _crearBoton(resource.save),
       ],
     );
   }
 
-   _crearContenedorCampos() {
-    return BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(35.0),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.black26,
-              blurRadius: 7.0,
-              offset: Offset(0.0, 5.0),
-              spreadRadius: 7.0)
-        ]
-      );
-  }
-
-
-
-  // _crearContenedorCamposRRSS() {
-  //   return BoxDecoration(
-  //       color: Colors.white,
-  //       borderRadius: BorderRadius.circular(35.0),
-  //       boxShadow: <BoxShadow>[
-  //         BoxShadow(
-  //             color: Colors.black26,
-  //             blurRadius: 7.0,
-  //             offset: Offset(0.0, 5.0),
-  //             spreadRadius: 7.0)
-  //       ]
-  //     );
-  // }
   Widget _crearBoton(String text) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 100.0),
@@ -364,10 +362,13 @@ domingo= InputCheckBox('Dom',selectDomingo);
       child: RaisedButton.icon(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: Colors.orange,
+        color: Color.fromRGBO(165, 5, 5, 0.7),
         textColor: Colors.white,
-        label: Text(text),
-        icon: Icon(Icons.save),
+        label: Text(
+          text,
+          style: kSubtitleStyle,
+        ),
+        icon: FaIcon(FontAwesomeIcons.save, color: Colors.white),
         onPressed: (_save) ? null : _submit,
       ),
     );
@@ -381,91 +382,66 @@ domingo= InputCheckBox('Dom',selectDomingo);
       _save = true;
     });
 
-    if (lunes.objectValue == true) { intLunes =1; selectLunes = true;}
-if (martes.objectValue == true)  {  intMartes =1;selectMartes = true;}
-if (miercoles.objectValue == true)  {  intMiercoles =1;selectMiercoles = true;}
-if (jueves.objectValue == true)  {  intJueves =1;selectJueves = true;}
-if (viernes.objectValue == true)  {  intViernes =1;selectViernes = true;}
-if (sabado.objectValue == true)  {  intSabado =1;selectSabado = true;}
-if (domingo.objectValue == true)  {  intDomingo =1;selectDomingo = true;}
+    if (lunes.objectValue == true) {
+      intLunes = 1;
+      selectLunes = true;
+    }
+    if (martes.objectValue == true) {
+      intMartes = 1;
+      selectMartes = true;
+    }
+    if (miercoles.objectValue == true) {
+      intMiercoles = 1;
+      selectMiercoles = true;
+    }
+    if (jueves.objectValue == true) {
+      intJueves = 1;
+      selectJueves = true;
+    }
+    if (viernes.objectValue == true) {
+      intViernes = 1;
+      selectViernes = true;
+    }
+    if (sabado.objectValue == true) {
+      intSabado = 1;
+      selectSabado = true;
+    }
+    if (domingo.objectValue == true) {
+      intDomingo = 1;
+      selectDomingo = true;
+    }
 
-
-   entity.idInstitucion = int.parse(prefs.idInsitucion);
+    entity.idInstitucion = int.parse(prefs.idInsitucion);
     entity.idInstitucionPersonal = -1;
-    entity.perLunes= intLunes;
+    entity.perLunes = intLunes;
     entity.perMartes = intMartes;
     entity.perMiercoles = intMiercoles;
     entity.perJueves = intJueves;
     entity.perViernes = intViernes;
     entity.perSabado = intSabado;
     entity.perDomingo = intDomingo;
-   entity.perLunesH = lunesH.objectValue;
+    entity.perLunesH = lunesH.objectValue;
     entity.perMartesH = martesH.objectValue;
     entity.perMiercolesH = miercolesH.objectValue;
     entity.perJuevesH = juevesH.objectValue;
     entity.perViernesH = viernesH.objectValue;
     entity.perSabadoH = sabadoH.objectValue;
     entity.perDomingoH = domingoH.objectValue;
-     entity.usuario = prefs.correoElectronico;
+    entity.usuario = prefs.correoElectronico;
 
- final dataMap = generic.add(entity, urlAddAtencionInstitucion);
+    final dataMap = generic.add(entity, urlAddAtencionInstitucion);
 
     await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
-    print('resultado:$result');
 
-    if (result == "0") {
-   
-           scaffoldKey.currentState.showSnackBar(messageOk("Se insertó correctamente"));
-    }
-    
+    if (result == "0")
+      scaffoldKey.currentState
+          .showSnackBar(messageOk("Se insertó correctamente"));
     else
-           scaffoldKey.currentState.showSnackBar(messageNOk("Error, vuelta a intentarlo"));
-
+      scaffoldKey.currentState
+          .showSnackBar(messageNOk("Error, vuelta a intentarlo"));
 
     setState(() {
       _save = false;
     });
-
-    //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
   }
-
-  // Widget _crearBotonRRSS(String text) {
-  //   return Container(
-  //     padding: EdgeInsets.symmetric(horizontal: 100.0),
-  //     width: MediaQuery.of(context).size.width,
-  //     child: RaisedButton.icon(
-  //       shape:
-  //           RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-  //       color: Colors.blue,
-  //       textColor: Colors.white,
-  //       label: Text(text),
-  //       icon: Icon(Icons.save),
-  //       onPressed: (_save) ? null : _submit,
-  //     ),
-  //   );
-  // }
-
-  // _submit2() async {
-  //   if (!formKey.currentState.validate()) return;
-
-  //   formKey.currentState.save();
-  //   setState(() {
-  //     _save = true;
-  //   });
-
-  //   if (hospital.nombre == null) {
-  //     // generic.add(citizen);
-  //     print("INSERTOOOO");
-  //   } else {
-  //     //  generic.update(citizen);
-  //     print("MODIFICO");
-  //   }
-
-  //   setState(() {
-  //     _save = false;
-  //   });
-
-  //   //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
-  // }
-
 }

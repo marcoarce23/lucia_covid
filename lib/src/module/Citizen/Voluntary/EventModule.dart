@@ -10,6 +10,7 @@ import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
@@ -239,7 +240,7 @@ class _EventModuleState extends State<EventModule> {
               decoration: _crearContenedorCampos(),
               child: _crearCampos(),
             ),
-            crearLucia(),
+             copyRigth(),
           ],
         ),
       ),

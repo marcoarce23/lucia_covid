@@ -6,6 +6,7 @@ import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Util/Validator.dart' as validator;
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 
 class CitizenAtentionRegisterModule extends StatefulWidget {
   CitizenAtentionRegisterModule({Key key}) : super(key: key);
@@ -228,7 +229,7 @@ class _CitizenAtentionRegisterModuleState
               decoration: _crearContenedorCampos(),
               child: _crearCampos(),
             ),
-            crearLucia(),
+             copyRigth(),
           ],
         ),
       ),

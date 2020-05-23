@@ -156,22 +156,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
               children: <Widget>[
                 imagenProfesional(),
                 SizedBox(width: 15.0),
-                RichText(
-                  text: TextSpan(
-                    text: 'Voluntario(a): ${prefs.nombreUsuario}',
-                    style: kTitleCardStyle,
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: '\n' + 'Institución: ${prefs.nombreInstitucion}',
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
+                cabeceraInformativa(),
               ],
             ),
             divider(),

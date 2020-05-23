@@ -108,25 +108,30 @@ home: new HomePageModule(),//FilePickerDemo(),
         'introScreen': (BuildContext context) => new IntroScreenModule(),
         'home': (BuildContext context) => new HomePageModule(),
         'mapAtencion': (BuildContext context) => new MapAdressModule(),
-        'voluntary': (BuildContext context) => new VoluntaryModule(),
+        
         'lisVoluntary': (BuildContext context) => new ListVoluntaryModule(),
         'ListEventVoluntary': (BuildContext context) => new ListEventModule(),
         'eventVoluntary': (BuildContext context) => EventModule(),
         'atentionVoluntary': (BuildContext context) => AtentionModule(),
         'multimedia': (BuildContext context) => MultimediaModule(),
-        'lisMultimedia': (BuildContext context) => ListMultimediaModule(),
+       
         'AtentionEntity': (BuildContext context) => AtentionEntityModule(),
         'entidad': (BuildContext context) => new EntityModule(),
         'listaEntidad': (BuildContext context) => new ListEntityModule(),
         'eventEntity': (BuildContext context) => new ListEntityModule(),
+
+
 'helpCitizen': (BuildContext context) => new  CitizenHelpModule(),
+"ListaCiudadanoAyuda": (BuildContext context) =>     new ListCitizenHelpModule(),
+'voluntary': (BuildContext context) => new VoluntaryModule(),
+ 'listMultimedia': (BuildContext context) => ListMultimediaModule(),
 
 
       //  "CiudadanoAlertaEmergencia":(BuildContext context)=> new  CitizenAlertEmergency(),
         "CiudadanoEmergencia": (BuildContext context) =>     new CitizenEmergencyModule(),
         "CiudadanoEventos": (BuildContext context) => new CitizenEventsModule(),
         //"CiudadanoEventosDetalle":(BuildContext context)=> new CitizenEventsDetailModule(),
-        "ListaCiudadanoAyuda": (BuildContext context) =>     new ListCitizenHelpModule(),
+        
         //"CiudadanoInstitucion":(BuildContext context)=> new CitizenInstitutionModule(),
         "ListaInstituciones": (BuildContext context) =>     new CitizenListInstitucionModule(),
         //"ImagenDetalle":(BuildContext context)=> new CitizenImageDetailModule(),

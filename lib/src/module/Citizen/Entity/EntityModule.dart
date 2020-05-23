@@ -56,17 +56,11 @@ class _EntityAllModuleState extends State<EntityAllModule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppTheme.themeColorAzul,
+        backgroundColor: AppTheme.themeVino,
         toolbarOpacity: 0.7,
-        iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
         elevation: 0,
-        title: Text(
-          "ENTIDADES-INSTITUCIONES",
-          style: TextStyle(
-              color: AppTheme.themeColorNaranja,
-              fontSize: 17,
-              fontWeight: FontWeight.w400),
-        ),
+        title: Text( "INSTITUCIONES - GRUPOS VOLUNTARIOS",  style: kTitleAppBar),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
@@ -78,6 +72,7 @@ class _EntityAllModuleState extends State<EntityAllModule> {
       ),
       drawer: DrawerCitizen(),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color.fromRGBO(165, 5, 5, 0.7),
         items: [
           BottomNavigationBarItem(
               icon: FaIcon(
@@ -99,8 +94,8 @@ class _EntityAllModuleState extends State<EntityAllModule> {
               title: Text('Listado')),
         ],
         currentIndex: page,
-        unselectedItemColor: Colors.black,
-        selectedItemColor: Colors.amber[800],
+        unselectedItemColor: Colors.black87,
+        selectedItemColor: Colors.white70,
         onTap: _onItemTapped,
       ),
       body: optionPage[page],

@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
+import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
@@ -13,7 +14,7 @@ import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class AtentionModule extends StatefulWidget {
-    static final String routeName = 'atentionVoluntary';
+  static final String routeName = 'atentionVoluntary';
   @override
   _AtentionModuleState createState() => _AtentionModuleState();
 }
@@ -49,50 +50,34 @@ class _AtentionModuleState extends State<AtentionModule> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final generic = new Generic();
-    final prefs = new PreferensUser();
-Atencion entity = new Atencion();
+  final prefs = new PreferensUser();
+  Atencion entity = new Atencion();
 
   @override
   void initState() {
-      prefs.ultimaPagina = AtentionModule.routeName;
+    prefs.ultimaPagina = AtentionModule.routeName;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Atencion entityData =
-        ModalRoute.of(context).settings.arguments;
-
-    if (entityData != null) entity = entityData;
 
     return Scaffold(
-        key: scaffoldKey,
-       
-        drawer: DrawerCitizen(),
-        body: Stack(
-          children: <Widget>[
-            _crearForm(context),
-          ],
-        ),
-     );
+      key: scaffoldKey,
+      drawer: DrawerCitizen(),
+      body: Stack(
+        children: <Widget>[ _crearForm(context),],
+      ),
+    );
   }
 
- 
-   Widget informacionProfesional(BuildContext context) {
+  Widget informacionProfesional(BuildContext context) {
     return Center(
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 4),
         padding: EdgeInsets.all(15.0),
-        width: MediaQuery.of(context).size.width -20 ,
-       
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          gradient: LinearGradient(colors: <Color>[
-        Color.fromRGBO(243, 124, 18, 1.0),
-        Color.fromRGBO(255, 209, 18, 3.0),
-        Color.fromRGBO(243, 156, 18, 1.0),
-        Color.fromRGBO(243, 223, 18, 1.0)
-      ])),
+        width: MediaQuery.of(context).size.width - 20,
+        decoration: contenedorCabecera(),
         child: Column(
           children: <Widget>[
             Row(
@@ -100,28 +85,8 @@ Atencion entity = new Atencion();
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 imagenProfesional(),
-                SizedBox(width:15.0),
-                RichText(
-                  text: TextSpan(
-                    text: 'Grupo: ${prefs.nombreInstitucion}', // 'Dr Dan MlayahFX',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                     // fontWeight: FontWeight.w600,
-                      height: 1.5,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: '\n' + 'Voluntario(a): ${prefs.nombreUsuario}',
-                        style: TextStyle(
-                          color: Colors.black,
-                         // fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
+                SizedBox(width: 15.0),
+                cabeceraInformativa(),
               ],
             ),
           ],
@@ -132,30 +97,7 @@ Atencion entity = new Atencion();
 
   ImageOvalNetwork imagenProfesional() {
     return ImageOvalNetwork(
-            imageNetworkUrl: prefs.avatarImagen, sizeImage: Size.fromWidth(40));
-  }
-
-  Column crearIconoProfesional(icon, title) {
-    return Column(
-      children: <Widget>[
-        Icon(
-          icon,
-          size: 28,
-          color: Colors.black,
-        ),
-        SizedBox(
-          height: 8.0,
-        ),
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.w300,
-            color: Colors.black,
-          ),
-        ),
-      ],
-    );
+        imageNetworkUrl: prefs.avatarImagen, sizeImage: Size.fromWidth(40));
   }
 
   Widget _crearForm(BuildContext context) {
@@ -167,101 +109,102 @@ Atencion entity = new Atencion();
         child: Column(
           children: <Widget>[
             informacionProfesional(context),
-            SafeArea(
-              child: Container(
-                height: 10.0,
-              ),
+            SizedBox(height: 5.0),
+            contenedorTitulo(
+              context,
+              40.0,
+              'REGISTRO DE ATENCIÓN',
+              FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.white60),
             ),
+            SizedBox(height: 5.0),
             Container(
-              width: size.width * 0.94,
+              width: size.width * 0.95,
               margin: EdgeInsets.symmetric(vertical: 0.0),
-              decoration: _crearContenedorCamposRRSS(),
-              child: _crearCamposRRSS(),
+              decoration: contenedorCampos(),
+              child: _crearCampos(),
             ),
-            Divider(height: 35,),
-           
+            divider(),
+            Text(
+              'IMPORTANTE:',
+              style: kTitleCardStyle,
+              textAlign: TextAlign.left,
+            ),
             Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(width: 20,),
-            Text(
-              '1. Seleccionar los días de atención',
-              style: TextStyle(fontSize: 13, color: Colors.black),
-              textAlign: TextAlign.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  width: 20,
+                ),
+                Text(
+                  '- Seleccionar los días de atención',
+                  style: kSubTitleCardStyle,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(width: 15.0),
+                FaIcon(
+                  FontAwesomeIcons.calendarCheck,
+                  color: AppTheme.themeVino,
+                  size: 15,
+                ),
+              ],
             ),
-            SizedBox(width: 15.0),
-            FaIcon(
-              FontAwesomeIcons.calendarCheck,
-              color: Colors.blue,
-              size: 15,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  width: 25,
+                ),
+                Text(
+                  '- Definir si la atención se realizará el fin de semana.',
+                  style: kSubTitleCardStyle,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(width: 15.0),
+                FaIcon(
+                  FontAwesomeIcons.calendarCheck,
+                  color: AppTheme.themeVino,
+                  size: 15,
+                ),
+              ],
             ),
-          ],
-        ),
-        
-         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(width: 25,),
-            Text(
-              '2. Definir si la atención se realiza fin de semana.',
-              style: TextStyle(fontSize: 13, color: Colors.black),
-              textAlign: TextAlign.center,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  width: 25,
+                ),
+                Text(
+                  '- Se recomienda que los días asignados sean \n cumplidos  por el voluntario.',
+                  style: kSubTitleCardStyle,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(width: 15.0),
+                FaIcon(
+                  FontAwesomeIcons.calendarCheck,
+                  color: AppTheme.themeVino,
+                  size: 15,
+                ),
+              ],
             ),
-            SizedBox(width: 15.0),
-            FaIcon(
-              FontAwesomeIcons.calendarCheck,
-              color: Colors.blue,
-              size: 15,
-            ),
-          ],
-        ),
-      copyRigth(),
+            copyRigth(),
           ],
         ),
       ),
     );
   }
 
-  Widget _crearCamposRRSS() {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-         
-        ),
-        _crearCampos(),
-      ],
-    );
-  }
-
   Widget _crearCampos() {
-    lunes = InputCheckBox('Lun', selectLunes);
-    martes = InputCheckBox('Mar', selectMartes);
-    miercoles = InputCheckBox('Mie', selectMiercoles);
-    jueves = InputCheckBox('Jue', selectJueves);
-    viernes = InputCheckBox('Vie', selectViernes);
-    sabado = InputCheckBox('Sab', selectSabado);
-    domingo = InputCheckBox('Dom', selectDomingo);
+    lunes = InputCheckBox('Lun.', selectLunes);
+    martes = InputCheckBox('Mar.', selectMartes);
+    miercoles = InputCheckBox('Mie.', selectMiercoles);
+    jueves = InputCheckBox('Jue.', selectJueves);
+    viernes = InputCheckBox('Vie.', selectViernes);
+    sabado = InputCheckBox('Sab.', selectSabado);
+    domingo = InputCheckBox('(*) Domingo', selectDomingo);
 
     return Column(
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'HORARIOS DE ATENCION',
-              style: TextStyle(fontSize: 18, color: Colors.black),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(width: 15.0),
-            FaIcon(
-              FontAwesomeIcons.calendarCheck,
-              color: Colors.blue,
-              size: 25,
-            ),
-          ],
-        ),
-        Divider(thickness: 2.0, color: Colors.orange),
+        divider(),
         Row(
           children: <Widget>[
             Expanded(
@@ -289,22 +232,10 @@ Atencion entity = new Atencion();
           ],
         ),
         domingo,
+        divider(),
         _crearBoton(resource.save),
       ],
     );
-  }
-
-  _crearContenedorCamposRRSS() {
-    return BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(35.0),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.black26,
-              blurRadius: 7.0,
-              offset: Offset(0.0, 5.0),
-              spreadRadius: 7.0)
-        ]);
   }
 
   Widget _crearBoton(String text) {
@@ -314,10 +245,13 @@ Atencion entity = new Atencion();
       child: RaisedButton.icon(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: Colors.orange,
+        color: Color.fromRGBO(165, 5, 5, 0.7),
         textColor: Colors.white,
-        label: Text(text),
-        icon: FaIcon(FontAwesomeIcons.edit, color: Colors.white, ),
+        label: Text(
+          text,
+          style: kSubtitleStyle,
+        ),
+        icon: FaIcon(FontAwesomeIcons.save, color: Colors.white),
         onPressed: (_save) ? null : _submit,
       ),
     );
@@ -381,20 +315,16 @@ Atencion entity = new Atencion();
     final dataMap = generic.add(entity, urlAddAtencion);
 
     await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
-    print('resultado:$result  y el idinstitucion');
 
-    if (result == "0") {
-   
-           scaffoldKey.currentState.showSnackBar(messageOk("Se insertó correctamente"));
-    }
-    
+    if (result == "0")
+      scaffoldKey.currentState
+          .showSnackBar(messageOk("Se insertó correctamente"));
     else
-           scaffoldKey.currentState.showSnackBar(messageNOk("Error, vuelta a intentarlo"));
+      scaffoldKey.currentState
+          .showSnackBar(messageNOk("Error, vuelta a intentarlo"));
 
     setState(() {
       _save = false;
     });
-
-    //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
   }
 }

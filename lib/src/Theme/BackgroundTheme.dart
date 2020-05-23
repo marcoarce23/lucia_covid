@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
 
-
-Widget  crearLucia(){
-   return Container(
-     child: Text('Lucia te Cuida.'),
-   );
-}
-
 Widget crearFondoForm(BuildContext context, String imagen) {
     final size = MediaQuery.of(context).size;
 
