@@ -12,6 +12,7 @@ import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Citizen/Entity/AtentionEntityodule.dart';
@@ -119,10 +120,10 @@ class _EntityModuleState extends State<EntityModule> {
   InputDropDown tipoInstitucion;
   InputDropDown ubicacion;
   InputTextField nombre;
-  InputTextField token;
-  InputTextField direccion;
+  InputNumberField token;
+  InputMultilineField direccion;
   InputPhoneField telefono;
-  InputTextField informacion;
+  InputMultilineField informacion;
   InputTextField facebook;
   InputTextField twitter;
   InputUrlField paginaWeb;
@@ -200,7 +201,7 @@ class _EntityModuleState extends State<EntityModule> {
               decoration: _crearContenedorCampos(),
               child: _crearCampos(),
             ),
-            crearLucia(),
+            copyRigth(),
           ],
         ),
       ),
@@ -222,53 +223,53 @@ class _EntityModuleState extends State<EntityModule> {
         FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
         'Nombre de la institución:',
         entity.nombreInstitucion,
-        '');
-    token = InputTextField(
+        'Ingrese el nombre', true);
+    token = InputNumberField(
         FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
-        'INgrese el token:',
+        'Ingrese el número de token:',
         entity.token,
-        'Ej:546AMDEr');
-    direccion = InputTextField(
+        'Ej:0142', true);
+    direccion = InputMultilineField(
         FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
         'Dirección/ubicacion:',
         entity.direccion,
-        '');
+        'Ingrese su dirección/ubicación', true);
     telefono = InputPhoneField(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
         'Telefono de referencia',
         entity.telefono,
-        '');
-    informacion = InputTextField(
+        'Ingrese el número de referencia', true);
+    informacion = InputMultilineField(
         FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
         'Información complementaria:',
         entity.perInformacionComp,
-        '');
+        'Informacióm complementaria', false);
     facebook = InputTextField(
         FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
         'Cuenta Facebook:',
         entity.perFacebbok,
-        '');
+        'Ingrese la cuenta Facebook', false);
     twitter = InputTextField(
         FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
         'Cuenta Twitter:',
         entity.perTwitter,
-        '');
+        'Ingrese la cuenta Twitter', false);
     paginaWeb = InputUrlField(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
         'Pagina Web/block:',
         entity.perPaginaWeb,
-        '');
+        'Página/block oficial',false);
     youtube = InputTextField(
         FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
         'Cuenta YouTube:',
         entity.perYouTube,
-        '');
+        'Ingrese la cuenta YouTube', false);
     email = InputEmailField(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
         'Correo Electronico:',
         entity.perCorreoElectronico,
-        '',
-        'Ingrese su correo electronico');
+        'Ingrese el correo electrónico',
+        'Ingrese su correo electronico', false);
 
     return Column(
       children: <Widget>[
@@ -347,7 +348,7 @@ class _EntityModuleState extends State<EntityModule> {
       child: RaisedButton.icon(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: Colors.blue,
+        color: Colors.orange,
         textColor: Colors.white,
         label: Text(text),
         icon: Icon(Icons.save),
@@ -382,7 +383,7 @@ class _EntityModuleState extends State<EntityModule> {
     entity.perPaginaWeb = paginaWeb.objectValue;
     entity.perYouTube = youtube.objectValue;
     entity.perCorreoElectronico = email.objectValue;
-    entity.usuario = prefs.nombreUsuario;
+    entity.usuario = prefs.userId;
 
     final dataMap = generic.add(entity, urlAddInstitucion);
     await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);

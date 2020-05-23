@@ -22,7 +22,6 @@ import 'package:lucia_covid/src/module/Citizen/Voluntary/FoundVoluntaryModule.da
 import 'package:lucia_covid/src/module/Citizen/Voluntary/VoluntaryModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
 import 'package:lucia_covid/src/module/Map/MapAdressModule.dart';
-import 'package:lucia_covid/src/module/Settings/ConfigurationModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
 
 class HomePageModule extends StatefulWidget {
@@ -259,11 +258,13 @@ class DrawerCitizen extends StatelessWidget {
         CustomListTile(
             Icons.person_pin,
             'Perfil',
-            () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CitizenListInstitucionModule()),
-                )),
+            () => sharedImage('assets/image/twitter.jpg','twitter','twitter.jpg','jpg','imagen de apoyo JPG'),
+            // Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //           builder: (context) => CitizenListInstitucionModule()),
+            //     )
+                ),
         CustomListTile(
             Icons.notification_important,
             'Notificaciones',
@@ -344,7 +345,7 @@ class DrawerCitizen extends StatelessWidget {
                 )),
         CustomListTile(
             Icons.edit_location,
-            'Registro de Instituciones',
+            'Registra tu Institución',
             () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => EntityAllModule()),
@@ -385,14 +386,6 @@ class DrawerCitizen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => CitizenAtentionRegisterModule()),
-                )),
-        CustomListTile(
-            Icons.settings,
-            'Configuración',
-            () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ConfigurationModule()),
                 )),
         CustomListTile(
             Icons.exit_to_app,

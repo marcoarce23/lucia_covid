@@ -8,7 +8,6 @@ import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
-import 'package:lucia_covid/src/Theme/PageRouteTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
@@ -290,34 +289,34 @@ ImageOvalNetwork imagenProfesional() {
   Widget _crearCampos() {
     titulo = InputTextField(
         FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
-        'Titulo del evento:',
-        '',
-        '');
+        'Nombre del evento:',
+        entity.eveTitulo,
+        'Nombre del Evento',true);
     objetivo = InputMultilineField(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
         'Objetivo:',
-        '',
-        '');
+        entity.eveObjetivo,
+        'Objetivo del evento',true);
     dirigidoA = InputMultilineField(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
         'Dirigido A:',
-        '',
-        '');
+        entity.eveDirigidoA,
+        'Dirigido A',true);
     expositor = InputTextField(
         FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
         'Expositor:',
-        '',
-        '');
+        entity.eveExpositor,
+        'Expositor/Disertante',true);
     ubicacion = InputMultilineField(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
-        'Ubicacion:',
-        '',
-        '');
+        'Ubicacion/enlace digital:',
+        entity.eveUbicacion,
+        'Ubicacion/enlace digital',true);
 
     return Column(
       children: <Widget>[
         Text(
-          'REGISTRO DE EVENTOS XXX',
+          'REGISTRO DE EVENTOS INSTITUCIONALES',
           style: TextStyle(fontSize: 20, color: Colors.black),
         ),
         titulo,

@@ -27,8 +27,7 @@ class _CitizenAlertEmergencyState extends State<CitizenAlertEmergency> {
   @override
   void initState() {
     prefs.ultimaPagina = CitizenAlertEmergency.routeName;
-    // TODO: implement initState
-    super.initState();
+     super.initState();
   }
 
   @override

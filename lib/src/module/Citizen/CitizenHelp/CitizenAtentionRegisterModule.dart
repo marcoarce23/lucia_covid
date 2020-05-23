@@ -343,7 +343,7 @@ class _CitizenAtentionRegisterModuleState
           labelText: text,
           icon: Icon(Icons.person_pin, color: Colors.orange),
         ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
+        validator: (value) => validator.validateTextfieldEmpty(value, true),
         onSaved: (value) => hospital.nombre = value,
       ),
     );
@@ -364,7 +364,7 @@ class _CitizenAtentionRegisterModuleState
           labelText: text,
           icon: Icon(Icons.person_outline, color: Colors.orange),
         ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
+        validator: (value) => validator.validateTextfieldEmpty(value, true),
         onSaved: (value) => hospital.nombre = value,
       ),
     );
@@ -384,7 +384,7 @@ class _CitizenAtentionRegisterModuleState
           labelText: text,
           icon: Icon(Icons.phone, color: Colors.orange),
         ),
-        validator: (value) => validator.validateTextfieldEmpty(value),
+        validator: (value) => validator.validateTextfieldEmpty(value, true),
         onSaved: (value) => hospital.nombre = value,
       ),
     );

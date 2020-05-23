@@ -112,13 +112,13 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
   InputEmailField email;
   InputPhoneField telefono;
   InputTextField ci;
-  InputTextField complmementario;
-  InputTextField facebook;
-  InputTextField twitter;
+  InputMultilineField complmementario;
+  InputUrlField facebook;
+  InputUrlField twitter;
   InputUrlField paginaWeb;
   InputDropDown expedido;
   InputSexo sexo;
-     InputTextField  token;
+  InputNumberField  token;
 
   bool _save = false;
   bool esCovid = false;
@@ -203,7 +203,10 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
     // tipoEntidad = InputDropDown(
     //     FaIcon(FontAwesomeIcons.building, color: Colors.orange),
     //     'Institución:', '7', urlGetClasificador + '2');
- token = InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'INgrese el token:', entity.idcovInstitucion.toString(), 'Ej:546AMDEr');
+ token = InputNumberField(
+        FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 
+        'Ingrese el token entregado:', 
+        entity.idaTipopersonal.toString(), 'Ej: 023431', true);
    
     tipoEspecialidad = InputDropDown(
         FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
@@ -217,42 +220,42 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
         urlGetClasificador + '53');
     nombre = InputTextField(
         FaIcon(FontAwesomeIcons.userFriends, color: Colors.orange),
-        'Nombre voluntario:',
+        'Nombre completo voluntario:',
         entity.perNombrepersonal,
-        '.');
+        'Ingrese nombre compelto', true);
     ci = InputTextField(FaIcon(FontAwesomeIcons.idCard, color: Colors.orange),
-        'Documentod e Identidad:', entity.perCI, '.');
+        'Documento Identidad:', entity.perCI, 'Ingrese documento', false);
     telefono = InputPhoneField(
         FaIcon(FontAwesomeIcons.mobileAlt, color: Colors.orange),
         'Telefono de referencia',
         entity.perTelefono,
-        '');
-    complmementario = InputTextField(
+        'Ingrese teléfono', true);
+    complmementario = InputMultilineField(
         FaIcon(FontAwesomeIcons.commentAlt, color: Colors.orange),
         'Información complementaria:',
         entity.perInformacionComplementaria,
-        '.');
+        'Ingrese la información complementaria', false);
     email = InputEmailField(
         FaIcon(FontAwesomeIcons.envelopeOpen, color: Colors.orange),
         'Correo Electronico:',
         entity.perCorreo,
-        '',
-        'Ingrese su correo electronico');
-    facebook = InputTextField(
+        'Ej: correo@gmail.com',
+        'Ingrese su correo electronico', false);
+    facebook = InputUrlField(
         FaIcon(FontAwesomeIcons.facebook, color: Colors.orange),
         'Cuenta Facebook:',
         entity.perFacebbok,
-        '.');
-    twitter = InputTextField(
+        'Ingrese su cuenta Facebook', false);
+    twitter = InputUrlField(
         FaIcon(FontAwesomeIcons.twitter, color: Colors.orange),
         'Cuenta Twitter:',
         entity.perTwitter,
-        '.');
+        'Ingrese su cuenta Twitter', false);
     paginaWeb = InputUrlField(
         FaIcon(FontAwesomeIcons.internetExplorer, color: Colors.orange),
         'Pagina Web/block:',
        entity.perPaginaWeb,
-        '.');
+        'Ingrese su página web/bloc', false);
     sexo = InputSexo();
 
     return FadeInLeft(

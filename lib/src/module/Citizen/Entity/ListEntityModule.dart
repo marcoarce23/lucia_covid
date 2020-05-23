@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
@@ -77,7 +78,6 @@ class _ListEntityModuleState extends State<ListEntityModule> {
                 ListTile(
                   leading: iconEntity(entityItem),
                   title: listEntity(context, entityItem),
-                  trailing: Icon(Icons.arrow_right),
                 ),
               ],
             ),
@@ -103,7 +103,7 @@ class _ListEntityModuleState extends State<ListEntityModule> {
       onDismissed: (value) {
         setState(() {
           final dataMap = generic.add(new RegistroAmigo(),
-              '$urlDeleteInstitucion${item.toString()}/${prefs.idPersonal}');
+              '$urlDeleteInstitucion${item.toString()}/${prefs.userId}');
 
           dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
           print('resultado:$result');
@@ -165,10 +165,62 @@ class _ListEntityModuleState extends State<ListEntityModule> {
                   )
                 ],
               ),
+
+               Wrap(
+                children: <Widget>[
+                  InkWell(
+                    child: FaIcon(
+                      FontAwesomeIcons.phoneVolume,
+                      color: Colors.blue,
+                      size: 25,
+                    ),
+                    onTap: () {
+                      callNumber(int.parse(entityItem.telefono));
+                    },
+                  ),
+                  SizedBox(width: 20.0),
+                  InkWell(
+                    child: FaIcon(
+                      FontAwesomeIcons.comment,
+                      color: Colors.blue,
+                      size: 25,
+                    ),
+                    onTap: () {
+                      sendSMS(int.parse(entityItem.telefono));
+                    },
+                  ),
+                  SizedBox(width: 20.0),
+                  InkWell(
+                    child: FaIcon(
+                      FontAwesomeIcons.mailBulk,
+                      color: Colors.blue,
+                      size: 25,
+                    ),
+                    onTap: () {
+                      sendEmailAdvanced(
+                          entityItem.perCorreoElectronico,
+                          "Colaboración ${entityItem.desInsitucion}",
+                          "Estimad@:  ${entityItem.nombreInstitucion}, favor su colaboración en: ");
+                    },
+                  ),
+                  SizedBox(width: 20.0),
+                  InkWell(
+                    child: FaIcon(
+                      FontAwesomeIcons.whatsapp,
+                      color: Colors.blue,
+                      size: 25,
+                    ),
+                    onTap: () {
+                      callWhatsApp(int.parse(entityItem.telefono));
+                    },
+                  )
+                ],
+              ),
             ],
           ),
         ],
       ),
+      
     );
   }
 

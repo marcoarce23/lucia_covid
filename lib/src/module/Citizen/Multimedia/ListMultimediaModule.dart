@@ -4,10 +4,11 @@ import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
+import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class ListMultimediaModule extends StatefulWidget {
-    static final String routeName = 'lisMultimedia';
+  static final String routeName = 'listMultimedia';
   const ListMultimediaModule({
     Key key,
   }) : super(key: key);
@@ -21,7 +22,7 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
   final prefs = new PreferensUser();
   var result;
 
-@override
+  @override
   void initState() {
     prefs.ultimaPagina = ListMultimediaModule.routeName;
     super.initState();
@@ -30,34 +31,18 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("IMAGENES MULTIMEDIA"),
-          backgroundColor: Color.fromRGBO(22, 23, 22 , 0.4),
-          actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {  
-               showSearch(context: context, delegate: DataSearchMultimedia()  );
-            },
-          )
-        ],
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-           SizedBox(height: 10.0),
-
-            futureItemsEntity(context)
-          ],
-        ),
+     
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[SizedBox(height: 10.0), futureItemsEntity(context)],
+      ),
     );
   }
 
- 
-
   Widget futureItemsEntity(BuildContext context) {
     return FutureBuilder(
-        future: generic.getAll( new Multimedia(), urlGetMultimedia, primaryKeyGetMultimedia),
+        future: generic.getAll(
+            new Multimedia(), urlGetMultimedia + '74', primaryKeyGetMultimedia),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -82,22 +67,21 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
 
           return Container(
             decoration: BoxDecoration(
-        color:  Color.fromRGBO(22, 23, 22 , 0.9),
-        borderRadius: BorderRadius.circular(20.0),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.yellow,
-              blurRadius: 3.0,
-              offset: Offset(5.0, 5.0),
-              spreadRadius: 1.0)
-        ]),
+                color: Color.fromRGBO(22, 23, 22, 0.9),
+                borderRadius: BorderRadius.circular(20.0),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                      color: Colors.yellow,
+                      blurRadius: 3.0,
+                      offset: Offset(5.0, 5.0),
+                      spreadRadius: 1.0)
+                ]),
             child: Column(
               children: <Widget>[
                 ListTile(
                   leading: iconEntity(entityItem),
                   title: listEntity(context, entityItem),
-                  trailing: Icon(Icons.arrow_right),
-                ),
+                 ),
               ],
             ),
           );
@@ -151,14 +135,15 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
                   child: Row(
                     children: <Widget>[
                       Icon(
-                    Icons.gamepad,
-                    color: Colors.green,
-                    size: 15,
-                  ),
+                        Icons.gamepad,
+                        color: Colors.green,
+                        size: 15,
+                      ),
                       Text('Material: ${entityItem.mulTitulo} ',
                           style: TextStyle(color: Colors.red, fontSize: 14)),
                     ],
                   )),
+                  SizedBox(height:5.0),
               Row(
                 children: <Widget>[
                   Icon(
@@ -166,34 +151,22 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
                     color: Colors.green,
                     size: 15,
                   ),
-                  Text(
-                    'Resumen: ${entityItem.mulResumen}',
-                    style: TextStyle(color: Colors.red, fontSize: 14)
-                  )
+                  Text('Resumen: ${entityItem.mulResumen}',
+                      style: TextStyle(color: Colors.red, fontSize: 14))
                 ],
               ),
+              SizedBox(height:5.0),
               Container(
                   child: Text(
-                'Categoria: ${entityItem.idaCategoria}',
+                'inicio: ${entityItem.detFechaInicio} - Conclusión: ${entityItem.detFechaFin}',
                 style: TextStyle(color: Colors.yellow, fontSize: 14),
               )),
-              Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.store_mall_directory,
-                    color: Colors.green,
-                    size: 15,
-                  ),
-                  Text(
-                    'Tipo Material: ${entityItem.idaTIpoMaterial}',
-                    style: TextStyle(color: Colors.yellow, fontSize: 14),
-                  )
-                ],
-              ),
             ],
           ),
         ],
       ),
+
+      
     );
   }
 
@@ -201,17 +174,14 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
     return Container(
         child: Column(
       children: <Widget>[
-        Icon(
-          Icons.person_pin,
-          size: 35,
-          color: Colors.yellow,
-        ),
+        ImageOvalNetwork(
+            imageNetworkUrl: entityItem.mulEnlace,
+            sizeImage: Size.fromWidth(40)),
+            SizedBox(height:3.0),
         Text(
-          '${entityItem.idaTIpoMaterial}',
+          '${entityItem.tipoMaterial}',
           style: TextStyle(
-              fontSize: 11,
-              color: Colors.yellow,
-              fontWeight: FontWeight.w400),
+              fontSize: 11, color: Colors.yellow, fontWeight: FontWeight.w400),
         ),
       ],
     ));

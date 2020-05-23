@@ -7,6 +7,7 @@ import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
@@ -189,7 +190,7 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
         key: formKey,
         child: Column(
           children: <Widget>[
-            informacionProfesional(context),
+         //   informacionProfesional(context),
             SafeArea(
               child: Container(
                 height: 10.0,
@@ -201,7 +202,7 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
               decoration: _crearContenedorCampos(),
               child: _crearCampos(),
             ),
-            crearLucia(),
+           copyRigth(),
           ],
         ),
       ),
@@ -218,13 +219,13 @@ viernes= InputCheckBox('Vie',selectViernes);
 sabado= InputCheckBox('Sab',selectSabado);
 domingo= InputCheckBox('Dom',selectDomingo);
 
-  lunesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
-  martesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
-  miercolesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
-  juevesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
-  viernesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
-  sabadoH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
-  domingoH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30');
+  lunesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30', false);
+  martesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30', false);
+  miercolesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30', false);
+  juevesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30', false);
+  viernesH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30', false);
+  sabadoH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30', false);
+  domingoH= InputTextField(FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ), 'Horarios de atención', '', 'Ej: 08:00  a 13:30', false);
 
     return Column(
       children: <Widget>[

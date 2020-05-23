@@ -76,7 +76,7 @@ class _AgreeLoginModuleState extends State<AgreeLoginModule> {
         'Correo electrónico',
         prefs.correoElectronico,
         'Ingresar su correo electrónico',
-        'ej: cuenta@correo.com');
+        'ej: cuenta@correo.com', true);
 
     return Column(
       children: <Widget>[

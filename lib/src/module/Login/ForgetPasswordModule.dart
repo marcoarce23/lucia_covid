@@ -102,18 +102,18 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         'Correo electrónico',
         '',
         'Ingresar su correo electrónico',
-        'ej: cuenta@correo.com');
+        'ej: cuenta@correo.com', true);
     contrasenia = InputTextPassword(
         FaIcon(FontAwesomeIcons.expeditedssl, color: Colors.orange),
         'Contraseña:',
         '',
-        'Ingrese su contraseña');
+        'Ingrese su contraseña', true);
 
     contrasenia2 = InputTextPassword(
         FaIcon(FontAwesomeIcons.expeditedssl, color: Colors.orange),
         'Repita Contraseña:',
         '',
-        'Repita contraseña');
+        'Repita contraseña', true);
 
     return Column(
       children: <Widget>[
