@@ -93,7 +93,9 @@ class _HomePageModuleState extends State<HomePageModule> {
     //     ));
 
     return Stack(
-      children: <Widget>[gradiente],// Positioned(top: -100.0, child: cajaRosa)],
+      children: <Widget>[
+        gradiente
+      ], // Positioned(top: -100.0, child: cajaRosa)],
     );
   }
 
@@ -140,63 +142,61 @@ class _HomePageModuleState extends State<HomePageModule> {
   }
 
   Widget _botonesRedondeados() {
-    return Table(
-      children: [
-        TableRow(children: [
+    return 
+    
+    Wrap(
+      children: <Widget>[
+           _crearBotonRedondeado(
+                  Colors.blue, Icons.border_all, 'Pedir ayuda', '1'),
+              _crearBotonRedondeado(
+                  Colors.purpleAccent, Icons.directions_bus, 'Urgencias', '2'),
+        
+         _crearBotonRedondeado(
+                  Colors.pinkAccent, Icons.shop, 'Ayuda a un amig@', '3'),
+              _crearBotonRedondeado(
+                  Colors.orange, Icons.insert_drive_file, 'Eventos', '4'),
+        
           _crearBotonRedondeado(
-              Colors.blue, Icons.border_all, 'Pedir ayuda', '1'),
-          _crearBotonRedondeado(
-              Colors.purpleAccent, Icons.directions_bus, 'Urgencias', '2'),
-        ]),
-        TableRow(children: [
-          _crearBotonRedondeado(
-              Colors.pinkAccent, Icons.shop, 'Ayuda a un amig@', '3'),
-          _crearBotonRedondeado(
-              Colors.orange, Icons.insert_drive_file, 'Eventos', '4'),
-        ]),
-        TableRow(children: [
-          _crearBotonRedondeado(
-              Colors.blueAccent, Icons.movie_filter, 'Voluntarios', '5'),
-          _crearBotonRedondeado(
-              Colors.green, Icons.cloud, 'Instituciones', '6'),
-        ]),
+                  Colors.blueAccent, Icons.movie_filter, 'Voluntarios', '5'),
+              _crearBotonRedondeado(
+                  Colors.green, Icons.cloud, 'Instituciones', '6'),
+        
+       
       ],
     );
   }
 
   Widget _crearBotonRedondeado(
       Color color, IconData icono, String texto, String valor) {
-    return ClipRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-        child: Container(
-          height: 100.0,
-          margin: EdgeInsets.all(10.0),
-          decoration: BoxDecoration(
-              color: Colors.white24, //Color.fromRGBO(62, 66, 107, 0.7),
-              borderRadius: BorderRadius.circular(20.0)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              SizedBox(height: 5.0),
-              CircleAvatar(
-                backgroundColor: color,
-                radius: 35.0,
-                child: Icon(icono, color: Colors.white, size: 30.0),
-              ),
+    return InkWell(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => CitizenListInstitucionModule()),
+      ),
+      child: ClipRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+          child: Container(
+            height: 100.0,
+            width: 150,
+            margin: EdgeInsets.all(10.0),
+            decoration: BoxDecoration(
+                color: Colors.white24, //Color.fromRGBO(62, 66, 107, 0.7),
+                borderRadius: BorderRadius.circular(20.0)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                SizedBox(height: 5.0),
+                CircleAvatar(
+                  backgroundColor: color,
+                  radius: 35.0,
+                  child: Icon(icono, color: Colors.white, size: 30.0),
+                ),
+                Text(texto, style: TextStyle(color: Colors.white)),
 
-              InkWell(
-                  splashColor:
-                      AppTheme.backGroundInstitutionPrimary, // inkwell color
-                  child: Text(texto, style: TextStyle(color: color)),
-                  onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                CitizenListInstitucionModule()),
-                      )),
-              // SizedBox( height: 5.0 )
-            ],
+                // SizedBox( height: 5.0 )
+              ],
+            ),
           ),
         ),
       ),
@@ -214,7 +214,6 @@ class DrawerCitizen extends StatelessWidget {
       children: <Widget>[
         DrawerHeader(
           decoration: boxDecoration(),
-                  
           child: Container(
               child: Column(
             children: <Widget>[
@@ -249,13 +248,11 @@ class DrawerCitizen extends StatelessWidget {
             Icons.home,
             'Inicio',
             () => //openWeb('http://mapacovid19.ruta88.net/'),
-            //sharedImage('assets/image/twitter.jpg','twitter','twitter.jpg','jpg','imagen de apoyo JPG'),
-            Navigator.push(
+                //sharedImage('assets/image/twitter.jpg','twitter','twitter.jpg','jpg','imagen de apoyo JPG'),
+                Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => HomePageModule()),
-                )
-                ),
+                  MaterialPageRoute(builder: (context) => HomePageModule()),
+                )),
         CustomListTile(
             Icons.notification_important,
             'Notificaciones',
@@ -319,7 +316,6 @@ class DrawerCitizen extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (context) => VoluntaryAllModule()),
                 )),
-                
         CustomListTile(
             Icons.bubble_chart,
             'Acerca de Lucia Te Cuida',
@@ -336,14 +332,14 @@ class DrawerCitizen extends StatelessWidget {
                       builder: (context) => CitizenEmergencyModule()),
                 )),
         CustomListTile(
-            Icons.map,
-            'Mapa de solicitudes',
-            () =>openWeb('http://mapacovid19.ruta88.net/'),
-            // Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => MapAdressModule()),
-            //     )
-                ),
+          Icons.map,
+          'Mapa de solicitudes',
+          () => openWeb('http://mapacovid19.ruta88.net/'),
+          // Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (context) => MapAdressModule()),
+          //     )
+        ),
         CustomListTile(
             Icons.edit_location,
             'Registra tu Institución',
@@ -351,7 +347,6 @@ class DrawerCitizen extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (context) => EntityAllModule()),
                 )),
-        
         CustomListTile(
             Icons.event_available,
             'Crear Eventos-Entidades',
@@ -364,7 +359,8 @@ class DrawerCitizen extends StatelessWidget {
             'Crear Eventos-Voluntarios',
             () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EventVoluntaryAllModule()),
+                  MaterialPageRoute(
+                      builder: (context) => EventVoluntaryAllModule()),
                 )),
         CustomListTile(
             Icons.image,
