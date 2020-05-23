@@ -1,6 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+
+final kTitleAppBar =  TextStyle(
+            color: Colors.white,
+            fontSize: 17,
+          );
+
+final kTitleCardStyle = TextStyle(
+                      color: Colors.black,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                      height: 1.5,
+                    );
+
+
+
 final kTitleStyle = TextStyle(
   color: Colors.white,
   fontFamily: 'CM Sans Serif',
@@ -70,7 +85,7 @@ return BoxDecoration(
  BoxDecoration  contenedorCabecera() {
     return BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(15.0),
         boxShadow: <BoxShadow>[
           BoxShadow(
               color: Colors.black26,
