@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
+
+
 
 Widget crearFondoForm(BuildContext context, String imagen) {
     final size = MediaQuery.of(context).size;
@@ -86,7 +89,7 @@ Widget crearFondoForm(BuildContext context, String imagen) {
     );
   }
 
-  Widget crearFondo(BuildContext context) {
+  Widget crearFondo1(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
     final fondoModaro = Container(

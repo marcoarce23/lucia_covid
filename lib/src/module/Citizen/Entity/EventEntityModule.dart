@@ -7,11 +7,9 @@ import 'package:intl/intl.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
-import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
-import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
@@ -19,25 +17,20 @@ import 'package:lucia_covid/src/module/Citizen/Entity/ListEventEntity.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
-
-
 class EventAllModule extends StatefulWidget {
-  static final String routeName ='voluntario';
+  static final String routeName = 'voluntario';
   const EventAllModule({Key key}) : super(key: key);
 
-
   @override
-  _EventAllModuleState createState() =>
-      _EventAllModuleState();
+  _EventAllModuleState createState() => _EventAllModuleState();
 }
 
 class _EventAllModuleState extends State<EventAllModule> {
   final prefs = new PreferensUser();
   final generic = new Generic();
   int page = 0;
-  final List<Widget> optionPage = [EventEntityModule(),  ListEventEntity()];
- 
- 
+  final List<Widget> optionPage = [EventEntityModule(), ListEventEntity()];
+
   void _onItemTapped(int index) {
     setState(() {
       page = index;
@@ -53,13 +46,13 @@ class _EventAllModuleState extends State<EventAllModule> {
 
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: AppTheme.themeVino,
         toolbarOpacity: 0.7,
         iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
         elevation: 0,
-        title: Text( "EVENTOS INSTITUCIONALES",  style: kTitleAppBar),
+        title: Text("EVENTOS INSTITUCIONALES", style: kTitleAppBar),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
@@ -74,13 +67,19 @@ class _EventAllModuleState extends State<EventAllModule> {
         backgroundColor: Color.fromRGBO(165, 5, 5, 0.7),
         items: [
           BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.userCircle, size: 25,),
+              icon: FaIcon(
+                FontAwesomeIcons.userCircle,
+                size: 25,
+              ),
               title: Text('Eventos')),
           BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.calendarCheck,size: 25, ),
+              icon: FaIcon(
+                FontAwesomeIcons.calendarCheck,
+                size: 25,
+              ),
               title: Text('Listado eventos')),
         ],
-            currentIndex: page,
+        currentIndex: page,
         unselectedItemColor: Colors.black87,
         selectedItemColor: Colors.white70,
         onTap: _onItemTapped,
@@ -102,7 +101,7 @@ class _EventEntityModuleState extends State<EventEntityModule> {
   bool _save = false;
   String _fecha = '';
   TimeOfDay _time;
-    var result;
+  var result;
   String imagen =
       'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80';
   File foto;
@@ -141,117 +140,27 @@ class _EventEntityModuleState extends State<EventEntityModule> {
     if (entityData != null) entity = entityData;
 
     return Scaffold(
-        key: scaffoldKey,
-
-        body: Stack(
-          children: <Widget>[
-            crearFondoForm(context, imagen),
-            _crearIconAppImagenes(), 
-            _crearIconAppCamara(),
-            _crearForm(context),
-          ],
-        ),
+      key: scaffoldKey,
+      body: Stack(
+        children: <Widget>[
+          crearFondo(context, imagen),
+          _crearForm(context),
+        ],
+      ),
     );
-   
   }
-
-
 
   _crearIconAppImagenes() {
     return IconButton(
-      icon: Icon(Icons.photo_size_select_actual),
+      icon: Icon(Icons.photo_size_select_actual, color: Colors.white),
       onPressed: _seleccionarFoto,
     );
   }
 
   _crearIconAppCamara() {
     return IconButton(
-      icon: Icon(Icons.camera_alt),
+      icon: Icon(Icons.camera_alt, color: Colors.white),
       onPressed: _tomarFoto,
-    );
-  }
-
-
-
-  Widget informacionProfesional(BuildContext context) {
-    return Center(
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 4),
-        padding: EdgeInsets.all(15.0),
-        width: MediaQuery.of(context).size.width - 50,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          color: Colors.black12,
-        ),
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                imagenProfesional(),
-                RichText(
-                  text: TextSpan(
-                    text: 'Corina Balderrama.', // 'Dr Dan MlayahFX',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      height: 1.5,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: '\n' + 'Especialidad: Psicologa',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                      TextSpan(
-                        text: '\n' + 'Grupo: Dejame Ayudarte',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-ImageOvalNetwork imagenProfesional() {
-    return ImageOvalNetwork(
-            imageNetworkUrl: prefs.avatarImagen, sizeImage: Size.fromWidth(40));
-  }
-
-  Column crearIconoProfesional(icon, title) {
-    return Column(
-      children: <Widget>[
-        Icon(
-          icon,
-          size: 28,
-          color: Colors.black,
-        ),
-        SizedBox(
-          height: 8.0,
-        ),
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.w300,
-            color: Colors.black,
-          ),
-        ),
-      ],
     );
   }
 
@@ -263,19 +172,42 @@ ImageOvalNetwork imagenProfesional() {
         key: formKey,
         child: Column(
           children: <Widget>[
-            informacionProfesional(context),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[],
+            ),
             SafeArea(
               child: Container(
-                height: 10.0,
+                height: 125.0,
               ),
             ),
             Container(
-              width: size.width * 0.92,
+              width: size.width * 0.96,
               margin: EdgeInsets.symmetric(vertical: 0.0),
-              decoration: _crearContenedorCampos(),
+              decoration: contenedorCarretes(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Text('CARGAR SU IMAGEN DE SU EVENTO',
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 16.0,
+                      )),
+                  _crearIconAppImagenes(),
+                  _crearIconAppCamara(),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Container(
+              width: size.width * 0.96,
+              margin: EdgeInsets.symmetric(vertical: 0.0),
+              decoration: contenedorCampos(),
               child: _crearCampos(),
             ),
-             copyRigth(),
+            copyRigth(),
           ],
         ),
       ),
@@ -284,37 +216,38 @@ ImageOvalNetwork imagenProfesional() {
 
   Widget _crearCampos() {
     titulo = InputTextField(
-        FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
+        FaIcon(FontAwesomeIcons.fileMedical, color: AppTheme.themeVino),
         'Nombre del evento:',
         entity.eveTitulo,
-        'Nombre del Evento',true);
+        'Nombre del Evento',
+        true);
     objetivo = InputMultilineField(
-        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        FaIcon(FontAwesomeIcons.idBadge, color: AppTheme.themeVino),
         'Objetivo:',
         entity.eveObjetivo,
-        'Objetivo del evento',true);
+        'Objetivo del evento',
+        true);
     dirigidoA = InputMultilineField(
-        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        FaIcon(FontAwesomeIcons.handshake, color: AppTheme.themeVino),
         'Dirigido A:',
         entity.eveDirigidoA,
-        'Dirigido A',true);
+        'Dirigido A',
+        true);
     expositor = InputTextField(
-        FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
+        FaIcon(FontAwesomeIcons.male, color: AppTheme.themeVino),
         'Expositor:',
         entity.eveExpositor,
-        'Expositor/Disertante',true);
+        'Expositor/Disertante',
+        true);
     ubicacion = InputMultilineField(
-        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        FaIcon(FontAwesomeIcons.mapMarkedAlt, color: AppTheme.themeVino),
         'Ubicacion/enlace digital:',
         entity.eveUbicacion,
-        'Ubicacion/enlace digital',true);
+        'Ubicacion/enlace digital',
+        true);
 
     return Column(
       children: <Widget>[
-        Text(
-          'REGISTRO DE EVENTOS INSTITUCIONALES',
-          style: TextStyle(fontSize: 20, color: Colors.black),
-        ),
         titulo,
         objetivo,
         dirigidoA,
@@ -322,6 +255,7 @@ ImageOvalNetwork imagenProfesional() {
         ubicacion,
         _crearFecha('Fecha Evento'),
         _crearTime('hora'),
+        divider(),
         _crearBoton(resource.save),
       ],
     );
@@ -356,7 +290,7 @@ ImageOvalNetwork imagenProfesional() {
           child: child,
         );
       },
-      //   locale: Locale('es', 'ES')
+      //  locale: Locale('es', 'ES')
     );
 
     if (picked != null) {
@@ -383,7 +317,8 @@ ImageOvalNetwork imagenProfesional() {
             hintText: 'Fecha del evento',
             labelText: 'Fecha del evento',
             //    suffixIcon: Icon(Icons.perm_contact_calendar),
-            icon: Icon(Icons.calendar_today, color: Colors.orange)),
+            icon: FaIcon(FontAwesomeIcons.calendarAlt,
+                color: AppTheme.themeVino)),
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
           _selectDate(context);
@@ -405,26 +340,13 @@ ImageOvalNetwork imagenProfesional() {
             hintText: 'Hora del evento',
             labelText: 'Hora del evento (23:59)',
             //    suffixIcon: Icon(Icons.perm_contact_calendar),
-            icon: Icon(Icons.timer, color: Colors.orange)),
+            icon: FaIcon(FontAwesomeIcons.clock, color: AppTheme.themeVino)),
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
           _selectTime(context);
         },
       ),
     );
-  }
-
-  _crearContenedorCampos() {
-    return BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(35.0),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.black26,
-              blurRadius: 7.0,
-              offset: Offset(0.0, 5.0),
-              spreadRadius: 7.0)
-        ]);
   }
 
   Widget _crearBoton(String text) {
@@ -434,10 +356,13 @@ ImageOvalNetwork imagenProfesional() {
       child: RaisedButton.icon(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: Colors.blue,
+        color: Color.fromRGBO(165, 5, 5, 0.7),
         textColor: Colors.white,
-        label: Text(text),
-        icon: Icon(Icons.save),
+        label: Text(
+          text,
+          style: kSubtitleStyle,
+        ),
+        icon: FaIcon(FontAwesomeIcons.save, color: Colors.white),
         onPressed: (_save) ? null : _submit,
       ),
     );

@@ -19,12 +19,9 @@ import 'package:lucia_covid/src/module/Citizen/Voluntary/ListEventModule.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
-
-
 class EventVoluntaryAllModule extends StatefulWidget {
-  static final String routeName ='voluntarioz';
+  static final String routeName = 'voluntarioz';
   const EventVoluntaryAllModule({Key key}) : super(key: key);
-
 
   @override
   _EventVoluntaryAllModuleState createState() =>
@@ -35,9 +32,8 @@ class _EventVoluntaryAllModuleState extends State<EventVoluntaryAllModule> {
   final prefs = new PreferensUser();
   final generic = new Generic();
   int page = 0;
-  final List<Widget> optionPage = [EventModule(),  ListEventModule()];
- 
- 
+  final List<Widget> optionPage = [EventModule(), ListEventModule()];
+
   void _onItemTapped(int index) {
     setState(() {
       page = index;
@@ -53,13 +49,13 @@ class _EventVoluntaryAllModuleState extends State<EventVoluntaryAllModule> {
 
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: AppTheme.themeVino,
         toolbarOpacity: 0.7,
         iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
         elevation: 0,
-        title: Text( "EVENTOS VOLUNTARIOS",  style: kTitleAppBar),
+        title: Text("EVENTOS VOLUNTARIOS", style: kTitleAppBar),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
@@ -74,13 +70,19 @@ class _EventVoluntaryAllModuleState extends State<EventVoluntaryAllModule> {
         backgroundColor: Color.fromRGBO(165, 5, 5, 0.7),
         items: [
           BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.userCircle, size: 25,),
+              icon: FaIcon(
+                FontAwesomeIcons.userCircle,
+                size: 25,
+              ),
               title: Text('Eventos')),
           BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.calendarCheck,size: 25, ),
+              icon: FaIcon(
+                FontAwesomeIcons.calendarCheck,
+                size: 25,
+              ),
               title: Text('Listado eventos')),
         ],
-            currentIndex: page,
+        currentIndex: page,
         unselectedItemColor: Colors.black87,
         selectedItemColor: Colors.white70,
         onTap: _onItemTapped,
@@ -91,7 +93,7 @@ class _EventVoluntaryAllModuleState extends State<EventVoluntaryAllModule> {
 }
 
 class EventModule extends StatefulWidget {
-   static final String routeName = 'eventVoluntary';
+  static final String routeName = 'eventVoluntary';
   @override
   _EventModuleState createState() => _EventModuleState();
 }
@@ -138,159 +140,27 @@ class _EventModuleState extends State<EventModule> {
     if (entityData != null) entity = entityData;
 
     return Scaffold(
-        key: scaffoldKey,
-        appBar: _appBar(),
-        body: Stack(
-          children: <Widget>[
-            crearFondoForm(context, imagen),
-            _crearForm(context),
-          ],
-        ),
-        drawer: DrawerCitizen(),
-    );
-  }
-
-  AppBar _appBar() {
-    return AppBar(
-      title: Text('REGISTRO DE EVENTOS'),
-      backgroundColor: Colors.orange,
-      actions: <Widget>[_crearIconAppImagenes(), _crearIconAppCamara()],
+      key: scaffoldKey,
+      body: Stack(
+        children: <Widget>[
+          crearFondo(context, imagen),
+          _crearForm(context),
+        ],
+      ),
     );
   }
 
   _crearIconAppImagenes() {
     return IconButton(
-      icon: Icon(Icons.photo_size_select_actual),
+      icon: Icon(Icons.photo_size_select_actual, color: Colors.white),
       onPressed: _seleccionarFoto,
     );
   }
 
   _crearIconAppCamara() {
     return IconButton(
-      icon: Icon(Icons.camera_alt),
+      icon: Icon(Icons.camera_alt, color: Colors.white),
       onPressed: _tomarFoto,
-    );
-  }
-
-
-
-// Widget widget() {
-//   return new TimePickerSpinner(
-//     is24HourMode: false,
-//     normalTextStyle: TextStyle(
-//       fontSize: 24,
-//       color: Colors.deepOrange
-//     ),
-//     highlightedTextStyle: TextStyle(
-//       fontSize: 24,
-//       color: Colors.yellow
-//     ),
-//     spacing: 50,
-//     itemHeight: 80,
-//     isForce2Digits: true,
-//     onTimeChange: (time) {
-//       setState(() {
-//         _dateTime = time;
-//       });
-//     },
-//   );
-// }
-
-  Widget informacionProfesional(BuildContext context) {
-    return Center(
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 4),
-        padding: EdgeInsets.all(15.0),
-        width: MediaQuery.of(context).size.width - 50,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          color: Colors.black12,
-        ),
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                imagenProfesional(),
-                RichText(
-                  text: TextSpan(
-                    text: 'Corina Balderrama.', // 'Dr Dan MlayahFX',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      height: 1.5,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: '\n' + 'Especialidad: Psicologa',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                      TextSpan(
-                        text: '\n' + 'Grupo: Dejame Ayudarte',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Image imagenProfesional() {
-    Image imagenAvatar;
-
-    //if (profesionalesDeInstitucion.sexo == "F") {
-    imagenAvatar = Image.asset(
-      "assets/image/circled_user_female.png",
-      width: 50,
-      height: 50,
-      fit: BoxFit.fill,
-    );
-    // } else {
-    //   imagenAvatar = Image.asset(
-    //     "assets/image/circled_user_male.png",
-    //     width: 50,
-    //     height: 50,
-    //     fit: BoxFit.fill,
-    //   );
-    // }
-    return imagenAvatar;
-  }
-
-  Column crearIconoProfesional(icon, title) {
-    return Column(
-      children: <Widget>[
-        Icon(
-          icon,
-          size: 28,
-          color: Colors.black,
-        ),
-        SizedBox(
-          height: 8.0,
-        ),
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.w300,
-            color: Colors.black,
-          ),
-        ),
-      ],
     );
   }
 
@@ -302,19 +172,42 @@ class _EventModuleState extends State<EventModule> {
         key: formKey,
         child: Column(
           children: <Widget>[
-            informacionProfesional(context),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[],
+            ),
             SafeArea(
               child: Container(
-                height: 10.0,
+                height: 125.0,
               ),
             ),
             Container(
-              width: size.width * 0.92,
+              width: size.width * 0.96,
               margin: EdgeInsets.symmetric(vertical: 0.0),
-              decoration: _crearContenedorCampos(),
+              decoration: contenedorCarretes(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Text('CARGAR SU IMAGEN DE SU EVENTO',
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 16.0,
+                      )),
+                  _crearIconAppImagenes(),
+                  _crearIconAppCamara(),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Container(
+              width: size.width * 0.96,
+              margin: EdgeInsets.symmetric(vertical: 0.0),
+              decoration: contenedorCampos(),
               child: _crearCampos(),
             ),
-             copyRigth(),
+            copyRigth(),
           ],
         ),
       ),
@@ -323,37 +216,37 @@ class _EventModuleState extends State<EventModule> {
 
   Widget _crearCampos() {
     titulo = InputTextField(
-        FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
+        FaIcon(FontAwesomeIcons.chalkboardTeacher, color: AppTheme.themeVino),
         'Nombre del evento:',
         entity.eveTitulo,
-        'Nombre del evento', true);
+        'Nombre del Evento',
+        true);
     objetivo = InputMultilineField(
-        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
-        'Objetivo del evento',
+        FaIcon(FontAwesomeIcons.clipboardList, color: AppTheme.themeVino),
+        'Objetivo:',
         entity.eveObjetivo,
-        'Ingrese el Objetivo del evento', true);
+        'Objetivo del evento',
+        true);
     dirigidoA = InputMultilineField(
-        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        FaIcon(FontAwesomeIcons.handshake, color: AppTheme.themeVino),
         'Dirigido A:',
         entity.eveDirigidoA,
-        'Ingrese a quien va a dirigido', true);
+        'Dirigido A',
+        true);
     expositor = InputTextField(
-        FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
-        'Expositor/Disertante:',
+        FaIcon(FontAwesomeIcons.male, color: AppTheme.themeVino),
+        'Expositor:',
         entity.eveExpositor,
-        'Ingrese Expositor/Disertante', true);
+        'Expositor/Disertante',
+        true);
     ubicacion = InputMultilineField(
-        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
-        'Ubicacion/Dirección digital:',
+        FaIcon(FontAwesomeIcons.mapMarkedAlt, color: AppTheme.themeVino),
+        'Ubicacion/enlace digital:',
         entity.eveUbicacion,
-        'Ingrese Ubicación/Dirección digital', true);
-
+        'Ubicacion/enlace digital',
+        true);
     return Column(
       children: <Widget>[
-        Text(
-          'REGISTRO DE EVENTOS XXX',
-          style: TextStyle(fontSize: 20, color: Colors.black),
-        ),
         titulo,
         objetivo,
         dirigidoA,
@@ -361,6 +254,7 @@ class _EventModuleState extends State<EventModule> {
         ubicacion,
         _crearFecha('Fecha Evento'),
         _crearTime('hora'),
+        divider(),
         _crearBoton(resource.save),
       ],
     );
@@ -401,7 +295,10 @@ class _EventModuleState extends State<EventModule> {
     if (picked != null) {
       setState(() {
         _time = picked;
-        _inputFieldTimeController.text = _time.hour.toString() + ':' + _time.minute.toString(); //TimeOfDay(hour: _time.hour, minute: _time.minute).toString();
+        _inputFieldTimeController.text = _time.hour.toString() +
+            ':' +
+            _time.minute
+                .toString(); //TimeOfDay(hour: _time.hour, minute: _time.minute).toString();
       });
     }
   }
@@ -419,7 +316,8 @@ class _EventModuleState extends State<EventModule> {
             hintText: 'Fecha del evento',
             labelText: 'Fecha del evento',
             //    suffixIcon: Icon(Icons.perm_contact_calendar),
-            icon: Icon(Icons.calendar_today, color: Colors.orange)),
+            icon: FaIcon(FontAwesomeIcons.calendarAlt,
+                color: AppTheme.themeVino)),
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
           _selectDate(context);
@@ -441,26 +339,13 @@ class _EventModuleState extends State<EventModule> {
             hintText: 'Hora del evento',
             labelText: 'Hora del evento (23:59)',
             //    suffixIcon: Icon(Icons.perm_contact_calendar),
-            icon: Icon(Icons.timer, color: Colors.orange)),
+            icon: FaIcon(FontAwesomeIcons.clock, color: AppTheme.themeVino)),
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
           _selectTime(context);
         },
       ),
     );
-  }
-
-  _crearContenedorCampos() {
-    return BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(35.0),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.black26,
-              blurRadius: 7.0,
-              offset: Offset(0.0, 5.0),
-              spreadRadius: 7.0)
-        ]);
   }
 
   Widget _crearBoton(String text) {
@@ -470,17 +355,20 @@ class _EventModuleState extends State<EventModule> {
       child: RaisedButton.icon(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: Colors.blue,
+        color: Color.fromRGBO(165, 5, 5, 0.7),
         textColor: Colors.white,
-        label: Text(text),
-        icon: Icon(Icons.save),
+        label: Text(
+          text,
+          style: kSubtitleStyle,
+        ),
+        icon: FaIcon(FontAwesomeIcons.save, color: Colors.white),
         onPressed: (_save) ? null : _submit,
       ),
     );
   }
 
   _submit() async {
-      entity.eveFoto = imagen;
+    entity.eveFoto = imagen;
 
     if (!formKey.currentState.validate()) return;
 
@@ -506,18 +394,16 @@ class _EventModuleState extends State<EventModule> {
     await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
     print('resultado:$result');
 
-  if (result == "0") {
-   
-           scaffoldKey.currentState.showSnackBar(messageOk("Se inserto correctamente"));
-    }
+    if (result == "0")
+      scaffoldKey.currentState
+          .showSnackBar(messageOk("Se inserto correctamente"));
     else
-           scaffoldKey.currentState.showSnackBar(messageNOk("Error, vuelta a intentarlo"));
-           
+      scaffoldKey.currentState
+          .showSnackBar(messageNOk("Error, vuelta a intentarlo"));
+
     setState(() {
       _save = false;
     });
-
-    //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
   }
 
   _seleccionarFoto() async => _procesarImagen(ImageSource.gallery);

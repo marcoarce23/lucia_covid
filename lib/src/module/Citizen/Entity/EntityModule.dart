@@ -157,7 +157,7 @@ class _EntityModuleState extends State<EntityModule> {
       key: scaffoldKey,
       body: Stack(
         children: <Widget>[
-          crearFondoForm(context, imagen),
+          crearFondo(context, imagen),
           _crearForm(context),
         ],
       ),
@@ -175,25 +175,35 @@ class _EntityModuleState extends State<EntityModule> {
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    verticalDirection: VerticalDirection.down,
-                    children: <Widget>[
-                      _crearIconAppImagenes(),
-                      _crearIconAppCamara(),
-                      _crearIconAppMap(),
-                    ]),
+               
               ],
             ),
             SafeArea(
               child: Container(
-                height: 160.0,
+                height: 125.0,
               ),
             ),
+           
+           Container(
+             width: size.width * 0.92,
+              margin: EdgeInsets.symmetric(vertical: 0.0),
+              decoration: contenedorCarretes(),
+             child: Row(
+               mainAxisAlignment: MainAxisAlignment.end,
+               children: <Widget>[
+                 Text('CARGAR UBICACIÓN - IMAGEN',   style: TextStyle( color: Colors.white70, fontSize: 16.0,) ),
+                 _crearIconAppMap(),
+                  _crearIconAppImagenes(),
+                      _crearIconAppCamara(),
+                      
+               ],
+             ),
+           ),
+          SizedBox( height: 5.0,),
             Container(
               width: size.width * 0.92,
               margin: EdgeInsets.symmetric(vertical: 0.0),
-              decoration: _crearContenedorCampos(),
+              decoration: contenedorCampos(),
               child: _crearCampos(),
             ),
             copyRigth(),
@@ -205,62 +215,62 @@ class _EntityModuleState extends State<EntityModule> {
 
   Widget _crearCampos() {
     tipoInstitucion = InputDropDown(
-        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        FaIcon(FontAwesomeIcons.chevronDown, color: AppTheme.themeVino),
         'Tipo institución:',
         '3',
         urlGetClasificador + '2');
     ubicacion = InputDropDown(
-        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        FaIcon(FontAwesomeIcons.chevronDown, color: AppTheme.themeVino),
         'Departamento/ciudad:',
         '60',
         urlGetClasificador + '53');
     nombre = InputTextField(
-        FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
+        FaIcon(FontAwesomeIcons.city, color: AppTheme.themeVino),
         'Nombre de la institución:',
         entity.nombreInstitucion,
         'Ingrese el nombre', true);
     token = InputNumberField(
-        FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
+        FaIcon(FontAwesomeIcons.creditCard, color: AppTheme.themeVino),
         'Ingrese el número de token:',
         entity.token,
         'Ej:0142', true);
     direccion = InputMultilineField(
-        FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
+        FaIcon(FontAwesomeIcons.dotCircle, color: AppTheme.themeVino),
         'Dirección/ubicacion:',
         entity.direccion,
         'Ingrese su dirección/ubicación', true);
     telefono = InputPhoneField(
-        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        FaIcon(FontAwesomeIcons.mobileAlt, color: AppTheme.themeVino),
         'Telefono de referencia',
         entity.telefono,
         'Ingrese el número de referencia', true);
     informacion = InputMultilineField(
-        FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
+        FaIcon(FontAwesomeIcons.listAlt, color: AppTheme.themeVino),
         'Información complementaria:',
         entity.perInformacionComp,
         'Informacióm complementaria', false);
     facebook = InputTextField(
-        FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
+        FaIcon(FontAwesomeIcons.facebook, color: AppTheme.themeVino),
         'Cuenta Facebook:',
         entity.perFacebbok,
         'Ingrese la cuenta Facebook', false);
     twitter = InputTextField(
-        FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
+        FaIcon(FontAwesomeIcons.twitter, color: AppTheme.themeVino),
         'Cuenta Twitter:',
         entity.perTwitter,
         'Ingrese la cuenta Twitter', false);
     paginaWeb = InputUrlField(
-        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        FaIcon(FontAwesomeIcons.edge, color: AppTheme.themeVino),
         'Pagina Web/block:',
         entity.perPaginaWeb,
         'Página/block oficial',false);
     youtube = InputTextField(
-        FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
+        FaIcon(FontAwesomeIcons.youtube, color: AppTheme.themeVino),
         'Cuenta YouTube:',
         entity.perYouTube,
         'Ingrese la cuenta YouTube', false);
     email = InputEmailField(
-        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        FaIcon(FontAwesomeIcons.mailBulk, color: AppTheme.themeVino),
         'Correo Electronico:',
         entity.perCorreoElectronico,
         'Ingrese el correo electrónico',
@@ -268,10 +278,6 @@ class _EntityModuleState extends State<EntityModule> {
 
     return Column(
       children: <Widget>[
-        Text(
-          'INFORMACION GENERAL',
-          style: TextStyle(fontSize: 18, color: Colors.black),
-        ),
         tipoInstitucion,
         ubicacion,
         token,
@@ -279,17 +285,14 @@ class _EntityModuleState extends State<EntityModule> {
         direccion,
         telefono,
         informacion,
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Divider(
-            color: Colors.orange,
-            thickness: 2.0,
-          ),
-        ),
-        Text(
-          'REDES SOCIALES',
-          style: TextStyle(fontSize: 18, color: Colors.black),
-        ),
+  
+       contenedorTitulo(
+              context,
+              40.0,
+              'REDES SOCIALES',
+              FaIcon(FontAwesomeIcons.chromecast, color: Colors.white60),
+            ),
+            SizedBox(height:5.0),
         facebook,
         twitter,
         paginaWeb,
@@ -300,29 +303,19 @@ class _EntityModuleState extends State<EntityModule> {
     );
   }
 
-  _crearContenedorCampos() {
-    return BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(35.0),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.black26,
-              blurRadius: 7.0,
-              offset: Offset(0.0, 5.0),
-              spreadRadius: 7.0)
-        ]);
-  }
+
+
 
   _crearIconAppImagenes() {
     return IconButton(
-      icon: Icon(Icons.photo_size_select_actual, color: Colors.blueGrey,),
+      icon: Icon(Icons.photo_size_select_actual, color: Colors.white,),
       onPressed: _seleccionarFoto,
     );
   }
 
   _crearIconAppMap() {
     return IconButton(
-        icon: Icon(Icons.photo_size_select_actual, color: Colors.blueGrey,),
+        icon: Icon(Icons.map, color: Colors.white,),
         onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => MapAdressModule()),
@@ -331,7 +324,7 @@ class _EntityModuleState extends State<EntityModule> {
 
   _crearIconAppCamara() {
     return IconButton(
-      icon: Icon(Icons.camera_alt, color: Colors.blueGrey,),
+      icon: Icon(Icons.camera_alt, color: Colors.white,),
       onPressed: _tomarFoto,
     );
   }
@@ -343,10 +336,13 @@ class _EntityModuleState extends State<EntityModule> {
       child: RaisedButton.icon(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: Colors.orange,
+        color: Color.fromRGBO(165, 5, 5, 0.7),
         textColor: Colors.white,
-        label: Text(text),
-        icon: Icon(Icons.save),
+        label: Text(
+          text,
+          style: kSubtitleStyle,
+        ),
+        icon: FaIcon(FontAwesomeIcons.save, color: Colors.white),
         onPressed: (_save) ? null : _submit,
       ),
     );

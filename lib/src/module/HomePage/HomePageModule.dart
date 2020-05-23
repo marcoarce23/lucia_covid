@@ -21,7 +21,6 @@ import 'package:lucia_covid/src/module/Citizen/Voluntary/EventModule.dart';
 import 'package:lucia_covid/src/module/Citizen/Voluntary/FoundVoluntaryModule.dart';
 import 'package:lucia_covid/src/module/Citizen/Voluntary/VoluntaryModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
-import 'package:lucia_covid/src/module/Map/MapAdressModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
 
 class HomePageModule extends StatefulWidget {
@@ -79,21 +78,10 @@ class _HomePageModuleState extends State<HomePageModule> {
       decoration: boxDecoration(),
     );
 
-    // final cajaRosa = Transform.rotate(
-    //     angle: -pi / 5.0,
-    //     child: Container(
-    //       height: 360.0,
-    //       width: 360.0,
-    //       decoration: BoxDecoration(
-    //           borderRadius: BorderRadius.circular(80.0),
-    //           gradient: LinearGradient(colors: [
-    //             Color.fromRGBO(134, 179, 247, 1.0),
-    //             Color.fromRGBO(78, 103, 205, 1.0)
-    //           ])),
-    //     ));
-
     return Stack(
-      children: <Widget>[gradiente],// Positioned(top: -100.0, child: cajaRosa)],
+      children: <Widget>[
+        gradiente
+      ], // Positioned(top: -100.0, child: cajaRosa)],
     );
   }
 
@@ -214,7 +202,6 @@ class DrawerCitizen extends StatelessWidget {
       children: <Widget>[
         DrawerHeader(
           decoration: boxDecoration(),
-                  
           child: Container(
               child: Column(
             children: <Widget>[
@@ -233,11 +220,11 @@ class DrawerCitizen extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       prefs.nombreUsuario,
-                      style: TextStyle(color: Colors.black54, fontSize: 18.0),
+                      style: TextStyle(color: Colors.white, fontSize: 18.0),
                     ),
                     Text(
                       prefs.correoElectronico,
-                      style: TextStyle(color: Colors.black87, fontSize: 18.0),
+                      style: TextStyle(color: Colors.white, fontSize: 18.0),
                     ),
                   ],
                 ),
@@ -249,13 +236,11 @@ class DrawerCitizen extends StatelessWidget {
             Icons.home,
             'Inicio',
             () => //openWeb('http://mapacovid19.ruta88.net/'),
-            //sharedImage('assets/image/twitter.jpg','twitter','twitter.jpg','jpg','imagen de apoyo JPG'),
-            Navigator.push(
+                //sharedImage('assets/image/twitter.jpg','twitter','twitter.jpg','jpg','imagen de apoyo JPG'),
+                Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => HomePageModule()),
-                )
-                ),
+                  MaterialPageRoute(builder: (context) => HomePageModule()),
+                )),
         CustomListTile(
             Icons.notification_important,
             'Notificaciones',
@@ -319,7 +304,6 @@ class DrawerCitizen extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (context) => VoluntaryAllModule()),
                 )),
-                
         CustomListTile(
             Icons.bubble_chart,
             'Acerca de Lucia Te Cuida',
@@ -336,14 +320,14 @@ class DrawerCitizen extends StatelessWidget {
                       builder: (context) => CitizenEmergencyModule()),
                 )),
         CustomListTile(
-            Icons.map,
-            'Mapa de solicitudes',
-            () =>openWeb('http://mapacovid19.ruta88.net/'),
-            // Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => MapAdressModule()),
-            //     )
-                ),
+          Icons.map,
+          'Mapa de solicitudes',
+          () => openWeb('http://mapacovid19.ruta88.net/'),
+          // Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (context) => MapAdressModule()),
+          //     )
+        ),
         CustomListTile(
             Icons.edit_location,
             'Registra tu Institución',
@@ -351,7 +335,6 @@ class DrawerCitizen extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (context) => EntityAllModule()),
                 )),
-        
         CustomListTile(
             Icons.event_available,
             'Crear Eventos-Entidades',
@@ -364,7 +347,8 @@ class DrawerCitizen extends StatelessWidget {
             'Crear Eventos-Voluntarios',
             () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EventVoluntaryAllModule()),
+                  MaterialPageRoute(
+                      builder: (context) => EventVoluntaryAllModule()),
                 )),
         CustomListTile(
             Icons.image,
@@ -380,7 +364,7 @@ class DrawerCitizen extends StatelessWidget {
             () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => CitizenAtentionRegisterModule()),
+                      builder: (context) => AtentionCitizenAllModule()),
                 )),
         CustomListTile(
             Icons.exit_to_app,

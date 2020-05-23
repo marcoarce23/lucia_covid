@@ -132,22 +132,20 @@ class _MultimediaModuleState extends State<MultimediaModule> {
   @override
   void initState() {
     prefs.ultimaPagina = MultimediaModule.routeName;
-    prefs.idInsitucion = '1008';
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final Multimedia entityData = ModalRoute.of(context).settings.arguments;
-    //final size = MediaQuery.of(context).size;
-
+  
     if (entityData != null) entity = entityData;
 
     return Scaffold(
       key: scaffoldKey,
       body: Stack(
         children: <Widget>[
-          crearFondoForm(context, imagen),
+          crearFondo(context, imagen),
           _crearForm(context),
         ],
       ),
@@ -156,112 +154,75 @@ class _MultimediaModuleState extends State<MultimediaModule> {
 
   _crearIconAppImagenes() {
     return IconButton(
-      icon: FaIcon(FontAwesomeIcons.images, color: Colors.black87),
+      icon: FaIcon(FontAwesomeIcons.images, color:  Colors.white),
       onPressed: _seleccionarFoto,
     );
   }
 
   _crearIconAppCamara() {
     return IconButton(
-      icon: FaIcon(FontAwesomeIcons.cameraRetro, color: Colors.black87),
+      icon: FaIcon(FontAwesomeIcons.cameraRetro,  color: Colors.white),
       onPressed: _tomarFoto,
     );
   }
 
   _crearIconAppVideo() {
     return IconButton(
-      icon: FaIcon(FontAwesomeIcons.videoSlash, color: Colors.black87, size: 25.0),
+      icon: FaIcon(FontAwesomeIcons.videoSlash,  color: Colors.white),
       onPressed: _pickVideo,
     );
   }
   _crearIconAppPDF() {
     return IconButton(
-      icon: FaIcon(FontAwesomeIcons.solidFilePdf, color: Colors.orange),
+      icon: FaIcon(FontAwesomeIcons.solidFilePdf, color: Colors.white),
       onPressed: _pickPDF,
     );
   }
 
-  Widget informacionProfesional(BuildContext context) {
-    return Center(
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 4),
-        padding: EdgeInsets.all(15.0),
-        width: MediaQuery.of(context).size.width - 50,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          color: Colors.black12,
-        ),
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                //  imagenProfesional(),
-                RichText(
-                  text: TextSpan(
-                    text: 'Corina Balderrama.', // 'Dr Dan MlayahFX',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      height: 1.5,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: '\n' + 'Especialidad: Psicologa',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                      TextSpan(
-                        text: '\n' + 'Grupo: Dejame Ayudarte',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                      TextSpan(
-                        text: '\n' + 'Correo: corina_123@gmail.com',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
+  
   Widget _crearForm(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+   final size = MediaQuery.of(context).size;
 
     return SingleChildScrollView(
       child: Form(
         key: formKey,
         child: Column(
           children: <Widget>[
-            //      informacionProfesional(context),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[],
+            ),
             SafeArea(
               child: Container(
-                height: 160.0,
+                height: 125.0,
               ),
             ),
-            
             Container(
-              width: size.width * 0.92,
+              width: size.width * 0.96,
               margin: EdgeInsets.symmetric(vertical: 0.0),
-              decoration: _crearContenedorCampos(),
+              decoration: contenedorCarretes(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Text('CARGAR MATERIAL',
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 16.0,
+                      )),
+                  _crearIconAppImagenes(),
+                  _crearIconAppCamara(),
+                  _crearIconAppVideo(),
+                  _crearIconAppPDF() ,
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Container(
+              width: size.width * 0.96,
+              margin: EdgeInsets.symmetric(vertical: 0.0),
+              decoration: contenedorCampos(),
               child: _crearCampos(),
             ),
             copyRigth(),
@@ -273,41 +234,37 @@ class _MultimediaModuleState extends State<MultimediaModule> {
 
   Widget _crearCampos() {
     titulo = InputTextField(
-        FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
+        FaIcon(FontAwesomeIcons.chalkboardTeacher, color: AppTheme.themeVino),
         'Nombre del material',
         entity.mulTitulo,
         'Ingrese el nombre del material',
         true);
     resumen = InputTextField(
-        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+          FaIcon(FontAwesomeIcons.clipboardList, color: AppTheme.themeVino),
         'Resumen sobre material',
         entity.mulResumen,
         'Registre resumen sobre el matarial',
         true);
 
     especialidad = InputDropDown(
-        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        FaIcon(FontAwesomeIcons.userMd, color: AppTheme.themeVino),
         'Especialidad:',
         '11',
         urlGetClasificador + '10');
 
     tipoMaterial = InputDropDown(
-        FaIcon(FontAwesomeIcons.userMd, color: Colors.orange),
+        FaIcon(FontAwesomeIcons.userMd, color: AppTheme.themeVino),
         'Tipo Material:',
         '74',
         urlGetClasificador + '73');
 
     return Column(
       children: <Widget>[
-        Text(
-          'REGISTRO DEL MATERIAL',
-          style: TextStyle(fontSize: 20, color: Colors.black),
-        ),
+
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Text('Cargar archivos:'),
-        _crearIconAppImagenes(),
+           _crearIconAppImagenes(),
             _crearIconAppCamara(),
             _crearIconAppVideo(),
             _crearIconAppPDF(),
@@ -319,7 +276,7 @@ class _MultimediaModuleState extends State<MultimediaModule> {
         resumen,
         _crearFechaInicio('Fecha Inicio'),
         _crearFechaFin('Fecha Fin'),
-        // detalle,
+        divider(),
         _crearBoton(resource.save),
       ],
     );
@@ -374,7 +331,8 @@ class _MultimediaModuleState extends State<MultimediaModule> {
             hintText: 'Fecha inicio del material',
             labelText: 'Fecha inicio del material',
             //    suffixIcon: Icon(Icons.perm_contact_calendar),
-            icon: Icon(Icons.calendar_today, color: Colors.orange)),
+            icon: FaIcon(FontAwesomeIcons.calendarAlt,
+                color: AppTheme.themeVino)),
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
           _selectDateInicio(context);
@@ -396,7 +354,8 @@ class _MultimediaModuleState extends State<MultimediaModule> {
             hintText: 'Fecha fin del material',
             labelText: 'Fecha fin del material',
             //    suffixIcon: Icon(Icons.perm_contact_calendar),
-            icon: Icon(Icons.calendar_today, color: Colors.orange)),
+            icon: FaIcon(FontAwesomeIcons.calendarAlt,
+                color: AppTheme.themeVino)),
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
           _selectDateFin(context);
@@ -405,30 +364,20 @@ class _MultimediaModuleState extends State<MultimediaModule> {
     );
   }
 
-  _crearContenedorCampos() {
-    return BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(35.0),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.black26,
-              blurRadius: 7.0,
-              offset: Offset(0.0, 5.0),
-              spreadRadius: 7.0)
-        ]);
-  }
-
-  Widget _crearBoton(String text) {
-    return Container(
+_crearBoton(String text) {
+   return Container(
       padding: EdgeInsets.symmetric(horizontal: 100.0),
       width: MediaQuery.of(context).size.width,
       child: RaisedButton.icon(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: Colors.blue,
+        color: Color.fromRGBO(165, 5, 5, 0.7),
         textColor: Colors.white,
-        label: Text(text),
-        icon: Icon(Icons.save),
+        label: Text(
+          text,
+          style: kSubtitleStyle,
+        ),
+        icon: FaIcon(FontAwesomeIcons.save, color: Colors.white),
         onPressed: (_save) ? null : _submit,
       ),
     );

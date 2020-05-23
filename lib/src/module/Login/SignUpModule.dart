@@ -80,8 +80,10 @@ class _SignUpModuleState extends State<SignUpModule> {
 
   Future<void> handleSignIn() async {
     try {
-      await _googleSignIn.signIn();
-      
+      await _googleSignIn.signIn().then((value) {
+     
+      //Timer(const Duration(milliseconds: 400), );
+
       final dataMap1 = generic.getAll(
           entity, getLogin + '${currentUser.email}', primaryKeyGetLogin);
 
@@ -148,6 +150,8 @@ class _SignUpModuleState extends State<SignUpModule> {
           }
         }
       });
+      }
+      );
     } catch (error) {
       scaffoldKey.currentState
           .showSnackBar(messageNOk('Se produjo un error: ${error.toString()}'));

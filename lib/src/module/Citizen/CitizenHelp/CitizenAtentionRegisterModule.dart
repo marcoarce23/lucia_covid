@@ -4,11 +4,90 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
+import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Util/Validator.dart' as validator;
 import 'package:lucia_covid/src/Util/Resource.dart' as resource;
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
+import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
+
+
+class AtentionCitizenAllModule extends StatefulWidget {
+  static final String routeName = 'atencionClinica';
+  const AtentionCitizenAllModule({Key key}) : super(key: key);
+
+  @override
+  _AtentionCitizenAllModuleState createState() => _AtentionCitizenAllModuleState();
+}
+
+class _AtentionCitizenAllModuleState extends State<AtentionCitizenAllModule> {
+  final prefs = new PreferensUser();
+  final generic = new Generic();
+  int page = 0;
+  final List<Widget> optionPage = [
+    CitizenAtentionRegisterModule(),
+    //ListCitizenHelpModule()
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      page = index;
+    });
+  }
+
+  @override
+  void initState() {
+    prefs.ultimaPagina = AtentionCitizenAllModule.routeName;
+    page = 0;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppTheme.themeVino,
+        toolbarOpacity: 0.7,
+        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+        elevation: 0,
+        title: Text( "ATENCIÓN PACIENTES",  style: kTitleAppBar),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: DataSearchVoluntary());
+            },
+          )
+        ],
+      ),
+      drawer: DrawerCitizen(),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color.fromRGBO(165, 5, 5, 0.7),
+        items: [
+          BottomNavigationBarItem(
+              icon: FaIcon(
+                FontAwesomeIcons.userCircle,
+                size: 25,
+              ),
+              title: Text('Registro')),
+          BottomNavigationBarItem(
+              icon: FaIcon(
+                FontAwesomeIcons.calendarCheck,
+                size: 25,
+              ),
+              title: Text('Atenciones')),
+        ],
+        currentIndex: page,
+        unselectedItemColor: Colors.black87,
+        selectedItemColor: Colors.white70,
+        onTap: _onItemTapped,
+      ),
+      body: optionPage[page],
+    );
+  }
+}
 
 class CitizenAtentionRegisterModule extends StatefulWidget {
   CitizenAtentionRegisterModule({Key key}) : super(key: key);
@@ -181,10 +260,7 @@ class _CitizenAtentionRegisterModuleState
   Widget  _crearCampos(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(
-          'Registro paciente',
-          style: TextStyle(fontSize: 18, color: Colors.black),
-        ),
+
         _crearNombre('Nombre completo'),
         _crearFecha('Fecha de la atención'),
         _crearNombre('Edad'),
@@ -193,6 +269,7 @@ class _CitizenAtentionRegisterModuleState
         _crearUbicacion('Apoyo realizado'),
 
         _crearTipoPrioridad(),
+        divider(),
         _crearBoton(resource.save),
       ],
     );
