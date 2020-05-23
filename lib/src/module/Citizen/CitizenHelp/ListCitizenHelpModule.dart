@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
@@ -18,6 +20,7 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
   final prefs = new PreferensUser();
   var result;
 
+
   @override
   void initState() {
     prefs.ultimaPagina = ListCitizenHelpModule.routeName;
@@ -26,10 +29,28 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[SizedBox(height: 10.0), futureItemsEntity(context)],
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(height: 10.0), 
+          Container(
+              width: size.width * 0.96,
+              margin: EdgeInsets.symmetric(vertical: 0.0),
+          child: contenedorTitulo(
+              context,
+              40.0,
+              'LISTADO DE AYUDA A UN AMIGO',
+              FaIcon(FontAwesomeIcons.userMd, color: Colors.white60),
+            ),
+          ),
+          divider(),
+          futureItemsEntity(context),
+          copyRigth(),
+          
+          ],
       ),
     );
   }
@@ -50,37 +71,56 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
   }
 
   Widget listItemsEntity(BuildContext context, AsyncSnapshot snapshot) {
+    final size = MediaQuery.of(context).size;
+
     return Expanded(
       child: ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         physics: ClampingScrollPhysics(),
         itemCount: snapshot.data.length,
-        itemBuilder: (context, index) {
+        itemBuilder: (context, index) 
+        {
           RegistroAmigo entityItem = snapshot.data[index];
 
-          return Container(
-            decoration: BoxDecoration(
-                color: Color.fromRGBO(22, 23, 22, 0.9),
-                borderRadius: BorderRadius.circular(20.0),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                      color: Colors.yellow,
-                      blurRadius: 3.0,
-                      offset: Offset(5.0, 5.0),
-                      spreadRadius: 1.0)
-                ]),
-            child: Column(
-              children: <Widget>[
-                ListTile(
-                  leading: iconEntity(entityItem),
-                  title: listEntity(context, entityItem),
-                  trailing: Icon(Icons.arrow_right),
+          return Column(
+            children: <Widget>[
+              Container(
+                width: size.width * 0.97,
+                  margin: EdgeInsets.symmetric(vertical: 0.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: <BoxShadow>[
+                       BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 7.0,
+                  offset: Offset(2.0, 3.0),
+                  spreadRadius: 4.0)
+                    ]
+                    ),
+                     
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      leading: iconEntity(entityItem),
+                      title: listEntity(context, entityItem),
+                      trailing: Icon(Icons.arrow_right),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          );
+               
+
+              ),
+              divider(),
+            ],
+           
+          ); 
+
+          
+           
         },
+       
       ),
     );
   }
@@ -121,46 +161,58 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                  width: MediaQuery.of(context).size.width - 160,
+                  width: MediaQuery.of(context).size.width -160,
                   child: Row(
                     children: <Widget>[
                       Icon(
                         Icons.gamepad,
-                        color: Colors.green,
+                        color: AppTheme.themeVino,
                         size: 15,
                       ),
                       Text('Persona: ${entityItem.regPersona} ',
-                          style: TextStyle(color: Colors.red, fontSize: 14)),
+                          style: kTitleCardStyle),
                     ],
                   )),
               Row(
                 children: <Widget>[
                   Icon(
                     Icons.place,
-                    color: Colors.green,
+                    color: AppTheme.themeVino,
                     size: 15,
                   ),
                   Text('Prioridad: ${entityItem.regPrioridad}',
-                      style: TextStyle(color: Colors.red, fontSize: 14))
+                      style: kSubTitleCardStyle)
                 ],
               ),
               Container(
-                  child: Text(
+                  child: Row(
+                    children: <Widget>[
+                      Icon(
+                      Icons.phone_android,
+                      color: AppTheme.themeVino,
+                      size: 15,
+                    ),
+                      Text(
                 'Telefono: ${entityItem.regTelefono}',
-                style: TextStyle(color: Colors.yellow, fontSize: 14),
-              )),
-              Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.store_mall_directory,
-                    color: Colors.green,
-                    size: 15,
-                  ),
-                  Text(
-                    'Ubicacion: ${entityItem.regUbicacion}',
-                    style: TextStyle(color: Colors.yellow, fontSize: 14),
-                  )
-                ],
+                style: kSubTitleCardStyle,
+              ),
+                    ],
+                  )),
+              Container(
+                width: MediaQuery.of(context).size.width ,
+                child: Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.store_mall_directory,
+                      color: AppTheme.themeVino,
+                      size: 15,
+                    ),
+                    Text(
+                      'Ubicacion: ${entityItem.regUbicacion}',
+                      style: kSubTitleCardStyle,
+                    )
+                  ],
+                ),
               ),
             ],
           ),
@@ -175,17 +227,14 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
       children: <Widget>[
         ImageOvalNetwork(
             imageNetworkUrl: prefs.avatarImagen, sizeImage: Size.fromWidth(40)),
+            SizedBox(height: 1.5,),
         Text(
           '${entityItem.regPrioridad}',
           style: TextStyle(
-              fontSize: 11, color: Colors.yellow, fontWeight: FontWeight.w400),
+              fontSize: 12, color: Colors.black87, fontWeight: FontWeight.w400),
         ),
       ],
     ));
   }
 
-  Container dividerLine() {
-    return Container(
-        height: 20, child: VerticalDivider(color: AppTheme.themeColorNaranja));
-  }
 }

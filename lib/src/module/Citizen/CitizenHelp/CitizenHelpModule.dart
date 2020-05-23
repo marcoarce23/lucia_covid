@@ -223,7 +223,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
             ),
             SizedBox(height: 5.0),
             Container(
-              width: size.width * 0.90,
+              width: size.width * 0.93,
               margin: EdgeInsets.symmetric(vertical: 0.0),
               decoration: contenedorCampos(),
               child: _crearCampos(context),

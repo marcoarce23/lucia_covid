@@ -9,12 +9,24 @@ final kTitleAppBar =  TextStyle(
 
 final kTitleCardStyle = TextStyle(
                       color: Colors.black,
-                      fontSize: 17,
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                       height: 1.5,
                     );
 
+final kSubTitleCardStyle = TextStyle(
+                      color: Colors.black87,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                     height: 1.0,
+                    );
 
+final kSubSubTitleCardStyle = TextStyle(
+                      color: Colors.black87,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      height: 1.5,
+                    );
 
 final kTitleStyle = TextStyle(
   color: Colors.white,
@@ -74,10 +86,6 @@ return BoxDecoration(
                     Color.fromRGBO(245, 173, 53, 1.0),
                     Color.fromRGBO(236, 220, 109, 1.0),
                     Color.fromRGBO(70, 191, 167 , 1.0),
-                // Color(0xFF3594DD),
-                // Color(0xFF4563DB),
-                // Color(0xFF5036D5),
-                // Color(0xFF5B16D0),
               ],)
               );
 }
