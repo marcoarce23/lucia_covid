@@ -26,7 +26,9 @@ class _CitizenEmergencyModuleState extends State<CitizenEmergencyModule> {
     PageMedicina(),
     PageCovid(),
     PageMedicmanetos(),
-    PageBonos()
+    PageBonos(),
+    PageAyudaAmigo()
+
   ];
 
   void _onItemTapped(int index) {
@@ -86,6 +88,10 @@ class _CitizenEmergencyModuleState extends State<CitizenEmergencyModule> {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.transfer_within_a_station, size: 24),
                   title: Text('bonos', style: TextStyle(fontSize: 12)),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.face, size: 24),
+                  title: Text('Ayuda Amigo', style: TextStyle(fontSize: 12)),
                 ),
               ],
               currentIndex: page,
@@ -1286,4 +1292,310 @@ class _PageBonosState extends State<PageBonos> {
       ),
     );
   }
+}
+
+class PageAyudaAmigo extends StatefulWidget {
+  PageAyudaAmigo({Key key}) : super(key: key);
+
+  @override
+  _PageAyudaAmigoState createState() => _PageAyudaAmigoState();
+}
+
+class _PageAyudaAmigoState extends State<PageAyudaAmigo> {
+   final generic = new Generic();
+  final prefs = new PreferensUser();
+  RegistrarAyuda registrarAyuda = new RegistrarAyuda();
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Listado de solicitudes de ayuda a personas",
+                style: AppTheme.themeTitulo,
+              ),
+              Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                      padding: EdgeInsets.only(right: 20),
+                      child: FlatButton(
+                        color: AppTheme.themeColorNaranja,
+                        textColor: Colors.white,
+                        disabledColor: Colors.grey,
+                        disabledTextColor: Colors.black,
+                        splashColor: Colors.greenAccent,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CitizenAlertEmergency(
+                                    "-1", prefs.idPersonal)),
+                          );
+                        },
+                        child: Text("Mis atenciones"),
+                      ))),
+              futureSolicitudesAmigo(context),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget futureSolicitudesAmigo(BuildContext context) {
+    return FutureBuilder(
+        future: Generic().getAll(
+            new SolicitudAyuda(),
+            urlGetListaSolicitudesAyudas + '/-1',
+            primaryKeyListaSolicitudesAyudas),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(child: CircularProgressIndicator());
+              break;
+            default:
+              //mostramos los datos
+              return buildItemSolcitud(context, snapshot);
+          }
+        });
+  }
+
+  Widget buildItemSolcitud(BuildContext context, AsyncSnapshot snapshot) {
+    return Container(
+      child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          physics: ClampingScrollPhysics(),
+          itemCount: snapshot.data.length,
+          itemBuilder: (context, index) {
+            SolicitudAyuda item = snapshot.data[index];
+            return itemSolicitud(context, item);
+          }),
+    );
+  }
+
+  Widget itemSolicitud(BuildContext context, SolicitudAyuda solicitudAyuda) {
+    DateTime tempDate =
+        new DateFormat("dd/MM/yyyy").parse(solicitudAyuda.fecha);
+    Color colorCuadro;
+    String detallePrioridad;
+    if (solicitudAyuda.idaPrioridad == "Muy Alta") {
+      colorCuadro = AppTheme.themeColorRojo;
+      detallePrioridad = "Muy alta";
+    } else if (solicitudAyuda.idaPrioridad == "Alta") {
+      colorCuadro = AppTheme.themeColorNaranja;
+      detallePrioridad = "Alta";
+    } else {
+      colorCuadro = AppTheme.themeColorVerde;
+      detallePrioridad = "Media";
+    }
+    return contenidoAtencionSolicitudes(
+        colorCuadro, detallePrioridad, tempDate, solicitudAyuda, context);
+  }
+
+  _submitMedicamentosConcluido(
+      BuildContext context, SolicitudAyuda solicitudAyuda) async {
+    registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
+    registrarAyuda.idaPersonal = int.parse(prefs.idPersonal);
+    registrarAyuda.fecha =
+        DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
+    registrarAyuda.idaEstado = 79; // en concluido
+    registrarAyuda.usuario = prefs.correoElectronico;
+
+    final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyud);
+    var result;
+    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+    if (result == "0") {
+      setState(() {
+        Scaffold.of(context)
+            .showSnackBar(messageOk("Se concluyo la solicitud"));
+      });
+    } else {
+      Scaffold.of(context)
+          .showSnackBar(messageNOk("Ocurrio un error inseperado"));
+    }
+
+    print('resultado:$result');
+  }
+
+  _submitAyudaAmigo(
+      BuildContext context, SolicitudAyuda solicitudAyuda) async {
+    registrarAyuda.idaBotonPanico = solicitudAyuda.idaBotonPanico;
+    registrarAyuda.idaPersonal = int.parse(prefs.idPersonal);
+    registrarAyuda.fecha =
+        DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now());
+    registrarAyuda.idaEstado = 78; // en cursoF
+    registrarAyuda.usuario = prefs.correoElectronico;
+
+    final dataMap = generic.add(registrarAyuda, urlAddSolicitudAyudaAmigo);
+    var result;
+    await dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+    if (result == "0") {
+      setState(() {
+        Scaffold.of(context)
+            .showSnackBar(messageOk("Se puso en atención su solicitud"));
+      });
+    } else {
+      Scaffold.of(context)
+          .showSnackBar(messageNOk("Ocurrio un error inseperado"));
+    }
+
+    print('resultado:$result');
+  }
+
+  Widget contenidoAtencionSolicitudes(
+      Color colorCuadro,
+      String detallePrioridad,
+      DateTime tempDate,
+      SolicitudAyuda solicitudAyuda,
+      BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(1.0),
+      child: Column(
+        children: <Widget>[
+          Container(
+            decoration: new BoxDecoration(boxShadow: [
+              new BoxShadow(
+                color: Colors.black12,
+                blurRadius: 30.0,
+              ),
+            ]),
+            child: Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: Column(
+                      children: <Widget>[
+                        FaIcon(
+                          FontAwesomeIcons.eye,
+                          color: colorCuadro,
+                          size: 30,
+                        ),
+                        Text(
+                          detallePrioridad,
+                          style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w800),
+                        ),
+                      ],
+                    ),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              new DateFormat("dd/MM/yyyy").format(tempDate),
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              new DateFormat("HH:mm").format(tempDate),
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Detalle:",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                          ),
+                        ),
+                        RichText(
+                          overflow: TextOverflow.clip,
+                          text: TextSpan(
+                            text: solicitudAyuda.detalle,
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                          ),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            InkWell(
+                              child: FaIcon(
+                                FontAwesomeIcons.phoneVolume,
+                                size: 20,
+                              ),
+                              onTap: () {
+                                callNumber(solicitudAyuda.telefono);
+                              },
+                            ),
+                            SizedBox(
+                              width: 25,
+                            ),
+                            InkWell(
+                              child: FaIcon(
+                                FontAwesomeIcons.comment,
+                                size: 20,
+                              ),
+                              onTap: () {
+                                sendSMS(solicitudAyuda.telefono);
+                              },
+                            ),
+                            SizedBox(
+                              width: 25,
+                            ),
+                            InkWell(
+                              child: FaIcon(
+                                FontAwesomeIcons.whatsapp,
+                                size: 20,
+                              ),
+                              onTap: () {
+                                callWhatsApp(solicitudAyuda.telefono);
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    trailing: InkWell(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          FaIcon(
+                            FontAwesomeIcons.checkCircle,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                          Text(
+                            "Atender",
+                          )
+                        ],
+                      ),
+                      onTap: () {
+                        _submitAyudaAmigo(context, solicitudAyuda);
+                      },
+                    ),
+                  ),
+                  ButtonBar(
+                    alignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          //contenidoCabecera(context, tempDate, solicitudAyuda),
+          //contenidoFinal(context, solicitudAyuda),
+        ],
+      ),
+    );
+  }
+
 }
