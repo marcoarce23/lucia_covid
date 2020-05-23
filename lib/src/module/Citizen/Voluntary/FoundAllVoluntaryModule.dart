@@ -5,6 +5,7 @@ import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 class FoundAllVoluntaryModule extends StatefulWidget {
@@ -34,28 +35,28 @@ class _FoundAllVoluntaryModuleState extends State<FoundAllVoluntaryModule> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+        backgroundColor: AppTheme.themeVino,
+        toolbarOpacity: 0.7,
+        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
         elevation: 0,
-        title: Text(
-          widget.profesional.profesion,
-          style: TextStyle(
-              color: AppTheme.themeColorNaranja,
-              fontSize: 17,
-              fontWeight: FontWeight.w400),
-        ),
-        //backgroundColor: AppTheme.themeColorNaranja,
+        title: Text(widget.profesional.profesion,
+            style: kTitleAppBar), //backgroundColor: AppTheme.themeColorNaranja,
       ),
       body: SingleChildScrollView(
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          SizedBox(
+            height: 20,
+          ),
           Row(
             children: <Widget>[
               SizedBox(
                 width: 15,
               ),
-              ImageOpaqueNetworkCustomize(widget.profesional.imagenFondo,
-                  Colors.white, Size(100, 100), 0.8, BoxFit.cover),
+              ImageOvalNetwork(
+                  imageNetworkUrl: widget.profesional.imagenFondo,
+                  sizeImage: Size.fromWidth(80)),
               SizedBox(
                 width: 10,
               ),
@@ -75,13 +76,17 @@ class _FoundAllVoluntaryModuleState extends State<FoundAllVoluntaryModule> {
           ),
           Container(
             child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  "Lista de profesionales / voluntarios registrados",
-                  style: AppTheme.themeTitulo,
-                )),
+              padding: EdgeInsets.all(10),
+              child: contenedorTitulo(
+                context,
+                40.0,
+                "Profesionales / Voluntarios".toUpperCase(),
+                FaIcon(FontAwesomeIcons.peopleCarry, color: Colors.white60),
+              ),
+            ),
           ),
           futureCuerpoProfesionales(context),
+          copyRigth(),
         ],
       )),
     );
@@ -90,96 +95,153 @@ class _FoundAllVoluntaryModuleState extends State<FoundAllVoluntaryModule> {
   Widget informacionProfesional(BuildContext context,
       ProfesionalesDeInstitucion profesionalesDeInstitucion) {
     String parametroCovid = profesionalesDeInstitucion.ayudaConCovid;
-    return ListTile(
-      leading: ImageOpaqueNetworkCustomize(profesionalesDeInstitucion.foto,
-          Colors.white, Size(50, 50), 1, BoxFit.cover),
+    return Column(
+      children: <Widget>[
+        ListTile(
+          leading: ImageOvalNetwork(
+              imageNetworkUrl: profesionalesDeInstitucion.foto,
+              sizeImage: Size.fromWidth(60)),
 
-      //imagenProfesional(profesionalesDeInstitucion),
-      title: Text(profesionalesDeInstitucion.tipoProfesion),
-      subtitle: Column(
-        //mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(profesionalesDeInstitucion.nombreProfesional),
-          Opacity(
-            opacity: (parametroCovid == "0") ? 0 : 1,
-            child: Row(
-              children: <Widget>[
-                Image.asset(
-                  "assets/image/COVID-19.png",
-                  width: 20,
-                  height: 20,
-                  fit: BoxFit.fill,
+          subtitle: Column(
+            //mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.person,
+                    color: AppTheme.themeVino,
+                    size: 15,
+                  ),
+                  Text(
+                    "Profesional / Voluntario",
+                    style: kSubTitleCardStyle,
+                  ),
+                ],
+              ),
+              Text(
+                profesionalesDeInstitucion.nombreProfesional,
+                style: kSubTitleCardStyle,
+              ),
+              Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.business,
+                    color: AppTheme.themeVino,
+                    size: 15,
+                  ),
+                  Text(
+                    "Institución",
+                    style: kSubTitleCardStyle,
+                  ),
+                ],
+              ),
+              Text(
+                profesionalesDeInstitucion.nombreInstitucion,
+                style: kSubTitleCardStyle,
+              ),
+              Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.category,
+                    color: AppTheme.themeVino,
+                    size: 15,
+                  ),
+                  Text(
+                    "Especialidad",
+                    style: kSubTitleCardStyle,
+                  ),
+                ],
+              ),
+              Text(
+                profesionalesDeInstitucion.tipoProfesion,
+                style: kSubTitleCardStyle,
+              ),
+              Opacity(
+                opacity: (parametroCovid == "0") ? 0 : 1,
+                child: Row(
+                  children: <Widget>[
+                    Image.asset(
+                      "assets/image/COVID-19.png",
+                      width: 20,
+                      height: 20,
+                      fit: BoxFit.fill,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      "Ayuda con pacientes COVID",
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
+                    )
+                  ],
                 ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  "Ayuda con pacientes COVID",
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
-                )
-              ],
-            ),
-          )
-        ],
-      ),
-      //trailing:crearIconoProfesional(Icons.mail, 'Correo')
-      trailing: Wrap(
-        children: <Widget>[
-          InkWell(
-            child: FaIcon(
-              FontAwesomeIcons.phoneVolume,
-              color: Colors.blue,
-              size: 25,
-            ),
-            onTap: () {
-              callNumber(int.parse(profesionalesDeInstitucion.telefono));
-            },
+              ),
+              Wrap(
+                children: <Widget>[
+                  InkWell(
+                    child: FaIcon(
+                      FontAwesomeIcons.phoneVolume,
+                      color: AppTheme.themeVino,
+                      size: 15,
+                    ),
+                    onTap: () {
+                      callNumber(
+                          int.parse(profesionalesDeInstitucion.telefono));
+                    },
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  InkWell(
+                    child: FaIcon(
+                      FontAwesomeIcons.comment,
+                      color: AppTheme.themeVino,
+                      size: 15,
+                    ),
+                    onTap: () {
+                      sendSMS(int.parse(profesionalesDeInstitucion.telefono));
+                    },
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  InkWell(
+                    child: FaIcon(
+                      FontAwesomeIcons.mailBulk,
+                      color: AppTheme.themeVino,
+                      size: 15,
+                    ),
+                    onTap: () {
+                      sendEmailAdvanced(
+                          profesionalesDeInstitucion.correo,
+                          "Colaboración ${profesionalesDeInstitucion.tipoProfesion}",
+                          "Estimad@:  ${profesionalesDeInstitucion.nombreProfesional}, favor su colaboración en: ");
+                    },
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  InkWell(
+                    child: FaIcon(
+                      FontAwesomeIcons.whatsapp,
+                      color: AppTheme.themeVino,
+                      size: 15,
+                    ),
+                    onTap: () {
+                      callWhatsApp(
+                          int.parse(profesionalesDeInstitucion.telefono));
+                    },
+                  )
+                ],
+              ),
+            ],
           ),
-          SizedBox(
-            width: 15,
-          ),
-          InkWell(
-            child: FaIcon(
-              FontAwesomeIcons.comment,
-              color: Colors.blue,
-              size: 25,
-            ),
-            onTap: () {
-              sendSMS(int.parse(profesionalesDeInstitucion.telefono));
-            },
-          ),
-          SizedBox(
-            width: 15,
-          ),
-          InkWell(
-            child: FaIcon(
-              FontAwesomeIcons.mailBulk,
-              color: Colors.blue,
-              size: 25,
-            ),
-            onTap: () {
-              sendEmailAdvanced(
-                  profesionalesDeInstitucion.correo,
-                  "Colaboración ${profesionalesDeInstitucion.tipoProfesion}",
-                  "Estimad@:  ${profesionalesDeInstitucion.nombreProfesional}, favor su colaboración en: ");
-            },
-          ),
-          SizedBox(
-            width: 15,
-          ),
-          InkWell(
-            child: FaIcon(
-              FontAwesomeIcons.whatsapp,
-              color: Colors.blue,
-              size: 25,
-            ),
-            onTap: () {
-              callWhatsApp(int.parse(profesionalesDeInstitucion.telefono));
-            },
-          )
-        ],
-      ),
+          //trailing:crearIconoProfesional(Icons.mail, 'Correo')
+        ),
+        divider()
+      ],
     );
   }
 

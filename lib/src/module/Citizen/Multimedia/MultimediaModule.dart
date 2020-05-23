@@ -52,6 +52,10 @@ class _MultimediaAllModuleState extends State<MultimediaAllModule> {
   Widget build(BuildContext context) {
    return Scaffold(
       appBar: AppBar(
+
+
+
+        
         backgroundColor: AppTheme.themeVino,
         toolbarOpacity: 0.7,
         iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),

@@ -22,6 +22,8 @@ import 'package:lucia_covid/src/module/Citizen/Voluntary/FoundVoluntaryModule.da
 import 'package:lucia_covid/src/module/Citizen/Voluntary/VoluntaryModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
+import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+
 
 class HomePageModule extends StatefulWidget {
   static final String routeName = 'home';
@@ -45,24 +47,35 @@ class _HomePageModuleState extends State<HomePageModule> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Row(
+
+  backgroundColor: AppTheme.themeVino,
+        toolbarOpacity: 0.7,
+        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+        elevation: 0,
+        title: 
+        Row(
             children: <Widget>[
-              Text("LUCIA TE CUIDA."),
+        Text( "Accesos rápidos",  style: kTitleAppBar),
               SizedBox(width: 10.0),
               FaIcon(
                 FontAwesomeIcons.keybase,
-                color: Colors.black,
+                color: Colors.white,
                 size: 18,
               ),
             ],
-          ),
+          )          
         ),
         body: Stack(
           children: <Widget>[
             _fondoApp(),
             SingleChildScrollView(
-              child: Column(
-                children: <Widget>[_titulos(), _botonesRedondeados()],
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    //_titulos(),
+                    SizedBox(height: 25,),
+                     _botonesRedondeados()],
+                ),
               ),
             )
           ],
@@ -87,21 +100,16 @@ class _HomePageModuleState extends State<HomePageModule> {
 
   Widget _titulos() {
     return SafeArea(
-      child: Container(
-        padding: EdgeInsets.all(15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text('Estamos contigo para ayudarte',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25.0,
-                    fontWeight: FontWeight.bold)),
-            SizedBox(height: 100.0),
-            //   Text('Puedes hacer consultar y pedir ayuda de forma directa', style: TextStyle( color: Colors.white, fontSize: 18.0 )),
-          ],
-        ),
-      ),
+      child:     
+      Container(
+            width: MediaQuery.of(context).size.width ,
+            margin: EdgeInsets.symmetric(vertical: 0.0),
+            child: contenedorTitulo(
+              context,
+              40.0,
+             'Estamos contigo para ayudarte',
+              FaIcon(FontAwesomeIcons.photoVideo, color: Colors.white60),
+            )),
     );
   }
 
@@ -128,63 +136,54 @@ class _HomePageModuleState extends State<HomePageModule> {
   }
 
   Widget _botonesRedondeados() {
-    return Table(
-      children: [
-        TableRow(children: [
-          _crearBotonRedondeado(
-              Colors.blue, Icons.border_all, 'Pedir ayuda', '1'),
-          _crearBotonRedondeado(
-              Colors.purpleAccent, Icons.directions_bus, 'Urgencias', '2'),
-        ]),
-        TableRow(children: [
-          _crearBotonRedondeado(
-              Colors.pinkAccent, Icons.shop, 'Ayuda a un amig@', '3'),
-          _crearBotonRedondeado(
-              Colors.orange, Icons.insert_drive_file, 'Eventos', '4'),
-        ]),
-        TableRow(children: [
-          _crearBotonRedondeado(
-              Colors.blueAccent, Icons.movie_filter, 'Voluntarios', '5'),
-          _crearBotonRedondeado(
-              Colors.green, Icons.cloud, 'Instituciones', '6'),
-        ]),
+    return Wrap(
+      children: <Widget>[
+        _crearBotonRedondeado(
+            Colors.blue, Icons.border_all, 'Pedir ayuda', '1'),
+        _crearBotonRedondeado(
+            Colors.purpleAccent, Icons.directions_bus, 'Urgencias', '2'),
+        _crearBotonRedondeado(
+            Colors.pinkAccent, Icons.shop, 'Ayuda a un amig@', '3'),
+        _crearBotonRedondeado(
+            Colors.orange, Icons.insert_drive_file, 'Eventos', '4'),
+        _crearBotonRedondeado(
+            Colors.blueAccent, Icons.movie_filter, 'Voluntarios', '5'),
+        _crearBotonRedondeado(Colors.green, Icons.cloud, 'Instituciones', '6'),
       ],
     );
   }
 
   Widget _crearBotonRedondeado(
       Color color, IconData icono, String texto, String valor) {
-    return ClipRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-        child: Container(
-          height: 100.0,
-          margin: EdgeInsets.all(10.0),
-          decoration: BoxDecoration(
-              color: Colors.white24, //Color.fromRGBO(62, 66, 107, 0.7),
-              borderRadius: BorderRadius.circular(20.0)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              SizedBox(height: 5.0),
-              CircleAvatar(
-                backgroundColor: color,
-                radius: 35.0,
-                child: Icon(icono, color: Colors.white, size: 30.0),
-              ),
+    return InkWell(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => CitizenListInstitucionModule()),
+      ),
+      child: ClipRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+          child: Container(
+            height: 100.0,
+            width: 150,
+            margin: EdgeInsets.all(10.0),
+            decoration: BoxDecoration(
+                color: Colors.white24, //Color.fromRGBO(62, 66, 107, 0.7),
+                borderRadius: BorderRadius.circular(20.0)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                SizedBox(height: 5.0),
+                CircleAvatar(
+                  backgroundColor: color,
+                  radius: 35.0,
+                  child: Icon(icono, color: Colors.white, size: 30.0),
+                ),
+                Text(texto, style: TextStyle(color: Colors.white)),
 
-              InkWell(
-                  splashColor:
-                      AppTheme.backGroundInstitutionPrimary, // inkwell color
-                  child: Text(texto, style: TextStyle(color: color)),
-                  onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                CitizenListInstitucionModule()),
-                      )),
-              // SizedBox( height: 5.0 )
-            ],
+                // SizedBox( height: 5.0 )
+              ],
+            ),
           ),
         ),
       ),
@@ -224,7 +223,7 @@ class DrawerCitizen extends StatelessWidget {
                     ),
                     Text(
                       prefs.correoElectronico,
-                      style: TextStyle(color: Colors.white, fontSize: 18.0),
+                      style: TextStyle(color: Colors.black87, fontSize: 18.0),
                     ),
                   ],
                 ),

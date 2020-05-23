@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 
 class CitizenEventsDetailModule extends StatefulWidget {
   final EventosItem eventosItem;
@@ -28,16 +29,21 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+
+
+  backgroundColor: AppTheme.themeVino,
+        toolbarOpacity: 0.7,
+        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
         elevation: 0,
-        title: Text(
-          widget.eventosItem.titulo,
-          style: TextStyle(
-              color: AppTheme.themeColorNaranja,
-              fontSize: 17,
-              fontWeight: FontWeight.w400),
-        ),
-        //backgroundColor: AppTheme.themeColorNaranja,
+        title:
+            Text(widget.eventosItem.titulo, style: kTitleAppBar),
+
+
+
+
+        
+       
+        //backgroundColor: Colors.black,
       ),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
@@ -60,7 +66,7 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                 style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 14,
-                    color: AppTheme.themeColorAzul),
+                    color: AppTheme.themeVino),
               ),
               Row(
                 children: <Widget>[
@@ -72,7 +78,7 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
-                        color: AppTheme.themeColorNaranja),
+                        color: Colors.black),
                   ),
                 ],
               ),
@@ -81,7 +87,7 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                 style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 14,
-                    color: AppTheme.themeColorAzul),
+                    color: AppTheme.themeVino),
               ),
               Row(
                 children: <Widget>[
@@ -93,7 +99,7 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
-                        color: AppTheme.themeColorNaranja),
+                        color: Colors.black),
                   ),
                 ],
               ),
@@ -102,7 +108,7 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                 style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 14,
-                    color: AppTheme.themeColorAzul),
+                    color: AppTheme.themeVino),
               ),
               Row(
                 children: <Widget>[
@@ -114,7 +120,7 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
-                        color: AppTheme.themeColorNaranja),
+                        color: Colors.black),
                   ),
                 ],
               ),
@@ -123,7 +129,7 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                 style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 14,
-                    color: AppTheme.themeColorAzul),
+                    color: AppTheme.themeVino),
               ),
               Row(
                 children: <Widget>[
@@ -135,7 +141,7 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
-                        color: AppTheme.themeColorNaranja),
+                        color: Colors.black),
                   ),
                 ],
               ),
@@ -144,7 +150,7 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                 style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 14,
-                    color: AppTheme.themeColorAzul),
+                    color: AppTheme.themeVino),
               ),
               Row(
                 children: <Widget>[
@@ -156,7 +162,7 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
-                        color: AppTheme.themeColorNaranja),
+                        color: Colors.black),
                   ),
                 ],
               ),
@@ -165,7 +171,7 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                 style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 14,
-                    color: AppTheme.themeColorAzul),
+                    color: AppTheme.themeVino),
               ),
               Row(
                 children: <Widget>[
@@ -177,10 +183,11 @@ class _CitizenEventsDetailModuleState extends State<CitizenEventsDetailModule> {
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
-                        color: AppTheme.themeColorNaranja),
+                        color: Colors.black),
                   ),
                 ],
               ),
+              copyRigth(),
             ],
           ),
         ),

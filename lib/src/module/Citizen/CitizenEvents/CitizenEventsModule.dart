@@ -6,6 +6,7 @@ import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/module/HomePage/HomePageModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
@@ -32,21 +33,23 @@ class _CitizenEventsModuleState extends State<CitizenEventsModule> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
+            backgroundColor: AppTheme.themeVino,
+            toolbarOpacity: 0.7,
             iconTheme:
-                IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+                IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
             elevation: 0,
-            title: Text(
-              "Eventos",
-              style: TextStyle(
-                  color: AppTheme.themeColorNaranja,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w400),
-            ),
+            title: Text("Eventos", style: kTitleAppBar),
+
             //backgroundColor: AppTheme.themeColorNaranja,
           ),
           drawer: DrawerCitizen(),
           body: SingleChildScrollView(
-              child: listadoDeNoticias()) //CollapsingList(),
+              child: Column(
+                children: <Widget>[
+                  listadoDeNoticias(),
+                  copyRigth(),
+                ],
+              )) //CollapsingList(),
 
           //ejemploNoticias(),
           ),
@@ -61,9 +64,8 @@ class _CitizenEventsModuleState extends State<CitizenEventsModule> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                "El listado de eventos esta ordenado ascendentemente",
-                style: AppTheme.themeTitulo,
+              SizedBox(
+                height: 15,
               ),
               futureEvento(context),
             ],

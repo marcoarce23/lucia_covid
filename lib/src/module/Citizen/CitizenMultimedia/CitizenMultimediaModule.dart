@@ -9,12 +9,9 @@ import 'package:lucia_covid/src/module/UtilModule/PageViewModule.dart';
 import 'CitizenImageDetailModule.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
-
-
 class CitizenMultimediaModule extends StatefulWidget {
-  static final String routeName ='CiudadanoMultimedia';
+  static final String routeName = 'CiudadanoMultimedia';
   const CitizenMultimediaModule({Key key}) : super(key: key);
-
 
   @override
   _CitizenMultimediaModuleState createState() =>
@@ -26,8 +23,7 @@ class _CitizenMultimediaModuleState extends State<CitizenMultimediaModule> {
   final generic = new Generic();
   int page = 0;
   final List<Widget> optionPage = [PagePicture(), PageVideo(), PageDocuments()];
- 
- 
+
   void _onItemTapped(int index) {
     setState(() {
       page = index;
@@ -45,49 +41,43 @@ class _CitizenMultimediaModuleState extends State<CitizenMultimediaModule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+        backgroundColor: AppTheme.themeVino,
+        toolbarOpacity: 0.7,
+        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
         elevation: 0,
-        title: Text(
-          "Multimedia",
-          style: TextStyle(
-              color: AppTheme.themeColorNaranja,
-              fontSize: 17,
-              fontWeight: FontWeight.w400),
-        ),
-          actions: <Widget>[
+        title: Text("Multimedia", style: kTitleAppBar),
+        actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              showSearch(context: context, delegate: DataSearchMultimedia()  );
+              showSearch(context: context, delegate: DataSearchMultimedia());
             },
           )
         ],
       ),
       drawer: DrawerCitizen(),
-       bottomNavigationBar: BottomNavigationBar(
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.image),
-                  title: Text('Imagenes'),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.videocam),
-                  title: Text('Videos'),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.picture_as_pdf),
-                  title: Text('Documentos'),
-                ),
-              
-              ],
-              currentIndex: page,
-              unselectedItemColor: Colors.black,
-              selectedItemColor: Colors.amber[800],
-              onTap: _onItemTapped,)
-            ,
-     
-          body: optionPage[page],  
-           
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color.fromRGBO(165, 5, 5, 0.7),
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.image),
+            title: Text('Imagenes'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.videocam),
+            title: Text('Videos'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.picture_as_pdf),
+            title: Text('Documentos'),
+          ),
+        ],
+        currentIndex: page,
+        unselectedItemColor: Colors.black87,
+        selectedItemColor: Colors.white70,
+        onTap: _onItemTapped,
+      ),
+      body: optionPage[page],
     );
   }
 }
@@ -104,11 +94,8 @@ class PagePicture extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-             // campoBuscarPorInstitucionCategoria(),
-              Text(
-                "Galería de imagenes",
-                style: AppTheme.themeTitulo,
-              ),
+              // campoBuscarPorInstitucionCategoria(),
+
               futureImagenes(context),
             ],
           ),
@@ -133,11 +120,8 @@ class PagePicture extends StatelessWidget {
 
   Widget futureImagenes(BuildContext context) {
     return FutureBuilder(
-        future: Generic().getAll(
-            new ListaMultimedia(),
-            urlGetListaMultimedia +
-                '/74',
-            primaryKeyListaMultimedia), 
+        future: Generic().getAll(new ListaMultimedia(),
+            urlGetListaMultimedia + '/74', primaryKeyListaMultimedia),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -147,7 +131,8 @@ class PagePicture extends StatelessWidget {
               //mostramos los datos
               if (snapshot.hasData)
                 return buildImage(context, snapshot);
-                else Container();
+              else
+                Container();
           }
         });
   }
@@ -242,10 +227,7 @@ class _PageVideoState extends State<PageVideo> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               //campoBuscarPorInstitucionCategoria(),
-              Text(
-                "Galería de videos",
-                style: AppTheme.themeTitulo,
-              ),
+
               futureVideo(context),
             ],
           ),
@@ -270,11 +252,8 @@ class _PageVideoState extends State<PageVideo> {
 
   Widget futureVideo(BuildContext context) {
     return FutureBuilder(
-        future: Generic().getAll(
-            new ListaMultimedia(),
-            urlGetListaMultimedia +
-                '/75',
-            primaryKeyListaMultimedia),
+        future: Generic().getAll(new ListaMultimedia(),
+            urlGetListaMultimedia + '/75', primaryKeyListaMultimedia),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -341,10 +320,7 @@ class PageDocuments extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               //campoBuscarPorInstitucionCategoria(),
-              Text(
-                "Galería de documentos",
-                style: AppTheme.themeTitulo,
-              ),
+
               futureDocumentos(context),
             ],
           ),
@@ -369,11 +345,8 @@ class PageDocuments extends StatelessWidget {
 
   Widget futureDocumentos(BuildContext context) {
     return FutureBuilder(
-        future: Generic().getAll(
-            new ListaMultimedia(),
-            urlGetListaMultimedia +
-                '/76',
-            primaryKeyListaMultimedia),
+        future: Generic().getAll(new ListaMultimedia(),
+            urlGetListaMultimedia + '/76', primaryKeyListaMultimedia),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:

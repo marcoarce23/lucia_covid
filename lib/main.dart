@@ -84,6 +84,7 @@ class _MyAppState extends State<MyApp> {
       ),
 
       //MULTILENGUAGE
+      /*
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -92,7 +93,7 @@ class _MyAppState extends State<MyApp> {
         const Locale('en', 'US'), // English
         const Locale('es', 'ES'), // Hebrew
       ],
-
+*/
 
      // initialRoute: prefs.ultimaPagina,
     //  home: new FilePickerDemo(),//MapAdressModule(),

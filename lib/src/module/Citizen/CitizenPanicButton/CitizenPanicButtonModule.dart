@@ -6,6 +6,7 @@ import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Citizen/CitizenEmergency/CitizenAlertEmergency.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
@@ -33,16 +34,27 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
+            backgroundColor: AppTheme.themeVino,
+            toolbarOpacity: 0.7,
             iconTheme:
-                IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+                IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
             elevation: 0,
-            title: Text(
-              "Botón de ayuda",
-              style: TextStyle(
-                  color: AppTheme.themeColorNaranja,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w400),
-            ),
+            title: Text("Botón de ayuda", style: kTitleAppBar),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.find_in_page),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            CitizenAlertEmergency(prefs.userId, "-1")),
+                  );
+
+                  ;
+                },
+              )
+            ],
             //backgroundColor: AppTheme.themeColorNaranja,
           ),
 
@@ -52,49 +64,23 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: Text(
-                    "El boton de panico es para notificar a las personas que colaboran al covid",
-                    style: AppTheme.themeTitulo,
-                  ),
-                ),
-                Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                        padding: EdgeInsets.only(right: 20),
-                        child: FlatButton(
-                          color: AppTheme.themeColorNaranja,
-                          textColor: Colors.white,
-                          disabledColor: Colors.grey,
-                          disabledTextColor: Colors.black,
-                          splashColor: Colors.greenAccent,
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CitizenAlertEmergency(
-                                      prefs.userId, "-1")),
-                            );
-                          },
-                          child: Text("Mis solicitudes"),
-                        ))),
                 ButtonPanic(
-                  titulo: "Boton ayuda COVID",
+                  titulo: "Consulta Covid",
                   tipoBoton: "65",
                 ),
                 ButtonPanic(
-                  titulo: "Boton ayuda Medica",
+                  titulo: "Consulta medica",
                   tipoBoton: "64",
                 ),
                 ButtonPanic(
-                  titulo: "Boton para medicamentos",
+                  titulo: "Compra medicamentos - Insumos",
                   tipoBoton: "66",
                 ),
                 ButtonPanic(
-                  titulo: "Boton para bonos",
+                  titulo: "Bonos y otros servicios",
                   tipoBoton: "77",
                 ),
+                copyRigth(),
               ],
             ),
           )),
@@ -154,9 +140,7 @@ class _ButtonPanic extends State<ButtonPanic> {
     botonPanico.idaEstadoSolicitud = 72;
 
     var textStyle = TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.w900,
-        color: AppTheme.themeColorVerde);
+        fontSize: 18, fontWeight: FontWeight.w900, color: AppTheme.themeVino);
 
     return Stack(
       children: <Widget>[
@@ -282,11 +266,7 @@ class _ButtonPanic extends State<ButtonPanic> {
                         ),
                         Center(
                           child: FlatButton(
-                            color: Colors.green,
-                            textColor: Colors.white,
-                            disabledColor: Colors.grey,
-                            disabledTextColor: Colors.black,
-                            splashColor: Colors.greenAccent,
+                            color: AppTheme.themeVino,
                             onPressed: () {
                               _submit();
                               setState(() {

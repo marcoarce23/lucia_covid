@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
@@ -11,46 +12,40 @@ import 'FoundAllVoluntaryModule.dart';
 import 'package:lucia_covid/src/Util/SearchDelegate/DataSearch.dart';
 
 class FoundVoluntaryModule extends StatefulWidget {
-
-  
-static final String routeName ='EncuentraVoluntario';
+  static final String routeName = 'EncuentraVoluntario';
   @override
   _FoundVoluntaryModuleState createState() => _FoundVoluntaryModuleState();
 }
 
 class _FoundVoluntaryModuleState extends State<FoundVoluntaryModule> {
-final prefs = new PreferensUser();
+  final prefs = new PreferensUser();
 
-@override
-void initState() { 
-  prefs.ultimaPagina = FoundVoluntaryModule.routeName;
-  super.initState();
-  
-}
+  @override
+  void initState() {
+    prefs.ultimaPagina = FoundVoluntaryModule.routeName;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
+            backgroundColor: AppTheme.themeVino,
+            toolbarOpacity: 0.7,
             iconTheme:
-                IconThemeData(color: AppTheme.themeColorNaranja, size: 12),
+                IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
             elevation: 0,
-            title: Text(
-              "Encuetra un voluntario",
-              style: TextStyle(
-                  color: AppTheme.themeColorNaranja,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w400),
-            ),
+            title: Text("Encuentra un voluntario", style: kTitleAppBar),
             actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              showSearch(context: context, delegate: DataSearchEncuentraUnAmigo()  );
-            },
-          )
-        ],
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  showSearch(
+                      context: context, delegate: DataSearchEncuentraUnAmigo());
+                },
+              )
+            ],
           ),
           drawer: DrawerCitizen(),
           body: SingleChildScrollView(
@@ -58,10 +53,18 @@ void initState() {
             padding: const EdgeInsets.only(left: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[                
-                Text(
-                  "Listado de categorias de los voluntarios",
-                  style: AppTheme.themeTitulo,
+              children: <Widget>[
+                SizedBox(
+                  height: 15,
+                ),
+                contenedorTitulo(
+                  context,
+                  40.0,
+                  "Voluntarios".toUpperCase(),
+                  FaIcon(FontAwesomeIcons.peopleCarry, color: Colors.white60),
+                ),
+                SizedBox(
+                  height: 15,
                 ),
                 futureCuerpoProfesionales(context),
               ],
@@ -130,12 +133,12 @@ void initState() {
               child: Stack(
                 children: <Widget>[
                   ImageOpaqueNetworkCustomize(
-                      profesional.imagenFondo,
-                      Colors.white,
-                      Size(150, 150),
-                      0.5,
-                      BoxFit.cover,
-                      ),
+                    profesional.imagenFondo,
+                    Colors.white,
+                    Size(150, 150),
+                    0.5,
+                    BoxFit.cover,
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
