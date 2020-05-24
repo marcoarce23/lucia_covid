@@ -54,7 +54,7 @@ class _HomePageModuleState extends State<HomePageModule> {
         title: 
         Row(
             children: <Widget>[
-        Text( "LUCIA TE CUIDA.",  style: kTitleAppBar),
+        Text( "PANTALLA PRINCIPAL.",  style: kTitleAppBar),
               SizedBox(width: 10.0),
               FaIcon(
                 FontAwesomeIcons.keybase,
@@ -75,23 +75,34 @@ class _HomePageModuleState extends State<HomePageModule> {
                    Container(
       child: Column(
         children: <Widget>[
+          SizedBox(height: 10.0,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SizedBox(height: 25.0,),
-              Text('Bienvenido a Lucia Te Cuida', style:kTitleHomeCursiveStyle, ),
+              
+              Text('Bienvenidos a la aplicación', style:kTitleHomeCursiveStyle, ),
             ],
           ),
-           Row(
+      
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text('SSSSS', style:kTitleCursiveStyle, ),
+              
+              Text('de todos.', style:kTitleHomeCursiveStyle, ),
+            ],
+          ),
+
+           Row(
+             mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('Lucia Te Cuida', style:kTitleHomeCursiveStyle, ),
             ],
           ),
 
         ],
       ),
     ),
-                    SizedBox(height: 60.0,),
+                    SizedBox(height: 15.0,),
                      _botonesRedondeados()],
                 ),
               ),
@@ -100,20 +111,6 @@ class _HomePageModuleState extends State<HomePageModule> {
         ),
         drawer: DrawerCitizen(),
         bottomNavigationBar: _bottomNavigationBar(context));
-  }
-  _titulos()
-  {
-    Container(
-      child: Column(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Text('SSSSS'),
-            ],
-          ),
-        ],
-      ),
-    );
   }
 
   Widget _fondoApp() {
@@ -133,10 +130,10 @@ class _HomePageModuleState extends State<HomePageModule> {
   Widget _bottomNavigationBar(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
-          canvasColor: Colors.white, //Color.fromRGBO(55, 57, 84, 1.0),
-          primaryColor: Colors.orange,
+          canvasColor: AppTheme.themeVino, //Color.fromRGBO(55, 57, 84, 1.0),
+          primaryColor: Colors.white,
           textTheme: Theme.of(context).textTheme.copyWith(
-              caption: TextStyle(color: Color.fromRGBO(116, 117, 152, 1.0)))),
+              caption: TextStyle(color: Colors.black87))),
       child: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
@@ -185,8 +182,22 @@ class _HomePageModuleState extends State<HomePageModule> {
             width: 150,
             margin: EdgeInsets.all(10.0),
             decoration: BoxDecoration(
-                color: Colors.white24, //Color.fromRGBO(62, 66, 107, 0.7),
-                borderRadius: BorderRadius.circular(20.0)),
+      gradient: LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomRight,
+    stops: [0.1, 0.4, 0.7, 0.9],
+    colors: [
+      // Color.fromRGBO(142, 12, 3, 0.8),
+      // Color.fromRGBO(232, 78, 68, 1.0),
+      // Color.fromRGBO(168, 18, 8, 0.6),
+      // Color.fromRGBO(196, 66, 58, 1.0),
+      Color.fromRGBO(168, 18, 8, 0.6),
+                Color.fromRGBO(176, 30, 20, 1.0),
+                Color.fromRGBO(168, 18, 8, 0.6),
+                Color.fromRGBO(164, 18, 9, 1.0),
+    ],
+  )),
+              //  borderRadius: BorderRadius.circular(20.0)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
@@ -196,7 +207,7 @@ class _HomePageModuleState extends State<HomePageModule> {
                   radius: 35.0,
                   child: Icon(icono, color: Colors.white, size: 30.0),
                 ),
-                Text(texto, style: TextStyle(color: Colors.white)),
+                Text(texto, style: TextStyle(color:AppTheme.white, fontSize: 15.0)),
 
                 // SizedBox( height: 5.0 )
               ],
