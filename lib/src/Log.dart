@@ -1,28 +1,8 @@
 import 'dart:async';
-import 'dart:convert' show json;
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
-import "package:http/http.dart" as http;
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lucia_covid/src/module/UtilModule/PdfViewer.dart';
-
-GoogleSignIn _googleSignIn = GoogleSignIn(
-  scopes: <String>[
-    'email',
-    'https://www.googleapis.com/auth/contacts.readonly',
-  ],
-);
-
-// void main() {
-//   runApp(
-//     MaterialApp(
-//       title: 'Google Sign In',
-//       home: SignInDemo(),
-//     ),
-//   );
-// }
 
 class SignInDemo1 extends StatefulWidget {
   @override

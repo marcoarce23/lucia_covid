@@ -22,7 +22,6 @@ class _MapAdressModuleState extends State<MapAdressModule> {
  List<Marker> allMarkers = [];
    BitmapDescriptor customIcon;
      Set<Marker> markers;
-       int _currentIndex =0;
 
   @override
   void initState() {

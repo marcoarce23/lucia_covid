@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
-import 'package:lucia_covid/src/Theme/BackgroundTheme.dart';
 import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/InputField/InputFieldWidget.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
@@ -61,7 +60,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         ),
         body: Stack(
           children: <Widget>[
-            crearFondoForm(context, imagen),
+         //   crearFondoForm(context, imagen),
             _crearForm(context),
           ],
         ));

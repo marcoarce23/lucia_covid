@@ -23,7 +23,6 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
   void initState() {
     prefs.ultimaPagina = IntroScreenModule.routeName;
     super.initState();
-    
   }
 
   List<Widget> _buildPageIndicator() {
@@ -56,13 +55,17 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+              end: Alignment.bottomRight,
               stops: [0.1, 0.4, 0.7, 0.9],
               colors: [
-                 Color.fromRGBO(215, 78, 159, 1.0),
-                    Color.fromRGBO(245, 173, 53, 1.0),
-                    Color.fromRGBO(236, 220, 109, 1.0),
-                    Color.fromRGBO(70, 191, 167 , 1.0),
+                Color.fromRGBO(168, 18, 8, 0.6),
+                Color.fromRGBO(176, 30, 20, 1.0),
+                Color.fromRGBO(168, 18, 8, 0.6),
+                Color.fromRGBO(164, 18, 9, 1.0),
+                //  Color.fromRGBO(215, 78, 159, 1.0),
+                //     Color.fromRGBO(245, 173, 53, 1.0),
+                //     Color.fromRGBO(236, 220, 109, 1.0),
+                //     Color.fromRGBO(70, 191, 167 , 1.0),
                 // Color(0xFF3594DD),
                 // Color(0xFF4563DB),
                 // Color(0xFF5036D5),
@@ -71,7 +74,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
             ),
           ),
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 25.0),
+            padding: EdgeInsets.symmetric(vertical: 20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
@@ -87,10 +90,10 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                           child: HomePageModule(),
                         )),
                     child: Text(
-                      'Saltar',
+                      'Iniciar',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20.0,
+                        fontSize: 22.0,
                       ),
                     ),
                   ),
@@ -114,28 +117,56 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                             Center(
                               child: Image(
                                 image: AssetImage(
-                                  'assets/image/onboarding0.png',
+                                  'assets/buu.PNG',
                                 ),
-                                height: 200.0,
-                                width: 200.0,
+                                height: 220.0,
+                                width: 220.0,
                               ),
                             ),
-                            SizedBox(height: 10.0),
                             Text(
-                              'Lucia Te Cuida, una APP para todos.',
+                              'Lucia Te Cuida, es una APP social para tod@s.',
                               style: kTitleStyle,
                             ),
                             SizedBox(height: 15.0),
                             Expanded(
                               child: Column(
                                 children: <Widget>[
-                                  Text(
-                                    'Con esta aplicación móvil, queremos brindar una alternativa para aquellas personas que requieran de una atención médica.\n',
-                                    style: kSubtitleStyle,
+                                  Row(
+                                    children: <Widget>[
+                                      FaIcon(
+                                          FontAwesomeIcons.handHoldingMedical,
+                                          color: AppTheme.white,
+                                          size: 35.0),
+                                      SizedBox(width: 11.0),
+                                      Text(
+                                        'Para todas las personas que requieren \nde una ayuda médica gratuita.',
+                                        style: kSubtitleStyle,
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    'Queremos que formes parte de sta aplicaón para apoyar a todos los que requeiren de un apoyo medico, espiritual. etc',
-                                    style: kSubtitleStyle,
+                                  SizedBox(height: 10.0),
+                                  Row(
+                                    children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.handHoldingHeart,
+                                          color: AppTheme.white, size: 35.0),
+                                      SizedBox(width: 11.0),
+                                      Text(
+                                        'Personas que requieren de apoyo espiritual,\nde motivacional y emocional.',
+                                        style: kSubtitleStyle,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 11.0),
+                                  Row(
+                                    children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.handHoldingWater,
+                                          color: AppTheme.white, size: 35.0),
+                                      SizedBox(width: 10.0),
+                                      Text(
+                                        'Es una aplicación tan humana que pre_\ntende dar una esperanza a las personas.',
+                                        style: kSubtitleStyle,
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -143,8 +174,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                           ],
                         ),
                       ),
-
-                       Padding(
+                      Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,20 +190,47 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                             ),
                             SizedBox(height: 10.0),
                             Text(
-                              'RECOMENDACIONES.',
+                              'QUIENES SOMOS?.',
                               style: kTitleStyle,
                             ),
-                            SizedBox(height: 15.0),
+                            SizedBox(height: 13.0),
                             Expanded(
                               child: Column(
                                 children: <Widget>[
-                                  Text(
-                                    'Somos un grupo de volunarios, que queremos apoyarte, con la aplciacón Lucia te CUida, podemos llegar a tí. \n\n',
-                                    style: kSubtitleStyle,
+                                  Row(
+                                    children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.peopleCarry,
+                                          color: AppTheme.white, size: 35.0),
+                                      SizedBox(width: 10.0),
+                                      Text(
+                                        'Grupo de voluntarios comprometidos\n y dedicados a brindarte un apoyo.',
+                                        style: kSubtitleStyle,
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    'Somos un grupo de volunarios, que queremos apoyarte, con la aplciacón Lucia te CUida, podemos llegar a tí.',
-                                    style: kSubtitleStyle,
+                                  SizedBox(height: 13.0),
+                                  Row(
+                                    children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.peopleArrows,
+                                          color: AppTheme.white, size: 35.0),
+                                      SizedBox(width: 13.0),
+                                      Text(
+                                        'Personas que nos preocupa tu salud,\n nos preocupa tu bienestar.',
+                                        style: kSubtitleStyle,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 13.0),
+                                  Row(
+                                    children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.diagnoses,
+                                          color: AppTheme.white, size: 35.0),
+                                      SizedBox(width: 10.0),
+                                      Text(
+                                        'Grupo de ciudadanos bolivianos que \n convecidos con nuestro trabajo\npodemos hacer a diferencia en tu vida.',
+                                        style: kSubtitleStyle,
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -181,8 +238,6 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                           ],
                         ),
                       ),
-
-
                       Padding(
                         padding: EdgeInsets.all(5.0),
                         child: Column(
@@ -201,22 +256,49 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                             Column(
                               children: <Widget>[
                                 Text(
-                                  'Recomendaciones',
+                                  'SOLO TE PEDIMOS.',
                                   style: kTitleStyle,
                                 ),
                               ],
                             ),
-                            SizedBox(height: 8.0),
+                            SizedBox(height: 12.0),
                             Expanded(
                               child: Column(
                                 children: <Widget>[
-                                  Text(
-                                    'Recoemndacion 1\n',
-                                    style: kSubtitleStyle,
+                                  Row(
+                                    children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.firstAid,
+                                          color: AppTheme.white, size: 30.0),
+                                      SizedBox(width: 10.0),
+                                      Text(
+                                        'Hacer buen uso de la aplicación, el tiempo \ntuyo y el nuestro es valioso.',
+                                        style: kSubtitleStyle,
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    'Recomendacion 2.\n',
-                                    style: kSubtitleStyle,
+                                  SizedBox(height: 12.0),
+                                  Row(
+                                    children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.listUl,
+                                          color: AppTheme.white, size: 30.0),
+                                      SizedBox(width: 10.0),
+                                      Text(
+                                        'Brindar información real y veridica a las \npersonas con las que tengas un contacto \na traves de la aplicación LuciaTeCuida.',
+                                        style: kSubtitleStyle,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 12.0),
+                                  Row(
+                                    children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.users,
+                                          color: AppTheme.white, size: 30.0),
+                                      SizedBox(width: 10.0),
+                                      Text(
+                                        'Difunde el uso de la aplicación con tus \namig@s, familiares y personas para que \npodamos llegar a mas personas.',
+                                        style: kSubtitleStyle,
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -293,7 +375,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                         Text(
                           'Comenzar',
                           style: TextStyle(
-                            color: Colors.black, //Color(0xFF5B16D0),
+                            color: Colors.black,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
                           ),
@@ -301,7 +383,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                         SizedBox(width: 10.0),
                         FaIcon(
                           FontAwesomeIcons.keybase,
-                          color: Colors.blue,
+                          color: AppTheme.themeVino,
                           size: 18,
                         ),
                       ],
@@ -313,5 +395,4 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
           : Text(''),
     );
   }
-
 }

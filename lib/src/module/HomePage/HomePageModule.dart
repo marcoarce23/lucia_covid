@@ -1,7 +1,7 @@
-import 'dart:math';
-import 'dart:ui';
+
 
 import 'package:flutter/material.dart';
+import 'dart:ui';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
@@ -22,7 +22,6 @@ import 'package:lucia_covid/src/module/Citizen/Voluntary/FoundVoluntaryModule.da
 import 'package:lucia_covid/src/module/Citizen/Voluntary/VoluntaryModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
-import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 
 
 class HomePageModule extends StatefulWidget {
@@ -95,21 +94,6 @@ class _HomePageModuleState extends State<HomePageModule> {
       children: <Widget>[
         gradiente
       ], // Positioned(top: -100.0, child: cajaRosa)],
-    );
-  }
-
-  Widget _titulos() {
-    return SafeArea(
-      child:     
-      Container(
-            width: MediaQuery.of(context).size.width ,
-            margin: EdgeInsets.symmetric(vertical: 0.0),
-            child: contenedorTitulo(
-              context,
-              40.0,
-             'Estamos contigo para ayudarte',
-              FaIcon(FontAwesomeIcons.photoVideo, color: Colors.white60),
-            )),
     );
   }
 

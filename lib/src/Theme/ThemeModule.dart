@@ -35,7 +35,7 @@ final kTitleStyle = TextStyle(
   color: Colors.white,
   fontFamily: 'CM Sans Serif',
   fontSize: 26.0,
-  height: 1.5,
+  height: 1.0,
 );
 
 final kSubtitleStyle = TextStyle(

@@ -4,7 +4,6 @@ import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Validator.dart' as validator;
-import 'package:lucia_covid/src/Widget/InputField/MaskEdit.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
 inputDecoration(String hint, String text, Icon icon, bool valida){
