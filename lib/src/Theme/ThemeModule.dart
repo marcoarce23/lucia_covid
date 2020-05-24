@@ -45,9 +45,9 @@ final kSubtitleStyle = TextStyle(
 );
 
 final kTitleHomeCursiveStyle = TextStyle(
-  color: Colors.white,
+  color: Colors.black87,
   fontFamily: 'Dancing',
-  fontSize: 26.0,
+  fontSize: 28.0,
   height: 1.5,
 );
 
@@ -164,17 +164,17 @@ boxDecorationAccesos() {
     end: Alignment.bottomRight,
     stops: [0.1, 0.4, 0.7, 0.9],
     colors: [
-      // Color.fromRGBO(142, 12, 3, 0.8),
-      // Color.fromRGBO(232, 78, 68, 1.0),
-      // Color.fromRGBO(168, 18, 8, 0.6),
+      Color.fromRGBO(255, 253, 253, 0.8),
+      Color.fromRGBO(252, 250, 250, 1.0),
+      Color.fromRGBO(248, 245, 245, 0.6),
       // Color.fromRGBO(196, 66, 58, 1.0),
       
       
       
-      Color.fromRGBO(168, 18, 8, 0.6),
-                Color.fromRGBO(176, 30, 20, 1.0),
-                Color.fromRGBO(168, 18, 8, 0.6),
-                Color.fromRGBO(164, 18, 9, 1.0),
+      // Color.fromRGBO(168, 18, 8, 0.6),
+      //           Color.fromRGBO(176, 30, 20, 1.0),
+      //           Color.fromRGBO(168, 18, 8, 0.6),
+      //           Color.fromRGBO(164, 18, 9, 1.0),
     ],
   ));
 }
