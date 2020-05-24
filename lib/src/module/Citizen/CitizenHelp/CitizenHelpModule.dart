@@ -329,8 +329,10 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
     print('resultado:$result');
 
     if (result == "0") {
-      Navigator.of(context).push(CupertinoPageRoute(
-          builder: (BuildContext context) => ListCitizenHelpModule()));
+      scaffoldKey.currentState
+          .showSnackBar(messageOk("Se registro correctamente."));
+     // Navigator.of(context).push(CupertinoPageRoute(
+      //    builder: (BuildContext context) => ListCitizenHelpModule()));
     } else
       scaffoldKey.currentState
           .showSnackBar(messageNOk("Error, vuelta a intentarlo"));

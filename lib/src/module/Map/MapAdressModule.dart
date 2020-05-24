@@ -55,7 +55,7 @@ class _MapAdressModuleState extends State<MapAdressModule> {
           width: MediaQuery.of(context).size.width,
           child: GoogleMap(
             initialCameraPosition:
-                CameraPosition(target: LatLng(-16.5132967736163, -68.12992248684166), zoom: 25.0),
+                CameraPosition(target: LatLng(-16.5132967736163, -68.12992248684166), zoom: 11.0),
           markers: markers,
             mapType: MapType.hybrid,
               onTap: (pos) {

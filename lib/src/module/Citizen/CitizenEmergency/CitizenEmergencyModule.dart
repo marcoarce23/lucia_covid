@@ -120,7 +120,7 @@ class _PageMedicinaState extends State<PageMedicina> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "Listado de solicitudes para ayuda con MEDICINA",
+                "SOLICITUDES PARA AYUDA CON MEDICINA",
                 style: AppTheme.themeTitulo,
               ),
               Align(

@@ -39,10 +39,10 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
             iconTheme:
                 IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
             elevation: 0,
-            title: Text("Botón de ayuda", style: kTitleAppBar),
+            title: Text("BOTON DE AYUDA", style: kTitleAppBar),
             actions: <Widget>[
               IconButton(
-                icon: Icon(Icons.find_in_page),
+                icon: Icon(Icons.search),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -65,19 +65,19 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
             child: Column(
               children: <Widget>[
                 ButtonPanic(
-                  titulo: "Consulta Covid",
+                  titulo: "CONSULTA COVID",
                   tipoBoton: "65",
                 ),
                 ButtonPanic(
-                  titulo: "Consulta medica",
+                  titulo: "CONSULTA MÉDICA",
                   tipoBoton: "64",
                 ),
                 ButtonPanic(
-                  titulo: "Compra medicamentos - Insumos",
+                  titulo: "COMPRA MEDICAMENTOS - INSUMOS",
                   tipoBoton: "66",
                 ),
                 ButtonPanic(
-                  titulo: "Bonos y otros servicios",
+                  titulo: "BONOS Y OTROS SERVICIOS",
                   tipoBoton: "77",
                 ),
                 copyRigth(),
@@ -173,7 +173,7 @@ class _ButtonPanic extends State<ButtonPanic> {
                         ),
                         Align(
                           alignment: Alignment.topLeft,
-                          child: Text(" Prioridad:",
+                          child: Text(" Selecione su Prioridad:",
                               style: TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.w700)),
                         ),
@@ -237,9 +237,9 @@ class _ButtonPanic extends State<ButtonPanic> {
                           decoration: InputDecoration(
                             labelStyle:
                                 TextStyle(fontSize: 14, color: Colors.black),
-                            labelText: "Detalle",
+                            labelText: "Ingrese Detalle/Inquietud",
                             border: InputBorder.none,
-                            hintText: 'Ingrese alguna observacion',
+                            hintText: 'Ingrese su inquietud',
                             hintStyle:
                                 TextStyle(fontSize: 14, color: Colors.black),
                           ),
@@ -275,7 +275,7 @@ class _ButtonPanic extends State<ButtonPanic> {
                                         .format(DateTime.now());
                               });
                             },
-                            child: Icon(Icons.pan_tool),
+                            child: Icon(Icons.pan_tool, color: Colors.white),
                           ),
                         )
                       ],
