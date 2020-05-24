@@ -32,6 +32,7 @@ import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:lucia_covid/src/module/Map/MapAdressModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
+import 'package:lucia_covid/src/module/SplashScreen/SplashScreenModule.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -98,7 +99,7 @@ class _MyAppState extends State<MyApp> {
      // initialRoute: prefs.ultimaPagina,
     //  home: new FilePickerDemo(),//MapAdressModule(),
 //home: new SignInDemo(),
-home: new HomePageModule(),//FilePickerDemo(),
+home: new SplashScreenModule(),//FilePickerDemo(),
 
         routes: <String, WidgetBuilder>{
         'login': (BuildContext context) => new SignUpModule(),
