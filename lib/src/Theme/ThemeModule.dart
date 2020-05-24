@@ -44,6 +44,13 @@ final kSubtitleStyle = TextStyle(
   height: 1.2,
 );
 
+final kTitleHomeCursiveStyle = TextStyle(
+  color: Colors.white,
+  fontFamily: 'Dancing',
+  fontSize: 26.0,
+  height: 1.5,
+);
+
 final kTitleCursiveStyle = TextStyle(
   color: Colors.black,
   fontFamily: 'Dancing',
@@ -138,10 +145,36 @@ boxDecoration() {
     end: Alignment.bottomRight,
     stops: [0.1, 0.4, 0.7, 0.9],
     colors: [
-      Color.fromRGBO(142, 12, 3, 0.8),
-      Color.fromRGBO(232, 78, 68, 1.0),
+      // Color.fromRGBO(142, 12, 3, 0.8),
+      // Color.fromRGBO(232, 78, 68, 1.0),
+      // Color.fromRGBO(168, 18, 8, 0.6),
+      // Color.fromRGBO(196, 66, 58, 1.0),
       Color.fromRGBO(168, 18, 8, 0.6),
-      Color.fromRGBO(196, 66, 58, 1.0),
+                Color.fromRGBO(176, 30, 20, 1.0),
+                Color.fromRGBO(168, 18, 8, 0.6),
+                Color.fromRGBO(164, 18, 9, 1.0),
+    ],
+  ));
+}
+
+boxDecorationAccesos() {
+  return BoxDecoration(
+      gradient: LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomRight,
+    stops: [0.1, 0.4, 0.7, 0.9],
+    colors: [
+      // Color.fromRGBO(142, 12, 3, 0.8),
+      // Color.fromRGBO(232, 78, 68, 1.0),
+      // Color.fromRGBO(168, 18, 8, 0.6),
+      // Color.fromRGBO(196, 66, 58, 1.0),
+      
+      
+      
+      Color.fromRGBO(168, 18, 8, 0.6),
+                Color.fromRGBO(176, 30, 20, 1.0),
+                Color.fromRGBO(168, 18, 8, 0.6),
+                Color.fromRGBO(164, 18, 9, 1.0),
     ],
   ));
 }

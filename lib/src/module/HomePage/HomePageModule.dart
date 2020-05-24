@@ -54,7 +54,7 @@ class _HomePageModuleState extends State<HomePageModule> {
         title: 
         Row(
             children: <Widget>[
-        Text( "Accesos rápidos",  style: kTitleAppBar),
+        Text( "LUCIA TE CUIDA.",  style: kTitleAppBar),
               SizedBox(width: 10.0),
               FaIcon(
                 FontAwesomeIcons.keybase,
@@ -71,8 +71,27 @@ class _HomePageModuleState extends State<HomePageModule> {
               child: Center(
                 child: Column(
                   children: <Widget>[
-                    //_titulos(),
-                    SizedBox(height: 25,),
+                   // _titulos(),
+                   Container(
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(height: 25.0,),
+              Text('Bienvenido a Lucia Te Cuida', style:kTitleHomeCursiveStyle, ),
+            ],
+          ),
+           Row(
+            children: <Widget>[
+              Text('SSSSS', style:kTitleCursiveStyle, ),
+            ],
+          ),
+
+        ],
+      ),
+    ),
+                    SizedBox(height: 60.0,),
                      _botonesRedondeados()],
                 ),
               ),
@@ -82,12 +101,26 @@ class _HomePageModuleState extends State<HomePageModule> {
         drawer: DrawerCitizen(),
         bottomNavigationBar: _bottomNavigationBar(context));
   }
+  _titulos()
+  {
+    Container(
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Text('SSSSS'),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _fondoApp() {
     final gradiente = Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: boxDecoration(),
+      decoration: boxDecorationAccesos(),
     );
 
     return Stack(
