@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lucia_covid/src/Util/Resource.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
 import 'package:splashscreen/splashscreen.dart';
 
@@ -15,7 +14,7 @@ class SplashScreenModuleState extends State<SplashScreenModule> {
       seconds: 7,
       navigateAfterSeconds: new SignUpModule(),
      
-      photoSize: 250,
+      photoSize: 210,
       image: Image(
         image: AssetImage('assets/fondo.png') ,       
         fit: BoxFit.cover,

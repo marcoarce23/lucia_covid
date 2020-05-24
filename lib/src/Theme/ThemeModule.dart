@@ -5,6 +5,20 @@ import 'package:lucia_covid/src/Util/Util.dart';
 
 final prefs = new PreferensUser();
 
+final kTitleSigIn = TextStyle(
+  color: Colors.black87,
+  fontFamily: 'Dancing',
+  fontSize: 32.0,
+  height: 1.5,
+);
+
+final kSubTitleSigIn = TextStyle(
+  color: Colors.black87,
+  fontFamily: 'Dancing',
+  fontSize: 27.0,
+  height: 1.5,
+);
+
 final kTitleAppBar = TextStyle(
   color: Colors.white,
   fontSize: 17,
@@ -73,7 +87,7 @@ final kTitleCursive2Style = TextStyle(
 final kTitleCursive3Style = TextStyle(
   color: Colors.black,
   fontFamily: 'Dancing4',
-  fontSize: 22.0,
+  fontSize: 20.0,
   height: 1.5,
 );
 
@@ -159,10 +173,11 @@ boxDecoration() {
 
 boxDecorationAccesos() {
   return BoxDecoration(
+    borderRadius: BorderRadius.circular(20.0),
       gradient: LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomRight,
-    stops: [0.1, 0.4, 0.7, 0.9],
+    stops: [0.1, 0.4, 0.7],
     colors: [
       Color.fromRGBO(255, 253, 253, 0.8),
       Color.fromRGBO(252, 250, 250, 1.0),

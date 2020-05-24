@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
@@ -36,7 +37,7 @@ class _SignUpModuleState extends State<SignUpModule> {
   String result2;
   var result;
   var result1;
-  
+
   GoogleSignInAccount currentUser;
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['profile', 'email']);
 
@@ -61,10 +62,12 @@ class _SignUpModuleState extends State<SignUpModule> {
     String idunique;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      platformImei =  await ImeiPlugin.getImei(shouldShowRequestPermissionRationale: false);
+      platformImei =
+          await ImeiPlugin.getImei(shouldShowRequestPermissionRationale: false);
       idunique = await ImeiPlugin.getId();
     } catch (error) {
-       scaffoldKey.currentState.showSnackBar(messageNOk('Se produjo un error: ${error.toString()}'));
+      scaffoldKey.currentState
+          .showSnackBar(messageNOk('Se produjo un error: ${error.toString()}'));
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -81,60 +84,25 @@ class _SignUpModuleState extends State<SignUpModule> {
   Future<void> handleSignIn() async {
     try {
       await _googleSignIn.signIn().then((value) {
-     
-      //Timer(const Duration(milliseconds: 400), );
+        //Timer(const Duration(milliseconds: 400), );
 
-      final dataMap1 = generic.getAll(
-          entity, getLogin + '${currentUser.email}', primaryKeyGetLogin);
+        final dataMap1 = generic.getAll(
+            entity, getLogin + '${currentUser.email}', primaryKeyGetLogin);
 
-      dataMap1.then((value) {
-        if (value.length > 0) {
-          for (int i = 0; i < value.length; i++) {
-            entity = value[i];
-          }
-          prefs.imei = entity.imei;
-          prefs.nombreUsuario = entity.nombrePersona;
-          prefs.correoElectronico = entity.correo;
-          prefs.avatarImagen = entity.avatar;
+        dataMap1.then((value) {
+          if (value.length > 0) {
+            for (int i = 0; i < value.length; i++) {
+              entity = value[i];
+            }
+            prefs.imei = entity.imei;
+            prefs.nombreUsuario = entity.nombrePersona;
+            prefs.correoElectronico = entity.correo;
+            prefs.avatarImagen = entity.avatar;
 
-          prefs.nombreInstitucion = entity.nombreInstitucion;
-          prefs.idInsitucion = entity.idInstitucion;
-          prefs.idPersonal = entity.idPersonal;
-          prefs.userId = entity.idUsuario;
-
-          Navigator.push(
-              context,
-              PageTransition(
-                curve: Curves.bounceOut,
-                type: PageTransitionType.rotate,
-                alignment: Alignment.topCenter,
-                child: IntroScreenModule(),
-              ));
-        } else {
-          entity.idUsuario = currentUser.id;
-          entity.idInstitucion = '-1';
-          entity.nombrePersona = currentUser.displayName;
-          entity.nombreInstitucion = '-1';
-          entity.usuario = currentUser.email;
-          entity.correo = currentUser.email;
-          entity.avatar = (currentUser.photoUrl == null)
-              ? 'https://definicionyque.es/wp-content/uploads/2017/11/Medicina_Preventiva.jpg'
-              : currentUser.photoUrl;
-          entity.password = '-1';
-          entity.tokenDispositivo = prefs.token;
-          entity.imei = _platformImei;
-          entity.primeraVez = '-1';
-
-          final dataMap = generic.add(entity, urlAddSignIn);
-          dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
-          //     print('resultado:$result ');
-
-          if (result != "-1") {
-            prefs.imei = _platformImei;
-            prefs.nombreUsuario = currentUser.displayName;
-            prefs.correoElectronico = currentUser.email;
-            prefs.avatarImagen = currentUser.photoUrl;
-            prefs.userId = result;
+            prefs.nombreInstitucion = entity.nombreInstitucion;
+            prefs.idInsitucion = entity.idInstitucion;
+            prefs.idPersonal = entity.idPersonal;
+            prefs.userId = entity.idUsuario;
 
             Navigator.push(
                 context,
@@ -142,16 +110,49 @@ class _SignUpModuleState extends State<SignUpModule> {
                   curve: Curves.bounceOut,
                   type: PageTransitionType.rotate,
                   alignment: Alignment.topCenter,
-                  child: AgreeLoginModule(),
+                  child: IntroScreenModule(),
                 ));
           } else {
-            scaffoldKey.currentState.showSnackBar(
-                messageNOk("Se produjo un error, vuelta a intentarlo"));
+            entity.idUsuario = currentUser.id;
+            entity.idInstitucion = '-1';
+            entity.nombrePersona = currentUser.displayName;
+            entity.nombreInstitucion = '-1';
+            entity.usuario = currentUser.email;
+            entity.correo = currentUser.email;
+            entity.avatar = (currentUser.photoUrl == null)
+                ? 'https://definicionyque.es/wp-content/uploads/2017/11/Medicina_Preventiva.jpg'
+                : currentUser.photoUrl;
+            entity.password = '-1';
+            entity.tokenDispositivo = prefs.token;
+            entity.imei = _platformImei;
+            entity.primeraVez = '-1';
+
+            final dataMap = generic.add(entity, urlAddSignIn);
+            dataMap.then((respuesta) => result = respuesta["TIPO_RESPUESTA"]);
+            //     print('resultado:$result ');
+
+            if (result != "-1") {
+              prefs.imei = _platformImei;
+              prefs.nombreUsuario = currentUser.displayName;
+              prefs.correoElectronico = currentUser.email;
+              prefs.avatarImagen = currentUser.photoUrl;
+              prefs.userId = result;
+
+              Navigator.push(
+                  context,
+                  PageTransition(
+                    curve: Curves.bounceOut,
+                    type: PageTransitionType.rotate,
+                    alignment: Alignment.topCenter,
+                    child: IntroScreenModule(),//AgreeLoginModule(),
+                  ));
+            } else {
+              scaffoldKey.currentState.showSnackBar(
+                  messageNOk("Se produjo un error, vuelta a intentarlo"));
+            }
           }
-        }
+        });
       });
-      }
-      );
     } catch (error) {
       scaffoldKey.currentState
           .showSnackBar(messageNOk('Se produjo un error: ${error.toString()}'));
@@ -169,26 +170,20 @@ class _SignUpModuleState extends State<SignUpModule> {
           children: <Widget>[
             //   crearFondo(context),
             Container(
-              
-               decoration: BoxDecoration(
-              gradient: LinearGradient(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomRight,
-                  stops: [0.1, 0.4, 0.7, 0.9],
+                  stops: [0.1, 0.4, 0.6, 0.9],
                   colors: [
-                    Color.fromRGBO(215, 78, 159, 1.0),
-                    Color.fromRGBO(245, 173, 53, 1.0),
-                    Color.fromRGBO(236, 220, 109, 1.0),
-                    Color.fromRGBO(70, 191, 167 , 1.0),
-               //      Color.fromRGBO(90, 150, 188 , 1.0),
-              //        Color.fromRGBO(133, 75, 178  , 1.0),
+                    Color.fromRGBO(254, 253, 253, 1.0),
+                    Color.fromRGBO(254, 253, 251, 1.0),
+                    Color.fromRGBO(235, 217, 211, 1.0),
+                    Color.fromRGBO(253, 252, 252, 1.0),
                   ],
                 ),
               ),
-            
-            
-
-             child: Padding(
+              child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 25.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -196,21 +191,22 @@ class _SignUpModuleState extends State<SignUpModule> {
                     Container(
                       child: Column(
                         children: <Widget>[
-                          Text('Estamos contigo. Beinvenido', style: kTitleCursiveStyle),
-                          Text('Lucia Te Cuida. La App de nuestro corazón'),
+                          SizedBox(height: 30.0),
+                          Text('Estamos contigo. Bienvenido',
+                              style: kTitleSigIn),
+                          Text('Lucia Te Cuida.', style: kSubTitleSigIn),
                           Image(
                               image: AssetImage("assets/buu.PNG"),
-                              height: 250.0),
+                              height: 230.0),
                         ],
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    //   SizedBox(height: 20.0),
                     _crearForm(context),
                   ],
                 ),
               ),
-              ),
-           
+            ),
           ],
         ));
   }
@@ -221,28 +217,23 @@ class _SignUpModuleState extends State<SignUpModule> {
         key: formKey,
         child: Column(
           children: <Widget>[
-       
-            //     Container(
-            //       width: size.width * 0.85,
-            //       margin: EdgeInsets.symmetric(vertical: 10.0),
-            //       // padding: EdgeInsets.symmetric( vertical: 30.0 ),
-            //      // decoration: _crearContenedorCampos(),
-            //  //     child: _crearCampos(),
-            //     ),
-
-
-            SizedBox(height: 20.0),
-
             _dividerOr(),
             _gmailButton(),
             _gmailButtonCerrar(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40.0),
-              child: Divider(
-                color: Colors.lightGreen,
-                thickness: 2.0,
+            SizedBox(height:10.0),
+             Row(
+               mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(width:15.0),
+              FaIcon(FontAwesomeIcons.clipboardList, color: AppTheme.themeVino, size: 40.0,),
+              SizedBox(width:10.0),
+              Text(
+                'Importante. Si deseas ingresar con una segunda\n cuenta Gmail, seleccionar la opcion "Cerrar\nSesión Google" y vuelva a ingresar.',
+                style: kTitleCursive3Style,
               ),
-            ),
+            ],
+          ),
+         
             copyRigth(),
           ],
         ),
@@ -253,26 +244,33 @@ class _SignUpModuleState extends State<SignUpModule> {
   Widget _dividerOr() {
     return Container(
       //   margin: EdgeInsets.symmetric(vertical: 10),
-      child: Row(
+      child: Column(
         children: <Widget>[
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Divider(
+                    thickness: 1,
+                  ),
+                ),
               ),
-            ),
-          ),
-          SizedBox(height: 5.0),
-          Text('Si cuentas con correo GMAIL', style: kTitleCursive3Style,),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
+              Text(
+                'Si cuentas con correo GMAIL',
+                style: kTitleCursive3Style,
               ),
-            ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Divider(
+                    thickness: 1,
+                  ),
+                ),
+              ),
+            ],
           ),
+         
         ],
       ),
     );
