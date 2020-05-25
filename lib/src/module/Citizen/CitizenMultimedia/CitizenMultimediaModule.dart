@@ -41,11 +41,11 @@ class _CitizenMultimediaModuleState extends State<CitizenMultimediaModule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppTheme.themeVino,
+        backgroundColor: Colors.white,
         toolbarOpacity: 0.7,
-        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+        iconTheme: IconThemeData(color: AppTheme.themeVino, size: 12),
         elevation: 0,
-        title: Text("Multimedia", style: kTitleAppBar),
+        title: Text("MATERIAL MULTIMEDIA", style: kTitleAppBar),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
@@ -57,7 +57,7 @@ class _CitizenMultimediaModuleState extends State<CitizenMultimediaModule> {
       ),
       drawer: DrawerCitizen(),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color.fromRGBO(165, 5, 5, 0.7),
+        backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.image),
@@ -73,8 +73,8 @@ class _CitizenMultimediaModuleState extends State<CitizenMultimediaModule> {
           ),
         ],
         currentIndex: page,
-        unselectedItemColor: Colors.black87,
-        selectedItemColor: Colors.white70,
+       unselectedItemColor: Colors.black54,
+        selectedItemColor: AppTheme.themeVino,
         onTap: _onItemTapped,
       ),
       body: optionPage[page],
@@ -221,6 +221,9 @@ class _PageVideoState extends State<PageVideo> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
+       
+                margin: EdgeInsets.symmetric(vertical: 0.0),
+                decoration: boxDecorationList(),
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(

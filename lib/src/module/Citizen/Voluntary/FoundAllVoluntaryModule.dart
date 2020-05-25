@@ -35,11 +35,11 @@ class _FoundAllVoluntaryModuleState extends State<FoundAllVoluntaryModule> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        backgroundColor: AppTheme.themeVino,
+        backgroundColor: Colors.white,
         toolbarOpacity: 0.7,
-        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+        iconTheme: IconThemeData(color:AppTheme.themeVino, size: 12),
         elevation: 0,
-        title: Text(widget.profesional.profesion,
+        title: Text(widget.profesional.profesion.toUpperCase(),
             style: kTitleAppBar), //backgroundColor: AppTheme.themeColorNaranja,
       ),
       body: SingleChildScrollView(
@@ -81,7 +81,7 @@ class _FoundAllVoluntaryModuleState extends State<FoundAllVoluntaryModule> {
                 context,
                 40.0,
                 "Profesionales / Voluntarios".toUpperCase(),
-                FaIcon(FontAwesomeIcons.peopleCarry, color: Colors.white60),
+                FaIcon(FontAwesomeIcons.peopleCarry, color: AppTheme.themeVino),
               ),
             ),
           ),

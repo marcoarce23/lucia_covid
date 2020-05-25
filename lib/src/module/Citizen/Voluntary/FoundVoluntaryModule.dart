@@ -31,12 +31,12 @@ class _FoundVoluntaryModuleState extends State<FoundVoluntaryModule> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            backgroundColor: AppTheme.themeVino,
+            backgroundColor: Colors.white,
             toolbarOpacity: 0.7,
             iconTheme:
-                IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+                IconThemeData(color: AppTheme.themeVino, size: 12),
             elevation: 0,
-            title: Text("Encuentra un voluntario", style: kTitleAppBar),
+            title: Text("BUSCA UN VOLUNTARIO", style: kTitleAppBar),
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.search),
@@ -61,7 +61,7 @@ class _FoundVoluntaryModuleState extends State<FoundVoluntaryModule> {
                   context,
                   40.0,
                   "Voluntarios".toUpperCase(),
-                  FaIcon(FontAwesomeIcons.peopleCarry, color: Colors.white60),
+                  FaIcon(FontAwesomeIcons.peopleCarry, color: AppTheme.themeVino),
                 ),
                 SizedBox(
                   height: 15,

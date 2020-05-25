@@ -43,7 +43,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         toolbarOpacity: 0.7,
-        iconTheme: IconThemeData(color: Colors.white, size: 12),
+        iconTheme: IconThemeData(color: AppTheme.themeVino, size: 12),
         elevation: 0,
         title:
             Text(widget.institutionItem.nombreInstitucion.toUpperCase(), style: kTitleAppBar),
@@ -52,6 +52,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
       body: SingleChildScrollView(
         child: Column(children: <Widget>[
           cabeceraInstitucion(screenHeigh, screenwidth),
+          divider(),
           Align(
             alignment: Alignment.topLeft,
             child: Container(
@@ -61,7 +62,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                   context,
                   40.0,
                   "Grupo de voluntarios".toUpperCase(),
-                  FaIcon(FontAwesomeIcons.peopleCarry, color: Colors.white60),
+                  FaIcon(FontAwesomeIcons.peopleCarry, color: AppTheme.themeVino),
                 ),
               ),
             ),
@@ -76,7 +77,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
                   context,
                   40.0,
                   "Galeria de fotos".toUpperCase(),
-                  FaIcon(FontAwesomeIcons.photoVideo, color: Colors.white60),
+                  FaIcon(FontAwesomeIcons.photoVideo, color: AppTheme.themeVino),
                 ),
               ),
             ),
@@ -108,7 +109,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
 
   Widget cabeceraInstitucion(double screenHeigh, double screenwidth) {
     return Container(
-      height: 210,
+      height: 180,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
@@ -423,7 +424,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
   Widget fotosMultimedia(BuildContext context, AsyncSnapshot snapshot) {
     return SingleChildScrollView(
       child: Container(
-        height: 170,
+        height: 160,
         child: ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,

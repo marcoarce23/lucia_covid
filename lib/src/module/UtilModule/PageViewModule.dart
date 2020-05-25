@@ -18,7 +18,7 @@ class PageViewModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('$title'),
+          title: Text('$title'.toUpperCase()),
         ),
         body: WebView(
           initialUrl: selectedUrl,

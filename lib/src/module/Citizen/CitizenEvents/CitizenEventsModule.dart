@@ -33,12 +33,12 @@ class _CitizenEventsModuleState extends State<CitizenEventsModule> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            backgroundColor: AppTheme.themeVino,
+            backgroundColor: Colors.white,
             toolbarOpacity: 0.7,
             iconTheme:
-                IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+                IconThemeData(color: AppTheme.themeVino, size: 12),
             elevation: 0,
-            title: Text("Eventos", style: kTitleAppBar),
+            title: Text("EVENTOS", style: kTitleAppBar),
 
             //backgroundColor: AppTheme.themeColorNaranja,
           ),

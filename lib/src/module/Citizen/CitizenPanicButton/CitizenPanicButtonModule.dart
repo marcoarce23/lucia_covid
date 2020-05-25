@@ -34,12 +34,12 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            backgroundColor: AppTheme.themeVino,
+            backgroundColor: Colors.white,
             toolbarOpacity: 0.7,
             iconTheme:
-                IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+                IconThemeData(color: AppTheme.themeVino, size: 12),
             elevation: 0,
-            title: Text("SOLICITA AYUDA", style: kTitleAppBar),
+            title: Text("SOLICITA UNA AYUDA", style: kTitleAppBar),
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.search),
@@ -74,7 +74,7 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
                   tipoBoton: "64",
                 ),
                 ButtonPanic(
-                  titulo: "COMPRA MEDICAMENTOS - INSUMOS",
+                  titulo: "COMPRA MEDICAMENTOS-INSUMOS",
                   tipoBoton: "66",
                 ),
                 ButtonPanic(
@@ -141,7 +141,7 @@ class _ButtonPanic extends State<ButtonPanic> {
     botonPanico.idaEstadoSolicitud = 72;
 
     var textStyle = TextStyle(
-        fontSize: 18, fontWeight: FontWeight.w900, color: AppTheme.themeVino);
+        fontSize: 16.5, fontWeight: FontWeight.w900, color: AppTheme.themeVino);
 
     return Stack(
       children: <Widget>[
