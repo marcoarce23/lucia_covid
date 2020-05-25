@@ -50,11 +50,11 @@ class _EventVoluntaryAllModuleState extends State<EventVoluntaryAllModule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppTheme.themeVino,
+        backgroundColor: Colors.white,
         toolbarOpacity: 0.7,
-        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+        iconTheme: IconThemeData(color: AppTheme.themeVino, size: 12),
         elevation: 0,
-        title: Text("EVENTOS VOLUNTARIOS", style: kTitleAppBar),
+        title: Text("EVENTOS", style: kTitleAppBar),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
@@ -66,7 +66,7 @@ class _EventVoluntaryAllModuleState extends State<EventVoluntaryAllModule> {
       ),
       drawer: DrawerCitizen(),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color.fromRGBO(165, 5, 5, 0.7),
+        backgroundColor: Colors.white,
         items: [
           BottomNavigationBarItem(
               icon: FaIcon(
@@ -82,8 +82,8 @@ class _EventVoluntaryAllModuleState extends State<EventVoluntaryAllModule> {
               title: Text('Listado eventos')),
         ],
         currentIndex: page,
-        unselectedItemColor: Colors.black87,
-        selectedItemColor: Colors.white70,
+         unselectedItemColor: Colors.black54,
+        selectedItemColor: AppTheme.themeVino,
         onTap: _onItemTapped,
       ),
       body: optionPage[page],
@@ -151,14 +151,14 @@ class _EventModuleState extends State<EventModule> {
 
   _crearIconAppImagenes() {
     return IconButton(
-      icon: Icon(Icons.photo_size_select_actual, color: Colors.white),
+      icon: Icon(Icons.photo_size_select_actual, color: AppTheme.themeVino,),
       onPressed: _seleccionarFoto,
     );
   }
 
   _crearIconAppCamara() {
     return IconButton(
-      icon: Icon(Icons.camera_alt, color: Colors.white),
+      icon: Icon(Icons.camera_alt, color: AppTheme.themeVino,),
       onPressed: _tomarFoto,
     );
   }
@@ -187,9 +187,9 @@ class _EventModuleState extends State<EventModule> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  Text('CARGAR SU IMAGEN DE SU EVENTO',
+                  Text('CARGAR IMAGEN DEL EVENTO',
                       style: TextStyle(
-                        color: Colors.white70,
+                        color: AppTheme.themeVino,
                         fontSize: 16.0,
                       )),
                   _crearIconAppImagenes(),

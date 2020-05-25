@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/Entity.dart';
 import 'package:lucia_covid/src/Model/Generic.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
+import 'package:lucia_covid/src/Widget/GeneralWidget.dart';
 import 'package:lucia_covid/src/Widget/Message/Message.dart';
 import 'package:lucia_covid/src/module/Settings/RoutesModule.dart';
 
@@ -28,10 +30,26 @@ class _ListEventModuleState extends State<ListEventModule> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[SizedBox(height: 10.0), futureItemsEntity(context)],
+        children: <Widget>[
+          SizedBox(height: 10.0),
+          Container(
+            width: size.width * 0.96,
+            margin: EdgeInsets.symmetric(vertical: 0.0),
+            child: contenedorTitulo(
+              context,
+              40.0,
+              'LISTADO DE EVENTOS',
+              FaIcon(FontAwesomeIcons.city, color: AppTheme.themeVino),
+            ),
+          ),
+          divider(),
+          futureItemsEntity(context),
+          copyRigth(),
+        ],
       ),
     );
   }
@@ -71,16 +89,7 @@ class _ListEventModuleState extends State<ListEventModule> {
               Container(
                 width: size.width * 0.97,
                 margin: EdgeInsets.symmetric(vertical: 0.0),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10.0),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 7.0,
-                          offset: Offset(2.0, 3.0),
-                          spreadRadius: 4.0)
-                    ]),
+                decoration: boxDecorationList(),
                 child: Column(
                   children: <Widget>[
                     ListTile(

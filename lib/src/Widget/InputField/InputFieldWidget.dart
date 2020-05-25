@@ -54,6 +54,7 @@ class _InputTextFieldState extends State<InputTextField> {
         maxLength: 50,
         autocorrect: true,
         autovalidate: false,
+        cursorColor: AppTheme.themeVino,
         toolbarOptions: ToolbarOptions(copy: true, cut:true, paste: true, selectAll: true),
         keyboardType: TextInputType.text,
      //   controller: controller,
@@ -62,10 +63,11 @@ class _InputTextFieldState extends State<InputTextField> {
            hintText: widget.hint,
            labelText: widget.text,
            icon: widget.icon,
-     
+   
+   hoverColor:AppTheme.themeVino,
 //errorText: 'XXXXX',
-           fillColor: Colors.white,
-  filled : true,
+           fillColor: AppTheme.themeVino,
+ 
   // enabledBorder: OutlineInputBorder(
   //   borderSide: BorderSide(color: Colors.orange, width: 1.0)
   // ),

@@ -20,7 +20,7 @@ final kSubTitleSigIn = TextStyle(
 );
 
 final kTitleAppBar = TextStyle(
-  color: Colors.white,
+  color: AppTheme.themeVino,
   fontSize: 17,
 );
 
@@ -46,15 +46,21 @@ final kSubSubTitleCardStyle = TextStyle(
 );
 
 final kTitleStyle = TextStyle(
-  color: Colors.white,
+  color: Colors.black54,
   fontFamily: 'CM Sans Serif',
-  fontSize: 26.0,
+  fontSize: 23.0,
   height: 1.0,
 );
 
 final kSubtitleStyle = TextStyle(
-  color: Colors.white60,
-  fontSize: 18.0,
+  color: Colors.black54,
+  fontSize: 15.0,
+  height: 1.2,
+);
+
+final kBotontitleStyle = TextStyle(
+  color: Colors.white,
+  fontSize: 15.0,
   height: 1.2,
 );
 
@@ -102,9 +108,25 @@ Widget crearFondo(BuildContext context, String imagen) {
     final size = MediaQuery.of(context).size;
 
     final fondoModaro = Container(
-      height: size.height * 0.38,
+      height: size.height * 0.33,
       width: double.infinity,
-      decoration: boxDecoration(),
+      decoration: BoxDecoration(
+      gradient: LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomRight,
+    stops: [0.3, 0.2, 0.4, 0.9],
+    colors: [
+      // Color.fromRGBO(142, 12, 3, 0.8),
+      // Color.fromRGBO(232, 78, 68, 1.0),
+      // Color.fromRGBO(168, 18, 8, 0.6),
+      // Color.fromRGBO(196, 66, 58, 1.0),
+ Color.fromRGBO(168, 18, 8, 0.4),   
+                    Color.fromRGBO(168, 18, 8, 0.5),
+                Color.fromRGBO(252, 252, 252, 0.6),
+                  
+                Color.fromRGBO(252, 252, 252, 0.4),
+    ],
+  )),
     );
     return Stack(
       children: <Widget>[
@@ -179,21 +201,48 @@ boxDecorationAccesos() {
     end: Alignment.bottomRight,
     stops: [0.1, 0.4, 0.7],
     colors: [
-      Color.fromRGBO(255, 253, 253, 0.8),
-      Color.fromRGBO(252, 250, 250, 1.0),
-      Color.fromRGBO(248, 245, 245, 0.6),
-      // Color.fromRGBO(196, 66, 58, 1.0),
-      
-      
-      
-      // Color.fromRGBO(168, 18, 8, 0.6),
-      //           Color.fromRGBO(176, 30, 20, 1.0),
-      //           Color.fromRGBO(168, 18, 8, 0.6),
-      //           Color.fromRGBO(164, 18, 9, 1.0),
-    ],
+      Color.fromRGBO(231, 233, 227, 0.6),
+      Color.fromRGBO(225, 226, 223, 1.0),
+      Color.fromRGBO(221, 221, 220, 0.6),
+     ],
   ));
 }
 
+boxDecorationFondo() {
+  return BoxDecoration(
+                    gradient:LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomRight,
+    stops: [0.6, 0.4, 0.7],
+    colors: [
+     
+      Colors.white,
+      Color.fromRGBO(252, 252, 252, 1.0),
+       Color.fromRGBO(251, 251, 251, 1.0),
+      
+     ]),
+                 
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 7.0,
+                          offset: Offset(2.0, 3.0),
+                          spreadRadius: 4.0)
+                    ]);
+}
+
+boxDecorationList() {
+  return BoxDecoration(
+                   color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 7.0,
+                          offset: Offset(2.0, 3.0),
+                          spreadRadius: 4.0)
+                    ]);
+}
 BoxDecoration contenedorCabecera() {
   return BoxDecoration(
       color: Colors.white,
@@ -208,8 +257,10 @@ BoxDecoration contenedorCabecera() {
 }
 
 BoxDecoration contenedorCampos() {
-  return BoxDecoration(
+  // return boxDecorationList(); 
+   return BoxDecoration(
       color: Colors.white,
+     // gradient: boxDecorationList(),
       borderRadius: BorderRadius.circular(20.0),
       boxShadow: <BoxShadow>[
         BoxShadow(
@@ -222,8 +273,9 @@ BoxDecoration contenedorCampos() {
 
 BoxDecoration contenedorCarretes() {
   return  BoxDecoration(
-        color: Color.fromRGBO(165, 5, 5, 0.8),
+        color: Colors.white70,
         borderRadius: BorderRadius.circular(8.0),
+         
         boxShadow: <BoxShadow>[
           BoxShadow(
               color: Colors.black26,
@@ -238,10 +290,20 @@ Container contenedorTitulo(
     BuildContext context, double height, String text, FaIcon icon) {
   final size = MediaQuery.of(context).size;
   return Container(
-    width: size.width * 0.92,
+    width: size.width * 0.94,
     height: height,
     decoration: BoxDecoration(
-        color: Color.fromRGBO(165, 5, 5, 0.8),
+       // color: Color.fromRGBO(165, 5, 5, 0.8),
+        gradient:LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomRight,
+    stops: [0.1, 0.4, 0.7],
+    colors: [
+        Color.fromRGBO(244, 245, 243, 1.0),
+      Color.fromRGBO(247, 247, 247, 1.0),
+       Color.fromRGBO(244, 245, 243, 1.0),
+      
+     ]),
         borderRadius: BorderRadius.circular(8.0),
         boxShadow: <BoxShadow>[
           BoxShadow(
@@ -257,7 +319,49 @@ Container contenedorTitulo(
         SizedBox(width: 15.0),
         Text(text,
             style: TextStyle(
-              color: Colors.white70,
+              color: AppTheme.themeVino,//Colors.white70,
+              fontSize: 16.0,
+              height: 1.5,
+            )),
+      ],
+    ),
+  );
+}
+
+Container contenedorSubTitulo(
+    BuildContext context, double height, String text, FaIcon icon) {
+  final size = MediaQuery.of(context).size;
+  return Container(
+    width: size.width * 0.92,
+    height: height,
+    decoration: BoxDecoration(
+        color: Color.fromRGBO(165, 5, 5, 0.8),
+    //     gradient:LinearGradient(
+    // begin: Alignment.topCenter,
+    // end: Alignment.bottomRight,
+    // stops: [0.1, 0.4, 0.7],
+    // colors: [
+    //   Color.fromRGBO(244, 245, 243, 1.0),
+    //   Color.fromRGBO(247, 247, 247, 1.0),
+    //    Color.fromRGBO(244, 245, 243, 1.0),
+      
+    //  ]),
+        borderRadius: BorderRadius.circular(8.0),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+              color: Colors.black26,
+              blurRadius: 7.0,
+              offset: Offset(2.0, 3.0),
+              spreadRadius: 4.0)
+        ]),
+    child: Row(
+      children: <Widget>[
+        SizedBox(width: 10.0),
+        icon,
+        SizedBox(width: 15.0),
+        Text(text,
+            style: TextStyle(
+              color: Colors.white,
               fontSize: 18.0,
               height: 1.5,
             )),
@@ -266,38 +370,12 @@ Container contenedorTitulo(
   );
 }
 
-Widget fondoApp1() {
-  return Container(
-    width: double.infinity,
-    height: double.infinity,
-    decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: FractionalOffset(0.0, 0.6),
-            end: FractionalOffset(0.0, 1.0),
-            colors: [
-          Color.fromRGBO(70, 191, 167, 1.0),
-          Color.fromRGBO(236, 220, 109, 1.0),
-          Color.fromRGBO(245, 173, 53, 1.0),
-          Color.fromRGBO(215, 78, 159, 1.0),
-        ])),
-  );
-}
-
 Widget fondoApp() {
-  return Container(
-    width: double.infinity,
-    height: double.infinity,
-    decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: FractionalOffset(0.0, 0.6),
-            end: FractionalOffset(0.0, 1.0),
-            colors: [
-          Color.fromRGBO(215, 78, 159, 1.0),
-          Color.fromRGBO(245, 173, 53, 1.0),
-          Color.fromRGBO(236, 220, 109, 1.0),
-          Color.fromRGBO(70, 191, 167, 1.0),
-        ])),
-  );
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: boxDecorationFondo(),//(),//boxDecorationAccesos(),
+    );
 }
 
 Divider divider() {
@@ -339,6 +417,7 @@ class AppTheme {
   static const Color themeColorBlanco = Colors.white;
   static const Color themeVino = Color.fromRGBO(165, 5, 5, 0.7);
   static const Color themeAmarillo = Color.fromRGBO(9, 65, 108, 1.0);
+static const Color themePlomo = Color.fromRGBO(248, 248, 248, 1.0);
 
   static const TextStyle themeTitulo = TextStyle(
       fontSize: 15,

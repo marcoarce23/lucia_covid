@@ -41,12 +41,12 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        backgroundColor: AppTheme.themeVino,
+        backgroundColor: Colors.white,
         toolbarOpacity: 0.7,
-        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+        iconTheme: IconThemeData(color: Colors.white, size: 12),
         elevation: 0,
         title:
-            Text(widget.institutionItem.nombreInstitucion, style: kTitleAppBar),
+            Text(widget.institutionItem.nombreInstitucion.toUpperCase(), style: kTitleAppBar),
         //backgroundColor: AppTheme.themeColorNaranja,
       ),
       body: SingleChildScrollView(
@@ -92,7 +92,7 @@ class _CitizenInstitutionModuleState extends State<CitizenInstitutionModule> {
   Widget cuerpoProfesionales(BuildContext context, AsyncSnapshot snapshot) {
     return SingleChildScrollView(
       child: Container(
-        height: 170,
+        height: 150,
         child: ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,

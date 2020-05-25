@@ -52,7 +52,7 @@ class _SignUpModuleState extends State<SignUpModule> {
     _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
       setState(() {
         currentUser = account;
-      });
+       });
     });
     _googleSignIn.signInSilently();
   }
@@ -191,7 +191,7 @@ class _SignUpModuleState extends State<SignUpModule> {
                     Container(
                       child: Column(
                         children: <Widget>[
-                          SizedBox(height: 30.0),
+                          SizedBox(height: 20.0),
                           Text('Estamos contigo. Bienvenido',
                               style: kTitleSigIn),
                           Text('Lucia Te Cuida.', style: kSubTitleSigIn),
@@ -219,7 +219,8 @@ class _SignUpModuleState extends State<SignUpModule> {
           children: <Widget>[
             _dividerOr(),
             _gmailButton(),
-            _gmailButtonCerrar(),
+            _botonInvitado('Entrar como invitado'),
+           // _gmailButtonCerrar(),
             SizedBox(height:10.0),
              Row(
                mainAxisAlignment: MainAxisAlignment.start,
@@ -305,6 +306,44 @@ class _SignUpModuleState extends State<SignUpModule> {
       ),
     );
   }
+
+Widget _botonInvitado (String text)
+{
+     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 90.0),
+      width: MediaQuery.of(context).size.width,
+      child: RaisedButton.icon(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        color: Color.fromRGBO(165, 5, 5, 0.7),
+        textColor: Colors.white,
+        label: Text(
+          text,
+          style: kSubtitleStyle,
+        ),
+        icon: FaIcon(FontAwesomeIcons.peopleArrows, color: Colors.white),
+        onPressed: (){
+          prefs.imei = entity.imei;
+            prefs.nombreUsuario = 'Invitado';
+            prefs.correoElectronico = 'Invitado';
+            prefs.nombreInstitucion = 'Invitado';
+            prefs.idInsitucion = '0';
+            prefs.idPersonal = '0';
+            prefs.userId = '0';
+
+            Navigator.push(
+                context,
+                PageTransition(
+                  curve: Curves.bounceOut,
+                  type: PageTransitionType.rotate,
+                  alignment: Alignment.topCenter,
+                  child: IntroScreenModule(),
+                ));
+        },
+      ),
+    );
+  }
+
 
   Widget _gmailButtonCerrar() {
     return OutlineButton(

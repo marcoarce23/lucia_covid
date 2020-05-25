@@ -66,7 +66,7 @@ class _AtentionModuleState extends State<AtentionModule> {
       key: scaffoldKey,
       drawer: DrawerCitizen(),
       body: Stack(
-        children: <Widget>[ _crearForm(context),],
+        children: <Widget>[ fondoApp(),_crearForm(context),],
       ),
     );
   }
@@ -77,7 +77,7 @@ class _AtentionModuleState extends State<AtentionModule> {
         margin: EdgeInsets.symmetric(vertical: 4),
         padding: EdgeInsets.all(15.0),
         width: MediaQuery.of(context).size.width - 20,
-        decoration: contenedorCabecera(),
+        decoration: boxDecorationList(),//contenedorCabecera(),
         child: Column(
           children: <Widget>[
             Row(
@@ -89,6 +89,7 @@ class _AtentionModuleState extends State<AtentionModule> {
                 cabeceraInformativa(),
               ],
             ),
+            divider(),
           ],
         ),
       ),
@@ -110,33 +111,40 @@ class _AtentionModuleState extends State<AtentionModule> {
           children: <Widget>[
             informacionProfesional(context),
             SizedBox(height: 5.0),
-            contenedorTitulo(
+          contenedorTitulo(
               context,
               40.0,
               'REGISTRO DE ATENCIÓN',
-              FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.white60),
+              FaIcon(FontAwesomeIcons.calendarAlt, color: AppTheme.themeVino),
             ),
+       
             SizedBox(height: 5.0),
             Container(
-              width: size.width * 0.95,
+              width: size.width * 0.98,
               margin: EdgeInsets.symmetric(vertical: 0.0),
               decoration: contenedorCampos(),
               child: _crearCampos(),
             ),
-            divider(),
-            Text(
-              'IMPORTANTE:',
-              style: kTitleCardStyle,
-              textAlign: TextAlign.left,
+
+            Row(
+              
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'IMPORTANTE:',
+                  style: kTitleCardStyle,
+                  textAlign: TextAlign.left,
+                ),
+              ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 SizedBox(
-                  width: 20,
+                  width: 10,
                 ),
                 Text(
-                  '- Seleccionar los días de atención',
+                  'Seleccionar los días de atención',
                   style: kSubTitleCardStyle,
                   textAlign: TextAlign.center,
                 ),
@@ -152,14 +160,13 @@ class _AtentionModuleState extends State<AtentionModule> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 SizedBox(
-                  width: 25,
+                  width: 10,
                 ),
-                Text(
-                  '- Definir si la atención se realizará el fin de semana.',
+                Text('Definir si la atención se realizará fin de semana.',
                   style: kSubTitleCardStyle,
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(width: 15.0),
+                SizedBox(width: 10.0),
                 FaIcon(
                   FontAwesomeIcons.calendarCheck,
                   color: AppTheme.themeVino,
@@ -171,10 +178,9 @@ class _AtentionModuleState extends State<AtentionModule> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 SizedBox(
-                  width: 25,
+                  width: 10,
                 ),
-                Text(
-                  '- Se recomienda que los días asignados sean \n cumplidos  por el voluntario.',
+                Text('Se recomienda que los días asignados sean \n cumplidos  por el voluntario.',
                   style: kSubTitleCardStyle,
                   textAlign: TextAlign.center,
                 ),
@@ -194,12 +200,12 @@ class _AtentionModuleState extends State<AtentionModule> {
   }
 
   Widget _crearCampos() {
-    lunes = InputCheckBox('Lun.', selectLunes);
-    martes = InputCheckBox('Mar.', selectMartes);
-    miercoles = InputCheckBox('Mie.', selectMiercoles);
-    jueves = InputCheckBox('Jue.', selectJueves);
-    viernes = InputCheckBox('Vie.', selectViernes);
-    sabado = InputCheckBox('Sab.', selectSabado);
+    lunes = InputCheckBox('Lun', selectLunes);
+    martes = InputCheckBox('Mar', selectMartes);
+    miercoles = InputCheckBox('Mie', selectMiercoles);
+    jueves = InputCheckBox('Jue', selectJueves);
+    viernes = InputCheckBox('Vie', selectViernes);
+    sabado = InputCheckBox('Sab', selectSabado);
     domingo = InputCheckBox('(*) Domingo', selectDomingo);
 
     return Column(
@@ -249,9 +255,9 @@ class _AtentionModuleState extends State<AtentionModule> {
         textColor: Colors.white,
         label: Text(
           text,
-          style: kSubtitleStyle,
+          style: kBotontitleStyle,
         ),
-        icon: FaIcon(FontAwesomeIcons.save, color: Colors.white),
+        icon: FaIcon(FontAwesomeIcons.checkCircle, color: Colors.white),
         onPressed: (_save) ? null : _submit,
       ),
     );

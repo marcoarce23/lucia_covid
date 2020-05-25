@@ -39,7 +39,7 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
             iconTheme:
                 IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
             elevation: 0,
-            title: Text("BOTON DE AYUDA", style: kTitleAppBar),
+            title: Text("SOLICITA AYUDA", style: kTitleAppBar),
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.search),
@@ -64,6 +64,7 @@ class _CitizenPanicButtonModuleState extends State<CitizenPanicButtonModule> {
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
+               
                 ButtonPanic(
                   titulo: "CONSULTA COVID",
                   tipoBoton: "65",
@@ -144,6 +145,7 @@ class _ButtonPanic extends State<ButtonPanic> {
 
     return Stack(
       children: <Widget>[
+        
         Container(
             decoration: BoxDecoration(
               border: Border.all(

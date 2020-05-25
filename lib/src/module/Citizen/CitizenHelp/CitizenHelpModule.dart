@@ -50,9 +50,9 @@ class _HelpFriendAllModuleState extends State<HelpFriendAllModule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppTheme.themeVino,
+        backgroundColor: Colors.white,
         toolbarOpacity: 0.7,
-        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+        iconTheme: IconThemeData(color: AppTheme.themeVino, size: 12),
         elevation: 0,
         title: Text( "AYUDA A UN AMIGO(A)",  style: kTitleAppBar),
         actions: <Widget>[
@@ -66,7 +66,7 @@ class _HelpFriendAllModuleState extends State<HelpFriendAllModule> {
       ),
       drawer: DrawerCitizen(),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color.fromRGBO(165, 5, 5, 0.7),
+        backgroundColor: Colors.white, 
         items: [
           BottomNavigationBarItem(
               icon: FaIcon(
@@ -82,8 +82,8 @@ class _HelpFriendAllModuleState extends State<HelpFriendAllModule> {
               title: Text('Solicitudes')),
         ],
         currentIndex: page,
-        unselectedItemColor: Colors.black87,
-        selectedItemColor: Colors.white70,
+        unselectedItemColor: Colors.black54,
+        selectedItemColor: AppTheme.themeVino,
         onTap: _onItemTapped,
       ),
       body: optionPage[page],
@@ -135,6 +135,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
       key: scaffoldKey,
       body: Stack(
         children: <Widget>[
+          fondoApp(),
           _crearForm(),
         ],
       ),
@@ -147,7 +148,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
         margin: EdgeInsets.symmetric(vertical: 4),
         padding: EdgeInsets.all(5.0),
         width: MediaQuery.of(context).size.width - 30,
-        decoration: contenedorCabecera(),
+        decoration: boxDecorationList(),
         child: Column(
           children: <Widget>[
             Row(
@@ -204,7 +205,7 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
               context,
               40.0,
               'REGISTRO DE DATOS',
-              FaIcon(FontAwesomeIcons.userMd, color: Colors.white60),
+              FaIcon(FontAwesomeIcons.userMd, color: AppTheme.themeVino),
             ),
             SizedBox(height: 5.0),
             Container(
@@ -294,9 +295,9 @@ class _CitizenHelpModuleState extends State<CitizenHelpModule> {
         textColor: Colors.white,
         label: Text(
           text,
-          style: kSubtitleStyle,
+          style: kBotontitleStyle,
         ),
-        icon: FaIcon(FontAwesomeIcons.save, color: Colors.white),
+        icon: FaIcon(FontAwesomeIcons.checkCircle, color: Colors.white),
         onPressed: (_save) ? null : _submit,
       ),
     );

@@ -33,11 +33,11 @@ class _CitizenListInstitucionModuleState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppTheme.themeVino,
+        backgroundColor: Colors.white,
         toolbarOpacity: 0.7,
-        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+        iconTheme: IconThemeData(color: AppTheme.themeVino, size: 12),
         elevation: 0,
-        title: Text("Instituciones", style: kTitleAppBar),
+        title: Text("INSTITUCIONES", style: kTitleAppBar),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
@@ -89,6 +89,7 @@ class _CitizenListInstitucionModuleState
   }
 
   Widget listItemsInstitution(BuildContext context, AsyncSnapshot snapshot) {
+    final size = MediaQuery.of(context).size;
     return Expanded(
       child: ListView.builder(
         shrinkWrap: true,
@@ -97,25 +98,29 @@ class _CitizenListInstitucionModuleState
         itemCount: snapshot.data.length,
         itemBuilder: (context, index) {
           InstitucionesItems institutionItem = snapshot.data[index];
-          return InkWell(
-            onTap: () {
-              if (institutionItem.miembros > 0) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CitizenInstitutionModule(
-                            institutionItem: institutionItem,
-                          )),
-                );
-              } else {
-                Scaffold.of(context).showSnackBar(messageHelp(
-                    "Aun no cuenta con miembros en ${institutionItem.nombreInstitucion}"));
-              }
-            },
-            child: ListTile(
-              leading: iconInstitution(institutionItem),
-              title: listInstitution(context, institutionItem),
-              trailing: Icon(Icons.arrow_right),
+          return Container(
+            width: size.width * 0.97,
+                margin: EdgeInsets.symmetric(vertical: 0.0),
+            decoration: boxDecorationList(),
+            child: InkWell(
+              onTap: () {
+                if (institutionItem.miembros > 0) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CitizenInstitutionModule(
+                              institutionItem: institutionItem,
+                            )),
+                  );
+                } else {
+                  Scaffold.of(context).showSnackBar(messageHelp(
+                      "Aun no cuenta con miembros en ${institutionItem.nombreInstitucion}"));
+                }
+              },
+              child: ListTile(
+                leading: iconInstitution(institutionItem),
+                title: listInstitution(context, institutionItem),
+               ),
             ),
           );
         },

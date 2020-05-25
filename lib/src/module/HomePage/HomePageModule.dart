@@ -1,9 +1,8 @@
-
-
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lucia_covid/src/Model/PreferenceUser.dart';
+import 'package:lucia_covid/src/Provider/NotificacionesModule.dart';
 import 'package:lucia_covid/src/Theme/ThemeModule.dart';
 import 'package:lucia_covid/src/Util/Util.dart';
 import 'package:lucia_covid/src/Widget/DrawerWidget/DrawerWiguet.dart';
@@ -22,7 +21,6 @@ import 'package:lucia_covid/src/module/Citizen/Voluntary/FoundVoluntaryModule.da
 import 'package:lucia_covid/src/module/Citizen/Voluntary/VoluntaryModule.dart';
 import 'package:lucia_covid/src/module/Login/SignUpModule.dart';
 import 'package:lucia_covid/src/module/SplashScreen/IntroScreenModule.dart';
-
 
 class HomePageModule extends StatefulWidget {
   static final String routeName = 'home';
@@ -46,64 +44,71 @@ class _HomePageModuleState extends State<HomePageModule> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-
-  backgroundColor: AppTheme.themeVino,
-        toolbarOpacity: 0.7,
-        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
-        elevation: 0,
-        title: 
-        Row(
-            children: <Widget>[
-        Text( "PANTALLA PRINCIPAL.",  style: kTitleAppBar),
-              SizedBox(width: 10.0),
-              FaIcon(
-                FontAwesomeIcons.keybase,
-                color: Colors.white,
-                size: 18,
-              ),
-            ],
-          )          
-        ),
+            backgroundColor: Colors.white,
+            toolbarOpacity: 0.7,
+            iconTheme:
+                IconThemeData(color: AppTheme.themeVino, size: 12),
+            elevation: 0,
+            title: Row(
+              children: <Widget>[
+                Text("PANTALLA PRINCIPAL.", style: kTitleAppBar),
+                SizedBox(width: 10.0),
+                FaIcon(
+                  FontAwesomeIcons.keybase,
+                  color: AppTheme.themeVino,
+                  size: 18,
+                ),
+              ],
+            )),
         body: Stack(
           children: <Widget>[
-            _fondoApp(),
+            fondoApp(),
             SingleChildScrollView(
               child: Center(
                 child: Column(
                   children: <Widget>[
-                   // _titulos(),
-                   Container(
-      child: Column(
-        children: <Widget>[
-          SizedBox(height: 10.0,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              
-              Text('Bienvenidos a la aplicación', style:kTitleHomeCursiveStyle, ),
-            ],
-          ),
-      
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              
-              Text('de todos.', style:kTitleHomeCursiveStyle, ),
-            ],
-          ),
-
-           Row(
-             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text('Lucia Te Cuida', style:kTitleHomeCursiveStyle, ),
-            ],
-          ),
-
-        ],
-      ),
-    ),
-                    SizedBox(height: 15.0,),
-                     _botonesRedondeados()],
+                    // _titulos(),
+                    Container(
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                'Bienvenidos a la aplicación',
+                                style: kTitleHomeCursiveStyle,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                'de todos.',
+                                style: kTitleHomeCursiveStyle,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                'Lucia Te Cuida',
+                                style: kTitleHomeCursiveStyle,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15.0,
+                    ),
+                    _botonesRedondeados()
+                  ],
                 ),
               ),
             )
@@ -113,36 +118,24 @@ class _HomePageModuleState extends State<HomePageModule> {
         bottomNavigationBar: _bottomNavigationBar(context));
   }
 
-  Widget _fondoApp() {
-    final gradiente = Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: boxDecorationAccesos(),
-    );
-
-    return Stack(
-      children: <Widget>[
-        gradiente
-      ], // Positioned(top: -100.0, child: cajaRosa)],
-    );
-  }
-
   Widget _bottomNavigationBar(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
-          canvasColor: AppTheme.themeVino, //Color.fromRGBO(55, 57, 84, 1.0),
-          primaryColor: Colors.white,
-          textTheme: Theme.of(context).textTheme.copyWith(
-              caption: TextStyle(color: Colors.black87))),
+          canvasColor: Colors.white,//AppTheme.themeVino, //Color.fromRGBO(55, 57, 84, 1.0),
+          primaryColor: AppTheme.themeVino,
+          textTheme: Theme.of(context)
+              .textTheme
+              .copyWith(caption: TextStyle(color: Colors.black45))),
       child: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today, size: 20.0),
               title: Text('Notificaciones')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.bubble_chart, size: 20.0), title: Text('Mapa')),
+              icon: Icon(Icons.add_call, size: 20.0),
+              title: Text('Atenciones')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.supervised_user_circle, size: 20.0),
+              icon: Icon(Icons.video_library, size: 20.0),
               title: Text('Multimedia')),
         ],
       ),
@@ -153,16 +146,16 @@ class _HomePageModuleState extends State<HomePageModule> {
     return Wrap(
       children: <Widget>[
         _crearBotonRedondeado(
-            Colors.blue, Icons.border_all, 'Pedir ayuda', '1'),
+            Colors.blue, Icons.add_comment, 'Pedir ayuda', '1'),
         _crearBotonRedondeado(
-            Colors.purpleAccent, Icons.directions_bus, 'Urgencias', '2'),
+            Colors.purpleAccent, Icons.hotel, 'Urgencias', '2'),
+        _crearBotonRedondeado(Colors.pinkAccent, Icons.accessible_forward,
+            'Ayuda a un amig@', '3'),
+        _crearBotonRedondeado(Colors.orange, Icons.blur_linear, 'Eventos', '4'),
         _crearBotonRedondeado(
-            Colors.pinkAccent, Icons.shop, 'Ayuda a un amig@', '3'),
+            Colors.blueAccent, Icons.people, 'Voluntarios', '5'),
         _crearBotonRedondeado(
-            Colors.orange, Icons.insert_drive_file, 'Eventos', '4'),
-        _crearBotonRedondeado(
-            Colors.blueAccent, Icons.movie_filter, 'Voluntarios', '5'),
-        _crearBotonRedondeado(Colors.green, Icons.cloud, 'Instituciones', '6'),
+            Colors.green, Icons.business, 'Instituciones', '6'),
       ],
     );
   }
@@ -182,22 +175,18 @@ class _HomePageModuleState extends State<HomePageModule> {
             width: 150,
             margin: EdgeInsets.all(10.0),
             decoration: BoxDecoration(
-      gradient: LinearGradient(
-    begin: Alignment.topCenter,
-    end: Alignment.bottomRight,
-    stops: [0.1, 0.4, 0.7, 0.9],
-    colors: [
-      // Color.fromRGBO(142, 12, 3, 0.8),
-      // Color.fromRGBO(232, 78, 68, 1.0),
-      // Color.fromRGBO(168, 18, 8, 0.6),
-      // Color.fromRGBO(196, 66, 58, 1.0),
-      Color.fromRGBO(168, 18, 8, 0.6),
+                gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomRight,
+              stops: [0.1, 0.4, 0.7, 0.9],
+              colors: [
+                Color.fromRGBO(168, 18, 8, 0.6),
                 Color.fromRGBO(176, 30, 20, 1.0),
                 Color.fromRGBO(168, 18, 8, 0.6),
                 Color.fromRGBO(164, 18, 9, 1.0),
-    ],
-  )),
-              //  borderRadius: BorderRadius.circular(20.0)),
+              ],
+            )),
+            //  borderRadius: BorderRadius.circular(20.0)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
@@ -207,9 +196,8 @@ class _HomePageModuleState extends State<HomePageModule> {
                   radius: 35.0,
                   child: Icon(icono, color: Colors.white, size: 30.0),
                 ),
-                Text(texto, style: TextStyle(color:AppTheme.white, fontSize: 15.0)),
-
-                // SizedBox( height: 5.0 )
+                Text(texto,
+                    style: TextStyle(color: AppTheme.white, fontSize: 15.0)),
               ],
             ),
           ),
@@ -220,7 +208,7 @@ class _HomePageModuleState extends State<HomePageModule> {
 }
 
 class DrawerCitizen extends StatelessWidget {
-  // const DrawerCitizen({Key key}) : super(key: key);
+
   final prefs = new PreferensUser();
   @override
   Widget build(BuildContext context) {
@@ -234,9 +222,9 @@ class DrawerCitizen extends StatelessWidget {
             children: <Widget>[
               Material(
                   borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                  elevation: 10.0,
+                  elevation: 60.0,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: ImageOvalNetwork(
                         imageNetworkUrl: prefs.avatarImagen,
                         sizeImage: Size.fromWidth(70)),
@@ -247,11 +235,13 @@ class DrawerCitizen extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       prefs.nombreUsuario,
-                      style: TextStyle(color: Colors.white, fontSize: 18.0),
+                      style:
+                          TextStyle(color: AppTheme.themePlomo, fontSize: 18.0),
                     ),
                     Text(
                       prefs.correoElectronico,
-                      style: TextStyle(color: Colors.black87, fontSize: 18.0),
+                      style:
+                          TextStyle(color: AppTheme.themePlomo, fontSize: 18.0),
                     ),
                   ],
                 ),
@@ -274,7 +264,7 @@ class DrawerCitizen extends StatelessWidget {
             () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => CitizenListInstitucionModule()),
+                      builder: (context) => NotificacionesModule()),
                 )),
         CustomListTile(
             Icons.business,

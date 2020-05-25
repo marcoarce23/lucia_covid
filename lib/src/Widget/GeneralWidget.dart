@@ -9,9 +9,8 @@ Widget copyRigth() {
       SizedBox(height: 10.0),
      divider(),
       Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SizedBox(width: 160.0),
           Text('Lucia te cuida@2020. ', style: kTitleCursive4Style),
           FaIcon(
             FontAwesomeIcons.keybase,
@@ -20,8 +19,6 @@ Widget copyRigth() {
           ),
         ],
       ),
-      // SizedBox(height: 5.0),
-      // Text('Derechos Reservados', style: TextStyle(fontSize: 12.0)),
     ],
   );
 }

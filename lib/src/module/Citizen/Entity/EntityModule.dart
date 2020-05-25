@@ -55,11 +55,11 @@ class _EntityAllModuleState extends State<EntityAllModule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppTheme.themeVino,
+        backgroundColor: Colors.white,
         toolbarOpacity: 0.7,
-        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+        iconTheme: IconThemeData(color: AppTheme.themeVino, size: 12),
         elevation: 0,
-        title: Text( "INSTITUCIONES - GRUPOS VOLUNTARIOS",  style: kTitleAppBar),
+        title: Text( "INSTITUCIONES - GRUPOS",  style: kTitleAppBar),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
@@ -71,7 +71,7 @@ class _EntityAllModuleState extends State<EntityAllModule> {
       ),
       drawer: DrawerCitizen(),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color.fromRGBO(165, 5, 5, 0.7),
+        backgroundColor: Colors.white,
         items: [
           BottomNavigationBarItem(
               icon: FaIcon(
@@ -93,8 +93,8 @@ class _EntityAllModuleState extends State<EntityAllModule> {
               title: Text('Listado')),
         ],
         currentIndex: page,
-        unselectedItemColor: Colors.black87,
-        selectedItemColor: Colors.white70,
+unselectedItemColor: Colors.black54,
+        selectedItemColor: AppTheme.themeVino,
         onTap: _onItemTapped,
       ),
       body: optionPage[page],
@@ -184,13 +184,13 @@ class _EntityModuleState extends State<EntityModule> {
             ),
            
            Container(
-             width: size.width * 0.92,
+             width: size.width * 0.96,
               margin: EdgeInsets.symmetric(vertical: 0.0),
               decoration: contenedorCarretes(),
              child: Row(
                mainAxisAlignment: MainAxisAlignment.end,
                children: <Widget>[
-                 Text('CARGAR UBICACIÓN - IMAGEN',   style: TextStyle( color: Colors.white70, fontSize: 16.0,) ),
+                 Text('CARGAR UBICACIÓN-IMAGEN',   style: TextStyle( color: AppTheme.themeVino, fontSize: 15.0,) ),
                  _crearIconAppMap(),
                   _crearIconAppImagenes(),
                       _crearIconAppCamara(),
@@ -285,12 +285,12 @@ class _EntityModuleState extends State<EntityModule> {
         telefono,
         informacion,
   
-       contenedorTitulo(
-              context,
-              40.0,
-              'REDES SOCIALES',
-              FaIcon(FontAwesomeIcons.chromecast, color: Colors.white60),
-            ),
+       contenedorSubTitulo(
+                context,
+                40.0,
+                'REDES-SOCIALES',
+                FaIcon(FontAwesomeIcons.chromecast, color: Colors.white60),
+              ),
             SizedBox(height:5.0),
         facebook,
         twitter,
@@ -307,14 +307,14 @@ class _EntityModuleState extends State<EntityModule> {
 
   _crearIconAppImagenes() {
     return IconButton(
-      icon: Icon(Icons.photo_size_select_actual, color: Colors.white,),
+      icon: Icon(Icons.photo_size_select_actual, color: AppTheme.themeVino,),
       onPressed: _seleccionarFoto,
     );
   }
 
   _crearIconAppMap() {
     return IconButton(
-        icon: Icon(Icons.map, color: Colors.white,),
+        icon: Icon(Icons.map, color: AppTheme.themeVino,),
         onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => MapAdressModule()),
@@ -323,7 +323,7 @@ class _EntityModuleState extends State<EntityModule> {
 
   _crearIconAppCamara() {
     return IconButton(
-      icon: Icon(Icons.camera_alt, color: Colors.white,),
+      icon: Icon(Icons.camera_alt, color: AppTheme.themeVino,),
       onPressed: _tomarFoto,
     );
   }
@@ -339,9 +339,9 @@ class _EntityModuleState extends State<EntityModule> {
         textColor: Colors.white,
         label: Text(
           text,
-          style: kSubtitleStyle,
+          style: kBotontitleStyle,
         ),
-        icon: FaIcon(FontAwesomeIcons.save, color: Colors.white),
+        icon: FaIcon(FontAwesomeIcons.checkCircle, color: Colors.white),
         onPressed: (_save) ? null : _submit,
       ),
     );

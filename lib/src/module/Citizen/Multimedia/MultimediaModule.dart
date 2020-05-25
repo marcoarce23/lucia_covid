@@ -55,11 +55,11 @@ class _MultimediaAllModuleState extends State<MultimediaAllModule> {
 
 
         
-        backgroundColor: AppTheme.themeVino,
+        backgroundColor: Colors.white,
         toolbarOpacity: 0.7,
-        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+        iconTheme: IconThemeData(color: AppTheme.themeVino, size: 12),
         elevation: 0,
-        title: Text( "MULTIMEDIA",  style: kTitleAppBar),
+        title: Text( "MATERIAL MULTIMEDIA",  style: kTitleAppBar),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
@@ -71,7 +71,7 @@ class _MultimediaAllModuleState extends State<MultimediaAllModule> {
       ),
       drawer: DrawerCitizen(),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color.fromRGBO(165, 5, 5, 0.7),
+        backgroundColor: Colors.white,
         items: [
           BottomNavigationBarItem(
               icon: FaIcon(
@@ -87,8 +87,8 @@ class _MultimediaAllModuleState extends State<MultimediaAllModule> {
               title: Text('Publicaciones')),
         ],
         currentIndex: page,
-        unselectedItemColor: Colors.black87,
-        selectedItemColor: Colors.white70,
+       unselectedItemColor: Colors.black54,
+        selectedItemColor: AppTheme.themeVino,
         onTap: _onItemTapped,
       ),
       body: optionPage[page],
@@ -157,27 +157,27 @@ class _MultimediaModuleState extends State<MultimediaModule> {
 
   _crearIconAppImagenes() {
     return IconButton(
-      icon: FaIcon(FontAwesomeIcons.images, color:  Colors.white),
+      icon: FaIcon(FontAwesomeIcons.images, color:  AppTheme.themeVino,),
       onPressed: _seleccionarFoto,
     );
   }
 
   _crearIconAppCamara() {
     return IconButton(
-      icon: FaIcon(FontAwesomeIcons.cameraRetro,  color: Colors.white),
+      icon: FaIcon(FontAwesomeIcons.cameraRetro,  color: AppTheme.themeVino,),
       onPressed: _tomarFoto,
     );
   }
 
   _crearIconAppVideo() {
     return IconButton(
-      icon: FaIcon(FontAwesomeIcons.videoSlash,  color: Colors.white),
+      icon: FaIcon(FontAwesomeIcons.videoSlash,  color: AppTheme.themeVino,),
       onPressed: _pickVideo,
     );
   }
   _crearIconAppPDF() {
     return IconButton(
-      icon: FaIcon(FontAwesomeIcons.solidFilePdf, color: Colors.white),
+      icon: FaIcon(FontAwesomeIcons.solidFilePdf, color: AppTheme.themeVino,),
       onPressed: _pickPDF,
     );
   }
@@ -209,7 +209,7 @@ class _MultimediaModuleState extends State<MultimediaModule> {
                 children: <Widget>[
                   Text('CARGAR MATERIAL',
                       style: TextStyle(
-                        color: Colors.white70,
+                        color: AppTheme.themeVino,
                         fontSize: 16.0,
                       )),
                   _crearIconAppImagenes(),
@@ -264,15 +264,6 @@ class _MultimediaModuleState extends State<MultimediaModule> {
     return Column(
       children: <Widget>[
 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-           _crearIconAppImagenes(),
-            _crearIconAppCamara(),
-            _crearIconAppVideo(),
-            _crearIconAppPDF(),
-          ]
-        ),
         tipoMaterial,
         especialidad,
         titulo,
@@ -378,9 +369,9 @@ _crearBoton(String text) {
         textColor: Colors.white,
         label: Text(
           text,
-          style: kSubtitleStyle,
+          style: kBotontitleStyle,
         ),
-        icon: FaIcon(FontAwesomeIcons.save, color: Colors.white),
+        icon: FaIcon(FontAwesomeIcons.checkCircle, color: Colors.white),
         onPressed: (_save) ? null : _submit,
       ),
     );

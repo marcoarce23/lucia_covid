@@ -31,24 +31,28 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(height: 10.0),
-          Container(
-            width: size.width * 0.96,
-            margin: EdgeInsets.symmetric(vertical: 0.0),
-            child: contenedorTitulo(
-              context,
-              40.0,
-              'LISTADO DE AYUDA A UN AMIGO',
-              FaIcon(FontAwesomeIcons.handHoldingHeart, color: Colors.white60),
+      body: Container(
+        decoration: boxDecorationFondo(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(height: 10.0),
+            Container(
+              width: size.width * 0.96,
+              margin: EdgeInsets.symmetric(vertical: 0.0),
+              child: contenedorTitulo(
+                context,
+                40.0,
+                'LISTADO DE AYUDA A UN AMIGO',
+                FaIcon(FontAwesomeIcons.handHoldingHeart,
+                    color: AppTheme.themeVino),
+              ),
             ),
-          ),
-          divider(),
-          futureItemsEntity(context),
-          copyRigth(),
-        ],
+            divider(),
+            futureItemsEntity(context),
+            copyRigth(),
+          ],
+        ),
       ),
     );
   }
@@ -85,16 +89,7 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
               Container(
                 width: size.width * 0.97,
                 margin: EdgeInsets.symmetric(vertical: 0.0),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10.0),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 7.0,
-                          offset: Offset(2.0, 3.0),
-                          spreadRadius: 4.0)
-                    ]),
+                decoration: boxDecorationList(),
                 child: Column(
                   children: <Widget>[
                     ListTile(
@@ -104,7 +99,8 @@ class _ListCitizenHelpModuleState extends State<ListCitizenHelpModule> {
                   ],
                 ),
               ),
-              divider(),
+              SizedBox(height: 8.0),
+              //  divider(),
             ],
           );
         },

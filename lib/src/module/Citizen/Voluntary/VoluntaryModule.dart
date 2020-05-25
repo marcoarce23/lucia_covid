@@ -53,9 +53,9 @@ class _VoluntaryAllModuleState extends State<VoluntaryAllModule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppTheme.themeVino,
+        backgroundColor: Colors.white,
         toolbarOpacity: 0.7,
-        iconTheme: IconThemeData(color: AppTheme.themeColorBlanco, size: 12),
+        iconTheme: IconThemeData(color: AppTheme.themeVino, size: 12),
         elevation: 0,
         title: Text("VOLUNTARIO", style: kTitleAppBar),
         actions: <Widget>[
@@ -69,7 +69,7 @@ class _VoluntaryAllModuleState extends State<VoluntaryAllModule> {
       ),
       drawer: DrawerCitizen(),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color.fromRGBO(165, 5, 5, 0.7),
+        backgroundColor: Colors.white,
         items: [
           BottomNavigationBarItem(
               icon: FaIcon(
@@ -91,8 +91,8 @@ class _VoluntaryAllModuleState extends State<VoluntaryAllModule> {
               title: Text('Integrantes')),
         ],
         currentIndex: page,
-        unselectedItemColor: Colors.black87,
-        selectedItemColor: Colors.white70,
+        unselectedItemColor: Colors.black54,
+        selectedItemColor: AppTheme.themeVino,
         onTap: _onItemTapped,
       ),
       body: optionPage[page],
@@ -152,6 +152,7 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
       key: scaffoldKey,
       body: Stack(
         children: <Widget>[
+          fondoApp(),
           crearFondo(context, imagen),
           _crearForm(context),
         ],
@@ -161,14 +162,14 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
 
   _crearIconAppImagenes() {
     return IconButton(
-      icon: FaIcon(FontAwesomeIcons.image, color: Colors.white),
+      icon: FaIcon(FontAwesomeIcons.image, color: AppTheme.themeVino,),
       onPressed: _seleccionarFoto,
     );
   }
 
   _crearIconAppCamara() {
     return IconButton(
-      icon: FaIcon(FontAwesomeIcons.cameraRetro, color: Colors.white),
+      icon: FaIcon(FontAwesomeIcons.cameraRetro, color: AppTheme.themeVino,),
       onPressed: _tomarFoto,
     );
   }
@@ -197,9 +198,9 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  Text('CARGAR SU IMAGEN DE VOLUNTARIO',
+                  Text('CARGAR TU IMAGEN-AVATAR',
                       style: TextStyle(
-                        color: Colors.white70,
+                        color: AppTheme.themeVino,
                         fontSize: 16.0,
                       )),
                   _crearIconAppImagenes(),
@@ -318,7 +319,7 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              contenedorTitulo(
+              contenedorSubTitulo(
                 context,
                 40.0,
                 'REDES-SOCIALES',
@@ -341,7 +342,7 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
     return SwitchListTile(
       value: esCovid,
       title: Text(text),
-      activeColor: Colors.orange,
+      activeColor: AppTheme.themeVino,
       onChanged: (value) => setState(() {
         esCovid = value;
       }),
@@ -359,9 +360,9 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
         textColor: Colors.white,
         label: Text(
           text,
-          style: kSubtitleStyle,
+          style: kBotontitleStyle,
         ),
-        icon: FaIcon(FontAwesomeIcons.save, color: Colors.white),
+        icon: FaIcon(FontAwesomeIcons.checkCircle, color: Colors.white),
         onPressed: (_save) ? null : _submit,
       ),
     );
@@ -427,7 +428,7 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
     //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
   }
 
-  _seleccionarFoto() async => _procesarImagen(ImageSource.gallery);
+  _seleccionarFoto() async =>_procesarImagen(ImageSource.gallery);
   _tomarFoto() async => _procesarImagen(ImageSource.camera);
   _procesarImagen(ImageSource origen) async {
     entity.foto = imagen;

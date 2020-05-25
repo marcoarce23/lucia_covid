@@ -98,6 +98,7 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
                 cabeceraInformativa(),
               ],
             ),
+            divider(),
           ],
         ),
       ),
@@ -146,7 +147,7 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
               context,
               40.0,
               'REGISTRO DE ATENCIÓN',
-              FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.white60),
+              FaIcon(FontAwesomeIcons.calendarAlt, color: AppTheme.themeVino),
             ),
             SizedBox(height: 5.0),
             Container(
@@ -165,10 +166,10 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 SizedBox(
-                  width: 20,
+                  width: 10,
                 ),
                 Text(
-                  '- Seleccionar los días de atención',
+                  'Seleccionar los días de atención',
                   style: kSubTitleCardStyle,
                   textAlign: TextAlign.center,
                 ),
@@ -184,10 +185,10 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 SizedBox(
-                  width: 25,
+                  width: 10,
                 ),
                 Text(
-                  '- Definir si la atención se realizará el fin de semana.',
+                  'Definir si la atención se realizará el fin de semana.',
                   style: kSubTitleCardStyle,
                   textAlign: TextAlign.center,
                 ),
@@ -203,10 +204,10 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 SizedBox(
-                  width: 25,
+                  width: 10,
                 ),
                 Text(
-                  '- Se recomienda que los días asignados sean \n cumplidos  por el voluntario.',
+                  'Se recomienda que los días asignados sean \n cumplidos  por el voluntario.',
                   style: kSubTitleCardStyle,
                   textAlign: TextAlign.center,
                 ),
@@ -366,9 +367,9 @@ class _AtentionEntityModuleState extends State<AtentionEntityModule> {
         textColor: Colors.white,
         label: Text(
           text,
-          style: kSubtitleStyle,
+          style: kBotontitleStyle,
         ),
-        icon: FaIcon(FontAwesomeIcons.save, color: Colors.white),
+        icon: FaIcon(FontAwesomeIcons.checkCircle, color: Colors.white),
         onPressed: (_save) ? null : _submit,
       ),
     );

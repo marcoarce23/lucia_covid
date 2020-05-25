@@ -40,7 +40,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
       height: 8.0,
       width: isActive ? 24.0 : 16.0,
       decoration: BoxDecoration(
-        color: isActive ? Colors.white : Color(0xFF7B51D3),
+        color: isActive ? AppTheme.themeVino : Colors.black54,
         borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
     );
@@ -58,11 +58,10 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
               end: Alignment.bottomRight,
               stops: [0.1, 0.4, 0.7, 0.9],
               colors: [
-                Color.fromRGBO(168, 18, 8, 0.6),
-                Color.fromRGBO(176, 30, 20, 1.0),
-                Color.fromRGBO(168, 18, 8, 0.6),
-                Color.fromRGBO(164, 18, 9, 1.0),
-                //  Color.fromRGBO(215, 78, 159, 1.0),
+                Color.fromRGBO(237, 237, 236, 1.0),
+      Color.fromRGBO(252, 252, 252, 1.0),
+       Color.fromRGBO(251, 251, 251, 1.0),
+                  Color.fromRGBO(239, 240, 239, 1.0),
                 //     Color.fromRGBO(245, 173, 53, 1.0),
                 //     Color.fromRGBO(236, 220, 109, 1.0),
                 //     Color.fromRGBO(70, 191, 167 , 1.0),
@@ -92,7 +91,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                     child: Text(
                       'Iniciar',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppTheme.themeVino,
                         fontSize: 22.0,
                       ),
                     ),
@@ -135,7 +134,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                                     children: <Widget>[
                                       FaIcon(
                                           FontAwesomeIcons.handHoldingMedical,
-                                          color: AppTheme.white,
+                                          color: AppTheme.themeVino,
                                           size: 35.0),
                                       SizedBox(width: 11.0),
                                       Text(
@@ -148,7 +147,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                                   Row(
                                     children: <Widget>[
                                       FaIcon(FontAwesomeIcons.handHoldingHeart,
-                                          color: AppTheme.white, size: 35.0),
+                                          color: AppTheme.themeVino, size: 35.0),
                                       SizedBox(width: 11.0),
                                       Text(
                                         'Personas que requieren de apoyo espiritual,\nde motivacional y emocional.',
@@ -160,7 +159,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                                   Row(
                                     children: <Widget>[
                                       FaIcon(FontAwesomeIcons.handHoldingWater,
-                                          color: AppTheme.white, size: 35.0),
+                                          color: AppTheme.themeVino, size: 35.0),
                                       SizedBox(width: 10.0),
                                       Text(
                                         'Es una aplicación tan humana que pre_\ntende dar una esperanza a las personas.',
@@ -200,7 +199,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                                   Row(
                                     children: <Widget>[
                                       FaIcon(FontAwesomeIcons.peopleCarry,
-                                          color: AppTheme.white, size: 35.0),
+                                          color: AppTheme.themeVino, size: 35.0),
                                       SizedBox(width: 10.0),
                                       Text(
                                         'Grupo de voluntarios comprometidos\n y dedicados a brindarte un apoyo.',
@@ -212,7 +211,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                                   Row(
                                     children: <Widget>[
                                       FaIcon(FontAwesomeIcons.peopleArrows,
-                                          color: AppTheme.white, size: 35.0),
+                                          color: AppTheme.themeVino, size: 35.0),
                                       SizedBox(width: 13.0),
                                       Text(
                                         'Personas que nos preocupa tu salud,\n nos preocupa tu bienestar.',
@@ -224,7 +223,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                                   Row(
                                     children: <Widget>[
                                       FaIcon(FontAwesomeIcons.diagnoses,
-                                          color: AppTheme.white, size: 35.0),
+                                          color: AppTheme.themeVino, size: 35.0),
                                       SizedBox(width: 10.0),
                                       Text(
                                         'Grupo de ciudadanos bolivianos que \n convecidos con nuestro trabajo\npodemos hacer a diferencia en tu vida.',
@@ -331,14 +330,14 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                                 Text(
                                   'Siguiente',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: AppTheme.themeVino,
                                     fontSize: 22.0,
                                   ),
                                 ),
                                 SizedBox(width: 10.0),
                                 Icon(
                                   Icons.arrow_forward,
-                                  color: Colors.white,
+                                  color: AppTheme.themeVino,
                                   size: 30.0,
                                 ),
                               ],
@@ -375,7 +374,7 @@ class _IntroScreenModuleState extends State<IntroScreenModule> {
                         Text(
                           'Comenzar',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: AppTheme.themeVino,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
                           ),

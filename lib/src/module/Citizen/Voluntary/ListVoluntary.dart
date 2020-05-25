@@ -72,7 +72,7 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
               context,
               40.0,
               'LISTADO VOLUNTARIOS',
-              FaIcon(FontAwesomeIcons.handHoldingMedical, color: Colors.white60),
+              FaIcon(FontAwesomeIcons.handHoldingMedical, color: AppTheme.themeVino),
             ),
           ),
           divider(),
@@ -115,16 +115,7 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
               Container(
                 width: size.width * 0.97,
                 margin: EdgeInsets.symmetric(vertical: 0.0),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10.0),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 7.0,
-                          offset: Offset(2.0, 3.0),
-                          spreadRadius: 4.0)
-                    ]),
+                decoration: boxDecorationList(),
                 child: Column(
                   children: <Widget>[
                     ListTile(
@@ -134,7 +125,8 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
                   ],
                 ),
               ),
-              divider(),
+            //  divider(),
+            SizedBox(height:7.0),
             ],
           );
         },
@@ -179,7 +171,7 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                  width: MediaQuery.of(context).size.width - 160,
+                  width: MediaQuery.of(context).size.width - 110,
                   child: Row(
                     children: <Widget>[
                       Icon(
@@ -187,7 +179,7 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
                         color: AppTheme.themeVino,
                         size: 15,
                       ),
-                      Text('Voluntario: ${entityItem.perNombrepersonal} ',
+                      Text('${entityItem.perNombrepersonal} ',
                           style: kTitleCardStyle,),
                     ],
                   )),
@@ -200,7 +192,7 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
                     color: AppTheme.themeVino,
                     size: 15,
                   ),
-                  Text('Institución: ${entityItem.desInstitucion}',
+                  Text('Inst.: ${entityItem.desInstitucion}',
                       style: kSubTitleCardStyle,),]
               ),
               SizedBox(height:7.0),
@@ -212,7 +204,7 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
                     color: AppTheme.themeVino,
                     size: 15,
                   ),
-                  Text('Telefono: ${entityItem.perTelefono}',
+                  Text('Telef.: ${entityItem.perTelefono}',
                       style: kSubTitleCardStyle,),]
               ),
               SizedBox(height:7.0),
@@ -292,12 +284,8 @@ class _ListVoluntaryModuleState extends State<ListVoluntaryModule> {
     return Container(
         child: Column(
       children: <Widget>[
-       // ImageOvalNetwork( imageNetworkUrl: entityItem.foto, sizeImage: Size.fromWidth(35)),
-        Icon(
-          Icons.person_pin,
-          size: 35,
-          color: Colors.black87,
-        ),
+        ImageOvalNetwork( imageNetworkUrl: prefs.avatarImagen, sizeImage: Size.fromWidth(35)),
+       SizedBox(height:5.0),
         Text(
           '${entityItem.desEspecialidad}',
           style: TextStyle(

@@ -45,7 +45,7 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
               context,
               40.0,
               'LISTADO MATERIAL MULTIMEDIA',
-              FaIcon(FontAwesomeIcons.photoVideo, color: Colors.white60),
+              FaIcon(FontAwesomeIcons.photoVideo, color: AppTheme.themeVino),
             ),
           ),
           divider(),
@@ -87,18 +87,9 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
           return Column(
             children: <Widget>[
               Container(
-                width: size.width * 0.97,
+                width: size.width * 0.98,
                 margin: EdgeInsets.symmetric(vertical: 0.0),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10.0),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 7.0,
-                          offset: Offset(2.0, 3.0),
-                          spreadRadius: 4.0)
-                    ]),
+                decoration: boxDecorationList(),
                 child: Column(
                   children: <Widget>[
                     ListTile(
@@ -123,7 +114,7 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
       key: Key(item.toString()), //UniqueKey(),
       background: Container(
         color: Colors.red,
-        padding: EdgeInsets.only(left: 20.0),
+        padding: EdgeInsets.only(left: 5.0),
         child: Text(
           'Eliminar registro',
           style: TextStyle(color: Colors.white),
@@ -157,7 +148,7 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                  width: MediaQuery.of(context).size.width - 160,
+                  width: MediaQuery.of(context).size.width - 130,
                   child: Row(
                     children: <Widget>[
                       Icon(
@@ -169,8 +160,9 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
                           style: kSubTitleCardStyle),
                     ],
                   )),
-                  SizedBox(height:5.0),
-              Row(
+        Container(
+                  width: MediaQuery.of(context).size.width - 130,
+             child: Row(
                 children: <Widget>[
                   Icon(
                     Icons.place,
@@ -180,12 +172,21 @@ class _ListMultimediaModuleState extends State<ListMultimediaModule> {
                   Text('Resumen: ${entityItem.mulResumen}',
                       style:kSubTitleCardStyle)
                 ],
-              ),
-              SizedBox(height:5.0),
-              Container(
-                  child: Text(
+              )),
+                 Container(
+                    width: MediaQuery.of(context).size.width - 90,
+                  child: Row(
+                children: <Widget>[
+                  // Icon(
+                  //   Icons.place,
+                  //   color: AppTheme.themeVino,
+                  //   size: 15,
+                  // ),
+  
+                  Text(
                 'inicio: ${entityItem.detFechaInicio} - Conclusión: ${entityItem.detFechaFin}',
-                style: kSubTitleCardStyle,
+                style: kSubTitleCardStyle),
+                ],
               )),
             ],
           ),
