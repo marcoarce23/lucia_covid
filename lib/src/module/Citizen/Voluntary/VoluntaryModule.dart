@@ -160,20 +160,19 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
     );
   }
 
-  _crearIconAppImagenes() {
+   _crearIconAppImagenes() {
     return IconButton(
-      icon: FaIcon(FontAwesomeIcons.image, color: AppTheme.themeVino,),
+      icon: Icon(Icons.photo_size_select_actual, color: AppTheme.themeVino,),
       onPressed: _seleccionarFoto,
     );
   }
 
   _crearIconAppCamara() {
     return IconButton(
-      icon: FaIcon(FontAwesomeIcons.cameraRetro, color: AppTheme.themeVino,),
+      icon: Icon(Icons.camera_alt, color: AppTheme.themeVino,),
       onPressed: _tomarFoto,
     );
   }
-
   Widget _crearForm(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
@@ -198,7 +197,7 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  Text('CARGAR TU IMAGEN-AVATAR',
+                  Text('CARGA TU IMAGEN - AVATAR',
                       style: TextStyle(
                         color: AppTheme.themeVino,
                         fontSize: 16.0,
@@ -428,15 +427,20 @@ class _VoluntaryModuleState extends State<VoluntaryModule> {
     //Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) => SliderShowModule()));
   }
 
-  _seleccionarFoto() async =>_procesarImagen(ImageSource.gallery);
+    _seleccionarFoto() async => _procesarImagen(ImageSource.gallery);
   _tomarFoto() async => _procesarImagen(ImageSource.camera);
+
   _procesarImagen(ImageSource origen) async {
-    entity.foto = imagen;
+    foto = await ImagePicker.pickImage(source: origen);
 
     if (foto != null) {
       imagen = await generic.subirImagen(foto);
-      entity.foto = imagen;
     }
-    setState(() {});
+
+    setState(() {
+      entity.foto = imagen;
+      print('cargadod e iagen ${entity.foto}');
+    });
   }
 }
+
